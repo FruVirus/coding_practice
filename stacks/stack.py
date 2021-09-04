@@ -16,25 +16,25 @@ class Stack:
         self.top = -1
 
     def empty(self):
-        if self.top == -1:
-            return True
-        return False
+        return True if self.top == -1 else False
 
     def pop(self):
-        assert not self.empty()
+        assert self.top > -1
         self.top -= 1
         return self.a[self.top + 1]
 
     def push(self, x):
+        assert self.top + 1 < self.size
         self.top += 1
-        assert self.top < self.size
         self.a[self.top] = x
 
 
-stack = Stack(10)
-for i in range(10):
+size = 10
+item = list(range(size))
+stack = Stack(size)
+for i in range(size):
     stack.push(i)
-assert stack.a == list(range(10))
-for i in range(10):
-    stack.pop()
+assert stack.a == item
+for i in range(size):
+    assert stack.pop() == item[size - i - 1]
 assert stack.empty()
