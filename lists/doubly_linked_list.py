@@ -17,10 +17,8 @@ search() takes O(n) time.
 
 
 class Node:
-    def __init__(self, key):
-        self.key = key
-        self.next = None
-        self.prev = None
+    def __init__(self, k):
+        self.k, self.next, self.prev = k, None, None
 
 
 class DLL:
@@ -38,7 +36,7 @@ class DLL:
             x.next.prev = x.prev
 
     def insert(self, x):
-        x.next = self.head
+        x.next, x.prev = self.head, None
         if self.head is not None:
             self.head.prev = x
         self.head = x
@@ -46,7 +44,7 @@ class DLL:
 
     def search(self, k):
         x = self.head
-        while x is not None and x.key != k:
+        while x is not None and x.k != k:
             x = x.next
         return x
 
@@ -59,6 +57,6 @@ dll.insert(x)
 dll.insert(Node(1))
 dll.delete(x)
 dll.delete(1)
-assert dll.head.key == 16
-assert dll.head.next.key == 9
+assert dll.head.k == 16
+assert dll.head.next.k == 9
 assert dll.head.prev is None
