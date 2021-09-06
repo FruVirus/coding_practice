@@ -17,12 +17,3 @@ def sorted_inner_product(l1, l2):
         else:
             j += 1
     return sum
-
-
-assert (
-    sorted_inner_product(
-        [[3, 2], [4, 1], [6, 1], [8, 1], [9, 1]],
-        [[2, 1], [3, 1], [6, 1], [7, 1], [8, 1]],
-    )
-    == 4
-)

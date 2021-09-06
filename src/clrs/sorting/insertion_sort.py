@@ -9,14 +9,11 @@ O(n^2)
 
 
 def insertion_sort(a):
-    for i in range(len(a)):
-        n = a[i]
+    for i in range(1, len(a) - 1):
+        k = a[i]
         j = i - 1
-        while j > -1 and a[j] > n:
+        while j > -1 and a[j] > k:
             a[j + 1] = a[j]
             j -= 1
-        a[j + 1] = n
+        a[j + 1] = k
     return a
-
-
-assert insertion_sort([4, 3, 2, -4, 1, 5]) == [-4, 1, 2, 3, 4, 5]

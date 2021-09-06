@@ -47,16 +47,3 @@ class DLL:
         while x is not None and x.k != k:
             x = x.next
         return x
-
-
-dll = DLL()
-dll.insert(Node(9))
-dll.insert(Node(16))
-x = Node(4)
-dll.insert(x)
-dll.insert(Node(1))
-dll.delete(x)
-dll.delete(1)
-assert dll.head.k == 16
-assert dll.head.next.k == 9
-assert dll.head.prev is None

@@ -32,6 +32,3 @@ def merge(l, r):
     if j < len(r):
         a.extend(r[j:])
     return a
-
-
-assert merge_sort([5, 4, 3, 2, 1, -4]) == [-4, 1, 2, 3, 4, 5]

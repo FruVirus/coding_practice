@@ -38,7 +38,3 @@ def find_cross(a, low, mid, high):
             rsum = rcsum
             chigh = i
     return clow, chigh, lsum + rsum
-
-
-a = [13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 700]
-assert find_max(a, 0, len(a) - 1) == (7, 15, 727.0)
