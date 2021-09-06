@@ -7,13 +7,9 @@ O(n^2)
 
 
 def bubble_sort(a):
-	for i in range(len(a)):
-		for j in range(len(a) - 1, i, -1):
-			if a[j] < a[j - 1]:
-				t = a[j]
-				a[j] = a[j - 1]
-				a[j - 1] = t
-	return a
-
-
-print(bubble_sort([-5, 3, 2, -4, 1, 5]))
+    for i in range(len(a) - 1):
+        for j in range(len(a) - 1, i, -1):
+            if a[j] < a[j - 1]:
+                t = a[j]
+                a[j], a[j - 1] = a[j - 1], t
+    return a

@@ -31,15 +31,16 @@ O(n * lg(n))
 """
 
 
+# Standard Library
 from operator import gt, lt
 
 
 class HeapQueue:
-    def __init__(self, a, is_max=True):
+    def __init__(self, a, is_max):
         self.a = a
         self.heap_size = len(self.a)
         self.is_max = is_max
-        self.compare_op, self.change_op = (gt, lt) if self.is_max else (lt, gt)
+        self.compare_op = gt if self.is_max else lt
         self.build()
 
     def _exchange(self, i, j):
@@ -66,7 +67,7 @@ class HeapQueue:
         assert self.compare_op(k, self.a[i])
         self.a[i] = k
         parent = self._parent(i)
-        while i > 0 and self.change_op(self.a[parent], self.a[i]):
+        while i > 0 and self.compare_op(self.a[i], self.a[parent]):
             self._exchange(i, parent)
             i = parent
             parent = self._parent(i)
@@ -74,11 +75,11 @@ class HeapQueue:
     def extract(self):
         assert self.heap_size > 0
         self.heap_size -= 1
-        val = self.a[0]
+        x = self.a[0]
         self.a[0] = self.a[self.heap_size]
         self.heapify(0)
         self.a.pop(-1)
-        return val
+        return x
 
     def get(self):
         return self.a[0]

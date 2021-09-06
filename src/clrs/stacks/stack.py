@@ -19,12 +19,12 @@ class Stack:
         return True if self.top == -1 else False
 
     def pop(self):
-        assert self.top > -1
+        assert self.top != -1
         self.top -= 1
         return self.a[self.top + 1]
 
     def push(self, x):
-        assert self.top + 1 < self.size
+        assert self.top + 1 != self.size
         self.top += 1
         self.a[self.top] = x
 

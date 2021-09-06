@@ -1,0 +1,44 @@
+# PLEASE BE KIND AND LIST SECTIONS ALPHABETICALLY!
+
+########## Black ##########
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+setup.py
+'''
+
+########## Isort ##########
+[tool.isort]
+atomic = true
+filter_files = true
+import_heading_firstparty = "Repository Library"
+import_heading_future = "Future Library"
+import_heading_localfolder = "Local Folder"
+import_heading_stdlib = "Standard Library"
+import_heading_thirdparty = "Third Party Library"
+include_trailing_comma = true
+known_first_party = "coding_practice"
+known_third_party = "numpy, pytest"
+line_length = 88
+lines_between_types = 1
+multi_line_output = 3
+
+########## Pytest ##########
+[tool.pytest.ini_options]
+markers = ["clrs_only", "leet_only"]
+
+########### Pytest Coverage ##########
+[tool.coverage.report]
+exclude_lines = ['if __name__ == "__main__"', "if __name__ == '__main__'"]

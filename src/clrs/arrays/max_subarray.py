@@ -25,7 +25,7 @@ def find_max(a, low, high):
 
 def find_cross(a, low, mid, high):
     lsum = rsum = -float("inf")
-    lcsum = rcsum = 0.
+    lcsum = rcsum = 0.0
     clow = chigh = -1
     for i in range(mid, low - 1, -1):
         lcsum += a[i]
@@ -41,4 +41,4 @@ def find_cross(a, low, mid, high):
 
 
 a = [13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 700]
-print(find_max(a, 0, len(a) - 1))
+assert find_max(a, 0, len(a) - 1) == (7, 15, 727.0)

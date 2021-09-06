@@ -34,4 +34,4 @@ def merge(l, r):
     return a
 
 
-print(merge_sort([5, 4, 3, 2, 1, -4]))
+assert merge_sort([5, 4, 3, 2, 1, -4]) == [-4, 1, 2, 3, 4, 5]

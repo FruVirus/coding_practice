@@ -36,7 +36,7 @@ class DLL:
             x.next.prev = x.prev
 
     def insert(self, x):
-        x.next, x.prev = self.head, None
+        x.next = self.head
         if self.head is not None:
             self.head.prev = x
         self.head = x
