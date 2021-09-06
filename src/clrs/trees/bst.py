@@ -35,8 +35,7 @@ class BST:
             if self.root is not None:
                 self.root.parent = None
             return deleted
-        else:
-            return node.delete()
+        return node.delete()
 
     def insert(self, k):
         node = BSTNode(None, k)
@@ -73,10 +72,9 @@ class BSTNode:
                 if self.parent.right is not None:
                     self.parent.right.parent = self.parent
             return self
-        else:
-            s = self.successor()
-            self.key, s.key = s.key, self.key
-            return s.delete()
+        s = self.successor()
+        self.key, s.key = s.key, self.key
+        return s.delete()
 
     def insert(self, node):
         if node is None:
@@ -87,12 +85,17 @@ class BSTNode:
                 self.left = node
             else:
                 self.left.insert(node)
+        elif self.right is None:
+            node.parent = self
+            self.right = node
         else:
-            if self.right is None:
-                node.parent = self
-                self.right = node
-            else:
-                self.right.insert(node)
+            self.right.insert(node)
+
+    def max(self):
+        current = self
+        while current.right is not None:
+            current = current.right
+        return current
 
     def min(self):
         current = self
@@ -100,19 +103,20 @@ class BSTNode:
             current = current.left
         return current
 
+    def predecessor(self):
+        if self.left is not None:
+            return self.left.max()
+        current = self
+        while current.parent is not None and current is current.parent.left:
+            current = current.parent
+        return current.parent
+
     def search(self, k):
         if k == self.key:
             return self
-        elif k < self.key:
-            if self.left is None:
-                return None
-            else:
-                return self.left.search(k)
-        else:
-            if self.right is None:
-                return None
-            else:
-                return self.right.search(k)
+        if k < self.key:
+            return None if self.left is None else self.left.search(k)
+        return None if self.right is None else self.right.search(k)
 
     def successor(self):
         if self.right is not None:
