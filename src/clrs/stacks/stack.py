@@ -16,7 +16,7 @@ class Stack:
         self.top = -1
 
     def empty(self):
-        return True if self.top == -1 else False
+        return self.top == -1
 
     def pop(self):
         assert self.top != -1
