@@ -9,7 +9,7 @@ O(n^2)
 
 
 def insertion_sort(a):
-    for i in range(1, len(a) - 1):
+    for i in range(1, len(a)):
         k = a[i]
         j = i - 1
         while j > -1 and a[j] > k:
