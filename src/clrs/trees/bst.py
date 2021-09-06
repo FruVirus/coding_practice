@@ -44,8 +44,15 @@ class BST:
         else:
             self.root.insert(node)
 
+    def max(self):
+        return self.root and self.root.max()
+
     def min(self):
         return self.root and self.root.min()
+
+    def predecessor(self, k):
+        node = self.search(k)
+        return node and node.predecessor()
 
     def search(self, k):
         return self.root and self.root.search(k)
@@ -57,8 +64,7 @@ class BST:
 
 class BSTNode:
     def __init__(self, parent, k):
-        self.key = k
-        self.parent = parent
+        self.key, self.parent = k, parent
         self.left = self.right = None
 
     def delete(self):
@@ -77,8 +83,7 @@ class BSTNode:
         return s.delete()
 
     def insert(self, node):
-        if node is None:
-            return
+        assert node is not None
         if node.key < self.key:
             if self.left is None:
                 node.parent = self
@@ -115,8 +120,8 @@ class BSTNode:
         if k == self.key:
             return self
         if k < self.key:
-            return None if self.left is None else self.left.search(k)
-        return None if self.right is None else self.right.search(k)
+            return self.left.search(k)
+        return self.right.search(k)
 
     def successor(self):
         if self.right is not None:
@@ -131,3 +136,26 @@ class MinBSTNode(BSTNode):
     def __init__(self, parent, key):
         super().__init__(parent, key)
         self.min = self
+
+
+bst = BST()
+bst.insert(12)
+bst.insert(5)
+bst.insert(2)
+bst.insert(9)
+bst.insert(18)
+bst.insert(15)
+bst.insert(17)
+bst.insert(13)
+bst.insert(19)
+bst_max = bst.max()
+bst_min = bst.min()
+assert bst_max.key == 19
+assert bst_min.key == 2
+result = bst.search(18)
+assert (
+    result.key == 18
+    and result.parent.key == 12
+    and result.left.key == 15
+    and result.right.key == 19
+)
