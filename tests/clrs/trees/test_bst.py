@@ -42,3 +42,7 @@ def test_bst():
     assert deleted.right is None
     assert deleted.parent.key == 15
     assert bst.root.key == 13
+    k = 2
+    bst.delete(k)
+    bst_min = bst.min()
+    assert bst_min.key == 9
