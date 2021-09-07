@@ -48,7 +48,7 @@ class BST:
         return self.root and self.root.max()
 
     def min(self):
-        return self.root.min_
+        return self.root and self.root.min_
 
     def predecessor(self, k):
         node = self.search(k)
@@ -150,9 +150,3 @@ class BSTNode:
             self.walk(node.left)
             print(node.key)
             self.walk(node.right)
-
-
-class MinBSTNode(BSTNode):
-    def __init__(self, parent, key):
-        super().__init__(parent, key)
-        self.min = self

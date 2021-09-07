@@ -74,14 +74,14 @@ class HeapQueue:
         return self.a[0]
 
     def heapify(self, i):
-        l, r, largest = self._left(i), self._right(i), i
+        l, r, index = self._left(i), self._right(i), i
         if l < self.heap_size and self.compare_op(self.a[l], self.a[i]):
-            largest = l
-        if r < self.heap_size and self.compare_op(self.a[r], self.a[largest]):
-            largest = r
-        if largest != i:
-            self._exchange(i, largest)
-            self.heapify(largest)
+            index = l
+        if r < self.heap_size and self.compare_op(self.a[r], self.a[index]):
+            index = r
+        if index != i:
+            self._exchange(i, index)
+            self.heapify(index)
 
     def increase(self, i, k):
         assert self.compare_op(k, self.a[i])
