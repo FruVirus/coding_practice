@@ -159,3 +159,13 @@ assert (
     and result.left.key == 15
     and result.right.key == 19
 )
+next_largest = bst.successor(9)
+assert next_largest.key == 12
+prev_largest = bst.predecessor(13)
+assert prev_largest.key == 12
+k = 5
+deleted = bst.delete(k)
+assert deleted.key == k
+assert deleted.left is None
+assert deleted.right is None
+assert deleted.parent.key == 9
