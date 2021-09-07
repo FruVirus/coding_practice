@@ -61,6 +61,12 @@ class BST:
         node = self.search(k)
         return node and node.successor()
 
+    def walk(self):
+        if self.root is not None:
+            self.root.walk(self.root.left)
+            print(self.root.key)
+            self.root.walk(self.root.right)
+
 
 class BSTNode:
     def __init__(self, parent, k):
@@ -131,6 +137,12 @@ class BSTNode:
             current = current.parent
         return current.parent
 
+    def walk(self, node):
+        if node is not None:
+            self.walk(node.left)
+            print(node.key)
+            self.walk(node.right)
+
 
 class MinBSTNode(BSTNode):
     def __init__(self, parent, key):
@@ -148,6 +160,7 @@ bst.insert(15)
 bst.insert(17)
 bst.insert(13)
 bst.insert(19)
+bst.walk()
 bst_max = bst.max()
 bst_min = bst.min()
 assert bst_max.key == 19
