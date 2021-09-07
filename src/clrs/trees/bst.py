@@ -48,7 +48,7 @@ class BST:
         return self.root and self.root.max()
 
     def min(self):
-        return self.root and self.root.min()
+        return self.root.min_
 
     def predecessor(self, k):
         node = self.search(k)
@@ -72,6 +72,7 @@ class BSTNode:
     def __init__(self, parent, k):
         self.key, self.parent = k, parent
         self.left = self.right = None
+        self.min_ = self
 
     def delete(self):
         if self.left is None or self.right is None:
@@ -79,6 +80,13 @@ class BSTNode:
                 self.parent.left = self.left or self.right
                 if self.parent.left is not None:
                     self.parent.left.parent = self.parent
+                    self.parent.min_ = self.parent.left.min_
+                else:
+                    self.parent.min_ = self.parent
+                current = self.parent
+                while current.parent is not None and current is current.parent.left:
+                    current.parent.min_ = current.min_
+                    current = current.parent
             else:
                 self.parent.right = self.left or self.right
                 if self.parent.right is not None:
@@ -92,6 +100,8 @@ class BSTNode:
         if node is None:
             return
         if node.key < self.key:
+            if node.key < self.min_.key:
+                self.min_ = node
             if self.left is None:
                 node.parent = self
                 self.left = node
@@ -110,10 +120,7 @@ class BSTNode:
         return current
 
     def min(self):
-        current = self
-        while current.left is not None:
-            current = current.left
-        return current
+        return self.min_
 
     def predecessor(self):
         if self.left is not None:
