@@ -11,7 +11,7 @@ binary-search-tree property:
     Let x be a node in a binary search tree. If y is a node in the left subtree of x,
     then y.key <= x.key. If y is a node in the right subtree of x, then y.key >= x.key.
 
-1. inorder_walk() takes O(n) time.
+1. walk() takes O(n) time.
 
 2. insert(), delete(), search(), min(), max(), successor(), and predecessor() all take
 O(h) = O(lg(n)) time on a bst of height h.
@@ -89,7 +89,8 @@ class BSTNode:
         return s.delete()
 
     def insert(self, node):
-        assert node is not None
+        if node is None:
+            return
         if node.key < self.key:
             if self.left is None:
                 node.parent = self
