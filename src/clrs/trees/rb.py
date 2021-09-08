@@ -40,8 +40,60 @@ class RB:
             self.root = temp_root.left
             if self.root is not None:
                 self.root.parent = None
+            self.delete_fix(deleted)
             return deleted
-        return node.delete()
+        deleted, x, orig_c = node.delete()
+        if orig_c == 1:
+            if x is None:
+                x = RBNode(None, None, c=1)
+            self.delete_fix(x)
+        return deleted
+
+    def delete_fix(self, x):
+        while x is not self.root and x.c == 1:
+            if x is x.parent.left:
+                w = x.parent.right
+                if w.c == 0:
+                    w.c = 1
+                    x.parent.c = 0
+                    self.rotate(x.parent.key, left_rotate=True)
+                    w = x.parent.right
+                if w.left.c == 1 and w.right.c == 1:
+                    w.c = 0
+                    x = x.parent
+                else:
+                    if w.right.c == 1:
+                        w.left.c = 1
+                        w.c = 0
+                        self.rotate(w.key, left_rotate=False)
+                        w = x.parent.right
+                    w.c = x.parent.c
+                    x.parent.c = 1
+                    w.right.c = 1
+                    self.rotate(x.parent.key, left_rotate=True)
+                    x = self.root
+            else:
+                w = x.parent.left
+                if w.c == 0:
+                    w.c = 1
+                    x.parent.c = 0
+                    self.rotate(x.parent.key, left_rotate=False)
+                    w = x.parent.left
+                if w.right.c == 1 and w.left.c == 1:
+                    w.c = 0
+                    x = x.parent
+                else:
+                    if w.left.c == 1:
+                        w.right.c = 1
+                        w.c = 0
+                        self.rotate(w.key, left_rotate=True)
+                        w = x.parent.left
+                    w.c = x.parent.c
+                    x.parent.c = 1
+                    w.left.c = 1
+                    self.rotate(x.parent.key, left_rotate=False)
+                    x = self.root
+        x.c = 1
 
     def insert(self, k):
         node = RBNode(None, k, 1 if self.root is None else 0)
@@ -49,16 +101,15 @@ class RB:
             self.root = node
         else:
             self.root.insert(node)
-        if node.parent is not None:
-            self.insert_fix(node)
+        self.insert_fix(node)
 
     def insert_fix(self, node):
         while node.parent is not None and node.parent.c == 0:
             if node.parent is node.parent.parent.left:
-                y = node.parent.parent.right
-                if y.c == 0:
+                uncle = node.parent.parent.right
+                if uncle.c == 0:
                     node.parent.c = 1
-                    y.c = 1
+                    uncle.c = 1
                     node.parent.parent.c = 0
                     node = node.parent.parent
                 else:
@@ -69,10 +120,10 @@ class RB:
                     node.parent.parent.c = 0
                     self.rotate(node.parent.parent.key, left_rotate=False)
             else:
-                y = node.parent.parent.left
-                if y.c == 0:
+                uncle = node.parent.parent.left
+                if uncle.c == 0:
                     node.parent.c = 1
-                    y.c = 1
+                    uncle.c = 1
                     node.parent.parent.c = 0
                     node = node.parent.parent
                 else:
@@ -123,19 +174,28 @@ class RBNode:
         self.left = self.right = None
 
     def delete(self):
+        orig_c = self.c
         if self.left is None or self.right is None:
             if self is self.parent.left:
+                x = self.left or self.right
                 self.parent.left = self.left or self.right
                 if self.parent.left is not None:
                     self.parent.left.parent = self.parent
             else:
+                x = self.left or self.right
                 self.parent.right = self.left or self.right
                 if self.parent.right is not None:
                     self.parent.right.parent = self.parent
-            return self
+            return self, x, orig_c
         s = self.successor()
-        self.key, s.key = s.key, self.key
-        return s.delete()
+        s_orig_c = s.c
+        x = s.right
+        if s.parent is self:
+            x.parent = s
+        else:
+            self.key, s.key = s.key, self.key
+        self.c, s.c = s.c, self.c
+        return s.delete(), x, s_orig_c
 
     def insert(self, node):
         if node is None:
@@ -252,6 +312,10 @@ print(rb.search(8).c)
 print(rb.search(14).c)
 print(rb.search(4).c)
 print(rb.search(15).c)
+print()
+print()
+rb.delete(11)
+print(rb.search(14).c)
 
 # rb.insert(26)
 # rb.insert(17)
