@@ -14,7 +14,7 @@ binary-search-tree property:
 1. walk() takes O(n) time.
 
 2. insert(), delete(), search(), min(), max(), successor(), and predecessor() all take
-O(h) = O(lg(n)) time on a bst of height h.
+O(h) time on a BST of height h. If the BST is balanced, then O(h) = O(lg(n)).
 """
 
 
