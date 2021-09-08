@@ -192,8 +192,7 @@ class RBNode:
         x = s.right
         if s.parent is self:
             x.parent = s
-        else:
-            self.key, s.key = s.key, self.key
+        self.key, s.key = s.key, self.key
         self.c, s.c = s.c, self.c
         return s.delete(), x, s_orig_c
 
@@ -316,6 +315,7 @@ print()
 print()
 rb.delete(11)
 print(rb.search(14).c)
+print(rb.search(15).c)
 
 # rb.insert(26)
 # rb.insert(17)
