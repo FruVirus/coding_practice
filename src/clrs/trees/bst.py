@@ -44,15 +44,10 @@ class BST:
             y.left.p = y
 
     def insert(self, z):
-        z = BSTNode(z, None)
-        y = None
-        x = self.root
+        x, y, z = self.root, None, BSTNode(z, None)
         while x is not None:
             y = x
-            if z.key < x.key:
-                x = x.left
-            else:
-                x = x.right
+            x = x.left if z.key < x.key else x.right
         z.p = y
         if y is None:
             self.root = z
@@ -76,7 +71,7 @@ class BST:
     def predecessor(self, x):
         x = self._get_node(x)
         if x.left is not None:
-            return self.max(x.left)
+            return self.min(x.left)
         y = x.p
         while y is not None and x is y.left:
             x = y
@@ -86,10 +81,7 @@ class BST:
     def search(self, x, k):
         x = self._get_node(x)
         while x is not None and k != x.key:
-            if k < x.key:
-                x = x.left
-            else:
-                x = x.right
+            x = x.left if k < x.key else x.right
         return x
 
     def successor(self, x):
