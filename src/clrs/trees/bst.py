@@ -76,7 +76,7 @@ class BST:
     def predecessor(self, x):
         x = self._get_node(x)
         if x.left is not None:
-            return self.min(x.left)
+            return self.max(x.left)
         y = x.p
         while y is not None and x is y.left:
             x = y
