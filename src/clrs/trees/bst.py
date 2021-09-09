@@ -19,134 +19,108 @@ O(h) time on a BST of height h. If the BST is balanced, then O(h) = O(lg(n)).
 
 
 class BST:
-    def __init__(self):
-        self.root = None
+    def __init__(self, z):
+        self.root = BSTNode(z, None)
 
-    def delete(self, k):
-        node = self.search(k)
-        if node is None:
-            return None
-        if node is self.root:
-            temp_root = BSTNode(None, 0)
-            temp_root.left = self.root
-            self.root.parent = temp_root
-            deleted = self.root.delete()
-            self.root = temp_root.left
-            if self.root is not None:
-                self.root.parent = None
-            return deleted
-        return node.delete()
+    def _get_node(self, x):
+        if not isinstance(x, BSTNode):
+            x = self.search(self.root, x)
+        return x
 
-    def insert(self, k):
-        node = BSTNode(None, k)
-        if self.root is None:
-            self.root = node
+    def delete(self, z):
+        z = self._get_node(z)
+        if z.left is None:
+            self.transplant(z, z.right)
+        elif z.right is None:
+            self.transplant(z, z.left)
         else:
-            self.root.insert(node)
+            y = self.min(z.right)
+            if y.p is not z:
+                self.transplant(y, y.right)
+                y.right = z.right
+                y.right.p = y
+            self.transplant(z, y)
+            y.left = z.left
+            y.left.p = y
 
-    def max(self):
-        return self.root and self.root.max()
+    def insert(self, z):
+        z = BSTNode(z, None)
+        y = None
+        x = self.root
+        while x is not None:
+            y = x
+            if z.key < x.key:
+                x = x.left
+            else:
+                x = x.right
+        z.p = y
+        if y is None:
+            self.root = z
+        elif z.key < y.key:
+            y.left = z
+        else:
+            y.right = z
 
-    def min(self):
-        return self.root and self.root.min_
+    def max(self, x):
+        x = self._get_node(x)
+        while x.right is not None:
+            x = x.right
+        return x
 
-    def predecessor(self, k):
-        node = self.search(k)
-        return node and node.predecessor()
+    def min(self, x):
+        x = self._get_node(x)
+        while x.left is not None:
+            x = x.left
+        return x
 
-    def search(self, k):
-        return self.root and self.root.search(k)
+    def predecessor(self, x):
+        x = self._get_node(x)
+        if x.left is not None:
+            return self.min(x.left)
+        y = x.p
+        while y is not None and x is y.left:
+            x = y
+            y = y.p
+        return y
 
-    def successor(self, k):
-        node = self.search(k)
-        return node and node.successor()
+    def search(self, x, k):
+        x = self._get_node(x)
+        while x is not None and k != x.key:
+            if k < x.key:
+                x = x.left
+            else:
+                x = x.right
+        return x
 
-    def walk(self):
-        if self.root is not None:
-            self.root.walk(self.root.left)
-            print(self.root.key)
-            self.root.walk(self.root.right)
+    def successor(self, x):
+        x = self._get_node(x)
+        if x.right is not None:
+            return self.min(x.right)
+        y = x.p
+        while y is not None and x is y.right:
+            x = y
+            y = y.p
+        return y
+
+    def transplant(self, u, v):
+        if u.p is None:
+            self.root = v
+        elif u is u.p.left:
+            u.p.left = v
+        else:
+            u.p.right = v
+        if v is not None:
+            v.p = u.p
+
+    def walk(self, x):
+        if x is not None:
+            x = self._get_node(x)
+            self.walk(x.left)
+            print(x.key)
+            self.walk(x.right)
 
 
 class BSTNode:
-    def __init__(self, parent, k):
-        self.key, self.parent = k, parent
+    def __init__(self, key, parent):
+        self.key, self.p = key, parent
         self.left = self.right = None
-        self.min_ = self
-
-    def delete(self):
-        if self.left is None or self.right is None:
-            if self is self.parent.left:
-                self.parent.left = self.left or self.right
-                if self.parent.left is not None:
-                    self.parent.left.parent = self.parent
-                    self.parent.min_ = self.parent.left.min_
-                else:
-                    self.parent.min_ = self.parent
-                current = self.parent
-                while current.parent is not None and current is current.parent.left:
-                    current.parent.min_ = current.min_
-                    current = current.parent
-            else:
-                self.parent.right = self.left or self.right
-                if self.parent.right is not None:
-                    self.parent.right.parent = self.parent
-            return self
-        s = self.successor()
-        self.key, s.key = s.key, self.key
-        return s.delete()
-
-    def insert(self, node):
-        if node is None:
-            return
-        if node.key < self.key:
-            if node.key < self.min_.key:
-                self.min_ = node
-            if self.left is None:
-                node.parent = self
-                self.left = node
-            else:
-                self.left.insert(node)
-        elif self.right is None:
-            node.parent = self
-            self.right = node
-        else:
-            self.right.insert(node)
-
-    def max(self):
-        current = self
-        while current.right is not None:
-            current = current.right
-        return current
-
-    def min(self):
-        return self.min_
-
-    def predecessor(self):
-        if self.left is not None:
-            return self.left.max()
-        current = self
-        while current.parent is not None and current is current.parent.left:
-            current = current.parent
-        return current.parent
-
-    def search(self, k):
-        if k == self.key:
-            return self
-        if k < self.key:
-            return self.left.search(k)
-        return self.right.search(k)
-
-    def successor(self):
-        if self.right is not None:
-            return self.right.min()
-        current = self
-        while current.parent is not None and current is current.parent.right:
-            current = current.parent
-        return current.parent
-
-    def walk(self, node):
-        if node is not None:
-            self.walk(node.left)
-            print(node.key)
-            self.walk(node.right)
