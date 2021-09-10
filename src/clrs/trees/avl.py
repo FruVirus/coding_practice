@@ -14,7 +14,7 @@ O(lg(n)) time.
 
 
 # Repository Library
-from src.clrs.trees.bst import BST, BSTNode
+from src.clrs.trees.bst import BST
 
 
 class AVL(BST):
@@ -98,7 +98,7 @@ class AVL(BST):
         x.h = max(self.height(x.left), self.height(x.right)) + 1
 
 
-class AVLNode(BSTNode):
+class AVLNode:
     def __init__(self, key, parent, height):
-        super().__init__(key, parent)
-        self.h = height
+        self.key, self.p, self.h = key, parent, height
+        self.left = self.right = None
