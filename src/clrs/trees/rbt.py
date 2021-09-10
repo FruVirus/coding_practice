@@ -186,23 +186,9 @@ class RBT:
     def rotate(self, x, left_rotate):
         x = self._get_node(x)
         if left_rotate:
-            return self.rotate_left(x)
-        return self.rotate_right(x)
-
-    def rotate_right(self, x):
-        y = x.left
-        x.left = y.right
-        if y.right is not self.nil:
-            y.right.p = x
-        y.p = x.p
-        if x.p == self.nil:
-            self.root = y
-        elif x is x.p.right:
-            x.p.right = y
+            self.rotate_left(x)
         else:
-            x.p.left = y
-        y.right = x
-        x.p = y
+            self.rotate_right(x)
 
     def rotate_left(self, x):
         y = x.right
@@ -210,13 +196,28 @@ class RBT:
         if y.left is not self.nil:
             y.left.p = x
         y.p = x.p
-        if x.p == self.nil:
+        if x.p is self.nil:
             self.root = y
         elif x is x.p.left:
             x.p.left = y
         else:
             x.p.right = y
         y.left = x
+        x.p = y
+
+    def rotate_right(self, x):
+        y = x.left
+        x.left = y.right
+        if y.right is not self.nil:
+            y.right.p = x
+        y.p = x.p
+        if x.p is self.nil:
+            self.root = y
+        elif x is x.p.right:
+            x.p.right = y
+        else:
+            x.p.left = y
+        y.right = x
         x.p = y
 
     def search(self, x, k):
