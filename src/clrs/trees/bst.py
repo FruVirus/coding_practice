@@ -20,10 +20,7 @@ O(h) time on a BST of height h. If the BST is balanced, then O(h) = O(lg(n)).
 
 class BST:
     def __init__(self, z):
-        if isinstance(z, (int, float)):
-            self.root = BSTNode(z, None)
-        else:
-            self.root = z
+        self.root = BSTNode(z, None)
 
     def _get_node(self, x):
         if isinstance(x, (int, float)):

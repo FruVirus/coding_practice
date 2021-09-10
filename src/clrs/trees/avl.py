@@ -19,7 +19,7 @@ from src.clrs.trees.bst import BST
 
 class AVL(BST):
     def __init__(self, z):
-        super().__init__(AVLNode(z, None, 0))
+        self.root = AVLNode(z, None, 0)
 
     def balance(self, x):
         while x is not None:
