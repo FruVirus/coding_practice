@@ -61,6 +61,13 @@ class HeapQueue:
         for i in range(len(self.a) // 2 - 1, -1, -1):
             self.heapify(i)
 
+    def change(self, i, k):
+        assert self.compare_op(k, self.a[i])
+        self.a[i] = k
+        while i > 0 and self.compare_op(self.a[i], self.a[self._parent(i)]):
+            self._exchange(i, self._parent(i))
+            i = self._parent(i)
+
     def extract(self):
         assert self.heap_size > 0
         self.heap_size -= 1
@@ -83,14 +90,7 @@ class HeapQueue:
             self._exchange(i, index)
             self.heapify(index)
 
-    def increase(self, i, k):
-        assert self.compare_op(k, self.a[i])
-        self.a[i] = k
-        while i > 0 and self.compare_op(self.a[i], self.a[self._parent(i)]):
-            self._exchange(i, self._parent(i))
-            i = self._parent(i)
-
     def insert(self, k):
         self.a.append(-float("inf") if self.is_max else float("inf"))
-        self.increase(self.heap_size, k)
+        self.change(self.heap_size, k)
         self.heap_size += 1
