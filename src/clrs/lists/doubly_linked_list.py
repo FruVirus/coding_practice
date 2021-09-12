@@ -44,6 +44,6 @@ class DLL:
 
     def search(self, k):
         x = self.head
-        while x is not None and x.k != k:
+        while x is not None and k != x.k:
             x = x.next
         return x
