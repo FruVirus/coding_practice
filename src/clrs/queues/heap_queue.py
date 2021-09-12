@@ -42,8 +42,7 @@ class HeapQueue:
         self.build()
 
     def _exchange(self, i, j):
-        t = self.a[i]
-        self.a[i], self.a[j] = self.a[j], t
+        self.a[i], self.a[j] = self.a[j], self.a[i]
 
     @staticmethod
     def _left(i):
