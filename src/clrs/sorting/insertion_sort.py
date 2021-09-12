@@ -5,6 +5,7 @@ position of the previous item. By swapping and decrementing the index position o
 previous item, we continuously move the i-th item in a to its correctly sorted position.
 
 O(n^2)
+O(n) if a is already sorted
 """
 
 

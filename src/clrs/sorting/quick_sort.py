@@ -25,26 +25,46 @@ quicksort.
 Combine: Because the sub-arrays are already sorted, no work is needed to combine them:
 the entire array A[p...r] is now sorted.
 
+Note that quicksort has in-place partition but is NOT an in-place algorithm due to the
+extra stack space required with each recursive call. The running time of quicksort is
+dominated by the time spent in the partition() function.
+
 To sort an entire array A, the initial call is quicksort(A, 0, len(A) - 1).
 
-O(n^2) worst case
-O(n*lg(n)) expect case.
+quicksort():
+    O(n^2) worst case --> when the partitioning routine produces one sub-problem with
+        n - 1 elements and one with 0 elements or when the input array is already sorted
+    O(n*lg(n)) expected case --> when we can equally balance the two sides of the
+        partition at every level of the recursion (only possible when we can choose the
+        median value with each recursion)
+
+partition():
+    O(n) = O(h - l + 1)
 """
 
+# Standard Library
+import random
 
-def quicksort(a, p, r):
-    if p < r:
-        q = partition(a, p, r)
-        quicksort(a, p, q - 1)
-        quicksort(a, q + 1, r)
+
+def quicksort(a, low, high):
+    while low < high:
+        pivot = partition(a, low, high)
+        if pivot - low < high - pivot:
+            quicksort(a, low, pivot - 1)
+            low = pivot + 1
+        else:
+            quicksort(a, pivot + 1, high)
+            high = pivot - 1
     return a
 
 
-def partition(a, p, r):
-    x, i = a[r], p - 1
-    for j in range(p, r):
+def partition(a, low, high):
+    r = random.randrange(low, high + 1)
+    a[high], a[r] = a[r], a[high]
+    x, i = a[high], low - 1
+    for j in range(low, high):
         if a[j] <= x:
             i += 1
             a[i], a[j] = a[j], a[i]
-    a[i + 1], a[r] = a[r], a[i + 1]
+    a[i + 1], a[high] = a[high], a[i + 1]
     return i + 1
