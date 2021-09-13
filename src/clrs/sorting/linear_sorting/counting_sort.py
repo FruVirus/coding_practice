@@ -17,8 +17,6 @@ sort.
 O(n)
 """
 
-# pylint: disable=consider-using-enumerate
-
 
 def counting_sort(a, k):
     n = len(a)
