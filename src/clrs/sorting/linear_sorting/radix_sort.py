@@ -8,8 +8,7 @@ O(d * (n + k))
 
 def counting_sort(a, exp, base):
     n = len(a)
-    output = [0] * n
-    count = [0] * base
+    output, count = [0] * n, [0] * base
     for i in range(n):
         index = (a[i] // exp) % base
         count[index] += 1
