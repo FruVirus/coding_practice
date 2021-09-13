@@ -4,6 +4,8 @@ sorts them, and combines them into a new list. Each successive call to merge() s
 increasingly larger lists until we end up comparing half of the original list with its
 other half and doing one last final sort between each of the two sorted halves.
 
+Merge sort is an asymptotically optimal comparison sort.
+
 O(n*lg(n))
 """
 
@@ -21,7 +23,7 @@ def merge_sort(a):
 def merge(l, r):
     i, j, a = 0, 0, []
     while i < len(l) and j < len(r):
-        if l[i] < r[j]:
+        if l[i] <= r[j]:
             a.append(l[i])
             i += 1
         else:

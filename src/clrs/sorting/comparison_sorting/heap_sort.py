@@ -16,6 +16,8 @@ sorts the unordered input array by first building an initial heap, then moving t
 item in the heap array to the i-th element. Each time the movement is conducted, the
 heap array is rebuilt with a smaller heap size.
 
+Heap sort is an asymptotically optimal comparison sort.
+
 O(n * lg(n))
 """
 
