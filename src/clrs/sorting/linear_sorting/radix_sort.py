@@ -11,14 +11,14 @@ def counting_sort(a, exp, base):
     output = [0] * n
     count = [0] * base
     for i in range(n):
-        index = a[i] // exp
-        count[index % base] += 1
+        index = (a[i] // exp) % base
+        count[index] += 1
     for i in range(1, base):
         count[i] += count[i - 1]
     for i in range(n - 1, -1, -1):
-        index = a[i] // exp
-        output[count[index % base] - 1] = a[i]
-        count[index % base] -= 1
+        index = (a[i] // exp) % base
+        output[count[index] - 1] = a[i]
+        count[index] -= 1
     return output
 
 
