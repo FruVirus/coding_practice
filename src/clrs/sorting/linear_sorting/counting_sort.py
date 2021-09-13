@@ -21,12 +21,12 @@ O(n)
 
 
 def counting_sort(a, k):
-    c = [0 for _ in range(k + 1)]
+    n = len(a)
+    b, c = [0] * n, [0] * (k + 1)
     for i in range(len(a)):
         c[a[i]] += 1
     for i in range(1, k + 1):
         c[i] += c[i - 1]
-    b = [None] * len(a)
     for i in range(len(a) - 1, -1, -1):
         b[c[a[i]] - 1] = a[i]
         c[a[i]] -= 1
