@@ -18,17 +18,17 @@ O(d * (n + k))
 
 def csort(a, exp, base):
     n = len(a)
-    output, count = [0] * n, [0] * base
+    b, c = [0] * n, [0] * base
     for i in range(n):
         index = (a[i] // exp) % base
-        count[index] += 1
+        c[index] += 1
     for i in range(1, base):
-        count[i] += count[i - 1]
+        c[i] += c[i - 1]
     for i in range(n - 1, -1, -1):
         index = (a[i] // exp) % base
-        output[count[index] - 1] = a[i]
-        count[index] -= 1
-    return output
+        b[c[index] - 1] = a[i]
+        c[index] -= 1
+    return b
 
 
 def radix_sort(a, base=10):

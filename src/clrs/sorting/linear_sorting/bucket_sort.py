@@ -27,8 +27,4 @@ def bucket_sort(a):
     size = largest // n + (largest % n > 0)
     for i in range(n):
         b[int(a[i] / size)].append(a[i])
-    x = []
-    for i in range(n):
-        if b[i]:
-            x.extend(insertion_sort(b[i]))
-    return x
+    return [x for i in range(n) for x in insertion_sort(b[i]) if b[i]]
