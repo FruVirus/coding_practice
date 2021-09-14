@@ -55,7 +55,6 @@ def quicksort(a, low, high):
         else:
             quicksort(a, pivot + 1, high)
             high = pivot - 1
-    return a
 
 
 def partition(a, low, high):

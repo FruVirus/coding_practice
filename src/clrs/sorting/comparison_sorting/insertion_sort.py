@@ -17,4 +17,3 @@ def insertion_sort(a):
             a[j + 1] = a[j]
             j -= 1
         a[j + 1] = k
-    return a

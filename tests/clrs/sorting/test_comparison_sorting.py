@@ -26,7 +26,8 @@ from tests.conftest import PARAM
     ],
 )
 def test_bubble_sort(a):
-    assert bubble_sort.bubble_sort(a) == sorted(a)
+    bubble_sort.bubble_sort(a)
+    assert a == sorted(a)
 
 
 @PARAM(
@@ -46,7 +47,8 @@ def test_bubble_sort(a):
     ],
 )
 def test_insertion_sort(a):
-    assert insertion_sort.insertion_sort(a) == sorted(a)
+    insertion_sort.insertion_sort(a)
+    assert a == sorted(a)
 
 
 @PARAM(
@@ -86,7 +88,8 @@ def test_merge_sort(a):
     ],
 )
 def test_quick_sort(a):
-    assert quick_sort.quicksort(a, 0, len(a) - 1) == sorted(a)
+    quick_sort.quicksort(a, 0, len(a) - 1)
+    assert a == sorted(a)
 
 
 @PARAM(
