@@ -14,6 +14,7 @@ when satellite data are carried around with the element being sorted.
 Counting sort's stability is the reason why it's also used as a subroutine in radix
 sort.
 
+Stable
 O(n)
 """
 

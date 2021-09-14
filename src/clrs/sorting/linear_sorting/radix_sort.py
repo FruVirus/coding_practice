@@ -12,6 +12,7 @@ array and their most significant digit is the same (i.e, 4) and csort (just like
 original counting_sort()) is a stable sorting algorithm. In any words, csort() only
 sorts properly if it is iteratively called with increasing significant digit.
 
+Stable
 O(d * (n + k))
 """
 

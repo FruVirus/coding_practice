@@ -18,6 +18,7 @@ heap array is rebuilt with a smaller heap size.
 
 Heap sort is an asymptotically optimal comparison sort.
 
+Not stable
 O(n * lg(n))
 """
 

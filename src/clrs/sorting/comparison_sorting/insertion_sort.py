@@ -4,6 +4,7 @@ than the current item, then we perform a swap of the two items and decrement the
 position of the previous item. By swapping and decrementing the index position of the
 previous item, we continuously move the i-th item in a to its correctly sorted position.
 
+Stable
 O(n^2)
 O(n) if a is already sorted
 """

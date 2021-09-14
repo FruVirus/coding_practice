@@ -6,6 +6,7 @@ other half and doing one last final sort between each of the two sorted halves.
 
 Merge sort is an asymptotically optimal comparison sort.
 
+Stable
 O(n*lg(n))
 """
 
