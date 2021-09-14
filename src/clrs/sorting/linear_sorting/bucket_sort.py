@@ -21,9 +21,8 @@ from src.clrs.sorting.comparison_sorting.insertion_sort import insertion_sort
 
 
 def bucket_sort(a):
-    n = len(a)
+    n, largest = len(a), max(a)
     b = [[] for _ in range(n)]
-    largest = max(a)
     size = largest // n + (largest % n > 0)
     for i in range(n):
         b[int(a[i] / size)].append(a[i])
