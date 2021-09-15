@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.arrays.maxmin import maxmin
+from clrs.arrays.minmax import minmax
 from tests.conftest import PARAM
 
 
@@ -16,5 +16,5 @@ from tests.conftest import PARAM
         ),
     ],
 )
-def test_maxmin(a, result):
-    assert maxmin(a) == result
+def test_minmax(a, result):
+    assert minmax(a) == result
