@@ -57,9 +57,12 @@ def quicksort(a, low, high):
             high = pivot - 1
 
 
-def partition(a, low, high):
-    r = random.randrange(low, high + 1)
-    a[high], a[r] = a[r], a[high]
+def partition(a, low, high, random_partition=True, k=None):
+    if random_partition:
+        r = random.randrange(low, high + 1)
+        a[high], a[r] = a[r], a[high]
+    elif k is not None:
+        a[high], a[k] = a[k], a[high]
     x, i = a[high], low - 1
     for j in range(low, high):
         if a[j] <= x:
