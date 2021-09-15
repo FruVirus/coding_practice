@@ -22,31 +22,33 @@ def get_median(a):
         insertion_sort(group)
         median = (len(group) + 1) // 2 - 1
         b.append(group[median])
-    return get_median(b)
+    return quick_select(b, 0, len(b) - 1, (len(b) + 1) // 2 - 1)
 
 
-def quick_select(a, low, high, i):
-    med_of_med = get_median(a[low : high + 1])
-    med_index = a.index(med_of_med)
-    pivot = partition(a, low, high, random_partition=False, k=med_index)
+def quick_select(a, low, high, i, pivot_index=None):
+    pivot = partition(a, low, high, pivot_index=pivot_index, random_partition=False)
     k = pivot - low + 1
     if i == k:
-        return med_of_med
+        return a[k]
     if i < k:
         return quick_select(a, low, pivot - 1, i)
     return quick_select(a, pivot + 1, high, i - k)
 
 
 a = [2, 1, 3, 4, 5, 6, 44, 36, 29, 0, 11, 12]
-print(quick_select(a, 0, len(a) - 1, 1))
-print(quick_select(a, 0, len(a) - 1, 2))
-print(quick_select(a, 0, len(a) - 1, 3))
-print(quick_select(a, 0, len(a) - 1, 4))
-print(quick_select(a, 0, len(a) - 1, 5))
-print(quick_select(a, 0, len(a) - 1, 6))
-print(quick_select(a, 0, len(a) - 1, 7))
-print(quick_select(a, 0, len(a) - 1, 8))
-print(quick_select(a, 0, len(a) - 1, 9))
-print(quick_select(a, 0, len(a) - 1, 10))
-print(quick_select(a, 0, len(a) - 1, 11))
-print(quick_select(a, 0, len(a) - 1, 12))
+med = get_median(a)
+med_index = a.index(med)
+print(quick_select(a, 0, len(a) - 1, 1, med_index))
+a = [2, 1, 3, 4, 5, 6, 44, 36, 29, 0, 11, 12]
+print(quick_select(a, 0, len(a) - 1, 2, med_index))
+exit()
+print(quick_select(a, 0, len(a) - 1, 3, med_index))
+print(quick_select(a, 0, len(a) - 1, 4, med_index))
+print(quick_select(a, 0, len(a) - 1, 5, med_index))
+print(quick_select(a, 0, len(a) - 1, 6, med_index))
+print(quick_select(a, 0, len(a) - 1, 7, med_index))
+print(quick_select(a, 0, len(a) - 1, 8, med_index))
+print(quick_select(a, 0, len(a) - 1, 9, med_index))
+print(quick_select(a, 0, len(a) - 1, 10, med_index))
+print(quick_select(a, 0, len(a) - 1, 11, med_index))
+print(quick_select(a, 0, len(a) - 1, 12, med_index))
