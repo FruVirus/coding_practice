@@ -26,10 +26,10 @@ def get_median(a):
 
 
 def quick_select(a, low, high, i):
-    med_of_med = a
-    while isinstance(med_of_med, list) and len(med_of_med) > 1:
-        med_of_med = get_median(med_of_med[low : high + 1])
-    pivot_index = a.index(med_of_med[0])
+    med = a
+    while isinstance(med, list) and len(med) > 1:
+        med = get_median(med[low : high + 1])
+    pivot_index = a.index(med[0])
     pivot = partition(a, low, high, pivot_index, False)
     k = pivot - low + 1
     if i == k:
