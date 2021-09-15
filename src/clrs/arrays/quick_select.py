@@ -30,7 +30,7 @@ def quick_select(a, low, high, i):
     while isinstance(med_of_med, list) and len(med_of_med) > 1:
         med_of_med = get_median(med_of_med[low : high + 1])
     pivot_index = a.index(med_of_med[0])
-    pivot = partition(a, low, high, pivot_index=pivot_index, random_partition=False)
+    pivot = partition(a, low, high, pivot_index, False)
     k = pivot - low + 1
     if i == k:
         return a[pivot]
