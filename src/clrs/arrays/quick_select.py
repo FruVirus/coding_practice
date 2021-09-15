@@ -13,30 +13,25 @@ from src.clrs.sorting.comparison_sorting.insertion_sort import insertion_sort
 from src.clrs.sorting.comparison_sorting.quick_sort import partition
 
 
-def get_median(c):
-    if len(c) == 1:
-        return c[0]
+def get_median(a):
+    if len(a) == 1:
+        return a[0]
     b = []
-    for i in range(0, len(c), 5):
-        group = c[i : i + 5]
+    for i in range(0, len(a), 5):
+        group = a[i : i + 5]
         insertion_sort(group)
         median = (len(group) + 1) // 2 - 1
         b.append(group[median])
-    return b
-    # return get_median(b)
+    return get_median(b)
 
 
 def quick_select(a, low, high, i):
     med_of_med = get_median(a[low : high + 1])
-    if isinstance(med_of_med, list):
-        med_of_med = quick_select(med_of_med, low, high, i)
-    print(med_of_med)
-    print(a)
     med_index = a.index(med_of_med)
     pivot = partition(a, low, high, pivot_index=med_index, random_partition=False)
     k = pivot - low + 1
     if i == k:
-        return a[pivot]
+        return med_of_med
     if i < k:
         return quick_select(a, low, pivot - 1, i)
     return quick_select(a, pivot + 1, high, i - k)
