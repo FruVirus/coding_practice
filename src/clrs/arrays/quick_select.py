@@ -13,29 +13,40 @@ from src.clrs.sorting.comparison_sorting.insertion_sort import insertion_sort
 from src.clrs.sorting.comparison_sorting.quick_sort import partition
 
 
-def _select(a, low, high):
-    if low == high:
-        return a[low]
+def get_median(a):
+    if len(a) == 1:
+        return a[0]
     b = []
     for i in range(0, len(a), 5):
         group = a[i : i + 5]
         insertion_sort(group)
         median = (len(group) + 1) // 2 - 1
         b.append(group[median])
-    return _select(b, 0, len(b) - 1)
+    return get_median(b)
 
 
-def select(a, low, high, i):
-    med_of_med = _select(a, low, high)
+def quick_select(a, low, high, i):
+    med_of_med = get_median(a[low : high + 1])
     med_index = a.index(med_of_med)
     pivot = partition(a, low, high, random_partition=False, k=med_index)
     k = pivot - low + 1
     if i == k:
         return med_of_med
     if i < k:
-        return select(a, low, pivot - 1, i)
-    return select(a, pivot + 1, high, i - k)
+        return quick_select(a, low, pivot - 1, i)
+    return quick_select(a, pivot + 1, high, i - k)
 
 
 a = [2, 1, 3, 4, 5, 6, 44, 36, 29, 0, 11, 12]
-print(select(a, 0, len(a) - 1, 3))
+print(quick_select(a, 0, len(a) - 1, 1))
+print(quick_select(a, 0, len(a) - 1, 2))
+print(quick_select(a, 0, len(a) - 1, 3))
+print(quick_select(a, 0, len(a) - 1, 4))
+print(quick_select(a, 0, len(a) - 1, 5))
+print(quick_select(a, 0, len(a) - 1, 6))
+print(quick_select(a, 0, len(a) - 1, 7))
+print(quick_select(a, 0, len(a) - 1, 8))
+print(quick_select(a, 0, len(a) - 1, 9))
+print(quick_select(a, 0, len(a) - 1, 10))
+print(quick_select(a, 0, len(a) - 1, 11))
+print(quick_select(a, 0, len(a) - 1, 12))
