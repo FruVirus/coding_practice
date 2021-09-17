@@ -19,7 +19,7 @@ class Stack:
         return self.top == -1
 
     def pop(self):
-        assert self.top != -1
+        assert not self.empty()
         self.top -= 1
         return self.a[self.top + 1]
 
