@@ -105,7 +105,7 @@ class BST:
             return
         if l <= x.key <= h:
             result.append(x.key)
-        if x.key >= l:
+        if l <= x.key:
             self.node_list(x.left, l, h, result)
         if x.key <= h:
             self.node_list(x.right, l, h, result)
@@ -129,7 +129,7 @@ class BST:
                 r += 1
                 if x.left is not None:
                     r += x.left.size
-                if x.key == k:
+                if k == x.key:
                     return r
                 x = x.right
         return r
