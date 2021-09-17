@@ -31,6 +31,14 @@ class BST:
             x = self.search(self.root, x)
         return x
 
+    def count(self, l, h):
+        assert l < h
+        count = self.rank(h) - self.rank(l)
+        has_l = self.search(self.root, l)
+        if has_l is None or (has_l is None and self.search(self.root, h) is None):
+            return count
+        return count + 1
+
     def delete(self, z):
         z = self._get_node(z)
         if z.left is None:
@@ -46,6 +54,8 @@ class BST:
             self.transplant(z, y)
             y.left = z.left
             y.left.p = y
+        if isinstance(z.p, BSTNode):
+            self.update_size(z.p)
         return z
 
     def insert(self, z):
@@ -62,6 +72,8 @@ class BST:
             y.left = z
         else:
             y.right = z
+        if isinstance(z.p, BSTNode):
+            self.update_size(z.p)
         return z
 
     def lca(self, l, h):
@@ -108,6 +120,20 @@ class BST:
             y = y.p
         return y
 
+    def rank(self, k):
+        r, x = 0, self.root
+        while x is not None:
+            if k < x.key:
+                x = x.left
+            else:
+                r += 1
+                if x.left is not None:
+                    r += x.left.size
+                if x.key == k:
+                    return r
+                x = x.right
+        return r
+
     def search(self, x, k):
         x = self._get_node(x)
         while x is not None and k != x.key:
@@ -134,6 +160,13 @@ class BST:
         if v is not None:
             v.p = u.p
 
+    def update_size(self, x):
+        x.size = 1 + ((x.left and x.left.size) or 0) + ((x.right and x.right.size) or 0)
+        if x.left is not None:
+            self.update_size(x.left)
+        if x.right is not None:
+            self.update_size(x.right)
+
     def walk(self, x):
         if x is not None:
             x = self._get_node(x)
@@ -144,5 +177,5 @@ class BST:
 
 class BSTNode:
     def __init__(self, key, parent):
-        self.key, self.p = key, parent
+        self.key, self.p, self.size = key, parent, 1
         self.left = self.right = None

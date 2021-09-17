@@ -35,14 +35,6 @@ class AVL(BST):
                 self.rotate(x, True)
             x = x.p
 
-    def count(self, l, h):
-        assert l < h
-        count = self.rank(h) - self.rank(l)
-        has_l = self.search(self.root, l)
-        if has_l is None or (has_l is None and self.search(self.root, h) is None):
-            return count
-        return count + 1
-
     def delete(self, z):
         z = super().delete(z)
         self.balance(z.p)
@@ -57,21 +49,6 @@ class AVL(BST):
     def insert(self, z):
         z = super().insert(AVLNode(z, None, 0))
         self.balance(z)
-
-    def rank(self, k):
-        r, x = 0, self.root
-        while x is not None:
-            if k < x.key:
-                x = x.left
-            else:
-                if x.left is not None:
-                    r = r + 1 + x.left.size
-                else:
-                    r = r + 1
-                if x.key == k:
-                    return r
-                x = x.right
-        return r
 
     def rotate(self, x, left_rotate):
         x = self._get_node(x)
@@ -121,12 +98,8 @@ class AVL(BST):
     def update_height(self, x):
         x.h = max(self.height(x.left), self.height(x.right)) + 1
 
-    @staticmethod
-    def update_size(x):
-        x.size = 1 + ((x.left and x.left.size) or 0) + ((x.right and x.right.size) or 0)
-
 
 class AVLNode(BSTNode):
     def __init__(self, key, parent, height):
         super().__init__(key, parent)
-        self.h, self.size = height, 1
+        self.h = height

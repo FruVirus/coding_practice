@@ -66,6 +66,20 @@ def test_avl():
     assert prev_largest.key == 12
     k = 5
     avl.delete(k)
+    assert avl.rank(-1) == 0
+    assert avl.rank(2) == 1
+    assert avl.rank(9) == 2
+    assert avl.rank(12) == 3
+    assert avl.rank(13) == 4
+    assert avl.rank(15) == 5
+    assert avl.rank(17) == 6
+    assert avl.rank(18) == 7
+    assert avl.rank(19) == 8
+    assert avl.count(2, 19) == 8
+    assert avl.count(13, 19) == 5
+    assert avl.count(-1, 19) == 8
+    assert avl.count(2, 20) == 8
+    assert avl.count(-1, 20) == 8
     k = 12
     avl.delete(k)
     k = 2
