@@ -14,3 +14,5 @@ def test_dll():
     assert dll.head.k == 16
     assert dll.head.next.k == 9
     assert dll.head.prev is None
+    x = dll.search(666)
+    assert x is None

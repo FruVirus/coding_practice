@@ -15,6 +15,10 @@ binary-search-tree property:
 
 2. insert(), delete(), search(), min(), max(), successor(), and predecessor() all take
 O(h) time on a BST of height h. If the BST is balanced, then O(h) = O(lg(n)).
+
+3. list() takes O(lg(n)) + O(L) time where L is the number of keys returned.
+
+4. rank() and count() both take O(lg(n)) time.
 """
 
 
@@ -60,6 +64,18 @@ class BST:
             y.right = z
         return z
 
+    def lca(self, l, h):
+        x = self.root
+        while x is not None and not l <= x.key <= h:
+            x = x.left if l < x.key else x.right
+        return x
+
+    def list(self, l, h):
+        lca = self.lca(l, h)
+        result = []
+        self.node_list(lca, l, h, result)
+        return result
+
     def max(self, x):
         x = self._get_node(x)
         while x.right is not None:
@@ -71,6 +87,16 @@ class BST:
         while x.left is not None:
             x = x.left
         return x
+
+    def node_list(self, x, l, h, result):
+        if x is None:
+            return
+        if l <= x.key <= h:
+            result.append(x.key)
+        if x.key >= l:
+            self.node_list(x.left, l, h, result)
+        if x.key <= h:
+            self.node_list(x.right, l, h, result)
 
     def predecessor(self, x):
         x = self._get_node(x)

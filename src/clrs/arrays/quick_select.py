@@ -14,8 +14,6 @@ from src.clrs.sorting.comparison_sorting.quick_sort import partition
 
 
 def get_median(a):
-    if not isinstance(a, list):
-        return a
     b = []
     for i in range(0, len(a), 5):
         group = a[i : i + 5]

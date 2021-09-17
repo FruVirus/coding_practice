@@ -13,6 +13,22 @@ def test_avl():
     avl.insert(13)
     avl.insert(19)
     avl.walk(12)
+    assert avl.rank(-1) == 0
+    assert avl.rank(2) == 1
+    assert avl.rank(5) == 2
+    assert avl.rank(9) == 3
+    assert avl.rank(12) == 4
+    assert avl.rank(13) == 5
+    assert avl.rank(15) == 6
+    assert avl.rank(17) == 7
+    assert avl.rank(18) == 8
+    assert avl.rank(19) == 9
+    assert avl.count(2, 19) == 9
+    assert avl.count(2, 5) == 2
+    assert avl.count(13, 19) == 5
+    assert avl.count(-1, 19) == 9
+    assert avl.count(2, 20) == 9
+    assert avl.count(-1, 20) == 9
     root = avl.root
     assert (
         root.key == 12
@@ -35,6 +51,9 @@ def test_avl():
         and root.right.right.right.key == 19
         and root.right.right.right.h == 1
     )
+    assert avl.list(2, 19) == [12, 5, 2, 9, 17, 15, 13, 18, 19]
+    assert avl.list(13, 19) == [17, 15, 13, 18, 19]
+    assert avl.height(12) == 4
     avl_max = avl.max(12)
     avl_min = avl.min(12)
     assert avl_max.key == 19

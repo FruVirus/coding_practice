@@ -13,6 +13,8 @@ def test_bst():
     bst.insert(13)
     bst.insert(19)
     bst.walk(12)
+    assert bst.list(2, 19) == [12, 5, 2, 9, 18, 15, 13, 17, 19]
+    assert bst.list(13, 19) == [18, 15, 13, 17, 19]
     bst_max = bst.max(12)
     bst_min = bst.min(12)
     assert bst_max.key == 19
