@@ -5,12 +5,12 @@ O(lg(n))
 """
 
 
-def binary_search(arr, low, high, k):
+def binary_search(a, low, high, k):
     if high >= low:
         mid = (high + low) // 2
-        if arr[mid] == k:
+        if a[mid] == k:
             return mid
-        if arr[mid] > k:
-            return binary_search(arr, low, mid - 1, k)
-        return binary_search(arr, mid + 1, high, k)
+        if a[mid] > k:
+            return binary_search(a, low, mid - 1, k)
+        return binary_search(a, mid + 1, high, k)
     return None
