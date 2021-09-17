@@ -36,19 +36,13 @@ class AVL(BST):
             x = x.p
 
     def delete(self, z):
-        z = super().delete(z)
-        self.balance(z.p)
+        self.balance(super().delete(z).p)
 
     def height(self, x):
-        if x is None:
-            return 0
-        if not isinstance(x, AVLNode):
-            x = self.search(self.root, x)
-        return x.h
+        return 0 if x is None else self._get_node(x).h
 
     def insert(self, z):
-        z = super().insert(AVLNode(z, None, 0))
-        self.balance(z)
+        self.balance(super().insert(AVLNode(z, None, 0)))
 
     def rotate(self, x, left_rotate):
         x = self._get_node(x)
