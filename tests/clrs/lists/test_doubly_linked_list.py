@@ -9,6 +9,8 @@ def test_dll():
     x = Node(4)
     dll.insert(x)
     dll.insert(Node(1))
+    assert dll.size() == 4
+    assert dll.head.k == 1
     dll.delete(x)
     dll.delete(1)
     assert dll.head.k == 16
