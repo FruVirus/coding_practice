@@ -75,7 +75,7 @@ class HashOpen(HashChain):
                 self.table[hash_value] = k
                 return hash_value
             i += 1
-        raise OverflowError("HashOpen hash table overflow!")
+        raise OverflowError()
 
     def linear_probe(self, k, i):
         return (self.aux_hash_func(k) + i) % self.size
