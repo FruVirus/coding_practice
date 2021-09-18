@@ -1,10 +1,10 @@
 # Repository Library
-from clrs.hash_tables.hash import Hash
+from clrs.hash_tables.hash_chain import HashChain
 from clrs.lists.singly_linked_list import Node
 
 
-def test_hash():
-    x = Hash(10)
+def test_hash_chain():
+    x = HashChain(10)
     x.insert(Node(8))
     x.insert(Node(3))
     x.insert(Node(13))

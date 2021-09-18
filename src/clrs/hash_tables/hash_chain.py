@@ -26,25 +26,17 @@ deletion: O(1) if we use a doubly linked list. Otherwise, O(n) if we use a singl
 list since we have to search for the element previous to the element being deleted
 first.
 
-search: Theta(1++ n/m)
-
-Closed Hashing - Open Addressing - Linear Probing
-=================================================
-XXX
-
-Closed Hashing - Open Addressing - Quadratic Probing
-====================================================
-XXX
+search: Theta(1 + n / m)
 """
 
 # Repository Library
 from src.clrs.lists.doubly_linked_list import DLL
 
 
-class Hash:
-    def __init__(self, size, hash_func="hash_div"):
-        self.hash_func = getattr(self, hash_func)
+class HashChain:
+    def __init__(self, size, aux_hash_func="hash_div"):
         self.size = size
+        self.aux_hash_func = getattr(self, aux_hash_func)
         self.table = [None] * self.size
         self.a, self.m = 0.62, 2 ** self.size
 
@@ -56,17 +48,17 @@ class Hash:
 
     def delete(self, x):
         if isinstance(x, (int, float)):
-            hash_value = self.hash_func(x)
+            hash_value = self.aux_hash_func(x)
         else:
-            hash_value = self.hash_func(x.k)
+            hash_value = self.aux_hash_func(x.k)
         self.table[hash_value].delete(x)
 
     def insert(self, x):
-        hash_value = self.hash_func(x.k)
+        hash_value = self.aux_hash_func(x.k)
         if self.table[hash_value] is None:
             self.table[hash_value] = DLL()
         self.table[hash_value].insert(x)
 
     def search(self, k):
-        hash_value = self.hash_func(k)
+        hash_value = self.aux_hash_func(k)
         return self.table[hash_value].search(k)
