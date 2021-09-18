@@ -29,6 +29,9 @@ first.
 search: Theta(1 + n / m)
 """
 
+# Standard Library
+import random
+
 # Repository Library
 from src.clrs.lists.doubly_linked_list import DLL
 
@@ -46,6 +49,12 @@ class HashChain:
     def hash_mul(self, k):
         return int(self.m * ((k * self.a) % 1))
 
+    def hash_uni(self, k, keys, **kwargs):
+        p = next_prime(max(keys))
+        a = kwargs["a"] or random.choice(list(range(1, p)))
+        b = kwargs["b"] or random.choice(list(range(0, p)))
+        return ((a * k + b) % p) % self.size
+
     def delete(self, x):
         if isinstance(x, (int, float)):
             hash_value = self.aux_hash_func(x)
@@ -62,3 +71,25 @@ class HashChain:
     def search(self, k):
         hash_value = self.aux_hash_func(k)
         return self.table[hash_value].search(k)
+
+
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    for i in range(5, n // 2 + 1, 6):
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+    return True
+
+
+def next_prime(n):
+    if n <= 1:
+        return 2
+    while True:
+        n += 1
+        if is_prime(n):
+            return n

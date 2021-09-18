@@ -45,47 +45,47 @@ no longer depend on the load factor alpha, and for this reason chaining is more 
 selected as a collision resolution technique when keys must be deleted.
 """
 
+# Standard Library
+import random
+
 # Repository Library
-from src.clrs.hash_tables.hash_chain import HashChain, is_prime
+from src.clrs.hash_tables.hash_chain import next_prime
 
 
-class HashOpen(HashChain):
+class HashPerfect:
     _DELETED = "DELETED"
 
-    def __init__(self, size, aux_hash_func="hash_div", hash_func="linear_probe"):
-        super().__init__(size, aux_hash_func)
-        self.hash_func = getattr(self, hash_func)
+    def __init__(self, keys, **kwargs):
+        self.keys = keys
+        self.m = len(self.keys)
+        self.p = kwargs["p"] or next_prime(max(self.keys))
+        self.a = kwargs["a"] or random.choice(list(range(1, self.p)))
+        self.b = kwargs["b"] or random.choice(list(range(0, self.p)))
+        self.a_list = [None] * self.m
+        self.b_list = [None] * self.m
+        self.n = [0] * self.m
+        self.table = [None] * self.m
+        self.hash()
 
-    def delete(self, k):
-        hash_value = self.search(k)
-        self.table[hash_value] = self._DELETED
-
-    def double_hashing(self, k, i):
-        if (self.size & (self.size - 1) == 0) and self.size != 0:
-            h1, h2 = self.hash_div(k), self.hash_mul(k)
-            if h2 % 2 == 0:
-                h2 += 1
-        else:
-            assert is_prime(self.size)
-            h1 = k % self.size
-            h2 = 1 + (k % (self.size - 1))
-        return (h1 + i * h2) % self.size
-
-    def insert(self, k):
-        i = 0
-        while i != self.size:
-            hash_value = self.hash_func(k, i)
-            if self.table[hash_value] in [None, self._DELETED]:
+    def hash(self):
+        for k in self.keys:
+            hash_value = ((self.a * k + self.b) % self.p) % self.m
+            self.n[hash_value] += 1
+            self.a_list[hash_value] = random.choice(list(range(1, self.p)))
+            self.b_list[hash_value] = random.choice(list(range(0, self.p)))
+        for m in range(self.m):
+            if self.n[m] > 1:
+                self.table[m] = [None] * self.n[m] ** 2
+        for k in self.keys:
+            hash_value = ((self.a * k + self.b) % self.p) % self.m
+            a = self.a_list[hash_value]
+            b = self.b_list[hash_value]
+            if isinstance(self.table[hash_value], list):
+                m = len(self.table[hash_value])
+                index = ((a * k + b) % self.p) % m
+                self.table[hash_value][index] = k
+            else:
                 self.table[hash_value] = k
-                return hash_value
-            i += 1
-        raise OverflowError()
-
-    def linear_probe(self, k, i):
-        return (self.aux_hash_func(k) + i) % self.size
-
-    def quadratic_probe(self, k, i):
-        return (self.aux_hash_func(k) + i ** 2) % self.size
 
     def search(self, k):
         i = 0
