@@ -19,7 +19,7 @@ search() takes O(n) time.
 
 class Node:
     def __init__(self, k):
-        self.k, self.next = k, None
+        self.k, self.next, self.prev = k, None, None
 
 
 class SLL:
@@ -27,16 +27,16 @@ class SLL:
         self.head = None
 
     def delete(self, x):
-        if not isinstance(x, Node):
+        if isinstance(x, (int, float)):
             x = self.search(x)
-        current, previous = self.head, None
-        while current is not None and current.k != x.k:
-            previous = current
-            current = current.next
-        if previous is None:
-            self.head = current.next
+        curr, prev = self.head, None
+        while curr is not None and curr.k != x.k:
+            prev = curr
+            curr = curr.next
+        if prev is None:
+            self.head = curr.next
         else:
-            previous.next = current.next
+            prev.next = curr.next
 
     def insert(self, x):
         x.next = self.head

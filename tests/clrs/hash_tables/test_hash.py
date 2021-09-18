@@ -1,6 +1,6 @@
 # Repository Library
 from clrs.hash_tables.hash import Hash
-from clrs.lists.doubly_linked_list import Node
+from clrs.lists.singly_linked_list import Node
 
 
 def test_hash():

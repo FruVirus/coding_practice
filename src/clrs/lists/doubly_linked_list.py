@@ -15,16 +15,11 @@ insert() takes O(1) time.
 search() takes O(n) time.
 """
 
-
-class Node:
-    def __init__(self, k):
-        self.k, self.next, self.prev = k, None, None
+# Repository Library
+from src.clrs.lists.singly_linked_list import SLL
 
 
-class DLL:
-    def __init__(self):
-        self.head = None
-
+class DLL(SLL):
     def delete(self, x):
         if isinstance(x, (int, float)):
             x = self.search(x)
@@ -41,16 +36,3 @@ class DLL:
             self.head.prev = x
         self.head = x
         x.prev = None
-
-    def search(self, k):
-        x = self.head
-        while x is not None and k != x.k:
-            x = x.next
-        return x
-
-    def size(self):
-        x, count = self.head, 0
-        while x is not None:
-            count += 1
-            x = x.next
-        return count

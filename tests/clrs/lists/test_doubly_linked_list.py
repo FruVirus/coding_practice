@@ -1,5 +1,6 @@
 # Repository Library
-from clrs.lists.doubly_linked_list import DLL, Node
+from clrs.lists.doubly_linked_list import DLL
+from clrs.lists.singly_linked_list import Node
 
 
 def test_dll():
