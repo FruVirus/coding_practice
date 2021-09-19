@@ -36,7 +36,7 @@ class AVL(BST):
             x = x.p
 
     def delete(self, z):
-        z = super.delete(z)
+        z = super().delete(z)
         self.balance(z.p)
 
     def height(self, x):
