@@ -10,39 +10,22 @@ array, since a hash table typically uses an array of size proportional to the nu
 keys actually stored. Instead of using the key as an array index directly, the array
 index is computed from the key using a hash function.
 
-Closed Hashing - Open Addressing
-================================
+Perfect Hashing
+===============
 
-In open addressing, all elements occupy the hash table itself. That is, each table entry
-contains either an element of the dynamic set or None. When searching for an element, we
-systematically examine table slots until either we find the desired element or we have
-ascertained that the element is not in the table. No lists and no elements are stored
-outside the table, unlike in chaining. Thus, in open addressing, the hash table can
-"fill up" so that no further insertions can be made; one consequence is that the load
-factor alpha = n / m can never exceed 1.
+Perfect hashing provides an excellent worst-case performance when the set of keys is
+static: once the keys are stored in the table, the set of keys never changes. Some
+applications naturally have static sets of keys: consider the set of reserved words in
+a programming language, or the set of file names on a CD-ROM.
 
-The advantage of open addressing is that it avoids pointers altogether. Instead of
-following pointers, we compute the sequence of slots to be examined. The extra memory
-freed by not storing pointers provides the hash table with a larger number of slots for
-the same amount of memory, potentially yielding fewer collisions and faster retrieval.
+Perfect hashing requires O(n) memory space.
 
-To determine which slots to probe, we extend the hash function to include the probe
-number (starting from 0) as a second input. With open addressing, we require that for
-every key k, the probe sequence is a permutation of the number of slots, so that every
-hash table position is eventually considered as a slot for a new key as the table fills
-up.
+NB: When m = n^2, a hash function chosen randomly from the set of universal hash
+functions is more likely than not to have no collisions. However, one must still perform
+some trial and error before finding a collision-free hash function for a given set of
+(static) keys.
 
-insertion: Requires at most 1 / (1 - alpha) probes on average, assuming uniform hashing.
-
-deletion: O(1) if we use a doubly linked list. Otherwise, O(n) if we use a singly linked
-list since we have to search for the element previous to the element being deleted
-first.
-
-search: Expected number of probes in an unsuccessful search is at most 1 / (1 - alpha).
-Expected number of probes in a successful search is at most
-(1 / alpha) * ln(1 / (1 - alpha)). When we use the special value "DELETED", search times
-no longer depend on the load factor alpha, and for this reason chaining is more commonly
-selected as a collision resolution technique when keys must be deleted.
+search: O(1) in the worst case.
 """
 
 # Standard Library
@@ -61,39 +44,38 @@ class HashPerfect:
         self.p = kwargs["p"] or next_prime(max(self.keys))
         self.a = kwargs["a"] or random.choice(list(range(1, self.p)))
         self.b = kwargs["b"] or random.choice(list(range(0, self.p)))
-        self.a_list = [None] * self.m
-        self.b_list = [None] * self.m
+        self.a_list = [27, None, 48, None, None, 16, None, 48, None]
+        self.b_list = [83, None, 51, None, None, 59, None, 35, None]
+        self._create_table()
+
+    def _create_table(self):
         self.n = [0] * self.m
         self.table = [None] * self.m
-        self.hash()
-
-    def hash(self):
         for k in self.keys:
             hash_value = ((self.a * k + self.b) % self.p) % self.m
             self.n[hash_value] += 1
-            self.a_list[hash_value] = random.choice(list(range(1, self.p)))
-            self.b_list[hash_value] = random.choice(list(range(0, self.p)))
         for m in range(self.m):
             if self.n[m] > 1:
                 self.table[m] = [None] * self.n[m] ** 2
         for k in self.keys:
-            hash_value = ((self.a * k + self.b) % self.p) % self.m
-            a = self.a_list[hash_value]
-            b = self.b_list[hash_value]
-            if isinstance(self.table[hash_value], list):
-                m = len(self.table[hash_value])
-                index = ((a * k + b) % self.p) % m
+            hash_value, index = self.hash(k)
+            if index is not None:
                 self.table[hash_value][index] = k
             else:
                 self.table[hash_value] = k
 
+    def hash(self, k):
+        hash_value = ((self.a * k + self.b) % self.p) % self.m
+        a = self.a_list[hash_value]
+        b = self.b_list[hash_value]
+        if isinstance(self.table[hash_value], list):
+            m = len(self.table[hash_value])
+            index = ((a * k + b) % self.p) % m
+            return hash_value, index
+        return hash_value, None
+
     def search(self, k):
-        i = 0
-        while True:
-            hash_value = self.hash_func(k, i)
-            if self.table[hash_value] == k:
-                return hash_value
-            i += 1
-            if self.table[hash_value] is None or i == self.size:
-                break
-        return None
+        hash_value, index = self.hash(k)
+        if index is not None:
+            return hash_value, index
+        return hash_value
