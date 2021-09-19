@@ -7,7 +7,7 @@ O(lg(n))
 
 def binary_search(a, low, high, k):
     if high >= low:
-        mid = (high + low) // 2
+        mid = (low + high) // 2
         if a[mid] == k:
             return mid
         if a[mid] > k:
