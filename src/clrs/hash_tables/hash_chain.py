@@ -43,6 +43,13 @@ class HashChain:
         self.table = [None] * self.size
         self.a, self.m = 0.62, 2 ** self.size
 
+    def delete(self, x):
+        if isinstance(x, (int, float)):
+            hash_value = self.aux_hash_func(x)
+        else:
+            hash_value = self.aux_hash_func(x.k)
+        self.table[hash_value].delete(x)
+
     def hash_div(self, k):
         return k % self.size
 
@@ -54,13 +61,6 @@ class HashChain:
         a = kwargs.get("a", None) or random.choice(list(range(1, p)))
         b = kwargs.get("b", None) or random.choice(list(range(0, p)))
         return ((a * k + b) % p) % self.size
-
-    def delete(self, x):
-        if isinstance(x, (int, float)):
-            hash_value = self.aux_hash_func(x)
-        else:
-            hash_value = self.aux_hash_func(x.k)
-        self.table[hash_value].delete(x)
 
     def insert(self, x):
         hash_value = self.aux_hash_func(x.k)
