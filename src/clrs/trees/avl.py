@@ -36,7 +36,8 @@ class AVL(BST):
             x = x.p
 
     def delete(self, z):
-        self.balance(super().delete(z).p)
+        z = super.delete(z)
+        self.balance(z.p)
 
     def height(self, x):
         return 0 if x is None else self._get_node(x).h
