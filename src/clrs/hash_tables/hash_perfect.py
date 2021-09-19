@@ -34,6 +34,10 @@ import random
 # Repository Library
 from src.clrs.hash_tables.hash_chain import next_prime
 
+# Define globals.
+A_LIST = [27, None, 48, None, None, 16, None, 48, None]
+B_LIST = [83, None, 51, None, None, 59, None, 35, None]
+
 
 class HashPerfect:
     def __init__(self, keys, **kwargs):
@@ -42,8 +46,8 @@ class HashPerfect:
         self.p = kwargs.get("p", None) or next_prime(max(self.keys))
         self.a = kwargs.get("a", None) or random.choice(list(range(1, self.p)))
         self.b = kwargs.get("b", None) or random.choice(list(range(0, self.p)))
-        self.a_list = [27, None, 48, None, None, 16, None, 48, None]
-        self.b_list = [83, None, 51, None, None, 59, None, 35, None]
+        self.a_list = A_LIST
+        self.b_list = B_LIST
         self._create_table()
 
     def _create_table(self):
