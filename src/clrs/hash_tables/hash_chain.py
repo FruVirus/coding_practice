@@ -57,7 +57,7 @@ class HashChain:
         return int(self.m * ((k * self.a) % 1))
 
     def hash_uni(self, k, keys, **kwargs):
-        p = next_prime(max(keys))
+        p = kwargs.get("p", None) or next_prime(max(keys))
         a = kwargs.get("a", None) or random.choice(list(range(1, p)))
         b = kwargs.get("b", None) or random.choice(list(range(0, p)))
         return ((a * k + b) % p) % self.size
