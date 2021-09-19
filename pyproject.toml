@@ -35,6 +35,54 @@ line_length = 88
 lines_between_types = 1
 multi_line_output = 3
 
+########## Poetry ##########
+[tool.poetry]
+authors = ["Zhen (Tony) Zhao"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Computer Programming :: Algorithms",
+]
+description = "Coding practice for job interviews."
+name = "coding_practice"
+readme = "README.md"
+repository = "https://github.com/FruVirus/coding_practice"
+version = "0.0.0"
+
+[tool.poetry-dynamic-versioning]
+dirty = true
+enable = true
+metadata = true
+vcs = "git"
+
+[tool.poetry.dependencies]
+dill = "^0.3.3"
+GitPython = "^3.1.9"
+pexpect = "^4.7.0"
+python = "^3.6.1"
+PyYAML = "^5.3.1"
+tenacity = "^6.3.1"
+typer = "^0.3.2"
+
+[tool.poetry.dev-dependencies]
+black = "20.8b1"
+flake8 = "3.8.4"
+isort = "5.7.0"
+mypy = "0.812"
+mypy-extensions = "0.4.3"
+pre-commit = "2.10.1"
+pylint = "2.7.2"
+pytest = "^6.2.2"
+pytest-bdd = "^4.0.2"
+pytest-cov = "^2.11.1"
+pytest-mock = "^2.0.0"
+pytest-randomly = "^3.7.0"
+setuptools = "45.2.0"
+setuptools_scm = "4.1.2"
+
+[tool.poetry.extras]
+docs = ["Sphinx", "sphinx-rtd-theme"]
+
 ########## Pytest ##########
 [tool.pytest.ini_options]
 markers = ["clrs_only", "leet_only"]
