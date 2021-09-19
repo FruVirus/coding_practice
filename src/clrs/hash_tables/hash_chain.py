@@ -51,8 +51,8 @@ class HashChain:
 
     def hash_uni(self, k, keys, **kwargs):
         p = next_prime(max(keys))
-        a = kwargs["a"] or random.choice(list(range(1, p)))
-        b = kwargs["b"] or random.choice(list(range(0, p)))
+        a = kwargs.get("a", None) or random.choice(list(range(1, p)))
+        b = kwargs.get("b", None) or random.choice(list(range(0, p)))
         return ((a * k + b) % p) % self.size
 
     def delete(self, x):
