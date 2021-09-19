@@ -21,7 +21,8 @@ def test_hash_perfect():
     assert 40 in x.table[7]
     assert 52 in x.table[7]
     assert x.table[8] is None
-    assert x.search(10) == 0
+    assert x.search(10)[0] == 0
+    assert x.search(10)[1] is None
     result = x.search(72)
     assert result[0] == 2 and result[1] == 1
     result = x.search(60)
