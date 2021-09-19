@@ -36,8 +36,6 @@ from src.clrs.hash_tables.hash_chain import next_prime
 
 
 class HashPerfect:
-    _DELETED = "DELETED"
-
     def __init__(self, keys, **kwargs):
         self.keys = keys
         self.m = len(self.keys)
