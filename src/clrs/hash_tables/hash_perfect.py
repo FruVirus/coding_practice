@@ -46,8 +46,6 @@ class HashPerfect:
         self.p = kwargs.get("p", None) or next_prime(max(self.keys))
         self.a = kwargs.get("a", None) or random.choice(list(range(1, self.p)))
         self.b = kwargs.get("b", None) or random.choice(list(range(0, self.p)))
-        self.a_list = A_LIST
-        self.b_list = B_LIST
         self._create_table()
 
     def _create_table(self):
@@ -72,8 +70,8 @@ class HashPerfect:
 
     def hash(self, k):
         hash_value = self._get_hash_value(self.a, self.b, self.p, self.m, k)
-        a = self.a_list[hash_value]
-        b = self.b_list[hash_value]
+        a = A_LIST[hash_value]
+        b = B_LIST[hash_value]
         index = None
         if isinstance(self.table[hash_value], list):
             index = self._get_hash_value(a, b, self.p, len(self.table[hash_value]), k)
