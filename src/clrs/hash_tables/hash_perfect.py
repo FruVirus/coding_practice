@@ -49,8 +49,7 @@ class HashPerfect:
         self._create_table()
 
     def _create_table(self):
-        self.n = [0] * self.m
-        self.table = [None] * self.m
+        self.n, self.table = [0] * self.m, [None] * self.m
         for k in self.keys:
             hash_value = self._get_hash_value(self.a, self.b, self.p, self.m, k)
             self.n[hash_value] += 1
@@ -70,9 +69,7 @@ class HashPerfect:
 
     def hash(self, k):
         hash_value = self._get_hash_value(self.a, self.b, self.p, self.m, k)
-        a = A_LIST[hash_value]
-        b = B_LIST[hash_value]
-        index = None
+        a, b, index = A_LIST[hash_value], B_LIST[hash_value], None
         if isinstance(self.table[hash_value], list):
             index = self._get_hash_value(a, b, self.p, len(self.table[hash_value]), k)
         return hash_value, index
