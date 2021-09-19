@@ -49,13 +49,13 @@ class HashPerfect:
         self._create_table()
 
     def _create_table(self):
-        self.n, self.table = [0] * self.m, [None] * self.m
+        n, self.table = [0] * self.m, [None] * self.m
         for k in self.keys:
             hash_value = self._get_hash_value(self.a, self.b, self.p, self.m, k)
-            self.n[hash_value] += 1
+            n[hash_value] += 1
         for m in range(self.m):
-            if self.n[m] > 1:
-                self.table[m] = [None] * self.n[m] ** 2
+            if n[m] > 1:
+                self.table[m] = [None] * n[m] ** 2
         for k in self.keys:
             hash_value, index = self.hash(k)
             if index is not None:
