@@ -6,7 +6,7 @@ O(|l1| + |l2|) vs. O(|l1|*|l2|) for a brute force inner product implementation.
 
 
 def sorted_inner_product(l1, l2):
-    i, j, sum = 0, 0, 0.0
+    i, j, sum = 0
     while i < len(l1) and j < len(l2):
         if l1[i][0] == l2[j][0]:
             sum += l1[i][1] * l2[j][1]
