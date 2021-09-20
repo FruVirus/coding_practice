@@ -25,7 +25,7 @@ def find_max(a, low, high):
 
 def find_cross(a, low, mid, high):
     lsum = rsum = -float("inf")
-    lcsum = rcsum = 0.0
+    lcsum = rcsum = 0
     clow = chigh = -1
     for i in range(mid, low - 1, -1):
         lcsum += a[i]
