@@ -23,16 +23,14 @@ A RBT tree with n internal nodes has height at most 2* lg(n + 1).
 2. All other operations take O(lg(n)) or O(1) time.
 """
 
+# Repository Library
+from src.clrs.trees.bst import BST, BSTNode
 
-class RBT:
+
+class RBT(BST):
     def __init__(self, z):
         self.nil = RBTNode(1, None, None)
         self.root = RBTNode(1, z, self.nil)
-
-    def _get_node(self, x):
-        if not isinstance(x, RBTNode):
-            x = self.search(self.root, x)
-        return x
 
     def delete(self, z):
         z = self._get_node(z)
@@ -183,13 +181,6 @@ class RBT:
             y = y.p
         return y
 
-    def rotate(self, x, left_rotate):
-        x = self._get_node(x)
-        if left_rotate:
-            self.rotate_left(x)
-        else:
-            self.rotate_right(x)
-
     def rotate_left(self, x):
         y = x.right
         x.right = y.left
@@ -257,7 +248,7 @@ class RBT:
             self.walk(x.right)
 
 
-class RBTNode:
+class RBTNode(BSTNode):
     def __init__(self, color, key, parent):
-        self.color, self.key, self.p = color, key, parent
-        self.left = self.right = None
+        super().__init__(key, parent)
+        self.color = color
