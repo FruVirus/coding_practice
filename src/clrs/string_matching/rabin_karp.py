@@ -22,8 +22,7 @@ def rabin_karp(t, p, radix, q=13):
     assert radix * q < 2 ** radix - 1
     h, p_, t_ = radix ** (m - 1) % q, 0, 0
     for i in range(m):
-        p_ = radix * p_ + int(p[i])
-        t_ = radix * t_ + int(t[i])
+        p_, t_ = radix * p_ + int(p[i]), radix * t_ + int(t[i])
     p_ %= q
     t_ %= q
     count = 0
