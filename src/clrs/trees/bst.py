@@ -161,11 +161,11 @@ class BST:
             v.p = u.p
 
     def update_size(self, x):
+        if x is None:
+            return
         x.size = 1 + ((x.left and x.left.size) or 0) + ((x.right and x.right.size) or 0)
-        if x.left is not None:
-            self.update_size(x.left)
-        if x.right is not None:
-            self.update_size(x.right)
+        self.update_size(x.left)
+        self.update_size(x.right)
 
     def walk(self, x):
         if x is not None:

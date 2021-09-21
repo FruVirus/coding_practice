@@ -19,14 +19,18 @@ O(n)
 """
 
 
-def counting_sort(a, k):
-    n = len(a)
-    b, c = [0] * n, [0] * (k + 1)
+def counting_sort(a, k=None, exp=None, base=None):
+    if k is None:
+        assert exp is not None and base is not None
+    n, base = len(a), base or (k + 1)
+    b, c = [0] * n, [0] * base
     for i in range(n):
-        c[a[i]] += 1
-    for i in range(1, k + 1):
+        index = a[i] if k is not None else (a[i] // exp) % base
+        c[index] += 1
+    for i in range(1, base):
         c[i] += c[i - 1]
     for i in range(n - 1, -1, -1):
-        b[c[a[i]] - 1] = a[i]
-        c[a[i]] -= 1
+        index = a[i] if k is not None else (a[i] // exp) % base
+        b[c[index] - 1] = a[i]
+        c[index] -= 1
     return b

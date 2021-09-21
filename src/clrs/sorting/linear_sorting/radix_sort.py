@@ -16,25 +16,13 @@ Stable
 O(d * (n + k))
 """
 
-
-def csort(a, exp, base):
-    n = len(a)
-    b, c = [0] * n, [0] * base
-    for i in range(n):
-        index = (a[i] // exp) % base
-        c[index] += 1
-    for i in range(1, base):
-        c[i] += c[i - 1]
-    for i in range(n - 1, -1, -1):
-        index = (a[i] // exp) % base
-        b[c[index] - 1] = a[i]
-        c[index] -= 1
-    return b
+# Repository Library
+from src.clrs.sorting.linear_sorting.counting_sort import counting_sort
 
 
 def radix_sort(a, base=10):
     exp = 1
     while max(a) / exp > 1:
-        a = csort(a, exp, base)
+        a = counting_sort(a, exp=exp, base=base)
         exp *= base
     return a
