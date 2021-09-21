@@ -15,15 +15,15 @@ Rabin-Karp: Theta(m) preprocessing time. Theta((n - m + 1) * m) matching time.
 from src.clrs.hash_tables.hash_chain import is_prime, next_prime
 
 
-def rabin_karp(t, p, d, q=13):
+def rabin_karp(t, p, radix, q=13):
     n, m = len(t), len(p)
     if not is_prime(q):
         q = next_prime(q)
-    assert d * q < 2 ** d - 1
-    h, p_, t_ = d ** (m - 1) % q, 0, 0
+    assert radix * q < 2 ** radix - 1
+    h, p_, t_ = radix ** (m - 1) % q, 0, 0
     for i in range(m):
-        p_ = d * p_ + int(p[i])
-        t_ = d * t_ + int(t[i])
+        p_ = radix * p_ + int(p[i])
+        t_ = radix * t_ + int(t[i])
     p_ %= q
     t_ %= q
     count = 0
@@ -32,8 +32,5 @@ def rabin_karp(t, p, d, q=13):
         if p_ == t_ and p == t[s : s + m]:
             count += 1
         if s < n - m:
-            t_ = (d * (t_ - int(t[s]) * h) + int(t[s + m])) % q
+            t_ = (radix * (t_ - int(t[s]) * h) + int(t[s + m])) % q
     return count
-
-
-print(rabin_karp("2359023141526739921", "31415", 10))
