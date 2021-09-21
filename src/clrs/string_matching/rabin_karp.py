@@ -27,7 +27,6 @@ def rabin_karp(t, p, radix, q=13):
     t_ %= q
     count = 0
     for s in range(n - m):
-        print(p_, t_, t[s : s + m])
         if p_ == t_ and p == t[s : s + m]:
             count += 1
         if s < n - m:
