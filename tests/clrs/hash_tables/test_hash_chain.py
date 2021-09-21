@@ -20,6 +20,7 @@ def test_hash_chain():
     assert x.table[3].head.next is None
     assert x.table[3].head.prev is None
     assert x.search(10).k == 10
+    assert x.search(1) is None
     x.delete(y)
     assert x.hash_mul(666) == 942
     assert x.hash_uni(5, [0, 1, 2, 3, 4, 5], a=4, b=5) == 4

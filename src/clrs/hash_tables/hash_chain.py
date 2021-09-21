@@ -70,7 +70,9 @@ class HashChain:
 
     def search(self, k):
         hash_value = self.aux_hash_func(k)
-        return self.table[hash_value].search(k)
+        if self.table[hash_value] is not None:
+            return self.table[hash_value].search(k)
+        return None
 
 
 def is_prime(n):
