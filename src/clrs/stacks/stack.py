@@ -39,9 +39,9 @@ class Stack:
         return self.a[self.top + 1]
 
     def push(self, x):
-        if not self.table_double:
-            assert self.top + 1 != self.size
-        else:
+        if self.table_double:
             self._grow()
+        else:
+            assert self.top + 1 != self.size
         self.top += 1
         self.a[self.top] = x
