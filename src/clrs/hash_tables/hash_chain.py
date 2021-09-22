@@ -17,7 +17,7 @@ In chaining, we place all the elements that has to the same slot into the same l
 list. Slot j contains a pointer to the head of the list of all stored elements that hash
 to j; if there are no such elements, slot j contains NIL.
 
-insertion: O(1) if we assume that the element x being inserted is not alrady present in
+insertion: O(1) if we assume that the element x being inserted is not already present in
 the table. Otherwise, searching for the element will take O(L) time or an average-case
 time of Theta(1 + n/m), where n is the total number of elements and m is the total
 number of slots in the hash table.
@@ -43,7 +43,40 @@ class HashChain:
         self.table = [None] * self.size
         self.a, self.m = 0.62, 2 ** self.size
 
+    def _grow(self, x):
+        if self.table.count(None) == 0:
+            print("GROW!")
+            self.size *= 2
+            table = [None] * self.size
+            key_list = []
+            for ll in self.table:
+                if ll is None:
+                    continue
+                head = ll.head
+                while head is not None:
+                    key_list.append(head.k)
+                    head = head.next
+            for key in key_list:
+                hash_value = self.aux_hash_func(key)
+                if table[hash_value] is None:
+                    table[hash_value] = DLL()
+                table[hash_value].insert(Node(key))
+            self.table = table
+        hash_value = self.aux_hash_func(x.k)
+        if self.table[hash_value] is None:
+            self.table[hash_value] = DLL()
+        self.table[hash_value].insert(x)
+
+    def _reduce(self):
+        if self.table.count(None) == self.size // 4:
+            print("REDUCE!")
+            print(self.table)
+            exit()
+            self.a = [self.a[i] for i in range(self.size // 2)]
+            self.size = int(self.size / 2)
+
     def delete(self, x):
+        self._reduce()
         if isinstance(x, (int, float)):
             hash_value = self.aux_hash_func(x)
         else:
@@ -63,10 +96,7 @@ class HashChain:
         return ((a * k + b) % p) % self.size
 
     def insert(self, x):
-        hash_value = self.aux_hash_func(x.k)
-        if self.table[hash_value] is None:
-            self.table[hash_value] = DLL()
-        self.table[hash_value].insert(x)
+        self._grow(x)
 
     def search(self, k):
         hash_value = self.aux_hash_func(k)
@@ -95,3 +125,59 @@ def next_prime(n):
         n += 1
         if is_prime(n):
             return n
+
+
+# from clrs.lists.singly_linked_list import Node
+#
+#
+# x = HashChain(size=2)
+# x.insert(Node(1))
+# print(x.table)
+# print()
+# x.insert(Node(2))
+# print(x.table)
+# print()
+# x.insert(Node(3))
+# print(x.table)
+# print()
+# x.insert(Node(5))
+# print(x.table)
+# print()
+# x.insert(Node(6))
+# print(x.table)
+# print()
+# x.insert(Node(7))
+# print(x.table)
+# print()
+# x.insert(Node(12))
+# print(x.table)
+# print()
+# x.insert(Node(13))
+# print(x.table)
+# print()
+# x.insert(Node(14))
+# print(x.table)
+# print()
+# x.insert(Node(15))
+# print(x.table)
+# print()
+#
+# exit()
+# x.delete(15)
+# print(x.table)
+# print()
+# x.delete(14)
+# print(x.table)
+# print()
+# x.delete(13)
+# print(x.table)
+# print()
+# x.delete(12)
+# print(x.table)
+# print()
+# x.delete(7)
+# print(x.table)
+# print()
+# x.delete(6)
+# print(x.table)
+# print()
