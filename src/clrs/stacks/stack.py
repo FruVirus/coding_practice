@@ -31,6 +31,9 @@ class Stack:
     def empty(self):
         return self.top == -1
 
+    def full(self):
+        return self.top + 1 == self.size
+
     def pop(self):
         assert not self.empty()
         self.top -= 1
@@ -42,6 +45,6 @@ class Stack:
         if self.table_double:
             self._grow()
         else:
-            assert self.top + 1 != self.size
+            assert not self.full()
         self.top += 1
         self.a[self.top] = x
