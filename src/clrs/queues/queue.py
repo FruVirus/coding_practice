@@ -47,22 +47,22 @@ class Queue:
         return x
 
     def dequeue(self):
-        if not self.table_double:
-            assert self.head != self.tail
-            x = self.a[self.head]
-            if self.head == self.size - 1:
-                self.head = 0
-            else:
-                self.head += 1
-            return x
-        return self._reduce()
+        if self.table_double:
+            return self._reduce()
+        assert self.head != self.tail
+        x = self.a[self.head]
+        if self.head == self.size - 1:
+            self.head = 0
+        else:
+            self.head += 1
+        return x
 
     def enqueue(self, x):
-        if not self.table_double:
+        if self.table_double:
+            self._grow()
+        else:
             assert self.head != self.tail + 1
             assert not (self.head == 0 and self.tail == self.size - 1)
-        else:
-            self._grow()
         self.a[self.tail] = x
         if self.tail == self.size - 1 and not self.table_double:
             self.tail = 0
