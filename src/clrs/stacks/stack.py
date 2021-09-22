@@ -12,8 +12,9 @@ Each of the stack operations take O(1).
 
 
 class Stack:
-    def __init__(self, size):
+    def __init__(self, size, table_double=False):
         self.size = size
+        self.table_double = table_double
         self.a = [None] * self.size
         self.top = -1
 
@@ -33,10 +34,14 @@ class Stack:
     def pop(self):
         assert not self.empty()
         self.top -= 1
-        self._reduce()
+        if self.table_double:
+            self._reduce()
         return self.a[self.top + 1]
 
     def push(self, x):
-        self._grow()
+        if not self.table_double:
+            assert self.top + 1 != self.size
+        else:
+            self._grow()
         self.top += 1
         self.a[self.top] = x

@@ -15,7 +15,7 @@ def test_stack():
 
 
 def test_table_doubling():
-    x = Stack(2)
+    x = Stack(2, table_double=True)
     x.push(1)
     assert x.a == [1, None]
     x.push(2)

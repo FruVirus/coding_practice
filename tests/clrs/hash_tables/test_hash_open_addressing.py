@@ -102,7 +102,7 @@ def test_hash_open():
 
 
 def test_table_doubling():
-    x = HashOpen(size=2)
+    x = HashOpen(size=2, table_double=True)
     x.insert(1)
     x.insert(2)
     x.insert(3)

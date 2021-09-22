@@ -27,7 +27,7 @@ def test_hash_chain():
 
 
 def test_table_doubling():
-    x = HashChain(size=2)
+    x = HashChain(size=2, table_double=True)
     x.insert(Node(1))
     x.insert(Node(2))
     x.insert(Node(3))

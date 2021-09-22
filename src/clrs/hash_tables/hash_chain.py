@@ -40,9 +40,10 @@ from src.clrs.lists.singly_linked_list import Node
 
 
 class HashChain:
-    def __init__(self, size, aux_hash_func="hash_div"):
+    def __init__(self, size, aux_hash_func="hash_div", table_double=False):
         self.size = size
         self.aux_hash_func = getattr(self, aux_hash_func)
+        self.table_double = table_double
         self.table = [None] * self.size
         self.a, self.m = 0.62, 2 ** self.size
 
@@ -79,9 +80,10 @@ class HashChain:
         else:
             hash_value = self.aux_hash_func(x.k)
         self.table[hash_value].delete(x)
-        if self.table[hash_value].head is None:
-            self.table[hash_value] = None
-        self._reduce()
+        if self.table_double:
+            if self.table[hash_value].head is None:
+                self.table[hash_value] = None
+            self._reduce()
 
     def hash_div(self, k):
         return k % self.size
@@ -96,7 +98,8 @@ class HashChain:
         return ((a * k + b) % p) % self.size
 
     def insert(self, x):
-        self._grow()
+        if self.table_double:
+            self._grow()
         hash_value = self.aux_hash_func(x.k)
         if self.table[hash_value] is None:
             self.table[hash_value] = DLL()

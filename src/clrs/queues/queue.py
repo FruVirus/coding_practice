@@ -28,12 +28,10 @@ class Queue:
         self.a = [None] * self.size
         self.head = self.tail = 0
 
-    def _grow(self, x):
+    def _grow(self):
         if self.tail == self.size - 1:
             self.a = self.a + [None] * self.size
             self.size *= 2
-        self.a[self.tail] = x
-        self.tail += 1
 
     def _reduce(self):
         x = self.a[self.head]
@@ -69,4 +67,6 @@ class Queue:
             else:
                 self.tail += 1
         else:
-            self._grow(x)
+            self._grow()
+            self.a[self.tail] = x
+            self.tail += 1
