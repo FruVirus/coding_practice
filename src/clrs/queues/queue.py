@@ -35,7 +35,8 @@ class Queue:
 
     def _reduce(self):
         x = self.a[self.head]
-        if self.tail - self.head + 1 == self.size // 4 or self.size // 4 <= 1:
+        threshold = self.size // 4
+        if self.tail - self.head + 1 == threshold or threshold <= 1:
             start = self.head + 1
             end = start + self.size // 2
             self.a = [self.a[i] for i in range(start, end)]
@@ -49,7 +50,7 @@ class Queue:
     def dequeue(self):
         if self.table_double:
             return self._reduce()
-        assert self.head != self.tail
+        assert not self.empty()
         x = self.a[self.head]
         if self.head == self.size - 1:
             self.head = 0
@@ -57,14 +58,23 @@ class Queue:
             self.head += 1
         return x
 
+    def empty(self):
+        return self.head == self.tail
+
     def enqueue(self, x):
         if self.table_double:
             self._grow()
         else:
-            assert self.head != self.tail + 1
-            assert not (self.head == 0 and self.tail == self.size - 1)
+            assert not self.full()
         self.a[self.tail] = x
-        if self.tail == self.size - 1 and not self.table_double:
+        if self.tail == self.size - 1:
             self.tail = 0
         else:
             self.tail += 1
+
+    def full(self):
+        if self.head == self.tail + 1:
+            return True
+        if self.head == 0 and self.tail == self.size - 1:
+            return True
+        return False
