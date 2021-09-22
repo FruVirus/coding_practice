@@ -17,6 +17,8 @@ In chaining, we place all the elements that has to the same slot into the same l
 list. Slot j contains a pointer to the head of the list of all stored elements that hash
 to j; if there are no such elements, slot j contains NIL.
 
+NB: HashChain mimics table doubling for practice even though it's redundant in Python.
+
 insertion: O(1) if we assume that the element x being inserted is not already present in
 the table. Otherwise, searching for the element will take O(L) time or an average-case
 time of Theta(1 + n/m), where n is the total number of elements and m is the total
@@ -64,11 +66,11 @@ class HashChain:
             while head is not None:
                 key_list.append(head.k)
                 head = head.next
-        for key in key_list:
-            hash_value = self.aux_hash_func(key)
+        for k in key_list:
+            hash_value = self.aux_hash_func(k)
             if table[hash_value] is None:
                 table[hash_value] = DLL()
-            table[hash_value].insert(Node(key))
+            table[hash_value].insert(Node(k))
         return table
 
     def delete(self, x):
