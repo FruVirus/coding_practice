@@ -61,12 +61,10 @@ class Queue:
         if not self.table_double:
             assert self.head != self.tail + 1
             assert not (self.head == 0 and self.tail == self.size - 1)
-            self.a[self.tail] = x
-            if self.tail == self.size - 1:
-                self.tail = 0
-            else:
-                self.tail += 1
         else:
             self._grow()
-            self.a[self.tail] = x
+        self.a[self.tail] = x
+        if self.tail == self.size - 1 and not self.table_double:
+            self.tail = 0
+        else:
             self.tail += 1
