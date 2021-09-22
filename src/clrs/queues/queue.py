@@ -48,9 +48,9 @@ class Queue:
         return x
 
     def dequeue(self):
+        assert not self.empty()
         if self.table_double:
             return self._reduce()
-        assert not self.empty()
         x = self.a[self.head]
         if self.head == self.size - 1:
             self.head = 0
