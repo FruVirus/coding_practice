@@ -40,9 +40,9 @@ from src.clrs.lists.singly_linked_list import Node
 
 
 class HashChain:
-    def __init__(self, size, aux_hash_func="hash_div", table_double=False):
+    def __init__(self, size, ahf="hash_div", table_double=False):
         self.size = size
-        self.aux_hash_func = getattr(self, aux_hash_func)
+        self.ahf = getattr(self, ahf)
         self.table_double = table_double
         self.table = [None] * self.size
         self.a, self.m = 0.62, 2 ** self.size
@@ -53,7 +53,7 @@ class HashChain:
             self.table = self._rehash()
 
     def _insert(self, k, table):
-        hash_value = self.aux_hash_func(k)
+        hash_value = self.ahf(k)
         if table[hash_value] is None:
             table[hash_value] = DLL()
         table[hash_value].insert(Node(k))
@@ -77,7 +77,7 @@ class HashChain:
         return table
 
     def delete(self, x):
-        hash_value = self.aux_hash_func(x if isinstance(x, (int, float)) else x.k)
+        hash_value = self.ahf(x if isinstance(x, (int, float)) else x.k)
         self.table[hash_value].delete(x)
         if self.table_double and self.table[hash_value].head is None:
             self.table[hash_value] = None
@@ -100,7 +100,7 @@ class HashChain:
         self._insert(x.k, self.table)
 
     def search(self, k):
-        hash_value = self.aux_hash_func(k)
+        hash_value = self.ahf(k)
         if self.table[hash_value] is not None:
             return self.table[hash_value].search(k)
         return None

@@ -55,13 +55,9 @@ class HashOpen(HashChain):
     _DELETED = "DELETED"
 
     def __init__(
-        self,
-        size,
-        aux_hash_func="hash_div",
-        hash_func="linear_probe",
-        table_double=False,
+        self, size, ahf="hash_div", hash_func="linear_probe", table_double=False
     ):
-        super().__init__(size, aux_hash_func, table_double=table_double)
+        super().__init__(size, ahf, table_double=table_double)
         self.hash_func = getattr(self, hash_func)
 
     def _grow(self):
@@ -119,10 +115,10 @@ class HashOpen(HashChain):
         raise OverflowError()
 
     def linear_probe(self, k, i):
-        return (self.aux_hash_func(k) + i) % self.size
+        return (self.ahf(k) + i) % self.size
 
     def quadratic_probe(self, k, i):
-        return (self.aux_hash_func(k) + i ** 2) % self.size
+        return (self.ahf(k) + i ** 2) % self.size
 
     def search(self, k):
         i = 0
