@@ -101,7 +101,7 @@ class HashChain:
 
     def insert(self, x):
         self._grow()
-        self._insert(x.k, table=self.table)
+        self._insert(x.k, self.table)
 
     def search(self, k):
         hash_value = self.aux_hash_func(k)
