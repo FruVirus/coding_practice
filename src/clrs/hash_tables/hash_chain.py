@@ -64,8 +64,7 @@ class HashChain:
             self.table = self._rehash()
 
     def _rehash(self):
-        table = [None] * self.size
-        key_list = []
+        table, key_list = [None] * self.size, []
         for ll in self.table:
             if ll is not None:
                 head = ll.head
