@@ -21,7 +21,7 @@ class Stack:
     def _grow(self):
         if not self.table_double:
             assert not self.full()
-        elif self.top + 1 == self.size:
+        elif self.top == self.size - 1:
             self.a = self.a + [None] * self.size
             self.size *= 2
         self.top += 1
