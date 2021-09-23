@@ -95,6 +95,6 @@ class AVL(BST):
 
 
 class AVLNode(BSTNode):
-    def __init__(self, key, height=0, parent=None):
+    def __init__(self, key, parent=None, height=0):
         super().__init__(key, parent)
         self.h = height
