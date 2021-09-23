@@ -18,6 +18,16 @@ static: once the keys are stored in the table, the set of keys never changes. So
 applications naturally have static sets of keys: consider the set of reserved words in
 a programming language, or the set of file names on a CD-ROM.
 
+In perfect hashing, we create two levels of hashing, with universal hashing at each
+level. The first level is essentially the same as for hashing with chaining: we hash the
+n keys into m slots using a hash function h carefully selected from a family of
+universal hash functions. Instead of making a linked list of the keys hashing to slot j,
+however, we use a small secondary hash table with its own associated hash function. By
+choosing the secondary hash functions carefully, we can guarantee that there are no
+collisions at the secondary level. In order to guarantee that there are no collisions
+at the secondary level, however, we will need to let the size of the secondary tables be
+the square of the number of keys hashing to that slot.
+
 Perfect hashing requires O(n) memory space.
 
 NB: When m = n^2, a hash function chosen randomly from the set of universal hash
