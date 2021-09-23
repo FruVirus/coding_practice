@@ -59,7 +59,7 @@ class HashChain:
         table[hash_value].insert(Node(k))
 
     def _reduce(self):
-        if self.table.count(None) == int(3 * self.size / 4):
+        if self.table_double and self.table.count(None) == int(3 * self.size / 4):
             self.size = int(self.size / 2)
             self.table = self._rehash()
 
@@ -85,7 +85,7 @@ class HashChain:
         if self.table_double:
             if self.table[hash_value].head is None:
                 self.table[hash_value] = None
-            self._reduce()
+        self._reduce()
 
     def hash_div(self, k):
         return k % self.size
