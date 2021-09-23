@@ -61,7 +61,7 @@ class HashOpen(HashChain):
     def _grow(self):
         if self.table_double:
             none, deleted = self.table.count(None), self.table.count(self._DELETED)
-            if none == 0 and deleted == 0:
+            if none == deleted == 0:
                 self.size *= 2
                 self.table = self._rehash()
 
