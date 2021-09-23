@@ -169,10 +169,10 @@ class BST:
 
     def walk(self, x):
         if x is not None:
-            x = self._get_node(x)
-            self.walk(x.left)
-            print(x.key)
-            self.walk(x.right)
+            node = self.min(x)
+            while node is not None:
+                print(node.key)
+                node = self.successor(node)
 
 
 class BSTNode:
