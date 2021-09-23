@@ -37,8 +37,8 @@ class Queue:
 
     def _reduce(self):
         x = self.a[self.head]
-        threshold = self.size // 4
-        if self.tail - self.head + 1 == threshold or threshold <= 1:
+        thresh = self.size // 4
+        if self.tail - self.head + 1 == thresh or thresh <= 1:
             start = self.head + 1
             end = start + self.size // 2
             self.a = [self.a[i] for i in range(start, end)]
