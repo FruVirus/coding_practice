@@ -54,7 +54,7 @@ from src.clrs.hash_tables.hash_chain import HashChain, is_prime
 class HashOpen(HashChain):
     _DELETED = "DELETED"
 
-    def __init__(self, size, hash_func="linear_probe", table_double=False):
+    def __init__(self, size, hash_func="hash_linear", table_double=False):
         super().__init__(size, table_double=table_double)
         self.hash_func = getattr(self, hash_func)
 
@@ -94,7 +94,7 @@ class HashOpen(HashChain):
         self.table[hash_value] = self._DELETED
         self._reduce()
 
-    def double_hashing(self, k, i):
+    def hash_double(self, k, i):
         if (self.size & (self.size - 1) == 0) and self.size != 0:
             h1, h2 = self.hash_div(k), self.hash_mul(k)
             if h2 % 2 == 0:
@@ -105,15 +105,15 @@ class HashOpen(HashChain):
             h2 = 1 + (k % (self.size - 1))
         return (h1 + i * h2) % self.size
 
+    def hash_linear(self, k, i):
+        return (self.ahf(k) + i) % self.size
+
+    def hash_quadratic(self, k, i):
+        return (self.ahf(k) + i ** 2) % self.size
+
     def insert(self, k):
         self._grow()
         self._insert(k, self.table)
-
-    def linear_probe(self, k, i):
-        return (self.ahf(k) + i) % self.size
-
-    def quadratic_probe(self, k, i):
-        return (self.ahf(k) + i ** 2) % self.size
 
     def search(self, k):
         i = 0
