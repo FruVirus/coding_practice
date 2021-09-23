@@ -29,8 +29,8 @@ def test_bst():
     assert bst.count(-1, 19) == 9
     assert bst.count(2, 20) == 9
     assert bst.count(-1, 20) == 9
-    assert bst.list(2, 19) == [12, 5, 2, 9, 18, 15, 13, 17, 19]
-    assert bst.list(13, 19) == [18, 15, 13, 17, 19]
+    assert bst.list(2, 19) == sorted([12, 5, 2, 9, 18, 15, 13, 17, 19])
+    assert bst.list(13, 19) == sorted([18, 15, 13, 17, 19])
     bst_max = bst.max(12)
     bst_min = bst.min(12)
     assert bst_max.key == 19

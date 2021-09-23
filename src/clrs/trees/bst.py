@@ -83,9 +83,13 @@ class BST:
         return x
 
     def list(self, l, h):
-        lca = self.lca(l, h)
-        result = []
-        self.node_list(lca, l, h, result)
+        result = [l]
+        node = self.successor(l)
+        while True:
+            result.append(node.key)
+            node = self.successor(node)
+            if node is None or node.key > h:
+                break
         return result
 
     def max(self, x):
@@ -99,16 +103,6 @@ class BST:
         while x.left is not None:
             x = x.left
         return x
-
-    def node_list(self, x, l, h, result):
-        if x is None:
-            return
-        if l <= x.key <= h:
-            result.append(x.key)
-        if l <= x.key:
-            self.node_list(x.left, l, h, result)
-        if x.key <= h:
-            self.node_list(x.right, l, h, result)
 
     def predecessor(self, x):
         x = self._get_node(x)

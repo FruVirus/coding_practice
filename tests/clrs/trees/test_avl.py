@@ -51,8 +51,8 @@ def test_avl():
         and root.right.right.right.key == 19
         and root.right.right.right.h == 1
     )
-    assert avl.list(2, 19) == [12, 5, 2, 9, 17, 15, 13, 18, 19]
-    assert avl.list(13, 19) == [17, 15, 13, 18, 19]
+    assert avl.list(2, 19) == sorted([12, 5, 2, 9, 17, 15, 13, 18, 19])
+    assert avl.list(13, 19) == sorted([17, 15, 13, 18, 19])
     assert avl.height(12) == 4
     avl_max = avl.max(12)
     avl_min = avl.min(12)
