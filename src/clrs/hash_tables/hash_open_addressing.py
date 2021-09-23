@@ -65,6 +65,16 @@ class HashOpen(HashChain):
                 self.size *= 2
                 self.table = self._rehash()
 
+    def _insert(self, k, table):
+        i = 0
+        while i != self.size:
+            hash_value = self.hash_func(k, i)
+            if table[hash_value] in [None, self._DELETED]:
+                table[hash_value] = k
+                return hash_value
+            i += 1
+        raise OverflowError()
+
     def _reduce(self):
         if self.table_double:
             none, deleted = self.table.count(None), self.table.count(self._DELETED)
@@ -76,13 +86,7 @@ class HashOpen(HashChain):
         table = [None] * self.size
         key_list = [slot for slot in self.table if slot not in [None, self._DELETED]]
         for k in key_list:
-            i = 0
-            while i != self.size:
-                hash_value = self.hash_func(k, i)
-                if table[hash_value] is None:
-                    table[hash_value] = k
-                    break
-                i += 1
+            self._insert(k, table)
         return table
 
     def delete(self, k):
@@ -103,14 +107,7 @@ class HashOpen(HashChain):
 
     def insert(self, k):
         self._grow()
-        i = 0
-        while i != self.size:
-            hash_value = self.hash_func(k, i)
-            if self.table[hash_value] in [None, self._DELETED]:
-                self.table[hash_value] = k
-                return hash_value
-            i += 1
-        raise OverflowError()
+        self._insert(k, self.table)
 
     def linear_probe(self, k, i):
         return (self.ahf(k) + i) % self.size
