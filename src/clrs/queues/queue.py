@@ -29,7 +29,9 @@ class Queue:
         self.head = self.tail = 0
 
     def _grow(self):
-        if self.tail == self.size - 1:
+        if not self.table_double:
+            assert not self.full()
+        elif self.tail == self.size - 1:
             self.a = self.a + [None] * self.size
             self.size *= 2
 
@@ -62,10 +64,7 @@ class Queue:
         return self.head == self.tail
 
     def enqueue(self, x):
-        if self.table_double:
-            self._grow()
-        else:
-            assert not self.full()
+        self._grow()
         self.a[self.tail] = x
         if self.tail == self.size - 1:
             self.tail = 0

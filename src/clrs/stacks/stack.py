@@ -19,12 +19,14 @@ class Stack:
         self.top = -1
 
     def _grow(self):
-        if self.top + 1 == self.size:
+        if not self.table_double:
+            assert not self.full()
+        elif self.top + 1 == self.size:
             self.a = self.a + [None] * self.size
             self.size *= 2
 
     def _reduce(self):
-        if self.top + 1 == self.size // 4:
+        if self.table_double and self.top + 1 == self.size // 4:
             self.a = [self.a[i] for i in range(self.size // 2)]
             self.size = int(self.size / 2)
 
@@ -37,14 +39,10 @@ class Stack:
     def pop(self):
         assert not self.empty()
         self.top -= 1
-        if self.table_double:
-            self._reduce()
+        self._reduce()
         return self.a[self.top + 1]
 
     def push(self, x):
-        if self.table_double:
-            self._grow()
-        else:
-            assert not self.full()
+        self._grow()
         self.top += 1
         self.a[self.top] = x

@@ -48,12 +48,18 @@ class HashChain:
         self.a, self.m = 0.62, 2 ** self.size
 
     def _grow(self):
-        if self.table.count(None) == 0:
+        if self.table_double and self.table.count(None) == 0:
             self.size *= 2
             self.table = self._rehash()
 
+    def _insert(self, k, table):
+        hash_value = self.aux_hash_func(k)
+        if table[hash_value] is None:
+            table[hash_value] = DLL()
+        table[hash_value].insert(Node(k))
+
     def _reduce(self):
-        if self.table.count(None) >= int(3 * self.size / 4):
+        if self.table.count(None) == int(3 * self.size / 4):
             self.size = int(self.size / 2)
             self.table = self._rehash()
 
@@ -61,17 +67,13 @@ class HashChain:
         table = [None] * self.size
         key_list = []
         for ll in self.table:
-            if ll is None:
-                continue
-            head = ll.head
-            while head is not None:
-                key_list.append(head.k)
-                head = head.next
+            if ll is not None:
+                head = ll.head
+                while head is not None:
+                    key_list.append(head.k)
+                    head = head.next
         for k in key_list:
-            hash_value = self.aux_hash_func(k)
-            if table[hash_value] is None:
-                table[hash_value] = DLL()
-            table[hash_value].insert(Node(k))
+            self._insert(k, table)
         return table
 
     def delete(self, x):
@@ -98,12 +100,8 @@ class HashChain:
         return ((a * k + b) % p) % self.size
 
     def insert(self, x):
-        if self.table_double:
-            self._grow()
-        hash_value = self.aux_hash_func(x.k)
-        if self.table[hash_value] is None:
-            self.table[hash_value] = DLL()
-        self.table[hash_value].insert(x)
+        self._grow()
+        self._insert(x.k, table=self.table)
 
     def search(self, k):
         hash_value = self.aux_hash_func(k)
