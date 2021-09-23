@@ -54,10 +54,8 @@ from src.clrs.hash_tables.hash_chain import HashChain, is_prime
 class HashOpen(HashChain):
     _DELETED = "DELETED"
 
-    def __init__(
-        self, size, ahf="hash_div", hash_func="linear_probe", table_double=False
-    ):
-        super().__init__(size, ahf, table_double=table_double)
+    def __init__(self, size, hash_func="linear_probe", table_double=False):
+        super().__init__(size, table_double=table_double)
         self.hash_func = getattr(self, hash_func)
 
     def _grow(self):
