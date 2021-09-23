@@ -65,16 +65,18 @@ class HashOpen(HashChain):
         self.hash_func = getattr(self, hash_func)
 
     def _grow(self):
-        none, deleted = self.table.count(None), self.table.count(self._DELETED)
-        if none == 0 and deleted == 0:
-            self.size *= 2
-            self.table = self._rehash()
+        if self.table_double:
+            none, deleted = self.table.count(None), self.table.count(self._DELETED)
+            if none == 0 and deleted == 0:
+                self.size *= 2
+                self.table = self._rehash()
 
     def _reduce(self):
-        none, deleted = self.table.count(None), self.table.count(self._DELETED)
-        if none + deleted >= int(3 * self.size / 4):
-            self.size = int(self.size / 2)
-            self.table = self._rehash()
+        if self.table_double:
+            none, deleted = self.table.count(None), self.table.count(self._DELETED)
+            if none + deleted == int(3 * self.size / 4):
+                self.size = int(self.size / 2)
+                self.table = self._rehash()
 
     def _rehash(self):
         table = [None] * self.size
@@ -92,8 +94,7 @@ class HashOpen(HashChain):
     def delete(self, k):
         hash_value = self.search(k)
         self.table[hash_value] = self._DELETED
-        if self.table_double:
-            self._reduce()
+        self._reduce()
 
     def double_hashing(self, k, i):
         if (self.size & (self.size - 1) == 0) and self.size != 0:
@@ -107,8 +108,7 @@ class HashOpen(HashChain):
         return (h1 + i * h2) % self.size
 
     def insert(self, k):
-        if self.table_double:
-            self._grow()
+        self._grow()
         i = 0
         while i != self.size:
             hash_value = self.hash_func(k, i)
