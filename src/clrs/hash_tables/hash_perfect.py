@@ -44,8 +44,8 @@ class HashPerfect:
         self.keys = keys
         self.m = len(self.keys)
         self.p = kwargs.get("p", None) or next_prime(max(self.keys))
-        self.a = kwargs.get("a", None) or random.choice(list(range(1, self.p)))
-        self.b = kwargs.get("b", None) or random.choice(list(range(0, self.p)))
+        self.a = kwargs.get("a", None) or random.randrange(1, self.p)
+        self.b = kwargs.get("b", None) or random.randrange(0, self.p)
         self._create_table()
 
     def _create_table(self):
