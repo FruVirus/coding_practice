@@ -77,14 +77,10 @@ class HashChain:
         return table
 
     def delete(self, x):
-        if isinstance(x, (int, float)):
-            hash_value = self.aux_hash_func(x)
-        else:
-            hash_value = self.aux_hash_func(x.k)
+        hash_value = self.aux_hash_func(x if isinstance(x, (int, float)) else x.k)
         self.table[hash_value].delete(x)
-        if self.table_double:
-            if self.table[hash_value].head is None:
-                self.table[hash_value] = None
+        if self.table_double and self.table[hash_value].head is None:
+            self.table[hash_value] = None
         self._reduce()
 
     def hash_div(self, k):
@@ -95,8 +91,8 @@ class HashChain:
 
     def hash_uni(self, k, keys, **kwargs):
         p = kwargs.get("p", None) or next_prime(max(keys))
-        a = kwargs.get("a", None) or random.choice(list(range(1, p)))
-        b = kwargs.get("b", None) or random.choice(list(range(0, p)))
+        a = kwargs.get("a", None) or random.randrange(1, p)
+        b = kwargs.get("b", None) or random.randrange(0, p)
         return ((a * k + b) % p) % self.size
 
     def insert(self, x):
