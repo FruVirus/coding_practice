@@ -16,10 +16,10 @@ from src.clrs.hash_tables.hash_chain import is_prime, next_prime
 
 
 def rabin_karp(t, p, radix, q=13):
-    n, m = len(t), len(p)
     if not is_prime(q):
         q = next_prime(q)
     assert radix * q < 2 ** radix - 1
+    n, m = len(t), len(p)
     h, p_, t_ = radix ** (m - 1) % q, 0, 0
     for i in range(m):
         p_, t_ = radix * p_ + int(p[i]), radix * t_ + int(t[i])
