@@ -24,7 +24,7 @@ def compute_transition(p, m, tf, sigma):
             lps = tf[lps][ord(p[i])]
 
 
-def fam(t, p, sigma=256):
+def fa(t, p, sigma=256):
     n, m, q, indices = len(t), len(p), 0, []
     tf = [[0 for _ in range(sigma)] for _ in range(m + 1)]
     compute_transition(p, m, tf, sigma)

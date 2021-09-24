@@ -1,11 +1,11 @@
 # Repository Library
-from clrs.string_matching.finite_automata import fam
+from clrs.string_matching.finite_automata import fa
 
 
-def test_fam():
+def test_fa():
     t = "abababacaba"
     p = "ababaca"
-    assert fam(t, p) == [2]
+    assert fa(t, p) == [2]
     t = "ACACACACAGA AGA ACACAGA ACACAGA GEEKS"
     p = "ACACAGA"
-    assert fam(t, p) == [4, 16, 24]
+    assert fa(t, p) == [4, 16, 24]
