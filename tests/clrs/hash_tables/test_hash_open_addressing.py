@@ -24,7 +24,7 @@ def test_hash_open():
     assert x.search(8) == 8
     x.delete(13)
     assert x.search(4) == 5
-    x = HashOpen(10, hash_func="quadratic_probe")
+    x = HashOpen(10, hash_func="hash_quadratic")
     x.insert(8)
     x.insert(3)
     x.insert(13)
@@ -50,7 +50,7 @@ def test_hash_open():
     x.insert(2)
     x.insert(7)
     assert x.search(666) is None
-    x = HashOpen(8, hash_func="double_hashing")
+    x = HashOpen(8, hash_func="hash_double")
     x.insert(8)
     x.insert(3)
     x.insert(13)
@@ -73,7 +73,7 @@ def test_hash_open():
     assert x.search(4) == 4
     assert x.search(6) == 6
     assert x.search(5) == 7
-    x = HashOpen(11, hash_func="double_hashing")
+    x = HashOpen(11, hash_func="hash_double")
     x.insert(8)
     x.insert(3)
     x.insert(13)
