@@ -60,7 +60,7 @@ class HashChain:
 
     def _reduce(self):
         if self.table_double and self.table.count(None) == int(3 * self.size / 4):
-            self.size = int(self.size / 2)
+            self.size = self.size // 2
             self.table = self._rehash()
 
     def _rehash(self):
