@@ -30,7 +30,7 @@ class Stack:
         assert not self.empty()
         if self.table_double and self.top == self.size // 4:
             self.a = [self.a[i] for i in range(self.size // 2)]
-            self.size = int(self.size / 2)
+            self.size = self.size // 2
         self.top -= 1
 
     def empty(self):
