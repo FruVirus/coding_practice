@@ -25,10 +25,10 @@ def rabin_karp(t, p, radix, q=13):
         p_, t_ = radix * p_ + int(p[i]), radix * t_ + int(t[i])
     p_ %= q
     t_ %= q
-    count = 0
+    indices = []
     for s in range(n - m):
         if p_ == t_ and p == t[s : s + m]:
-            count += 1
+            indices.append(s)
         if s < n - m:
             t_ = (radix * (t_ - int(t[s]) * h) + int(t[s + m])) % q
-    return count
+    return indices
