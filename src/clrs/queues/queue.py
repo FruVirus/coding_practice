@@ -42,7 +42,7 @@ class Queue:
             start = self.head + 1
             end = start + self.size // 2
             self.a = [self.a[i] for i in range(start, end)]
-            self.size = int(self.size / 2)
+            self.size = self.size // 2
             self.tail -= self.head + 1
             self.head = 0
         else:
