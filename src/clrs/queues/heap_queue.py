@@ -1,4 +1,8 @@
-"""HeapQueue is a class that implements a heap-based priority queue.
+"""
+Overview
+========
+
+HeapQueue is a class that implements a heap-based priority queue.
 
 1. _exchange() is a helper method to exchange two elements in the queue array and runs
 in O(1) time.
@@ -20,12 +24,22 @@ Vice versa for min heaps. extract() runs in O(lg(n)) time.
 
 5. get() simply returns the maximum/minimum element from the heap and runs in O(1) time.
 
-6. insert() inserts an element into the key at the correct heap position. increase()
-increases the value of an element's key to a new value, which is assumed to be at least
-as large as the value's current key value. Both insert() and increase() runs in O(lg(n))
+6. insert() inserts an element into the key at the correct heap position. change()
+changes the value of an element's key to a new value, which is assumed to be at least as
+large as the value's current key value. Both insert() and change() runs in O(lg(n))
 time.
 
-O(n * lg(n))
+Complexity
+==========
+
+build(): O(n)
+change: O(lg(n))
+extract(): O(lg(n))
+insert(): O(lg(n))
+heapify(): O(lg(n))
+all others: O(1)
+
+Overall: O(n * lg(n))
 """
 
 
