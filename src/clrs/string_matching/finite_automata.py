@@ -15,8 +15,9 @@ Matching time: O(n)
 """
 
 
-def compute_transition(p, m, tf, sigma):
+def compute_transition(p, m, sigma):
     lps = 0
+    tf = [[0 for _ in range(sigma)] for _ in range(m + 1)]
     tf[0] = [0] * sigma
     tf[0][ord(p[0])] = 1
     for i in range(1, m + 1):
@@ -25,12 +26,12 @@ def compute_transition(p, m, tf, sigma):
         if i < m:
             tf[i][ord(p[i])] = i + 1
             lps = tf[lps][ord(p[i])]
+    return tf
 
 
 def fa(t, p, sigma=256):
     n, m, q, indices = len(t), len(p), 0, []
-    tf = [[0 for _ in range(sigma)] for _ in range(m + 1)]
-    compute_transition(p, m, tf, sigma)
+    tf = compute_transition(p, m, sigma)
     for i in range(n):
         q = tf[q][ord(t[i])]
         if q == m:
