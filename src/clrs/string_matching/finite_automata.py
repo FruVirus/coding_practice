@@ -6,6 +6,9 @@ character exactly once, taking constant time per text character. The matching ti
 At each step, the automaton is merely keeping track of the longest prefix of the pattern
 that is a suffix of what has been read so far.
 
+Complexity
+==========
+
 Preprocessing time: O(m * sigma)
 
 Matching time: O(n)

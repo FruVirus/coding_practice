@@ -30,6 +30,9 @@ In essence, kmp() iterates through the states in the pi table in decreasing orde
 stopping at some state x and then possibly moving to state x + 1 if strings continue to
 match.
 
+Complexity
+==========
+
 Preprocessing time: O(m)
 
 Matching time: O(n)
