@@ -28,9 +28,9 @@ def compute_transition(p, m, sigma):
     return tf
 
 
-def fa(t, p, sigma=256):
+def fa(t, p):
     n, m, q, indices = len(t), len(p), 0, []
-    tf = compute_transition(p, m, sigma)
+    tf = compute_transition(p, m, 256)
     for i in range(n):
         q = tf[q][ord(t[i])]
         if q == m:
