@@ -1,10 +1,17 @@
-"""An AVL tree is a BST that balances itself every time an element is inserted or
-deleted. In addition to the invariants of a BST, each node of an AVL tree has the
-invariant property that the heights of the sub-tree rooted at its children differ by at
-most one: |height(node.left) - height(node.right)| <= 1.
+"""
+Overview
+========
 
-EVery time we insert or delete a node, we need to update the height all the way up the
+An AVL tree is a BST that balances itself every time an element is inserted or deleted.
+In addition to the invariants of a BST, each node of an AVL tree has the invariant
+property that the heights of the sub-tree rooted at its children differ by at most one:
+|height(node.left) - height(node.right)| <= 1.
+
+Every time we insert or delete a node, we need to update the height all the way up the
 ancestry until the height of a node doesn't change.
+
+Complexity
+==========
 
 1. walk() takes O(n) time.
 

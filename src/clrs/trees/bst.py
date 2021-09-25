@@ -1,6 +1,10 @@
-"""A binary search tree (BST) is organized as a binary tree. We can recognize such a
-tree by a linked data structure in which each node is an object. In addition to a key
-and satellite data, each node contains attributes, left, right, and p that point to the
+"""
+Overview
+========
+
+A binary search tree (BST) is organized as a binary tree. We can recognize such a tree
+by a linked data structure in which each node is an object. In addition to a key and
+satellite data, each node contains attributes, left, right, and p that point to the
 nodes corresponding to its left child, its right child, and its parent, respectively. If
 a child or parent is missing, the appropriate attribute contains the value None. The
 root node is the only node in the tree whose parent is None.
@@ -10,6 +14,9 @@ binary-search-tree property:
 
     Let x be a node in a binary search tree. If y is a node in the left subtree of x,
     then y.key <= x.key. If y is a node in the right subtree of x, then y.key >= x.key.
+
+Complexity
+==========
 
 1. walk() takes O(n) time.
 
