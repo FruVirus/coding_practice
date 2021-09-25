@@ -1,4 +1,8 @@
-"""Rabin-Karp is a string-matching algorithm that performs well in practice and also
+"""
+Overview
+========
+
+Rabin-Karp is a string-matching algorithm that performs well in practice and also
 generalizes to other algorithms for related problems, such as two-dimensional pattern
 matching.
 
@@ -8,7 +12,10 @@ If the expected number of valid shifts is small (i.e., we expect few valid match
 we choose the prime q  to be larger than the length of the pattern, then we can expect
 the Rabin-Karp algorithm to use only O(n + m) = O(n) matching time since m <= n.
 
-Rabin-Karp: Theta(m) preprocessing time. Theta((n - m + 1) * m) matching time.
+Complexity
+==========
+
+Theta(m) preprocessing time. Theta((n - m + 1) * m) matching time.
 """
 
 # Repository Library
