@@ -1,4 +1,9 @@
-"""The Knuth-Morris-Pratt algorithm avoids computing the transition function altogether,
+"""
+
+Overview
+========
+
+The Knuth-Morris-Pratt algorithm avoids computing the transition function altogether,
 and its matching time is O(n) using just an auxiliary function pi, which we precompute
 from the pattern in time O(m) and store in an array pi[1...m]. The array pi allows us to
 compute the transition function efficiently (in an amortized sense) on the fly as

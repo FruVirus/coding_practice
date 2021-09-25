@@ -1,4 +1,9 @@
-"""A string finite automaton is a simple function that scans the text string t for all
+"""
+
+Overview
+========
+
+A string finite automaton is a simple function that scans the text string t for all
 occurrences of the pattern p. These automata are very efficient: they examine each text
 character exactly once, taking constant time per text character. The matching time used
 (after preprocessing the pattern to build the automaton) is therefore O(n).
