@@ -1,4 +1,8 @@
-"""In a queue, the element deleted is always the one that has been set for the longest
+"""
+Overview
+========
+
+In a queue, the element deleted is always the one that has been set for the longest
 time: queue implements a first-in, first-out, or FIFO, policy.
 
 The queue has a head and a tail. When an element is enqueued, it takes its place at the
@@ -16,6 +20,9 @@ underflows. When Q.head = Q.tail + 1 or both Q.head = 1 and Q.tail = Q.length, t
 is full, and if we attempt to enqueue an element, then the queue underflows.
 
 NB: Queue mimics table doubling for practice even though it's redundant in Python.
+
+Complexity
+==========
 
 enqueue() and dequeue() each take O(1) time.
 """
