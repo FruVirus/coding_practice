@@ -39,10 +39,8 @@ Matching time: O(n)
 """
 
 
-def kmp_prefix(p):
-    m = len(p)
-    pi = [0] * m
-    k = 0
+def kmp_prefix(p, m):
+    pi, k = [0] * m, 0
     for q in range(1, m):
         while k > 0 and p[k] != p[q]:
             k = pi[k]
@@ -53,8 +51,8 @@ def kmp_prefix(p):
 
 
 def kmp(t, p):
-    n, m, indices, pi = len(t), len(p), [], kmp_prefix(p)
-    i, j = 0, 0
+    n, m, indices, i, j = len(t), len(p), [], 0, 0
+    pi = kmp_prefix(p, m)
     while i < n:
         if p[j] == t[i]:
             i += 1
