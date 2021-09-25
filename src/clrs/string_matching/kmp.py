@@ -41,12 +41,12 @@ Matching time: O(n)
 
 def kmp_prefix(p, m):
     pi, k = [0] * m, 0
-    for q in range(1, m):
-        while k > 0 and p[k] != p[q]:
+    for i in range(1, m):
+        while k > 0 and p[k] != p[i]:
             k = pi[k]
-        if p[k] == p[q]:
+        if p[k] == p[i]:
             k += 1
-        pi[q] = k
+        pi[i] = k
     return pi
 
 
