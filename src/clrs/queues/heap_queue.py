@@ -11,10 +11,12 @@ in O(1) time.
 and right child, respectively, given the node index i. These methods run in O(1) time.
 
 3. build(), which runs in O(n) time, produces a heap (either maximum or minimum) from an
-unordered input array using heapify() and builds the heap in a bottom-up manner.
-heapify(), which runs in O(lg(n)) time, maintains the heap (either maximum or minimum)
-property. Whenever heapify() is called, the two subtrees of that node are both heaps
-(either maximum or minimum).
+unordered input array using heapify() and builds the heap in a bottom-up manner. Only
+half the length of the input array needs to be iterated over since a heap is a complete
+binary tree, which means that approximately half the nodes are leaves that do not need
+to be moved at all during the build process. heapify(), which runs in O(lg(n)) time,
+maintains the heap (either maximum or minimum) property. Whenever heapify() is called,
+the two subtrees of that node are both heaps (either maximum or minimum).
 
 4. extract() extracts the maximum/minimum element from the heap. For max heaps, the
 priority is that the largest number will always be maintained at the root node. With
