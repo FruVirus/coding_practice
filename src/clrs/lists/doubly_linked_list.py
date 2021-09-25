@@ -1,6 +1,10 @@
-"""A linked list is a data structure in which the objects are arranged in a linear
-order. Unlike an array, however, in which the linear order is determined by the array
-indices, the order in a linked list is determined by a pointer in each object.
+"""
+Overview
+========
+
+A linked list is a data structure in which the objects are arranged in a linear order.
+Unlike an array, however, in which the linear order is determined by the array indices,
+the order in a linked list is determined by a pointer in each object.
 
 A doubly linked list L is an object with an attribute key and two other pointer
 attributes: next and prev. Given an element x in the list, x.next points to its
@@ -9,6 +13,9 @@ the element x has no predecessor and is therefore the first element, or head, of
 list. If x.next = None, the element x has no successor and is therefore the last
 element, or tail, of the list. An attribute L.head points to the first element of the
 list. If L.head = None, the list is empty.
+
+Complexity
+==========
 
 delete() takes O(1) time.
 insert() takes O(1) time.
