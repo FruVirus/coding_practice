@@ -7,3 +7,4 @@ def test_random_select():
     b = sorted(a)
     for i, item in enumerate(b):
         assert random_select(a, 0, len(a) - 1, i + 1) == item
+    assert random_select(a, 1, 1, None) == 1
