@@ -1,7 +1,11 @@
-"""A red-black tree (RBT) is a binary search tree with one extra bit of storage per
-node: its color, which can be either RED (0) or BLACK (1). By constraining the node
-colors on any simple path from the root to a leaf, RBTs ensure that no such path is more
-than twice as long as any other, so that the tree is approximately balanced.
+"""
+Overview
+========
+
+A red-black tree (RBT) is a binary search tree with one extra bit of storage per node:
+its color, which can be either RED (0) or BLACK (1). By constraining the node colors on
+any simple path from the root to a leaf, RBTs ensure that no such path is more than
+twice as long as any other, so that the tree is approximately balanced.
 
 Each node of the tree now contains the attributes color, key, left, right, and parent.
 If a child or the parent of a node does not exist, the corresponding pointer attribute
@@ -17,6 +21,9 @@ A RBT is a binary tree that satisfies the following red-black properties:
 number of black nodes.
 
 A RBT tree with n internal nodes has height at most 2* lg(n + 1).
+
+Complexity
+==========
 
 1. walk() takes O(n) time.
 
