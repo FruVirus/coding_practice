@@ -1,9 +1,16 @@
-"""Maximum subarray finds the longest contiguous span of an input array that contains
-the greatest sum over its elements. This problem is only interesting if there is a
+"""
+Overview
+========
+
+Maximum sub-array finds the longest contiguous span of an input array that contains the
+greatest sum over its elements. This problem is only interesting if there is a
 combination of negative and positive numbers in the list. The longest, contiguous
 sub-array must exist in either the left half, right half, or cross over the midpoint of
 the original array. Thus, the problem is divided into finding the longest contiguous
 span in the left half, right half, and cross span.
+
+Complexity
+==========
 
 O(n*lg(n))
 """
