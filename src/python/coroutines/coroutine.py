@@ -90,17 +90,25 @@ print()
 
 
 def producer(sentence, next_coroutine):
-    """Producer which splits strings and feeds it to pattern_filter coroutine."""
+    """Producer which splits strings and feeds it to pattern_filter coroutine.
 
+    NB: This coroutine closes pattern_file() when it is done producing tokens since this
+    means that there are no more patterns to be filtered.
+    """
+
+    print("Producing tokens for: {}".format(sentence))
     tokens = sentence.split(" ")
     for token in tokens:
         next_coroutine.send(token)
+    print("Done with producing tokens!")
     next_coroutine.close()
 
 
 def pattern_filter(pattern="ing", next_coroutine=None):
     """Search for a pattern in the received token and if the pattern is matched, then
     send it to print_token() coroutine for printing.
+
+    NB: This coroutine is closed by producer().
     """
 
     print("Searching for pattern: {}".format(pattern))
@@ -110,11 +118,14 @@ def pattern_filter(pattern="ing", next_coroutine=None):
             if pattern in token:
                 next_coroutine.send(token)
     except GeneratorExit:
-        print("Done with pattern filtering!!")
+        print("Done with pattern filtering!")
 
 
 def print_token():
-    """Act as a sink and simply print the received tokens."""
+    """Act as a sink and simply print the received tokens.
+
+    NB: This coroutine is closed by pattern_filter().
+    """
 
     print("I'm sink. I'll print tokens!")
     try:
@@ -130,5 +141,5 @@ pt.__next__()
 pf = pattern_filter(next_coroutine=pt)
 pf.__next__()
 
-sentence = "Bob is running behind a fast moving car"
+sentence = "Bob is running behind a fast moving car."
 producer(sentence, pf)
