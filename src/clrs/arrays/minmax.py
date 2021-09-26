@@ -1,6 +1,13 @@
-"""Min-max finds the minimum and maximum elements in an array in O(n) time.
+"""
+Overview
+========
 
-O(n) time in no more than 3 * floor(n / 2) comparison.
+Min-max finds the minimum and maximum elements in an array in O(n) time.
+
+Complexity
+==========
+
+O(n) time in no more than 3 * floor(n / 2) comparisons.
 """
 
 
