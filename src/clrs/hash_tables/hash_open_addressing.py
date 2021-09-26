@@ -1,4 +1,8 @@
-"""A hash table is an effective data structure for implementing dictionaries and their
+"""
+Overview
+========
+
+A hash table is an effective data structure for implementing dictionaries and their
 operations: INSERT, DELETE, and SEARCH. Although searching for an element in a hash
 table can take as long as searching for an element in a linked list (Theta(n) time), in
 practice, hashing performs extremely well. Under reasonable assumptions, the average
@@ -33,6 +37,9 @@ hash table position is eventually considered as a slot for a new key as the tabl
 up.
 
 NB: HashOpen mimics table doubling for practice even though it's redundant in Python.
+
+Complexity
+==========
 
 insertion: Requires at most 1 / (1 - alpha) probes on average, assuming uniform hashing.
 
