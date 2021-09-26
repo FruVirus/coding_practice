@@ -1,4 +1,11 @@
-"""Random select returns the i-th smallest element of its input array.
+"""
+Overview
+========
+
+Random select returns the i-th smallest element of its input array.
+
+Complexity
+==========
 
 E[O(n)] time
 """
