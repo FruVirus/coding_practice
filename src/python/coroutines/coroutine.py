@@ -136,10 +136,9 @@ def print_token():
         print("Done with printing!")
 
 
+sentence = "Bob is running behind a fast moving car."
 pt = print_token()
 pt.__next__()
 pf = pattern_filter(next_coroutine=pt)
 pf.__next__()
-
-sentence = "Bob is running behind a fast moving car."
 producer(sentence, pf)
