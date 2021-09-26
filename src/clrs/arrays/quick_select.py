@@ -1,8 +1,15 @@
-"""Quick select returns the i-th smallest element of its input array in worst case O(n).
-select.py differs from random_select.py in that the former guarantees a good split upon
-partitioning the input array, thus improving the worst case selection time. select.py
-uses the deterministic partitioning algorithm from quick sort but modified to take the
-element to partition around as an input parameter.
+"""
+Overview
+========
+
+Quick select returns the i-th smallest element of its input array in worst case O(n).
+quick_select.py differs from random_select.py in that the former guarantees a good split
+upon partitioning the input array, thus improving the worst case selection time.
+quick_select.py uses the deterministic partitioning algorithm from quick sort but
+modified to take the element to partition around as an input parameter.
+
+Complexity
+==========
 
 O(n) worst case
 """
