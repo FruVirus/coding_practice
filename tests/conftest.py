@@ -44,6 +44,12 @@ def pytest_addoption(parser):
         default=False,
         help="Run Leet Code tests only.",
     )
+    parser.addoption(
+        "--python_only",
+        action="store_true",
+        default=False,
+        help="Run Python tests only.",
+    )
 
 
 def pytest_collection_modifyitems(config, items):
@@ -71,3 +77,15 @@ def pytest_collection_modifyitems(config, items):
         for item in items:
             if "leet_only" in item.keywords:
                 item.add_marker(skip_leet)
+    if config.getoption("--python_only"):
+        skip_nonpython = pytest.mark.skip(
+            reason="Skipping when --python_only option given."
+        )
+        for item in items:
+            if "python_only" not in item.keywords:
+                item.add_marker(skip_nonpython)
+    else:
+        skip_python = pytest.mark.skip(reason="Need --python_only option to run.")
+        for item in items:
+            if "python_only" in item.keywords:
+                item.add_marker(skip_python)
