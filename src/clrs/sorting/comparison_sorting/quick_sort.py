@@ -1,6 +1,10 @@
-"""Quicksort, like merge sort, is a divide and conquer algorithm that sorts in place.
+"""
+Overview
+========
 
-For a typical subarray A[p...r]:
+Quicksort, like merge sort, is a divide and conquer algorithm that sorts in place.
+
+For a typical sub-array A[p...r]:
 
 Divide: Partition (rearrange) the array A[p...r] into two (possibly empty) sub-arrays
 A[p...q - 1] and A[q + 1...r] such that each element of A[p...q - 1] is less than or
@@ -8,7 +12,7 @@ equal to A[q], which is, in turn, less than or equal to each element of A[q + 1.
 Compute the index q as part of this partitioning procedure.
 
 partition() selects an element x = A[r] as a pivot element around which to partition the
-subarray A[p...r]. As the procedure runs, it partitions the array into four (possible
+sub-array A[p...r]. As the procedure runs, it partitions the array into four (possible
 empty) regions. At the start of each iteration of the for-loop, the regions satisfy
 certain properties:
 
@@ -30,6 +34,9 @@ extra stack space required with each recursive call. The running time of quickso
 dominated by the time spent in the partition() function.
 
 To sort an entire array A, the initial call is quicksort(A, 0, len(A) - 1).
+
+Complexity
+==========
 
 quicksort():
     O(n^2) worst case --> when the partitioning routine produces one sub-problem with

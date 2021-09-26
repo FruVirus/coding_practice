@@ -1,10 +1,17 @@
-"""merge_sort() repeatedly splits the problem in half until we reach the base case where
+"""
+Overview
+========
+
+merge_sort() repeatedly splits the problem in half until we reach the base case where
 there's only one element in the list. merge() then compares the single element lists,
 sorts them, and combines them into a new list. Each successive call to merge() sees
 increasingly larger lists until we end up comparing half of the original list with its
 other half and doing one last final sort between each of the two sorted halves.
 
 Merge sort is an asymptotically optimal comparison sort.
+
+Complexity
+==========
 
 Stable
 O(n*lg(n))

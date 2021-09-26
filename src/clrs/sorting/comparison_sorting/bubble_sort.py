@@ -1,6 +1,13 @@
-"""bubble_sort() works backwards through the list N times, where N is the number of
-items in the list. For each backwards pass, we compare two adjacent items in the list
-and swap their places if necessary.
+"""
+Overview
+========
+
+bubble_sort() works backwards through the list N times, where N is the number of items
+in the list. For each backwards pass, we compare two adjacent items in the list and swap
+their places if necessary.
+
+Complexity
+==========
 
 O(n^2)
 """

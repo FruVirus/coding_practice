@@ -1,4 +1,8 @@
-"""HeapSort is a class that implements heap sorting on an unordered input array.
+"""
+Overview
+========
+
+HeapSort is a class that implements heap sorting on an unordered input array.
 
 1. _exchange() is a helper method to exchange two elements in the queue array.
 
@@ -17,6 +21,9 @@ item in the heap array to the i-th element. Each time the movement is conducted,
 heap array is rebuilt with a smaller heap size.
 
 Heap sort is an asymptotically optimal comparison sort.
+
+Complexity
+==========
 
 Not stable
 O(n * lg(n))
