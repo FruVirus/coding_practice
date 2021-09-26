@@ -1,4 +1,8 @@
-"""A hash table is an effective data structure for implementing dictionaries and their
+"""
+Overview
+========
+
+A hash table is an effective data structure for implementing dictionaries and their
 operations: INSERT, DELETE, and SEARCH. Although searching for an element in a hash
 table can take as long as searching for an element in a linked list (Theta(n) time), in
 practice, hashing performs extremely well. Under reasonable assumptions, the average
@@ -35,7 +39,11 @@ functions is more likely than not to have no collisions. However, one must still
 some trial and error before finding a collision-free hash function for a given set of
 (static) keys.
 
-search: O(1) in the worst case.
+Complexity
+==========
+
+search: O(1) in the worst case
+memory: O(n)
 """
 
 # Standard Library
