@@ -1,5 +1,12 @@
-"""Computes a fast inner product of two lists assuming that each list has been sorted by
+"""
+Overview
+========
+
+Computes a fast inner product of two lists assuming that each list has been sorted by
 their first elements.
+
+Complexity
+==========
 
 O(|l1| + |l2|) vs. O(|l1|*|l2|) for a brute force inner product implementation.
 """
