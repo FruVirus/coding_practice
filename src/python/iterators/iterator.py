@@ -29,6 +29,7 @@ while True:
         print(next(iterator))
     except StopIteration:
         break
+print()
 
 
 class MyIterator:
