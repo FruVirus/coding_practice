@@ -127,7 +127,7 @@ def print_token():
     NB: This coroutine is closed by pattern_filter().
     """
 
-    print("I'm sink. I'll print tokens!")
+    print("I'm a sink. I'll print tokens!")
     try:
         while True:
             token = yield
