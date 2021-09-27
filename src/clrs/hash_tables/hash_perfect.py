@@ -69,7 +69,7 @@ class HashPerfect:
     def _create_table(self):
         n, self.table = [0] * self.m, [None] * self.m
         for k in self.keys:
-            hash_value = self._get_hash_value(self.a, self.b, self.p, self.m, k)
+            hash_value = self._get_hash_value(k=k)
             n[hash_value] += 1
         for m in range(self.m):
             if n[m] > 1:
@@ -81,15 +81,18 @@ class HashPerfect:
             else:
                 self.table[hash_value] = k
 
-    @staticmethod
-    def _get_hash_value(a, b, p, m, k):
+    def _get_hash_value(self, a=None, b=None, m=None, p=None, k=None):
+        a = a or self.a
+        b = b or self.b
+        m = m or self.m
+        p = p or self.p
         return ((a * k + b) % p) % m
 
     def hash(self, k):
-        hash_value = self._get_hash_value(self.a, self.b, self.p, self.m, k)
+        hash_value = self._get_hash_value(k=k)
         a, b, index = A_LIST[hash_value], B_LIST[hash_value], None
         if isinstance(self.table[hash_value], list):
-            index = self._get_hash_value(a, b, self.p, len(self.table[hash_value]), k)
+            index = self._get_hash_value(a, b, len(self.table[hash_value]), k=k)
         return hash_value, index
 
     def search(self, k):
