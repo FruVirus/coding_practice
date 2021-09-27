@@ -68,8 +68,8 @@ def row_rolling_hash(t_list, t, next_row, prows, radix, q):
 def rabin_karp2d(t, p, radix=256, q=101):
     if not is_prime(q):
         q = next_prime(q)
-    assert radix * q < 2 ** radix - 1
     trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
+    assert radix * q < 2 ** radix - 1
     assert trows >= prows
     assert tcols >= pcols
     p_list, t_list = col_hash(t, p, tcols, pcols, prows, radix, q)
