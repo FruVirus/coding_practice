@@ -19,7 +19,7 @@ Theta(m) preprocessing time. Theta((n - m + 1) * m) matching time.
 """
 
 # Repository Library
-from src.clrs.hash_tables.hash_chain import is_prime, next_prime
+from src.clrs.numerics.next_prime import is_prime, next_prime
 
 
 def rabin_karp(t, p, radix, q=13):

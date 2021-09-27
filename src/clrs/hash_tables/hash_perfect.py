@@ -50,7 +50,7 @@ memory: O(n)
 import random
 
 # Repository Library
-from src.clrs.hash_tables.hash_chain import next_prime
+from src.clrs.numerics.next_prime import next_prime
 
 # Define globals.
 A_LIST = [27, None, 48, None, None, 16, None, 48, None]

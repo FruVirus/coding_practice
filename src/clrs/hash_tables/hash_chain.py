@@ -44,6 +44,7 @@ import random
 # Repository Library
 from src.clrs.lists.doubly_linked_list import DLL
 from src.clrs.lists.singly_linked_list import Node
+from src.clrs.numerics.next_prime import next_prime
 
 
 class HashChain:
@@ -110,25 +111,3 @@ class HashChain:
         if self.table[hash_value] is not None:
             return self.table[hash_value].search(k)
         return None
-
-
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    for i in range(5, n // 2 + 1, 6):
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-    return True
-
-
-def next_prime(n):
-    if n <= 1:
-        return 2
-    while True:
-        n += 1
-        if is_prime(n):
-            return n

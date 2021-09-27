@@ -55,7 +55,8 @@ selected as a collision resolution technique when keys must be deleted.
 """
 
 # Repository Library
-from src.clrs.hash_tables.hash_chain import HashChain, is_prime
+from src.clrs.hash_tables.hash_chain import HashChain
+from src.clrs.numerics.next_prime import is_prime
 
 
 class HashOpen(HashChain):
