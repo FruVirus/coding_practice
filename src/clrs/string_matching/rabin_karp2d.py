@@ -69,11 +69,12 @@ def rabin_karp2d(t, p, radix=256, q=101):
     if not is_prime(q):
         q = next_prime(q)
     assert radix * q < 2 ** radix - 1
-    indices = []
     trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
+    assert trows >= prows
+    assert tcols >= pcols
     p_list, t_list = col_hash(t, p, tcols, pcols, prows, radix, q)
     n_pcols, n_tcols = len(p_list), len(t_list)
-    p_ = row_hash(p_list, n_pcols, radix, q)
+    indices, p_ = [], row_hash(p_list, n_pcols, radix, q)
     for i in range(prows - 1, trows):
         col, t_ = 0, row_hash(t_list, n_pcols, radix, q)
         if p_ == t_:

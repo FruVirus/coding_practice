@@ -22,3 +22,6 @@ def test_rabin_karp2d():
     ]
     p = [["E", "F"], ["H", "I"]]
     assert rabin_karp2d(t, p) == [[0, 0], [0, 3], [2, 0], [2, 3]]
+    t = [["E", "F", "C", "E", "F"]]
+    p = [["F", "C"]]
+    assert rabin_karp2d(t, p) == [[0, 1]]
