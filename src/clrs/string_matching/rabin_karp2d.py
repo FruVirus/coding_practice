@@ -27,20 +27,20 @@ from src.clrs.numerics.next_prime import is_prime, next_prime
 
 
 def check_equal(t, p, row, col, pcols, prows, indices):
-    t = [t[i][col : pcols + col] for i in range(row, prows + row)]
+    t = [t[i][col : col + pcols] for i in range(row, row + prows)]
     if t == p:
         indices.append([row, col])
 
 
 def col_hash(t, p, tcols, pcols, prows, radix, q):
-    p_list, t_list = [], []
-    for list_, a, cols in zip((p_list, t_list), (p, t), (pcols, tcols)):
+    t_list, p_list = [], []
+    for list_, a, cols in zip((t_list, p_list), (t, p), (tcols, pcols)):
         for i in range(cols):
             h = 0
             for j in range(prows - 1, -1, -1):
                 h += radix ** (prows - j - 1) * ord(a[j][i]) % q
             list_.append(h % q)
-    return p_list, t_list
+    return t_list, p_list
 
 
 def col_rolling_hash(t_list, t_, col, n_pcols, radix, q):
@@ -70,10 +70,12 @@ def rabin_karp2d(t, p, radix=256, q=101):
         q = next_prime(q)
     trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
     assert radix * q < 2 ** radix - 1
-    assert isinstance(t[0], list) and trows >= prows
-    assert isinstance(p[0], list) and tcols >= pcols
-    p_list, t_list = col_hash(t, p, tcols, pcols, prows, radix, q)
-    n_pcols, n_tcols = len(p_list), len(t_list)
+    assert isinstance(t[0], list)
+    assert trows >= prows
+    assert isinstance(p[0], list)
+    assert tcols >= pcols
+    t_list, p_list = col_hash(t, p, tcols, pcols, prows, radix, q)
+    n_tcols, n_pcols = len(t_list), len(p_list)
     indices, p_ = [], row_hash(p_list, n_pcols, radix, q)
     for i in range(prows - 1, trows):
         col, t_ = 0, row_hash(t_list, n_pcols, radix, q)
