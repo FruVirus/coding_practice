@@ -62,7 +62,6 @@ def row_rolling_hash(t_list, t, next_row, prows, radix, q):
         t_ = (t_ * radix + ord(t[next_row][i])) % q
         t_ -= (radix ** prows * ord(t[next_row - prows][i])) % q
         t_list[i] = t_ % q
-    return t_list
 
 
 def rabin_karp2d(t, p, radix=256, q=101):
@@ -84,5 +83,5 @@ def rabin_karp2d(t, p, radix=256, q=101):
             if p_ == t_:
                 check_equal(t, p, i + 1 - prows, col, pcols, prows, indices)
         if i + 1 < trows:
-            t_list = row_rolling_hash(t_list, t, i + 1, prows, radix, q)
+            row_rolling_hash(t_list, t, i + 1, prows, radix, q)
     return indices
