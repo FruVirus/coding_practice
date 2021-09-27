@@ -8,6 +8,11 @@ than the current item, then we perform a swap of the two items and decrement the
 position of the previous item. By swapping and decrementing the index position of the
 previous item, we continuously move the i-th item in a to its correctly sorted position.
 
+NB: Even if we use binary search to find each insertion point, the complexity is still
+O(n^2). While binary insertion sorting improves the time it takes to find the right
+position for the next element being inserted, it may still take O(n) time to perform the
+swaps necessary to shift it into place.
+
 Complexity
 ==========
 
