@@ -69,8 +69,6 @@ def rabin_karp2d(t, p, radix=256, q=101):
         q = next_prime(q)
     trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
     assert radix * q < 2 ** radix - 1
-    assert isinstance(t[0], list) and isinstance(p[0], list)
-    assert trows >= prows and tcols >= pcols
     t_list, p_list = col_hash(t, p, tcols, pcols, prows, radix, q)
     n_tcols, n_pcols = len(t_list), len(p_list)
     indices, p_ = [], row_hash(p_list, n_pcols, radix, q)
