@@ -61,8 +61,7 @@ def row_rolling_hash(t_list, t, next_row, prows, radix, q):
     for i, t_ in enumerate(t_list):
         t_ = (t_ * radix + ord(t[next_row][i])) % q
         t_ -= (radix ** prows * ord(t[next_row - prows][i])) % q
-        t_ %= q
-        t_list[i] = t_
+        t_list[i] = t_ % q
     return t_list
 
 
