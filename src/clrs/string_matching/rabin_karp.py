@@ -26,13 +26,11 @@ def rabin_karp(t, p, radix, q=13):
     if not is_prime(q):
         q = next_prime(q)
     assert radix * q < 2 ** radix - 1
+    indices = []
     n, m = len(t), len(p)
     h, p_, t_ = radix ** (m - 1) % q, 0, 0
     for i in range(m):
-        p_, t_ = radix * p_ + int(p[i]), radix * t_ + int(t[i])
-    p_ %= q
-    t_ %= q
-    indices = []
+        p_, t_ = (radix * p_ + int(p[i])) % q, (radix * t_ + int(t[i])) % q
     for s in range(n - m):
         if p_ == t_ and p == t[s : s + m]:
             indices.append(s)

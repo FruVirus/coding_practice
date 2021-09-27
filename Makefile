@@ -38,7 +38,7 @@ lint:
 # Run all tests and get coverage report.
 test:
 	export PYTHONPATH=$(REPO_DIR)/src:PYTHONPATH && \
-	pytest -v --cov-report term-missing --cov=src/clrs tests/
+	pytest -v --cov-report term-missing --cov=src/clrs --cov=src/leet tests/
 
 test-clrs-only:
 	export PYTHONPATH=$(REPO_DIR)/src:PYTHONPATH && \
@@ -46,4 +46,4 @@ test-clrs-only:
 
 test-leet-only:
 	export PYTHONPATH=$(REPO_DIR)/src:PYTHONPATH && \
-	pytest -v --cov-report term-missing --cov=src/clrs tests/ --leet_only
+	pytest -v --cov-report term-missing --cov=src/leet tests/ --leet_only
