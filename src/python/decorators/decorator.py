@@ -226,13 +226,13 @@ print()
 
 
 def decodecorator(data_type, message1, message2):
-    def decorator(fun):
+    def decorator(func):
         print(message1)
 
         def wrapper(*args, **kwargs):
             print(message2)
             if all(isinstance(arg, data_type) for arg in args):
-                return fun(*args, **kwargs)
+                return func(*args, **kwargs)
             return "Invalid Input"
 
         return wrapper
@@ -253,4 +253,26 @@ def summation(*args):
 print(stringjoin("I ", "like ", "Fru", "and", "Poo"))
 print()
 print(summation(19, 2, 8, 533, 67, 981, 119))
+print()
+
+
+def stringjoin2(*args):
+    return " ".join(args)
+
+
+def summation2(*args):
+    return sum(args)
+
+
+print(
+    decodecorator(str, "Decorator for 'stringjoin'", "stringjoin started...")(
+        stringjoin2
+    )("I", "like", "Fru", "and", "Poo")
+)
+print()
+print(
+    decodecorator(int, "Decorator for 'summation'", "summation started...")(summation2)(
+        19, 2, 8, 533, 67, 981, 119
+    )
+)
 print()
