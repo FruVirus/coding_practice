@@ -42,6 +42,21 @@ def col_rolling_hash(t_list, t_, col, n_pcols, radix, q):
     return t_
 
 
+def init(t, p, radix, q):
+    if not is_prime(q):
+        q = next_prime(q)
+    assert radix * q < 2 ** radix - 1
+    if isinstance(t[0], list) and isinstance(p[0], list):
+        trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
+        t_list, p_list = row_hash(t, p, tcols, pcols, prows, radix, q)
+    else:
+        trows, prows, tcols, pcols = 1, 1, len(t), len(p)
+        t_list, p_list = row_hash([t], [p], tcols, pcols, prows, radix, q)
+    n_tcols, n_pcols = len(t_list), len(p_list)
+    indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
+    return t_list, n_tcols, n_pcols, trows, pcols, prows, p_, indices
+
+
 def row_hash(t, p, tcols, pcols, prows, radix, q):
     t_list, p_list = [], []
     for list_, a, cols in zip((t_list, p_list), (t, p), (tcols, pcols)):
@@ -54,17 +69,10 @@ def row_hash(t, p, tcols, pcols, prows, radix, q):
 
 
 def rabin_karp(t, p, radix=256, q=101):
-    if not is_prime(q):
-        q = next_prime(q)
-    assert radix * q < 2 ** radix - 1
-    t_array, p_array = [t], [p]
-    tcols, pcols, prows, indices = len(t_array[0]), len(p_array[0]), 1, []
-    t_list, p_list = row_hash(t_array, p_array, tcols, pcols, prows, radix, q)
-    n_tcols, n_pcols = len(t_list), len(p_list)
-    indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
+    t_list, n_tcols, n_pcols, _, pcols, prows, p_, indices = init(t, p, radix, q)
     col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
     for i in range(n_pcols, n_tcols):
         if p_ == t_:
-            check_equal(t_array, p_array, 0, col, pcols, prows, indices)
+            check_equal([t], [p], 0, col, pcols, prows, indices)
         col, t_ = col + 1, col_rolling_hash(t_list, t_, i, n_pcols, radix, q)
     return indices

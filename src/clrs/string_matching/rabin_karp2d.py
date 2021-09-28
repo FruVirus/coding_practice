@@ -23,12 +23,11 @@ Theta(m) preprocessing time. Theta((n - m + 1) * m) matching time.
 """
 
 # Repository Library
-from src.clrs.numerics.next_prime import is_prime, next_prime
 from src.clrs.string_matching.rabin_karp import (
     check_equal,
     col_hash,
     col_rolling_hash,
-    row_hash,
+    init,
 )
 
 
@@ -40,13 +39,7 @@ def row_rolling_hash(t_list, t, next_row, prows, radix, q):
 
 
 def rabin_karp2d(t, p, radix=256, q=101):
-    if not is_prime(q):
-        q = next_prime(q)
-    assert radix * q < 2 ** radix - 1
-    trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
-    t_list, p_list = row_hash(t, p, tcols, pcols, prows, radix, q)
-    n_tcols, n_pcols = len(t_list), len(p_list)
-    indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
+    t_list, n_tcols, n_pcols, trows, pcols, prows, p_, indices = init(t, p, radix, q)
     for i in range(prows - 1, trows):
         col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
         if p_ == t_:
