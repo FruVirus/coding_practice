@@ -38,7 +38,7 @@ def col_hash(t, p, tcols, pcols, prows, radix, q):
         for i in range(cols):
             h = 0
             for j in range(prows - 1, -1, -1):
-                h += radix ** (prows - j - 1) * ord(a[j][i]) % q
+                h += (radix ** (prows - j - 1) * ord(a[j][i])) % q
             list_.append(h % q)
     return t_list, p_list
 
