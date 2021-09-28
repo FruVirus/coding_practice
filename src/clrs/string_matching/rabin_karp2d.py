@@ -42,12 +42,10 @@ def rabin_karp2d(t, p, radix=256, q=101):
     t_list, n_tcols, n_pcols, trows, pcols, prows, p_, indices = init(t, p, radix, q)
     for i in range(prows - 1, trows):
         col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
-        if p_ == t_:
-            check_equal(t, p, i + 1 - prows, col, pcols, prows, indices)
+        check_equal(t, p, t_, p_, i + 1 - prows, col, pcols, prows, indices)
         for j in range(n_pcols, n_tcols):
             col, t_ = col + 1, col_rolling_hash(t_list, t_, j, n_pcols, radix, q)
-            if p_ == t_:
-                check_equal(t, p, i + 1 - prows, col, pcols, prows, indices)
+            check_equal(t, p, t_, p_, i + 1 - prows, col, pcols, prows, indices)
         if i + 1 < trows:
             row_rolling_hash(t_list, t, i + 1, prows, radix, q)
     return indices
