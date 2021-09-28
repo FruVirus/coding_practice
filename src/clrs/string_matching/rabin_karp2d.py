@@ -24,37 +24,12 @@ Theta(m) preprocessing time. Theta((n - m + 1) * m) matching time.
 
 # Repository Library
 from src.clrs.numerics.next_prime import is_prime, next_prime
-
-
-def check_equal(t, p, row, col, pcols, prows, indices):
-    t = [t[i][col : col + pcols] for i in range(row, row + prows)]
-    if p == t:
-        indices.append([row, col])
-
-
-def col_hash(t, p, tcols, pcols, prows, radix, q):
-    t_list, p_list = [], []
-    for list_, a, cols in zip((t_list, p_list), (t, p), (tcols, pcols)):
-        for i in range(cols):
-            h = 0
-            for j in range(prows - 1, -1, -1):
-                h += (radix ** (prows - j - 1) * ord(a[j][i])) % q
-            list_.append(h % q)
-    return t_list, p_list
-
-
-def col_rolling_hash(t_list, t_, col, n_pcols, radix, q):
-    t_ = (t_ * radix + t_list[col]) % q
-    t_ -= (radix ** n_pcols * t_list[col - n_pcols]) % q
-    t_ %= q
-    return t_
-
-
-def row_hash(list_, n_pcols, radix, q):
-    h = 0
-    for i in range(n_pcols):
-        h += (radix ** (n_pcols - i - 1) * list_[i]) % q
-    return h % q
+from src.clrs.string_matching.rabin_karp import (
+    check_equal,
+    col_hash,
+    col_rolling_hash,
+    row_hash,
+)
 
 
 def row_rolling_hash(t_list, t, next_row, prows, radix, q):
@@ -69,11 +44,11 @@ def rabin_karp2d(t, p, radix=256, q=101):
         q = next_prime(q)
     assert radix * q < 2 ** radix - 1
     trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
-    t_list, p_list = col_hash(t, p, tcols, pcols, prows, radix, q)
+    t_list, p_list = row_hash(t, p, tcols, pcols, prows, radix, q)
     n_tcols, n_pcols = len(t_list), len(p_list)
-    indices, p_ = [], row_hash(p_list, n_pcols, radix, q)
+    indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
     for i in range(prows - 1, trows):
-        col, t_ = 0, row_hash(t_list, n_pcols, radix, q)
+        col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
         if p_ == t_:
             check_equal(t, p, i + 1 - prows, col, pcols, prows, indices)
         for j in range(n_pcols, n_tcols):

@@ -22,18 +22,49 @@ Theta(m) preprocessing time. Theta((n - m + 1) * m) matching time.
 from src.clrs.numerics.next_prime import is_prime, next_prime
 
 
-def rabin_karp(t, p, radix, q=13):
+def check_equal(t, p, row, col, pcols, prows, indices):
+    t = [t[i][col : col + pcols] for i in range(row, row + prows)]
+    if p == t:
+        indices.append([row, col])
+
+
+def col_hash(list_, n_pcols, radix, q):
+    h = 0
+    for i in range(n_pcols):
+        h += (radix ** (n_pcols - i - 1) * list_[i]) % q
+    return h % q
+
+
+def col_rolling_hash(t_list, t_, col, n_pcols, radix, q):
+    t_ = (t_ * radix + t_list[col]) % q
+    t_ -= (radix ** n_pcols * t_list[col - n_pcols]) % q
+    t_ %= q
+    return t_
+
+
+def row_hash(t, p, tcols, pcols, prows, radix, q):
+    t_list, p_list = [], []
+    for list_, a, cols in zip((t_list, p_list), (t, p), (tcols, pcols)):
+        for i in range(cols):
+            h = 0
+            for j in range(prows - 1, -1, -1):
+                h += (radix ** (prows - j - 1) * ord(a[j][i])) % q
+            list_.append(h % q)
+    return t_list, p_list
+
+
+def rabin_karp(t, p, radix=256, q=101):
     if not is_prime(q):
         q = next_prime(q)
     assert radix * q < 2 ** radix - 1
-    indices = []
-    n, m = len(t), len(p)
-    h, p_, t_ = radix ** (m - 1) % q, 0, 0
-    for i in range(m):
-        p_, t_ = (radix * p_ + int(p[i])) % q, (radix * t_ + int(t[i])) % q
-    for s in range(n - m):
-        if p_ == t_ and p == t[s : s + m]:
-            indices.append(s)
-        if s < n - m:
-            t_ = (radix * (t_ - int(t[s]) * h) + int(t[s + m])) % q
+    t_array, p_array = [t], [p]
+    tcols, pcols, prows, indices = len(t_array[0]), len(p_array[0]), 1, []
+    t_list, p_list = row_hash(t_array, p_array, tcols, pcols, prows, radix, q)
+    n_tcols, n_pcols = len(t_list), len(p_list)
+    indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
+    col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
+    for i in range(n_pcols, n_tcols):
+        if p_ == t_:
+            check_equal(t_array, p_array, 0, col, pcols, prows, indices)
+        col, t_ = col + 1, col_rolling_hash(t_list, t_, i, n_pcols, radix, q)
     return indices
