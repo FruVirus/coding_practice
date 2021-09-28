@@ -46,11 +46,11 @@ def col_rolling_hash(t_list, t_, col, n_pcols, radix, q):
     return t_
 
 
-def init(t, p, radix, q):
+def init(t, p, radix, q, is_2d=True):
     if not is_prime(q):
         q = next_prime(q)
     assert radix * q < 2 ** radix - 1
-    if isinstance(t[0], list) and isinstance(p[0], list):
+    if is_2d:
         trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
         t_list, p_list = row_hash(t, p, tcols, pcols, prows, radix, q)
     else:
@@ -73,7 +73,7 @@ def row_hash(t, p, tcols, pcols, prows, radix, q):
 
 
 def rabin_karp(t, p, radix=256, q=101):
-    t_list, n_tcols, n_pcols, _, pcols, prows, p_, indices = init(t, p, radix, q)
+    t_list, n_tcols, n_pcols, _, pcols, prows, p_, indices = init(t, p, radix, q, False)
     col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
     for i in range(n_pcols, n_tcols):
         check_equal(t, p, t_, p_, 0, col, pcols, prows, indices)
