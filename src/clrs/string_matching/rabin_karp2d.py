@@ -39,7 +39,9 @@ def row_rolling_hash(t_list, t, next_row, prows, radix, q):
 
 
 def rabin_karp2d(t, p, radix=256, q=101):
-    t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices = init(t, p, radix, q)
+    t, p, t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices = init(
+        t, p, radix, q
+    )
     for i in range(prows - 1, trows):
         col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
         check_equal(t, p, t_, p_, i + 1 - prows, col, pcols, prows, indices)
