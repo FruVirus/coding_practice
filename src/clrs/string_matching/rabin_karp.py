@@ -22,10 +22,10 @@ Theta(m) preprocessing time. Theta((n - m + 1) * m) matching time.
 from src.clrs.numerics.next_prime import is_prime, next_prime
 
 
-def check_equal(t, p, t_, p_, row, col, pcols, prows, indices):
+def check_equal(t, p, t_, p_, row, col, pcols, prows, indices, is_2d=True):
     if p_ != t_:
         return
-    if not isinstance(t[0], list) and not isinstance(p[0], list):
+    if not is_2d:
         t, p = [t], [p]
     t = [t[i][col : col + pcols] for i in range(row, row + prows)]
     if p == t:
@@ -58,7 +58,7 @@ def init(t, p, radix, q, is_2d=True):
         t_list, p_list = row_hash([t], [p], tcols, pcols, prows, radix, q)
     n_tcols, n_pcols = len(t_list), len(p_list)
     indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
-    return t_list, n_tcols, n_pcols, trows, pcols, prows, p_, indices
+    return t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices
 
 
 def row_hash(t, p, tcols, pcols, prows, radix, q):
@@ -73,9 +73,9 @@ def row_hash(t, p, tcols, pcols, prows, radix, q):
 
 
 def rabin_karp(t, p, radix=256, q=101):
-    t_list, n_tcols, n_pcols, _, pcols, prows, p_, indices = init(t, p, radix, q, False)
+    t_list, n_tcols, n_pcols, _, prows, pcols, p_, indices = init(t, p, radix, q, False)
     col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
     for i in range(n_pcols, n_tcols):
-        check_equal(t, p, t_, p_, 0, col, pcols, prows, indices)
+        check_equal(t, p, t_, p_, 0, col, pcols, prows, indices, False)
         col, t_ = col + 1, col_rolling_hash(t_list, t_, i, n_pcols, radix, q)
     return indices
