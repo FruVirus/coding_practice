@@ -46,19 +46,16 @@ def gcd(a, b):
 
 
 def gcd_multi(*args):
-    n = len(args)
-    x_list = [None] * n
-    f, g = -2, -1
+    c_list, i = [None] * len(args), -1
     while len(args) > 2:
         d, x_, y_ = gcd(args[-2], args[-1])
-        if abs(f) != n:
-            x_list[f] = x_ if x_list[f] is None else x_list[f] * x_
-        x_list[g] = y_ if x_list[g] is None else x_list[g] * y_
+        c_list[i] = y_ if c_list[i] is None else c_list[i] * y_
+        if abs(i - 1) != len(args):
+            c_list[i - 1] = x_ if c_list[i - 1] is None else c_list[i - 1] * x_
         args = args[:-2] + (d,)
-        f -= 1
-        g -= 1
+        i -= 1
     d, x, y = gcd(args[0], args[1])
-    x_list[0] = x
-    for i in range(1, len(x_list)):
-        x_list[i] = y if x_list[i] is None else x_list[i] * y
-    return d, x_list
+    c_list[0] = x
+    for i in range(1, len(c_list)):
+        c_list[i] = y if c_list[i] is None else c_list[i] * y
+    return d, c_list
