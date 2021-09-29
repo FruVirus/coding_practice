@@ -43,7 +43,7 @@ Matching time: O(n)
 """
 
 
-def kmp_prefix(p, m):
+def compute_pi_table(p, m):
     pi, k = [0] * m, 0
     for i in range(1, m):
         while k > 0 and p[k] != p[i]:
@@ -56,7 +56,7 @@ def kmp_prefix(p, m):
 
 def kmp(t, p):
     n, m, indices, i, j = len(t), len(p), [], 0, 0
-    pi = kmp_prefix(p, m)
+    pi = compute_pi_table(p, m)
     while i < n:
         if p[j] == t[i]:
             i += 1
