@@ -22,7 +22,8 @@ number of recursive calls it makes.
 
 For the extended version, we also compute the integer coefficients x and y such that:
 d = gcd(a, b) = ax + by, where x and y acn be zero or negative. These coefficients are
-useful for compute modular multiplicative inverses.
+useful for compute modular multiplicative inverses. For example, gcd(5, 11) = (1, -2, 1)
+states that -2 (mod 11) (i.e., 9 (mod 11)) is a multiplicative inverse of 5 (mod 11).
 
 The number of recursive calls made in the extended version is equal to the number of
 recursive calls in the original version. Thus, the running times of both are the same,
