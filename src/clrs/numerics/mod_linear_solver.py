@@ -45,10 +45,3 @@ def mod_linear_solver(a, b, n):
         for i in range(d):
             solutions.append((x0 + i * (n / d)) % n)
     return solutions
-
-
-print(mod_linear_solver(14, 30, 100))
-print(mod_linear_solver(14, 30, 40))
-print(mod_linear_solver(14, 32, 40))
-print(mod_linear_solver(1, 32, 40))
-print(mod_linear_solver(4, 33, 40))
