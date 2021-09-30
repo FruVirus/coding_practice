@@ -42,6 +42,5 @@ def mod_linear_solver(a, b, n):
     solutions = []
     if b % d == 0:
         x0 = x * (b / d) % n
-        for i in range(d):
-            solutions.append((x0 + i * (n / d)) % n)
+        solutions = [(x0 + i * (n / d)) % n for i in range(d)]
     return solutions
