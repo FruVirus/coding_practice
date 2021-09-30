@@ -75,10 +75,3 @@ def gcd_multi(*args):
     for i in range(1, len(c_list)):
         c_list[i] = y if c_list[i] is None else c_list[i] * y
     return d, c_list
-
-
-print(gcd_binary(30, 21))
-print(gcd_binary(21, 30))
-print(gcd_binary(99, 78))
-print(gcd_binary(30, 24))
-print(gcd_binary(24, 12))
