@@ -1,5 +1,14 @@
 # Repository Library
-from clrs.numerics.gcd import gcd_multi
+from clrs.numerics.gcd import gcd_binary, gcd_multi
+
+
+def test_gcd_binary():
+    assert gcd_binary(30, 21) == 3
+    assert gcd_binary(21, 30) == 3
+    assert gcd_binary(99, 78) == 3
+    assert gcd_binary(30, 24) == 6
+    assert gcd_binary(24, 12) == 12
+    assert gcd_binary(25, 15) == 5
 
 
 def test_gcd_multi():

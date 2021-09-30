@@ -29,13 +29,18 @@ The number of recursive calls made in the extended version is equal to the numbe
 recursive calls in the original version. Thus, the running times of both are the same,
 to within a constant factor.
 
+gcd_binary() avoids the remainder computations used in gcd() since most computers can
+perform the operations of subtraction, parity testing of a binary integer, and halving
+more quickly than computing remainders.
+
 gcd_multi() can take arbitrary number of arguments and return a list of (unique)
 coefficients for each argument in order.
 
 Complexity
 ==========
 
-O(lg(b)) recursive calls.
+O(lg(b)) recursive calls
+O(lg(a)) for gcd_binary()
 """
 
 
@@ -44,6 +49,16 @@ def gcd(a, b):
         return a, 1, 0
     d, x, y = gcd(b, a % b)
     return d, y, x - (a // b) * y
+
+
+def gcd_binary(a, b):
+    if a % 2 == 0 and b % 2 == 0:
+        return 2 * gcd(a / 2, b / 2)[0]
+    if a % 2 == 0 or b % 2 == 0:
+        if b % 2 != 0:
+            a, b = b, a
+        return gcd(a, b / 2)[0]
+    return gcd((a - b) / 2, b)[0]
 
 
 def gcd_multi(*args):
@@ -60,3 +75,10 @@ def gcd_multi(*args):
     for i in range(1, len(c_list)):
         c_list[i] = y if c_list[i] is None else c_list[i] * y
     return d, c_list
+
+
+print(gcd_binary(30, 21))
+print(gcd_binary(21, 30))
+print(gcd_binary(99, 78))
+print(gcd_binary(30, 24))
+print(gcd_binary(24, 12))
