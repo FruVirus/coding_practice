@@ -44,29 +44,29 @@ Matching time: O(n)
 
 
 def compute_pi_table(p, m):
-    pi, k = [0] * m, 0
+    pi_table, k = [0] * m, 0
     for i in range(1, m):
         while k > 0 and p[k] != p[i]:
-            k = pi[k]
+            k = pi_table[k]
         if p[k] == p[i]:
             k += 1
-        pi[i] = k
-    return pi
+        pi_table[i] = k
+    return pi_table
 
 
 def kmp(t, p):
     n, m, indices, i, j = len(t), len(p), [], 0, 0
-    pi = compute_pi_table(p, m)
+    pi_table = compute_pi_table(p, m)
     while i < n:
         if p[j] == t[i]:
             i += 1
             j += 1
         if j == m:
             indices.append(i - j)
-            j = pi[j - 1]
+            j = pi_table[j - 1]
         elif i < n and p[j] != t[i]:
             if j != 0:
-                j = pi[j - 1]
+                j = pi_table[j - 1]
             else:
                 i += 1
     return indices
