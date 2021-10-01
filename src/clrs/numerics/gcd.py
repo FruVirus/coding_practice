@@ -52,7 +52,7 @@ def gcd(a, b):
 
 
 def gcd_binary(a, b):
-    if a % 2 == 0 and b % 2 == 0:
+    if a % 2 == b % 2 == 0:
         d, x, y = gcd(a / 2, b / 2)
         return 2 * d, x, y
     if a % 2 == 0 or b % 2 == 0:
