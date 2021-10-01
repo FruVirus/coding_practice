@@ -22,7 +22,6 @@ def lcm(a, b):
 def lcm_multi(*args):
     while len(args) > 2:
         a, b = args[-2], args[-1]
-        m = lcm(a, b)
-        args = args[:-2] + (m,)
+        args = args[:-2] + (lcm(a, b),)
     a, b = args[0], args[1]
     return lcm(a, b)
