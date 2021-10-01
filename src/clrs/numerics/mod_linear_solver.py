@@ -41,5 +41,6 @@ def mod_linear_solver(a, b, n):
     d, x, _ = gcd(a, n)
     solutions = None
     if b % d == 0:
-        solutions = [(x * (b / d) % n + i * (n / d)) % n for i in range(d)]
+        x0 = x * (b / d) % n
+        solutions = [(x0 + i * (n / d)) % n for i in range(d)]
     return solutions
