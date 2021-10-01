@@ -77,7 +77,4 @@ def crt(rems, coprimes):
         prod *= i
     prod_norm = [prod / i for i in coprimes]
     mod_inv = [gcd(i, j)[1] for i, j in zip(prod_norm, coprimes)]
-    x = 0
-    for i, j, k in zip(rems, prod_norm, mod_inv):
-        x += (i * j * k) % prod
-    return x % prod
+    return sum((i * j * k) % prod for i, j, k in zip(rems, prod_norm, mod_inv)) % prod
