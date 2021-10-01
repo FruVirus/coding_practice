@@ -7,6 +7,7 @@ two. The input array is assumed to be sorted in increasing order.
 
 Complexity
 ==========
+
 O(lg(n))
 """
 
