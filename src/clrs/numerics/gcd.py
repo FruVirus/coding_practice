@@ -53,21 +53,22 @@ def gcd(a, b):
 
 def gcd_binary(a, b):
     if a % 2 == 0 and b % 2 == 0:
-        return 2 * gcd(a / 2, b / 2)[0]
+        d, x, y = gcd(a / 2, b / 2)
+        return 2 * d, x, y
     if a % 2 == 0 or b % 2 == 0:
         if b % 2 != 0:
             a, b = b, a
-        return gcd(a, b / 2)[0]
-    return gcd((a - b) / 2, b)[0]
+        return gcd(a, b / 2)
+    return gcd((a - b) / 2, b)
 
 
 def gcd_multi(*args):
     c_list, i = [None] * len(args), -1
     while len(args) > 2:
-        d, x_, y_ = gcd(args[-2], args[-1])
-        c_list[i] = y_ if c_list[i] is None else c_list[i] * y_
+        d, x, y = gcd(args[-2], args[-1])
+        c_list[i] = y if c_list[i] is None else c_list[i] * y
         if abs(i - 1) != len(args):
-            c_list[i - 1] = x_ if c_list[i - 1] is None else c_list[i - 1] * x_
+            c_list[i - 1] = x if c_list[i - 1] is None else c_list[i - 1] * x
         args = args[:-2] + (d,)
         i -= 1
     d, x, y = gcd(args[0], args[1])
