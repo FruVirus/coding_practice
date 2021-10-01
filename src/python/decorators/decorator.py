@@ -1,11 +1,14 @@
-"""A decorator is a design pattern that we can use to add new functionality to an
-already existing object without the need to modify its structure. A decorator should be
-called directly before the function that is to be extended. With decorators, you can
-modify the functionality of a method, a function, or a class dynamically without
-directly using subclasses. This is a good idea when you want to extend the functionality
-of a function that you don't want to directly modify. Decorator patterns can be
-implemented everywhere, but Python provides more expressive syntax and features for
-that.
+"""
+Overview
+========
+
+A decorator is a design pattern that we can use to add new functionality to an already
+existing object without the need to modify its structure. A decorator should be called
+directly before the function that is to be extended. With decorators, you can modify the
+functionality of a method, a function, or a class dynamically without directly using
+subclasses. This is a good idea when you want to extend the functionality of a function
+that you don't want to directly modify. Decorator patterns can be implemented
+everywhere, but Python provides more expressive syntax and features for that.
 
 Python allows us to apply more than one decorator to a single function. In order to do
 this correctly, make sure that you apply the decorators in the same order that you'd run

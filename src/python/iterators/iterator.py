@@ -34,17 +34,17 @@ print()
 
 class MyIterator:
     def __init__(self, limit):
+        self.start = 10
         self.limit = limit
 
     def __iter__(self):
-        self.x = 10
         return self
 
     def __next__(self):
-        x = self.x
+        x = self.start
         if x > self.limit:
             raise StopIteration
-        self.x += 1
+        self.start += 1
         return x
 
 
