@@ -8,6 +8,13 @@ efficient way of compute a^b mod n, where a and b are non-negative integers and 
 positive integer. The method of repeated squares solves this problem efficiently using
 the binary representation of b.
 
+This method relies on Fermat's theorem, which states that if p is prime, then
+a^(p - 1) is congruent to 1 (mod p) for all a in Z_star_p. Equivalently, if p is prime,
+then a^p is congruent to a (mod p).
+
+A "non-trivial square root of 1" means the following. 1 is congruent to 9 mod 8, thus 3
+is a non-trivial square of 1 mod 8 since 1 mod 8 = 9 mod 8.
+
 The procedure computes a^c mod n as c is increased by doublings and incrementations from
 0 to b.
 
