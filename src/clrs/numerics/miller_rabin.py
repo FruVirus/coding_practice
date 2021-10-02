@@ -7,6 +7,17 @@ integer greater than 2. The test uses an auxiliary procedure witness(a, n) that 
 True iff a is a "witness" to the composite-ness of n---that is, if it is possible using
 a to prove that n is composite.
 
+The Miller-Rabin test computes a^(n - 1) mod n by first computing a^u mod n and then
+squaring the result t time successively.
+
+The Miller-Rabin test relies on Fermat's theorem, which states that if p is prime, then
+a^(p - 1) is congruent to 1 (mod p) for all a in Z_star_p. Thus, if a^(p - 1) is NOT
+congruent to 1 (mod p), then p is composite.
+
+The if-block inside the for-loop of witness() returns True if x_prev != 1 but
+x_next == 1 because this is a contradiction since x_prev != +/- 1 (mod p) but
+x_next == x_prev^2 = 1 (mod p). In addition, x_prev cannot be equal to n - 1.
+
 The Miller-Rabin procedure is a probabilistic search for a proof that n is composite.
 The main loop picks up to s random values of a. If one of the a's picked is a witness
 to the composite-ness of n, then we are definitely sure that n is NOT a prime. If there
@@ -43,7 +54,7 @@ def get_t_u(n):
     t = 1
     u = x // 2 ** t
     while True:
-        if x % 2 ** t == 0 and u % 2 != 0 and 2 ** t * u == x:
+        if u % 2 != 0 and 2 ** t * u == x:
             break
         t += 1
         u = x // 2 ** t
@@ -52,11 +63,13 @@ def get_t_u(n):
 
 def witness(a, n):
     t, u = get_t_u(n)
-    x = mod_exp(a, u, n)
+    x_prev = mod_exp(a, u, n)
+    x_next = x_prev ** 2 % n
     for _ in range(t):
-        if x ** 2 % n == 1 and x != 1 and x != n - 1:
+        if x_next == 1 and x_prev != 1 and x_prev != n - 1:
             return True
-    if x ** 2 % n != 1:
+        x_prev, x_next = x_next, x_prev ** 2 % n
+    if x_next != 1:
         return True
     return False
 
