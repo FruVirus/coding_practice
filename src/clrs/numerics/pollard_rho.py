@@ -31,13 +31,11 @@ import random
 from src.clrs.numerics.gcd import gcd
 
 
-def pollard_rho(n, num_factors=10, max_iters=10000):
+def pollard_rho(n, max_iters=10000):
     i, k, factors = 1, 2, []
     x = random.randrange(0, n)
     y = x
-    while True:
-        if len(factors) == num_factors or i == max_iters:
-            return factors
+    for i in range(max_iters):
         i += 1
         x = (x ** 2 - 1) % n
         d = gcd(y - x, n)[0]
@@ -45,3 +43,4 @@ def pollard_rho(n, num_factors=10, max_iters=10000):
             factors.append(d)
         if i == k:
             y, k = x, 2 * k
+    return factors

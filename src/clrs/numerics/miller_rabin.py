@@ -22,7 +22,7 @@ reports prime, and if n is composite, the chance that the Miller-Rabin test repo
 prime is at most 2^(-s). s >= 9 should suffice (see pg. 974 of CLRS).
 
 A "non-trivial square root of 1" means the following. 1 is congruent to 9 mod 8, thus 3
-is a non-trivial square of 1 mod 8.
+is a non-trivial square of 1 mod 8 since 1 mod 8 = 9 mod 8.
 
 Complexity
 ==========
