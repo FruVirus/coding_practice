@@ -10,10 +10,18 @@ Since the procedure is only a heuristic, neither its running time or its success
 guaranteed, although the procedure is highly effective in practice. Another advantage of
 the pollard-rho procedure is that it uses only a constant number of memory locations.
 
+Pollard's rho heuristic never prints an incorrect answer; any number it prints is a
+non-trivial divisor of n. Pollard's rho might not print anything at all though; it comes
+with no guarantee that it will print any divisors. However, we have good reason to
+expect that the heuristic will print a factor p of n after Theta(sqrt(p)) iterations of
+the while loop.
+
+Eventually, pollard_rho will start to repeat values---it can then exit at this point.
+
 Complexity
 ==========
 
-
+Theta(sqrt(p)) arithmetic operations, where p is a factor of n
 """
 
 # Standard Library
@@ -23,17 +31,17 @@ import random
 from src.clrs.numerics.gcd import gcd
 
 
-def pollard_rho(n):
-    i = 1
-    xi = random.randrange(0, n)
-    y = xi
-    k = 2
-    factors = []
+def pollard_rho(n, num_factors=10, max_iters=10000):
+    i, k, factors = 1, 2, []
+    x = random.randrange(0, n)
+    y = x
     while True:
+        if len(factors) == num_factors or i == max_iters:
+            return factors
         i += 1
-        xi = (xi ** 2 - 1) % n
-        d = gcd(y - xi, n)[0]
-        if d != 1 and d != n:
+        x = (x ** 2 - 1) % n
+        d = gcd(y - x, n)[0]
+        if d != 1 and d != n and d not in factors:
             factors.append(d)
         if i == k:
-            y, k = xi, 2 * k
+            y, k = x, 2 * k
