@@ -55,12 +55,11 @@ def get_t_u(n):
 
 def witness(a, n):
     t, u = get_t_u(n)
-    x_next, x_prev = None, mod_exp(a, u, n)
+    x = mod_exp(a, u, n)
     for _ in range(t):
-        x_next = x_prev ** 2 % n
-        if x_next == 1 and x_prev != 1 and x_prev != n - 1:
+        if x ** 2 % n == 1 and x != 1 and x != n - 1:
             return True
-    if x_next != 1:
+    if x ** 2 % n != 1:
         return True
     return False
 
