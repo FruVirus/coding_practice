@@ -66,7 +66,6 @@ def witness(a, n):
 
 def miller_rabin(n, s=9):
     for _ in range(s):
-        a = random.randrange(1, n)
-        if witness(a, n):
+        if witness(random.randrange(1, n), n):
             return False
     return True
