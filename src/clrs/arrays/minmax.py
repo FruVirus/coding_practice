@@ -17,7 +17,7 @@ def mms(x, y):
 
 def minmax(a):
     n = len(a)
-    if n % 2 > 0:
+    if n % 2 != 0:
         cmin = cmax = a[0]
         start_index = 1
     else:
@@ -25,8 +25,6 @@ def minmax(a):
         start_index = 2
     for i in range(start_index, n, 2):
         amin, amax = mms(a[i], a[i + 1])
-        if amin < cmin:
-            cmin = amin
-        if amax > cmax:
-            cmax = amax
+        cmin = min(amin, cmin)
+        cmax = max(amax, cmax)
     return cmin, cmax
