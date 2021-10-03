@@ -38,8 +38,7 @@ class SLL:
             x = self.search(x)
         curr, prev = self.head, None
         while curr is not None and curr.k != x.k:
-            prev = curr
-            curr = curr.next
+            prev, curr = curr, curr.next
         if prev is None:
             self.head = curr.next
         else:
