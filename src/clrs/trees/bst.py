@@ -92,11 +92,9 @@ class BST:
     def list(self, l, h):
         result = [l]
         node = self.successor(l)
-        while True:
+        while node is not None and node.key <= h:
             result.append(node.key)
-            node = self.successor(node)
-            if node is None or node.key > h:
-                break
+            node = self.successor(node.key)
         return result
 
     def max(self, x):
