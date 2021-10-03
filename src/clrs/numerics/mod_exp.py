@@ -37,14 +37,11 @@ O(beta^3) bit operations
 """
 
 
-# pylint: disable=C0200
-
-
 def mod_exp(a, b, n):
     assert a >= 0 and b >= 0 and n > 0
     b, d = [int(i) for i in list(bin(b)[2:])], 1
-    for i in range(len(b)):
+    for i in b:
         d = (d * d) % n
-        if b[i] == 1:
+        if i == 1:
             d = (d * a) % n
     return d
