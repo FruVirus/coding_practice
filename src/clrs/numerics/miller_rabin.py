@@ -66,7 +66,7 @@ def witness(a, n):
     x_prev = mod_exp(a, u, n)
     x_next = x_prev ** 2 % n
     for _ in range(t):
-        if x_next == 1 and x_prev != 1 and x_prev != n - 1:
+        if x_next == 1 and x_prev not in [1, n - 1]:
             return True
         x_prev, x_next = x_next, x_prev ** 2 % n
     if x_next != 1:
