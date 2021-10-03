@@ -38,7 +38,7 @@ from src.clrs.numerics.gcd import gcd
 
 def mod_linear_solver(a, b, n):
     assert a > 0 and n > 0
-    d, x, _ = gcd(a, n)
+    d, x = gcd(a, n)[:2]
     solutions = None
     if b % d == 0:
         x0 = x * (b / d) % n
