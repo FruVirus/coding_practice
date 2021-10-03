@@ -43,6 +43,3 @@ def pollard_rho(n, max_iters=10000):
         if i == k:
             y, k = x, 2 * k
     return factors
-
-
-print(pollard_rho(15))
