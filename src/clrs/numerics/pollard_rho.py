@@ -34,7 +34,7 @@ from src.clrs.numerics.gcd import gcd
 def pollard_rho(n, max_iters=10000):
     i, k, factors = 1, 2, []
     x = y = random.randrange(0, n)
-    for i in range(max_iters):
+    for _ in range(max_iters):
         i += 1
         x = (x ** 2 - 1) % n
         d = gcd(y - x, n)[0]
@@ -43,3 +43,6 @@ def pollard_rho(n, max_iters=10000):
         if i == k:
             y, k = x, 2 * k
     return factors
+
+
+print(pollard_rho(15))
