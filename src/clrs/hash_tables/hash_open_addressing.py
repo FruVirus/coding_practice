@@ -87,7 +87,7 @@ class HashOpen(HashChain):
         if self.table_double:
             none, deleted = self.table.count(None), self.table.count(self._DELETED)
             if none + deleted == int(3 * self.size / 4):
-                self.size = self.size // 2
+                self.size //= 2
                 self.table = self._rehash()
 
     def _rehash(self):
