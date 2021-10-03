@@ -36,6 +36,7 @@ O(beta) arithmetic operations
 O(beta^3) bit operations
 """
 
+
 # pylint: disable=C0200
 
 
