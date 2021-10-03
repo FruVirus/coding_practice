@@ -56,7 +56,7 @@ class SLL:
         return x
 
     def size(self):
-        x, count = self.head, 0
+        count, x = 0, self.head
         while x is not None:
             count += 1
             x = x.next
