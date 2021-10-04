@@ -66,11 +66,9 @@ class SLLMergeSort(SLL):
         temp = merged
         while l is not None and r is not None:
             if l.k <= r.k:
-                temp.next = l
-                l = l.next
+                temp.next, l = l, l.next
             else:
-                temp.next = r
-                r = r.next
+                temp.next, r = r, r.next
             temp = temp.next
         while l is not None:
             temp.next = l
