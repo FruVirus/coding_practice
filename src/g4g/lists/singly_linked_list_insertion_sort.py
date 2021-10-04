@@ -23,14 +23,12 @@ class SLLInsertionSort(SLL):
     @staticmethod
     def insertion_sort(sorted_, node):
         if sorted_ is None or sorted_.k >= node.k:
-            node.next = sorted_
-            sorted_ = node
+            node.next, sorted_ = sorted_, node
         else:
             curr = sorted_
             while curr.next is not None and curr.next.k < node.k:
                 curr = curr.next
-            node.next = curr.next
-            curr.next = node
+            node.next, curr.next = curr.next, node
         return sorted_
 
     def sort(self):
