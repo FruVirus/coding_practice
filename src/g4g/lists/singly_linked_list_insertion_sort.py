@@ -16,10 +16,23 @@ O(n) if a is already sorted
 """
 
 # Repository Library
-from src.clrs.lists.singly_linked_list import SLL, Node
+from src.clrs.lists.singly_linked_list import SLL
 
 
 class SLLInsertionSort(SLL):
+    @staticmethod
+    def insertion_sort(sorted_, node):
+        if sorted_ is None or sorted_.k >= node.k:
+            node.next = sorted_
+            sorted_ = node
+        else:
+            curr = sorted_
+            while curr.next is not None and curr.next.k < node.k:
+                curr = curr.next
+            node.next = curr.next
+            curr.next = node
+        return sorted_
+
     def sort(self):
         curr, sorted_ = self.head, None
         while curr is not None:
@@ -30,23 +43,4 @@ class SLLInsertionSort(SLL):
         while sorted_ is not None:
             sorted_list.append(sorted_.k)
             sorted_ = sorted_.next
-
-    def insertion_sort(self, h, node):
-        if h is None or h.k >= node.k:
-            node.next = h
-            h = node
-        else:
-            curr = h
-            while curr.next is not None and curr.next.k < node.k:
-                curr = curr.next
-            node.next = curr.next
-            curr.next = node
-        return h
-
-
-sll = SLLInsertionSort()
-sll.insert(Node(9))
-sll.insert(Node(16))
-sll.insert(Node(4))
-sll.insert(Node(1))
-print(sll.sort())
+        return sorted_list
