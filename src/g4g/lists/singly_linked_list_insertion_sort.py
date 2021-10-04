@@ -37,8 +37,6 @@ class SLLInsertionSort(SLL):
             next = curr.next
             sorted_ = self.insertion_sort(sorted_, curr)
             curr = next
-            print(curr.k)
-            exit()
         sorted_list = []
         while sorted_ is not None:
             sorted_list.append(sorted_.k)
