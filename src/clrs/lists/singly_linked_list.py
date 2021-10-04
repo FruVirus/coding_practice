@@ -34,11 +34,11 @@ class SLL:
         self.head = None
 
     @staticmethod
-    def _get_merge_sort_middle(h):
-        x = y = h
-        while y.next is not None and y.next.next is not None:
-            x, y = x.next, y.next.next
-        return x
+    def _get_middle(h):
+        slow, fast = h, h.next
+        while fast is not None and fast.next is not None:
+            slow, fast = slow.next, fast.next.next
+        return slow
 
     def delete(self, x):
         if isinstance(x, (int, float)):
@@ -71,7 +71,7 @@ class SLL:
     def merge_sort(self, h):
         if h is None or h.next is None:
             return h
-        middle = self._get_merge_sort_middle(h)
+        middle = self._get_middle(h)
         middle_next, middle.next = middle.next, None
         l = self.merge_sort(h)
         r = self.merge_sort(middle_next)
