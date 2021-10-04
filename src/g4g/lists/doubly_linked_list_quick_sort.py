@@ -31,7 +31,6 @@ partition():
 
 # Repository Library
 from src.clrs.lists.doubly_linked_list import DLL
-from src.clrs.lists.singly_linked_list import Node
 
 
 class DLLQuickSort(DLL):
@@ -43,13 +42,13 @@ class DLLQuickSort(DLL):
 
     @staticmethod
     def partition(low, high):
-        x, i, j = high.k, low.prev, low
+        x, i = high.k, low.prev
+        j = low
         while j != high:
             if j.k <= x:
                 i = low if i is None else i.next
                 temp = i.k
-                i.k = j.k
-                j.k = temp
+                i.k, j.k = j.k, temp
             j = j.next
         i = low if i is None else i.next
         temp = i.k
@@ -57,29 +56,15 @@ class DLLQuickSort(DLL):
         return i
 
     def quicksort(self, low, high):
-        sorted_list = []
         if high is not None and low != high and low != high.next:
             temp = self.partition(low, high)
             self.quicksort(low, temp.prev)
             self.quicksort(temp.next, high)
-            sorted_list.append(temp)
-            return sorted_list
 
     def sort(self):
-        result, sorted_list = self.quicksort(self.head, self._get_last()), []
-        print(sorted_list)
-        exit()
-        if result is not None:
-            curr = result
-            while curr is not None:
-                sorted_list.append(curr.k)
-                curr = curr.next
+        self.quicksort(self.head, self._get_last())
+        node, sorted_list = self.head, []
+        while node is not None:
+            sorted_list.append(node.k)
+            node = node.next
         return sorted_list
-
-
-dll = DLLQuickSort()
-dll.insert(Node(9))
-dll.insert(Node(16))
-dll.insert(Node(4))
-dll.insert(Node(1))
-print(dll.sort())

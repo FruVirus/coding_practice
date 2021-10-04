@@ -12,7 +12,9 @@ REPO_NAME = "coding_practice"
 # Assign default directories.
 REPO_DIR = os.path.join(os.getcwd().split(REPO_NAME)[0], REPO_NAME)
 CLRS_DIR = os.path.join(REPO_DIR, "src", "clrs")
+G4G_DIR = os.path.join(REPO_DIR, "src", "g4g")
 LEET_DIR = os.path.join(REPO_DIR, "src", "leet")
+PYTHON_DIR = os.path.join(REPO_DIR, "src", "python")
 TESTS_DIR = os.path.join(REPO_DIR, "tests")
 FIXTURES_DIR = os.path.join(TESTS_DIR, "fixtures")
 
@@ -37,6 +39,12 @@ def pytest_addoption(parser):
         action="store_true",
         default=False,
         help="Run CLRS tests only.",
+    )
+    parser.addoption(
+        "--g4g_only",
+        action="store_true",
+        default=False,
+        help="Run G4G tests only.",
     )
     parser.addoption(
         "--leet_only",
@@ -65,6 +73,16 @@ def pytest_collection_modifyitems(config, items):
         for item in items:
             if "clrs_only" in item.keywords:
                 item.add_marker(skip_clrs)
+    if config.getoption("--g4g_only"):
+        skip_nong4g = pytest.mark.skip(reason="Skipping when --g4g_only option given.")
+        for item in items:
+            if "g4g_only" not in item.keywords:
+                item.add_marker(skip_nong4g)
+    else:
+        skip_g4g = pytest.mark.skip(reason="Need --g4g_only option to run.")
+        for item in items:
+            if "g4g_only" in item.keywords:
+                item.add_marker(skip_g4g)
     if config.getoption("--leet_only"):
         skip_nonleet = pytest.mark.skip(
             reason="Skipping when --leet_only option given."
