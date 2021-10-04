@@ -17,3 +17,11 @@ def test_sll():
     assert sll.head.next.k == 9
     x = sll.search(666)
     assert x is None
+    sll = SLL()
+    sll.insert(Node(9))
+    sll.insert(Node(16))
+    sll.insert(Node(4))
+    sll.insert(Node(1))
+    assert sll.sort() == [1, 4, 9, 16]
+    sll = SLL()
+    assert sll.sort() == []

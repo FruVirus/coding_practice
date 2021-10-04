@@ -33,6 +33,13 @@ class SLL:
     def __init__(self):
         self.head = None
 
+    @staticmethod
+    def _get_merge_sort_middle(h):
+        x = y = h
+        while y.next is not None and y.next.next is not None:
+            x, y = x.next, y.next.next
+        return x
+
     def delete(self, x):
         if isinstance(x, (int, float)):
             x = self.search(x)
@@ -47,6 +54,41 @@ class SLL:
     def insert(self, x):
         x.next = self.head
         self.head = x
+
+    def merge(self, l, r):
+        if l is None:
+            return r
+        if r is None:
+            return l
+        if l.k <= r.k:
+            result = l
+            result.next = self.merge(l.next, r)
+        else:
+            result = r
+            result.next = self.merge(l, r.next)
+        return result
+
+    def merge_sort(self, h):
+        if h is None or h.next is None:
+            return h
+        middle = self._get_merge_sort_middle(h)
+        middle_next, middle.next = middle.next, None
+        l = self.merge_sort(h)
+        r = self.merge_sort(middle_next)
+        return self.merge(l, r)
+
+    def sort(self, sort="merge_sort"):
+        result, sorted_list = None, []
+        if sort == "merge_sort":
+            result = self.merge_sort(self.head)
+        else:
+            pass
+        if result is not None:
+            curr = result
+            while curr is not None:
+                sorted_list.append(curr.k)
+                curr = curr.next
+        return sorted_list
 
     def search(self, k):
         x = self.head
