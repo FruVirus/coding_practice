@@ -94,7 +94,7 @@ class BST:
         node = self.successor(l)
         while node is not None and node.key <= h:
             result.append(node.key)
-            node = self.successor(node.key)
+            node = self.successor(node)
         return result
 
     def max(self, x):
