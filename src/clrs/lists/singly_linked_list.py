@@ -71,10 +71,10 @@ class SLL:
     def merge_sort(self, h):
         if h is None or h.next is None:
             return h
-        middle = self._get_middle(h)
-        middle_next, middle.next = middle.next, None
+        mid = self._get_middle(h)
+        mid_next, mid.next = mid.next, None
         l = self.merge_sort(h)
-        r = self.merge_sort(middle_next)
+        r = self.merge_sort(mid_next)
         return self.merge(l, r)
 
     def sort(self, sort="merge_sort"):
