@@ -23,10 +23,8 @@ pigeonhole, put its elements into the original array in increasing order.
 Complexity
 ==========
 
-N is the range of keys values and n is the input size.
-
-O(N + n) worst case
-O(N + n) worst case
+O(N + n) worst case time complexity
+O(N + n) worst case space complexity
 """
 
 
