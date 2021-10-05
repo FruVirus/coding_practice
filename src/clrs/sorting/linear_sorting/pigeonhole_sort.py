@@ -33,8 +33,7 @@ def pigeonhole_sort(a):
     size = max(key for key, value in a) - base + 1
     pigeonholes = [[] for _ in range(size)]
     for key, value in a:
-        index = key - base
-        pigeonholes[index].append((key, value))
+        pigeonholes[key - base].append((key, value))
     a.clear()
     for i in pigeonholes:
         a.extend(i)
