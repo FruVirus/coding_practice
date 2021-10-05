@@ -1,5 +1,10 @@
 # Repository Library
-from clrs.sorting.linear_sorting import bucket_sort, counting_sort, radix_sort
+from clrs.sorting.linear_sorting import (
+    bucket_sort,
+    counting_sort,
+    pigeonhole_sort,
+    radix_sort,
+)
 from tests.conftest import PARAM
 
 
@@ -26,6 +31,12 @@ def test_bucket_sort(a):
 )
 def test_counting_sort(a, k):
     assert counting_sort.counting_sort(a, k) == sorted(a)
+
+
+def test_pigeonhole_sort():
+    a = [(5, "king"), (3, "pie"), (8, "apple"), (5, "hello")]
+    pigeonhole_sort.pigeonhole_sort(a)
+    assert a == [(3, "pie"), (5, "king"), (5, "hello"), (8, "apple")]
 
 
 @PARAM(
