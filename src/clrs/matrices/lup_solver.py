@@ -1,0 +1,180 @@
+"""
+Overview
+========
+
+LUP Solver
+----------
+
+We can formulate a linear system as a matrix equation in which each matrix or vector
+element belongs to a field, typically the real numbers (e.g., Ax = b). lup_solver()
+solves such a system of linear equations using a method called LUP decomposition. LUP
+decomposition is numerically stable and has the advantage of being faster in practice
+then the approach of computing the inverse of A and then multiplying by b.
+
+We only treat the case where there are exactly n equations in n unknowns; i.e., the rank
+of A is equal to the number n of unknowns and A is non-singular so that x = A^-1 * b
+
+If the rank of A is less than n, then the system is under-determined and the system will
+typically have infinitely many solutions, although no solutions at all if the equations
+are inconsistent.
+
+If the rank of A exceeds the number n of unknowns, then the system is overdetermined and
+there may not exist any solutions.
+
+The idea of LUP decomposition is to find three n x n matrices L, U, and P such that:
+
+    PA = LU
+
+where:
+    L is a unit lower-triangular matrix
+    U is an upper-triangular matrix
+    P is a permutation matrix
+
+Every non-singular matrix posses such a decomposition.
+
+Once we have found an LUP decomposition for A, we can solve the system of equations,
+Ax = b, by solving only the triangular linear systems by multiplying both sides of
+Ax = b by, which yields PAx = Pb. This amounts to permuting the system of equations.
+
+    PAx = Pb
+    LUx = Pb --> y = Ux
+        Ly = Pb --> solve for y using forward substitution
+        Ux = y --> solve for x using back substitution
+
+    since P is invertible, P^(-1)PA = P^(-1)LU --> A = P^(-1)LU
+
+    Ax = P^(-1)LUx
+       = P^(-1)Ly
+       = P^(-1)Pb
+       = b
+
+LU Decomposition
+----------------
+
+If A is a non-singular matrix, then we can factor A = LU using Gaussian elimination. We
+start by subtracting multiples of the first equation from the other equations in order
+to remove the first variable from those equations. Then, we subtract multiples of the
+second equation from the third and subsequent equations so that now the first and second
+variables are removed from them. We continue this process until the system that remains
+has an upper-triangular form---in fact, it is the matrix U. The matrix L is made up of
+the row multipliers that cause variables to be eliminated.
+
+The elements by which we divide during LU decomposition are called pivots, and they
+occupy the diagonal elements of the matrix U. The reason we include a permutation matrix
+P during LUP decomposition is that it allows us to avoid dividing by 0. When we use
+permutations to avoid division by 0 (or by small numbers, which would contribute to
+numerical instability), we are pivoting.
+
+An important class of matrices for which LU decomposition always works correctly is the
+class of symmetric positive-definite matrices. Such matrices require no pivoting, and
+thus we can employ LU decomposition without fear of dividing by 0.
+
+Each iteration of lu_decomp() works on a square sub-matrix, using its upper leftmost
+element as the pivot to compute the v and w vectors and the Schur complement, which then
+becomes the square sub-matrix worked on by the next iteration.
+
+A standard optimization of the procedure is that we store the significant elements of L
+and U in place in the matrix A.
+
+A = (a_11,  w.T)
+    (v,     A')
+  = (1      0)      (a_11    w.T)
+    (v/a_11 I_n-1)  (0      A' - vw.T/a_11)
+
+A' - vw.T/a_11 is the Schur complement of A. Because A is non-singular, then the Schur
+complement of A is also non-singular. Because the Schur complement of A is non-singular,
+we can recursively find an LU decomposition for it.
+
+Define A' - vw.T/a_11 = L'U'
+
+A = (1      0)      (a_11    w.T)
+    (v/a_11 I_n-1)  (0      A' - vw.T/a_11)
+  = (1      0)  (a_11   w.T)
+    (v/a_11 L') (0, U')
+  = LU
+
+LUP Decomposition
+-----------------
+
+Generally, in solving a system of linear equations Ax = b, we must pivot on off-diagonal
+elements of A to avoid dividing by 0. We also want to avoid dividing by a small value,
+even if A is non-singular, because numerical instabilities can result. We therefore try
+to pivot on a large value.
+
+We are given an n x n non-singular matrix A, and we wish to find a permutation matrix
+P, a unit lower-triangular matrix L, and an upper-triangular matrix U such that PA = LU.
+
+Before we partition the matrix A, as we did for LU decomposition, we move a non-zero
+element, say a_k1, from somewhere in the first column to the (1, 1) position of the
+matrix. For numerical stability, we choose a_k1 as the element in the first column with
+the greatest absolute value. In order to preserve the set of equations, we exchange row
+1 with row k, which is equivalent to multiplying A by a permutation matrix Q on the
+left.
+
+QA = (a_k1  w.T)
+     (v     A')
+   = (1      0)      (a_k1    w.T)
+     (v/a_k1 I_n-1)  (0      A' - vw.T/a_k1)
+
+P'(A' - vw.T/a_k1) = L'U'
+
+Define P = (1   0)Q
+           (0   P')
+
+PA = (1   0)QA
+     (0   P')
+   = LU
+
+Complexity
+==========
+
+Theta(n^3) for LU decomposition
+Theta(n^3) for LUP decomposition
+Theta(n^2) for forward substitution
+Theta(n^2) for back substitution
+Theta(n^2) for solving the system
+"""
+
+
+def lu_decomp(a):
+    n = len(a)
+    for k in range(n):
+        for i in range(k + 1, n):
+            a[i][k] /= a[k][k]
+        schur_complement(a, k, n, False)
+
+
+def lup_decomp(a):
+    n, p = len(a), []
+    for i in range(n):
+        p.append(i)
+    for k in range(n):
+        k_ = p_ = 0
+        for i in range(k, n):
+            if abs(a[i][k]) > p_:
+                k_, p_ = i, abs(a[i][k])
+        assert p_ != 0
+        p[k], p[k_] = p[k_], p[k]
+        for i in range(n):
+            a[k][i], a[k_][i] = a[k_][i], a[k][i]
+        schur_complement(a, k, n)
+    return p
+
+
+def lup_solver(a, b, p=None):
+    n = len(a)
+    x, y = [0] * n, [0] * n
+    for i in range(n):
+        b_ = b[i] if p is None else b[p[i]]
+        y[i] = b_ - sum(a[i][j] * y[j] for j in range(i))
+    for i in range(n - 1, -1, -1):
+        x[i] = (y[i] - sum(a[i][j] * x[j] for j in range(i + 1, n))) / a[i][i]
+    return x
+
+
+def schur_complement(a, k, n, lup=True):
+    for i in range(k + 1, n):
+        if lup:
+            a[i][k] /= a[k][k]
+        for j in range(k + 1, n):
+            a[i][j] -= a[i][k] * a[k][j]
