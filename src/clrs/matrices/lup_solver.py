@@ -149,14 +149,14 @@ def lup_decomp(a):
     for i in range(n):
         p.append(i)
     for k in range(n):
-        k_ = p_ = 0
+        k_new = p_new = 0
         for i in range(k, n):
-            if abs(a[i][k]) > p_:
-                k_, p_ = i, abs(a[i][k])
-        assert p_ != 0
-        p[k], p[k_] = p[k_], p[k]
+            if abs(a[i][k]) > p_new:
+                k_new, p_new = i, abs(a[i][k])
+        assert p_new != 0
+        p[k], p[k_new] = p[k_new], p[k]
         for i in range(n):
-            a[k][i], a[k_][i] = a[k_][i], a[k][i]
+            a[k][i], a[k_new][i] = a[k_new][i], a[k][i]
         schur_complement(a, k, n)
     return p
 
