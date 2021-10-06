@@ -386,8 +386,8 @@ def invert_matrix(a):
     assert det_ != 0
     if len(a) == 2:
         return [
-            [a[1][1] / det_, -1 * a[0][1] / det_],
-            [-1 * a[1][0] / det_, a[0][0] / det_],
+            [a[1][1] / det_, -a[0][1] / det_],
+            [-a[1][0] / det_, a[0][0] / det_],
         ]
     adjoint = transpose(cofactor(a))
     n = len(adjoint)
