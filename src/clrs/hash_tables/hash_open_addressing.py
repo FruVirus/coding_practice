@@ -83,19 +83,19 @@ class HashOpen(HashChain):
             i += 1
         raise OverflowError()
 
-    def _rehash(self):
-        table = [None] * self.size
-        key_list = [slot for slot in self.table if slot not in [None, self._DELETED]]
-        for k in key_list:
-            self._insert(k, table)
-        return table
-
     def _reduce(self):
         if self.table_double:
             none, deleted = self.table.count(None), self.table.count(self._DELETED)
             if none + deleted == int(3 * self.size / 4):
                 self.size //= 2
                 self.table = self._rehash()
+
+    def _rehash(self):
+        table = [None] * self.size
+        key_list = [slot for slot in self.table if slot not in [None, self._DELETED]]
+        for k in key_list:
+            self._insert(k, table)
+        return table
 
     def delete(self, k):
         hash_value = self.search(k)
@@ -110,7 +110,7 @@ class HashOpen(HashChain):
         else:
             assert is_prime(self.size)
             h1 = k % self.size
-            h2 = 1 + (k * (self.size - 1))
+            h2 = 1 + (k % (self.size - 1))
         return (h1 + i * h2) % self.size
 
     def hash_linear(self, k, i):
