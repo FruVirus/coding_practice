@@ -360,6 +360,43 @@ class SLL:
         return count
 
 
+def cofactor(a):
+    n = len(a)
+    return [
+        [((-1) ** (r + c)) * det(minor(a, r, c)) for c in range(n)] for r in range(n)
+    ]
+
+
+def det(a):
+    if len(a) == 2:
+        return a[0][0] * a[1][1] - a[0][1] * a[1][0]
+    return sum(((-1) ** c) * a[0][c] * det(minor(a, 0, c)) for c in range(len(a)))
+
+
+def minor(a, i, j):
+    return [row[:j] + row[j + 1 :] for row in a[:i] + a[i + 1 :]]
+
+
+def transpose(a):
+    return list(map(list, zip(*a)))
+
+
+def invert_matrix(a):
+    det_ = det(a)
+    assert det_ != 0
+    if len(a) == 2:
+        return [
+            [a[1][1] / det_, -1 * a[0][1] / det_],
+            [-1 * a[1][0] / det_, a[0][0] / det_],
+        ]
+    adjoint = transpose(cofactor(a))
+    n = len(adjoint)
+    for r in range(n):
+        for c in range(n):
+            adjoint[r][c] /= det_
+    return adjoint
+
+    
 def lu_decomp(a):
     n = len(a)
     for k in range(n):
