@@ -66,9 +66,14 @@ class HashChain:
             table[hash_value] = DLL()
         table[hash_value].insert(Node(k))
 
+    def _reduce(self):
+        if self.table_double and self.table.count(None) == int(3 * self.size / 4):
+            self.size //= 2
+            self.table = self._rehash()
+
     def _rehash(self):
         table, key_list = [None] * self.size, []
-        for ll in self.head:
+        for ll in self.table:
             if ll is not None:
                 head = ll.head
                 while head is not None:
@@ -77,11 +82,6 @@ class HashChain:
         for k in key_list:
             self._insert(k, table)
         return table
-
-    def _reduce(self):
-        if self.table_double and self.table.count(None) == int(3 * self.size / 4):
-            self.size //= 2
-            self.table = self._rehash()
 
     def delete(self, x):
         hash_value = self.ahf(x if isinstance(x, (int, float)) else x.k)
