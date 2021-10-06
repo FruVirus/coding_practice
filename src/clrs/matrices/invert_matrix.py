@@ -28,9 +28,9 @@ matrix.
 Cofactor
 --------
 
-The cofactor of an element is calculated by multiplying the minor with -1 to the
-exponent of the sum of the row and column elements in order representation of that
-element.
+The cofactor of an element is calculated by multiplying the determinant of the minor
+with -1 to the exponent of the sum of the row and column elements in order
+representation of that element.
 
 cofactor of a_ij = (-1)^(i + j) x minor(a_ij)
 
@@ -46,7 +46,7 @@ Minor
 -----
 
 The minor is defined for every element of a matrix. The minor of a particular element is
-the determinant obtained after eliminating the row and column containing the element.
+obtained after eliminating the row and column containing the element.
 
 Non-Singular Matrix
 -------------------
@@ -106,14 +106,9 @@ def invert_matrix(a):
             [a[1][1] / det_, -1 * a[0][1] / det_],
             [-1 * a[1][0] / det_, a[0][0] / det_],
         ]
-    cofactors = cofactor(a)
-    adjoint = transpose(cofactors)
+    adjoint = transpose(cofactor(a))
     n = len(adjoint)
     for r in range(n):
         for c in range(n):
-            adjoint[r][c] = adjoint[r][c] / det_
+            adjoint[r][c] /= det_
     return adjoint
-
-
-a = [[4, -2, 1], [5, 0, 3], [-1, 2, 6]]
-print(invert_matrix(a))
