@@ -387,7 +387,7 @@ def lup_decomp(a):
 
 def lup_solver(a, b, p=None):
     n = len(a)
-    x, y, = [0] * n, [0] * n
+    x, y = [0] * n, [0] * n
     for i in range(n):
         b_ = b[i] if p is None else b[p[i]]
         y[i] = b_ - sum(a[i][j] * y[j] for j in range(i))
