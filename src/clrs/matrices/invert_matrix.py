@@ -6,6 +6,10 @@ Although in practice we do not generally use matrix inverses to solve systems of
 equations, preferring instead to use more numerically stable techniques such as LUP
 decomposition, sometimes we need to compute a matrix inverse.
 
+The general formula for computing the inverse of a matrix A is:
+
+A^(-1) = Adjoint(A) / det(A)
+
 Adjoint
 -------
 
@@ -86,14 +90,15 @@ def invert_matrix(a):
             [a[1][1] / det_, -1 * a[0][1] / det_],
             [-1 * a[1][0] / det_, a[0][0] / det_],
         ]
-    cofactors = transpose(
-        [[((-1) ** (r + c)) * det(minor(a, r, c)) for c in range(n)] for r in range(n)]
-    )
-    n = len(cofactors)
+    cofactors = [
+        [((-1) ** (r + c)) * det(minor(a, r, c)) for c in range(n)] for r in range(n)
+    ]
+    adjoint = transpose(cofactors)
+    n = len(adjoint)
     for r in range(n):
         for c in range(n):
-            cofactors[r][c] = cofactors[r][c] / det_
-    return cofactors
+            adjoint[r][c] = adjoint[r][c] / det_
+    return adjoint
 
 
 a = [[4, -2, 1], [5, 0, 3], [-1, 2, 6]]
