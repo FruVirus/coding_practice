@@ -10,6 +10,15 @@ The general formula for computing the inverse of a matrix A is:
 
 A^(-1) = Adjoint(A) / det(A)
 
+The inverse of a 2 x 2 matrix A is:
+
+[d -b
+ -c a] / det(A)
+
+The determinant of a 2 x 2 matrix A is:
+
+det(A) = a * d - b * c
+
 Adjoint
 -------
 
@@ -68,6 +77,13 @@ Theta(n^3) time complexity
 """
 
 
+def cofactor(a):
+    n = len(a)
+    return [
+        [((-1) ** (r + c)) * det(minor(a, r, c)) for c in range(n)] for r in range(n)
+    ]
+
+
 def det(a):
     if len(a) == 2:
         return a[0][0] * a[1][1] - a[0][1] * a[1][0]
@@ -83,16 +99,14 @@ def transpose(a):
 
 
 def invert_matrix(a):
-    n, det_ = len(a), det(a)
+    det_ = det(a)
     assert det_ != 0
-    if n == 2:
+    if len(a) == 2:
         return [
             [a[1][1] / det_, -1 * a[0][1] / det_],
             [-1 * a[1][0] / det_, a[0][0] / det_],
         ]
-    cofactors = [
-        [((-1) ** (r + c)) * det(minor(a, r, c)) for c in range(n)] for r in range(n)
-    ]
+    cofactors = cofactor(a)
     adjoint = transpose(cofactors)
     n = len(adjoint)
     for r in range(n):
