@@ -2,7 +2,7 @@
 import math
 
 # Repository Library
-from clrs.matrices.invert_matrix import invert_matrix
+from clrs.matrices.invert import invert_matrix
 
 
 def test_invert_matrix():
