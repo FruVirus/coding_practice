@@ -80,6 +80,7 @@ def transpose(a):
 
 def invert_matrix(a):
     n, det_ = len(a), det(a)
+    assert det_ != 0
     if n == 2:
         return [
             [a[1][1] / det_, -1 * a[0][1] / det_],
@@ -93,3 +94,7 @@ def invert_matrix(a):
         for c in range(n):
             cofactors[r][c] = cofactors[r][c] / det_
     return cofactors
+
+
+a = [[4, -2, 1], [5, 0, 3], [-1, 2, 6]]
+print(invert_matrix(a))
