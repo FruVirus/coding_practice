@@ -78,9 +78,9 @@ Theta(n^3) time complexity
 
 
 def cofactor(a):
-    n = len(a)
     return [
-        [((-1) ** (r + c)) * det(minor(a, r, c)) for c in range(n)] for r in range(n)
+        [((-1) ** (r + c)) * det(minor(a, r, c)) for c in range(len(a))]
+        for r in range(len(a))
     ]
 
 

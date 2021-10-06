@@ -396,7 +396,7 @@ def invert_matrix(a):
             adjoint[r][c] /= det_
     return adjoint
 
-    
+
 def lu_decomp(a):
     n = len(a)
     for k in range(n):
