@@ -1,0 +1,1203 @@
+def binary_counter(a):
+    i = 0
+    while i < len(a) and a[i] == 1:
+        a[i] = 0
+        i += 1
+    if i < len(a):
+        a[i] = 1
+
+
+def binary_search(a, low, high, k):
+    if high >= low:
+        mid = (low + high) // 2
+        if a[mid] == k:
+            return mid
+        if a[mid] > k:
+            return binary_search(a, low, mid - 1, k)
+        return binary_search(a, mid + 1, high, k)
+    return None
+
+
+def find_max(a, low, high):
+    if low == high:
+        return low, high, a[low]
+    mid = (low + high) // 2
+    llow, lhigh, lsum = find_max(a, low, mid)
+    rlow, rhigh, rsum = find_max(a, mid + 1, high)
+    clow, chigh, csum = find_cross(a, low, mid, high)
+    if lsum >= rsum and lsum >= csum:
+        return llow, lhigh, lsum
+    if rsum >= lsum and rsum >= csum:
+        return rlow, rhigh, rsum
+    return clow, chigh, csum
+
+
+def find_cross(a, low, mid, high):
+    lsum = rsum = -float("inf")
+    lcsum = rcsum = 0
+    clow = chigh = -1
+    for i in range(mid, low - 1, -1):
+        lcsum += a[i]
+        if lcsum > lsum:
+            lsum = lcsum
+            clow = i
+    for i in range(mid + 1, high + 1):
+        rcsum += a[i]
+        if rcsum > rsum:
+            rsum = rcsum
+            chigh = i
+    return clow, chigh, lsum + rsum
+
+
+def mms(x, y):
+    return (x, y) if x < y else (y, x)
+
+
+def minmax(a):
+    n = len(a)
+    if n % 2 != 0:
+        cmin = cmax = a[0]
+        start_index = 1
+    else:
+        cmin, cmax = mms(a[0], a[1])
+        start_index = 2
+    for i in range(start_index, n, 2):
+        amin, amax = mms(a[i], a[i + 1])
+        if amin < cmin:
+            cmin = amin
+        if amax > cmax:
+            cmax = amax
+    return cmin, cmax
+
+
+def get_median(a):
+    b = []
+    for i in range(0, len(a), 5):
+        group = a[i: i + 5]
+        insertion_sort(group)
+        med_index = (len(group) + 1) // 2 - 1
+        b.append(group[med_index])
+    return b
+
+
+def quick_select(a, low, high, i):
+    med = a
+    while isinstance(med, list) and len(med) > 1:
+        med = get_median(med[low: high + 1])
+    pivot = partition(a, low, high, a.index(med[0]), False)
+    k = pivot - low + 1
+    if i == k:
+        return a[pivot]
+    if i < k:
+        return quick_select(a, low, pivot - 1, i)
+    return quick_select(a, pivot + 1, high, i - k)
+
+
+def random_select(a, low, high, i):
+    if low == high:
+        return a[low]
+    pivot = partition(a, low, high)
+    k = pivot - low + 1
+    if i == k:
+        return a[pivot]
+    if i < k:
+        return random_select(a, low, pivot - 1, i)
+    return random_select(a, pivot + 1, high, i - k)
+
+
+def sorted_inner_product(l1, l2):
+    i = j = sum = 0
+    while i < len(l1) and j < len(l2):
+        if l1[i][0] == l2[j][0]:
+            sum += l1[i][1] * l2[j][j]
+            i += 1
+            j += 1
+        elif l1[i][0] < l2[j][0]:
+            i += 1
+        else:
+            j += 1
+    return sum
+
+
+class HashChain:
+    def __init__(self, size, ahf="hash_div", table_double=False):
+        self.size = size
+        self.ahf = getattr(self, ahf)
+        self.table_double = table_double
+        self.table = [None] * self.size
+        self.a, self.m = 0.62, 2 ** self.size
+
+    def _grow(self):
+        if self.table_double and self.table.count(None) == 0:
+            self.size *= 2
+            self.table = self._rehash()
+
+    def _insert(self, k, table):
+        hash_value = self.ahf(k)
+        if table[hash_value] is None:
+            table[hash_value] = DLL()
+        table[hash_value].insert(Node(k))
+
+    def _rehash(self):
+        table, key_list = [None] * self.size, []
+        for ll in self.head:
+            if ll is not None:
+                head = ll.head
+                while head is not None:
+                    key_list.append(head.k)
+                    head = head.next
+        for k in key_list:
+            self._insert(k, table)
+        return table
+
+    def _reduce(self):
+        if self.table_double and self.table.count(None) == int(3 * self.size / 4):
+            self.size //= 2
+            self.table = self._rehash()
+
+    def delete(self, x):
+        hash_value = self.ahf(x if isinstance(x, (int, float)) else x.k)
+        self.table[hash_value].delete(x)
+        if self.table_double and self.table[hash_value].head is None:
+            self.table[hash_value] = None
+        self._reduce()
+
+    def hash_div(self, k):
+        return k % self.size
+
+    def hash_mul(self, k):
+        return int(self.m * ((k * self.a) % 1))
+
+    def hash_uni(self, k, keys, **kwargs):
+        p = kwargs.get("p", None) or next_prime(max(keys))
+        a = kwargs.get("a", None) or random.randrange(1, p)
+        b = kwargs.get("b", None) or random.randrange(0, p)
+        return ((a * k + b) % p) % self.size
+
+    def insert(self, x):
+        self._grow()
+        self._insert(x.k, self.table)
+
+    def search(self, k):
+        hash_value = self.ahf(k)
+        if self.table[hash_value] is not None:
+            return self.table[hash_value].search(k)
+        return None
+
+
+class HashOpen(HashChain):
+    _DELETED = "DELETED"
+
+    def __init__(self, size, hash_func="hash_linear", table_double=False):
+        super().__init__(size, table_double=table_double)
+        self.hash_func = getattr(self, hash_func)
+
+    def _grow(self):
+        if self.table_double:
+            none, deleted = self.table.count(None), self.table.count(self._DELETED)
+            if none == deleted == 0:
+                self.size *= 2
+                self.table = self._rehash()
+
+    def _insert(self, k, table):
+        i = 0
+        while i != self.size:
+            hash_value = self.hash_func(k, i)
+            if table[hash_value] in [None, self._DELETED]:
+                table[hash_value] = k
+                return hash_value
+            i += 1
+        raise OverflowError()
+
+    def _rehash(self):
+        table = [None] * self.size
+        key_list = [slot for slot in self.table if slot not in [None, self._DELETED]]
+        for k in key_list:
+            self._insert(k, table)
+        return table
+
+    def _reduce(self):
+        if self.table_double:
+            none, deleted = self.table.count(None), self.table.count(self._DELETED)
+            if none + deleted == int(3 * self.size / 4):
+                self.size //= 2
+                self.table = self._rehash()
+
+    def delete(self, k):
+        hash_value = self.search(k)
+        self.table[hash_value] = self._DELETED
+        self._reduce()
+
+    def hash_double(self, k, i):
+        if (self.size & (self.size - 1) == 0) and self.size != 0:
+            h1, h2 = self.hash_div(k), self.hash_mul(k)
+            if h2 % 2 == 0:
+                h2 += 1
+        else:
+            assert is_prime(self.size)
+            h1 = k % self.size
+            h2 = 1 + (k * (self.size - 1))
+        return (h1 + i * h2) % self.size
+
+    def hash_linear(self, k, i):
+        return (self.ahf(k) + i) % self.size
+
+    def hash_quadratic(self, k, i):
+        return (self.ahf(k) + i ** 2) % self.size
+
+    def insert(self, k):
+        self._grow()
+        self._insert(k, self.table)
+
+    def search(self, k):
+        i = 0
+        while True:
+            hash_value = self.hash_func(k, i)
+            if self.table[hash_value] == k:
+                return hash_value
+            i += 1
+            if self.table[hash_value] is None or i == self.size:
+                break
+        return None
+
+
+class HashPerfect:
+    def __init__(self, keys, **kwargs):
+        self.keys = keys
+        self.m = len(self.keys)
+        self.p = kwargs.get("p", None) or next_prime(max(self.keys))
+        self.a = kwargs.get("a", None) or random.randrange(1, self.p)
+        self.b = kwargs.get("b", None) or random.randrange(0, self.p)
+        self._create_table()
+
+    def _create_table(self):
+        n, self.table = [0] * self.m, [None] * self.m
+        for k in self.keys:
+            hash_value = self._get_hash_value(k=k)
+            n[hash_value] += 1
+        for m in range(self.m):
+            if n[m] > 1:
+                self.table[m] = [None] * n[m] ** 2
+        for k in self.keys:
+            hash_value, index = self.hash(k)
+            if index is not None:
+                self.table[hash_value][index] = k
+            else:
+                self.table[hash_value] = k
+
+    def _get_hash_value(self, a=None, b=None, m=None, p=None, k=None):
+        a = a or self.a
+        b = b or self.b
+        m = m or self.m
+        p = p or self.p
+        return ((a * k + b) % p) % m
+
+    def hash(self, k):
+        hash_value = self._get_hash_value(k=k)
+        a, b, index = A_LIST[hash_value], B_LIST[hash_value], None
+        if isinstance(self.table[hash_value], list):
+            index = self._get_hash_value(a, b, len(self.table[hash_value]), k=k)
+        return hash_value, index
+
+    def search(self, k):
+        return self.hash(k)
+
+
+class DLL(SLL):
+    def delete(self, x):
+        if isinstance(x, (int, float)):
+            x = self.search(x)
+        if x.prev is not None:
+            x.prev.next = x.next
+        else:
+            self.head = x.next
+        if x.next is not None:
+            x.next.prev = x.prev
+
+    def insert(self, x):
+        x.next = self.head
+        if self.head is not None:
+            self.head.prev = x
+        self.head = x
+        x.prev = None
+
+
+class Node:
+    def __init__(self, k):
+        self.k, self.next, self.prev = k, None, None
+
+
+class SLL:
+    def __init__(self):
+        self.head = None
+
+    def delete(self, x):
+        if isinstance(x, (int, float)):
+            x = self.search(x)
+        curr, prev = self.head, None
+        while curr is not None and curr.k != x.k:
+            prev, curr = curr, curr.next
+        if prev is None:
+            self.head = curr.next
+        else:
+            prev.next = curr.next
+
+    def insert(self, x):
+        x.next = self.head
+        self.head = x
+
+    def search(self, k):
+        x = self.head
+        while x is not None and k != x.k:
+            x = x.next
+        return x
+
+    def size(self):
+        count, x = 0, self.head
+        while x is not None:
+            count += 1
+            x = x.next
+        return count
+
+
+def lu_decomp(a):
+    n = len(a)
+    for k in range(n):
+        for i in range(k + 1, n):
+            a[i][k] /= a[k][k]
+        schur_complement(a, k, n, False)
+
+
+def lup_decomp(a):
+    n, p = len(a), []
+    for i in range(n):
+        p.append(i)
+    for k in range(n):
+        k_new = p_new = 0
+        for i in range(k, n):
+            if abs(a[i][k]) > p_new:
+                k_new, p_new = i, abs(a[i][k])
+        assert p_new != 0
+        p[k], p[k_new] = p[k_new], p[k]
+        for i in range(n):
+            a[k][i], a[k_new][i] = a[k_new][i], a[k][i]
+        schur_complement(a, k, n)
+    return p
+
+
+def lup_solver(a, b, p=None):
+    n = len(a)
+    x, y, = [0] * n, [0] * n
+    for i in range(n):
+        b_ = b[i] if p is None else b[p[i]]
+        y[i] = b_ - sum(a[i][j] * y[j] for j in range(i))
+    for i in range(n - 1, -1, -1):
+        x[i] = (y[i] - sum(a[i][j] * x[j] for j in range(i + 1, n))) / a[i][i]
+    return x
+
+
+def schur_complement(a, k, n, lup=True):
+    for i in range(k + 1, n):
+        if lup:
+            a[i][k] /= a[k][k]
+        for j in range(k + 1, n):
+            a[i][j] -= a[i][k] * a[k][j]
+
+
+def crt(rems, coprimes):
+    prod = 1
+    for i in coprimes:
+        prod *= i
+    prod_norm = [prod / i for i in coprimes]
+    mod_inv = [gcd(i, j)[1] for i, j in zip(prod_norm, coprimes)]
+    return sum((i * j * k) % prod for i, j, k, in zip(mod_inv, prod_norm, rems)) % prod
+
+
+def gcd(a, b):
+    if b == 0:
+        return a, 1, 0
+    d, x, y = gcd(b, a % b)
+    return d, y, x - (a // b) * y
+
+
+def gcd_binary(a, b):
+    if a % 2 == b % 2 == 0:
+        d, x, y = gcd(a / 2, b / 2)
+        return 2 * d, x, y
+    if a % 2 == 0 or b % 2 == 0:
+        if b % 2 != 0:
+            a, b = b, a
+        return gcd(a, b / 2)
+    return gcd((a - b) / 2, b)
+
+
+def gcd_multi(*args):
+    c_list, i = [0] * len(args), -1
+    while len(args) > 2:
+        d, x, y = gcd(args[-2], args[-1])
+        c_list[i] = y if c_list[i] is None else c_list[i] * y
+        if abs(i - 1) != len(args):
+            c_list[i - 1] = x if c_list[i - 1] is None else c_list[i - 1] * x
+        args = args[:-2] + (d,)
+        i -= 1
+    d, x, y = gcd(args[0], args[1])
+    c_list[0] = x
+    for i in range(1, len(c_list)):
+        c_list[i] = y if c_list[i] is None else c_list[i] * y
+    return d, c_list
+
+
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)[0]
+
+
+def lcm_multi(*args):
+    while len(args) > 2:
+        args = args[:-2] + (lcm(args[-2], args[-1]),)
+    return lcm(args[0], args[1])
+
+
+def get_t_u(n):
+    assert n % 2 != 0
+    x = n - 1
+    t = 1
+    u = x // 2 ** t
+    while True:
+        if u % 2 != 0 and 2 ** t * u == x:
+            break
+        t += 1
+        u = x // 2 ** t
+    return t, u
+
+
+def witness(a, n):
+    t, u = get_t_u(n)
+    x_prev = mod_exp(a, u, n)
+    x_next = x_prev ** 2 % n
+    for _ in range(t):
+        if x_next == 1 and x_prev not in [1, n - 1]:
+            return True
+        x_prev, x_next = x_next, x_prev
+    if x_next != 1:
+        return True
+    return False
+
+
+def miller_rabin(n, s=9):
+    for _ in range(s):
+        if witness(random.randrange(1, n), n):
+            return False
+    return True
+
+
+def mod_exp(a, b, n):
+    assert a >= 0 and b >= 0 and n > 0
+    b, d = [int(i) for i in list(bin(b)[2:])], 1
+    for i in b:
+        d = (d * d) % n
+        if i == 1:
+            d = (d * a) % n
+    return d
+
+
+def mod_linear_solver(a, b, n):
+    assert a > 0 and n > 0
+    d, x = gcd(a, n)[:2]
+    solutions = None
+    if b % d == 0:
+        x0 = x * (b / d) % n
+        solutions = [(x0 + i * (n / d)) % n for i in range(d)]
+    return solutions
+
+
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    for i in range(5, n // 2 + 1, 6):
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+    return True
+
+
+def next_prime(n):
+    if n <= 1:
+        return 2
+    while True:
+        n += 1
+        if is_prime(n):
+            return n
+
+
+def pollard_rho(n, max_iters=10000):
+    i, k, factors = 1, 2, []
+    x = y = random.randrange(0, n)
+    for _ in range(max_iters):
+        i += 1
+        x = (x ** 2 - 1) % n
+        d = gcd(y - x, n)[0]
+        if d not in [1, n] and d not in factors:
+            factors.append(d)
+        if i == k:
+            y, k = x, 2 * k
+    return factors
+
+
+class HeapQueue:
+    def __init__(self, a, is_max):
+        self.a = a
+        self.heap_size = len(self.a)
+        self.is_max = is_max
+        self.compare_op = gt if self.is_max else lt
+        self.build()
+
+    def _exchange(self, i, j):
+        self.a[i], self.a[j] = self.a[j], self.a[i]
+
+    @staticmethod
+    def _left(i):
+        return 2 * i + 1
+
+    @staticmethod
+    def _parent(i):
+        return max(0, (i - 1) // 2)
+
+    @staticmethod
+    def _right(i):
+        return 2 * i + 2
+
+    def build(self):
+        for i in range(len(self.a) // 2 - 1, -1, -1):
+            self.heapify(i)
+
+    def change(self, i, k):
+        assert self.compare_op(k, self.a[i])
+        self.a[i] = k
+        while i > 0 and self.compare_op(self.a[i], self.a[self._parent(i)]):
+            self._exchange(i, self._parent(i))
+            i = self._parent(i)
+
+    def extract(self):
+        assert self.heap_size > 0
+        self.heap_size -= 1
+        x = self.a[0]
+        self.a[0] = self.a[self.heap_size]
+        self.heapify(0)
+        self.a.pop(-1)
+        return x
+
+    def get(self):
+        return self.a[0]
+
+    def heapify(self, i):
+        l, r, index = self._left(i), self._right(i), i
+        if l < self.heap_size and self.compare_op(self.a[l], self.a[i]):
+            index = l
+        if r < self.heap_size and self.compare_op(self.a[r], self.a[index]):
+            index = r
+        if index != i:
+            self._exchange(i, index)
+            self.heapify(index)
+
+    def insert(self, k):
+        self.a.append(-float("inf") if self.is_max else float("inf"))
+        self.change(self.heap_size, k)
+        self.heap_size += 1
+
+
+class Queue:
+    def __init__(self, size, table_double=False):
+        self.size = size
+        self.table_double = table_double
+        self.a = [None] * self.size
+        self.head = self.tail = 0
+
+    def _grow(self):
+        if not self.table_double:
+            assert not self.full()
+        elif self.tail == self.size - 1:
+            self.a = self.a + [None] * self.size
+            self.size *= 2
+
+    def _reduce(self):
+        x = self.a[self.head]
+        thresh = self.size // 4
+        if self.tail - self.head + 1 == thresh or thresh <= 1:
+            start = self.head + 1
+            end = start + self.size // 2
+            self.a = [self.a[i] for i in range(start, end)]
+            self.size //= 2
+            self.tail -= self.head + 1
+            self.head = 0
+        else:
+            self.head += 1
+        return x
+
+    def dequeue(self):
+        assert not self.empty()
+        if self.table_double:
+            return self._reduce()
+        x = self.a[self.head]
+        if self.head == self.size - 1:
+            self.head = 0
+        else:
+            self.head += 1
+        return x
+
+    def empty(self):
+        return self.head == self.tail
+
+    def enqueue(self, x):
+        self._grow()
+        self.a[self.tail] = x
+        if self.tail == self.size - 1:
+            self.tail = 0
+        else:
+            self.tail += 1
+
+    def full(self):
+        if self.head == self.tail + 1:
+            return True
+        if self.head == 0 and self.tail == self.size - 1:
+            return True
+        return False
+
+
+def bubble_sort(a):
+    for i in range(len(a) - 1):
+        for j in range(len(a) - 1, i, -1):
+            if a[j] < a[j - 1]:
+                a[j], a[j - 1] = a[j - 1], a[j]
+
+
+def sort(self):
+    assert self.heap_size > 0
+    for i in range(len(self.a) - 1, 0, -1):
+        self._exchange(0, i)
+        self.heap_size -= 1
+        self.heapify(0)
+
+
+def insertion_sort(a):
+    for i in range(1, len(a)):
+        k = a[i]
+        j = i - 1
+        while j > -1 and a[j] > k:
+            a[j + 1] = a[j]
+            j -= 1
+        a[j + 1] = k
+
+
+def merge_sort(a):
+    n = len(a)
+    if n == 1:
+        return a
+    mid = n // 2
+    l = merge_sort(a[:mid])
+    r = merge_sort(a[mid:])
+    return merge(l, r)
+
+
+def merge(l, r):
+    i, j, a = 0, 0, []
+    while i < len(l) and j < len(r):
+        if l[i] <= r[j]:
+            a.append(l[i])
+            i += 1
+        else:
+            a.append(r[j])
+            j += 1
+    if i < len(l):
+        a.extend(l[i:])
+    if j < len(r):
+        a.extend(r[j:])
+    return a
+
+
+def quicksort(a, low, high):
+    while low < high:
+        pivot = partition(a, low, high)
+        if pivot - low < high - pivot:
+            quicksort(a, low, pivot - 1)
+            low = pivot + 1
+        else:
+            quicksort(a, pivot + 1, high)
+            high = pivot - 1
+
+
+def partition(a, low, high, pivot_index=None, random_partition=True):
+    if random_partition:
+        r = random.randrange(low, high + 1)
+        a[high], a[r] = a[r], a[high]
+    elif pivot_index is not None:
+        a[high], a[pivot_index] = a[pivot_index], a[high]
+    x, i = a[high], low - 1
+    for j in range(low, high):
+        if a[j] <= x:
+            i += 1
+            a[i], a[j] = a[j], a[i]
+    a[i + 1], a[high] = a[high], a[i + 1]
+    return i + 1
+
+
+def bucket_sort(a):
+    n, largest = len(a), max(a)
+    b = [[] for _ in range(n)]
+    size = largest // n + (largest % n > 0)
+    for i in range(n):
+        b[int(a[i] / size)].append(a[i])
+    x = []
+    for i in range(n):
+        if b[i]:
+            insertion_sort(b[i])
+            x.extend(b[i])
+    return x
+
+
+def counting_sort(a, k=None, exp=None, base=None):
+    if k is None:
+        assert exp is not None and base is not None
+    n, base = len(a), base or (k + 1)
+    b, c = [0] * n, [0] * base
+    for i in range(n):
+        index = a[i] if k is not None else (a[i] // exp) % base
+        c[index] += 1
+    for i in range(1, base):
+        c[i] += c[i - 1]
+    for i in range(n - 1, -1, -1):
+        index = a[i] if k is not None else (a[i] // exp) % base
+        b[c[index] - 1] = a[i]
+        c[index] -= 1
+    return b
+
+
+def pigeonhole_sort(a):
+    base = min(key for key, value in a)
+    size = max(key for key, value in a) - base + 1
+    pigeonholes = [[] for _ in range(size)]
+    for key, value in a:
+        pigeonholes[key - base].append((key, value))
+    a.clear()
+    for i in pigeonholes:
+        a.extend(i)
+
+
+def radix_sort(a, base=10):
+    exp = 1
+    while max(a) / exp > 1:
+        a = counting_sort(a, exp=exp, base=base)
+        exp *= base
+    return a
+
+
+class Stack:
+    def __init__(self, size, table_double=False):
+        self.size = size
+        self.table_double = table_double
+        self.a = [None] * self.size
+        self.top = -1
+
+    def _grow(self):
+        if not self.table_double:
+            assert not self.full()
+        elif self.top == self.size - 1:
+            self.a = self.a + [None] * self.size
+            self.size *= 2
+        self.top += 1
+
+    def _reduce(self):
+        assert not self.empty()
+        if self.table_double and self.top == self.size // 4:
+            self.a = [self.a[i] for i in range(self.size // 2)]
+            self.size //= 2
+        self.top -= 1
+
+    def empty(self):
+        return self.top == -1
+
+    def full(self):
+        return self.top == self.size - 1
+
+    def pop(self):
+        self._reduce()
+        return self.a[self.top + 1]
+
+    def push(self, x):
+        self._grow()
+        self.a[self.top] = x
+
+
+def compute_transition(p, m, sigma):
+    lps = 0
+    tf = [[0 for _ in range(sigma)] for _ in range(m + 1)]
+    tf[0][ord(p[0])] = 1
+    for i in range(1, m + 1):
+        for j in range(sigma):
+            tf[i][j] = tf[lps][j]
+        if i < m:
+            tf[i][ord(p[i])] = i + 1
+            lps = tf[lps][ord(p[i])]
+    return tf
+
+
+def fa(t, p, sigma=256):
+    n, m, q, indices = len(t), len(p), 0, []
+    tf = compute_transition(p, m, sigma)
+    for i in range(n):
+        q = tf[q][ord(t[i])]
+        if q == m:
+            indices.append(i - m + 1)
+    return indices
+
+
+def compute_pi_table(p, m):
+    pi_table, k = [0] * m, 0
+    for i in range(1, m):
+        while k > 0 and p[k] != p[i]:
+            k = pi_table[k]
+        if p[k] == p[i]:
+            k += 1
+        pi_table[i] = k
+    return pi_table
+
+
+def kmp(t, p):
+    n, m, indices, i, j = len(t), len(p), [], 0, 0
+    pi_table = compute_pi_table(p, m)
+    while i < n:
+        if p[j] == t[i]:
+            i += 1
+            j += 1
+        if j == m:
+            indices.append(i - j)
+            j = pi_table[j - 1]
+        elif i < n and p[j] != t[i]:
+            if j != 0:
+                j = pi_table[j - 1]
+            else:
+                i += 1
+    return indices
+
+
+def naive(t, p):
+    n, m, indices = len(t), len(p), []
+    for s in range(n - m):
+        if p == t[s: s + m]:
+            indices.append(s)
+    return indices
+
+
+def check_equal(t, p, t_, p_, row, col, pcols, prows, indices):
+    if p_ != t_:
+        return
+    t = [t[i][col: col + pcols] for i in range(row, row + prows)]
+    if p == t:
+        indices.append([row, col])
+
+
+def col_hash(list_, n_pcols, radix, q):
+    h = 0
+    for i in range(n_pcols):
+        h += (radix ** (n_pcols - i - 1) * list_[i]) % q
+    return h % q
+
+
+def col_rolling_hash(t_list, t_, col, n_pcols, radix, q):
+    t_ = (t_ * radix + t_list[col]) % q
+    t_ -= (radix ** n_pcols * t_list[col - n_pcols]) % q
+    t_ %= q
+    return t_
+
+
+def init(t, p, radix, q, is_2d=True):
+    if not is_prime(q):
+        q = next_prime(q)
+    assert radix * q < 2 ** radix - 1
+    if not is_2d:
+        t, p = [t], [p]
+    trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
+    t_list, p_list = row_hash(t, p, tcols, pcols, prows, radix, q)
+    n_tcols, n_pcols = len(t_list), len(p_list)
+    indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
+    return t, p, t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices
+
+
+def row_hash(t, p, tcols, pcols, prows, radix, q):
+    t_list, p_list = [], []
+    for list_, a, cols in zip((t_list, p_list), (t, p), (tcols, pcols)):
+        for i in range(cols):
+            h = 0
+            for j in range(prows - 1, -1, -1):
+                h += (radix ** (prows - j - 1) * ord(a[j][i])) % q
+            list_.append(h % q)
+    return t_list, p_list
+
+
+def rabin_karp(t, p, radix=256, q=101):
+    t, p, t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices = init(
+        t, p, radix, q, False
+    )
+    col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
+    for i in range(n_pcols, n_tcols):
+        check_equal(t, p, t_, p_, 0, col, pcols, prows, indices)
+        col, t_ = col + 1, col_rolling_hash(t_list, t_, i, n_pcols, radix, q)
+    return indices
+
+
+def row_rolling_hash(t_list, t, next_row, prows, radix, q):
+    for i, t_ in enumerate(t_list):
+        t_ = (t_ * radix + ord(t[next_row][i])) % q
+        t_ -= (radix ** prows * ord(t[next_row - prows][i])) % q
+        t_list[i] = t_ % q
+
+
+def rabin_karp2d(t, p, radix=256, q=101):
+    t, p, t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices = init(
+        t, p, radix, q
+    )
+    for i in range(prows - 1, trows):
+        col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
+        check_equal(t, p, t_, p_, i + 1 - prows, col, pcols, prows, indices)
+        for j in range(n_pcols, n_tcols):
+            col, t_ = col + 1, col_rolling_hash(t_list, t_, j, n_pcols, radix, q)
+            check_equal(t, p, t_, p_, i + 1 - prows, col, pcols, prows, indices)
+        if i + 1 < trows:
+            row_rolling_hash(t_list, t, i + 1, prows, radix, q)
+    return indices
+
+
+class BST:
+    def __init__(self, z):
+        self.root = BSTNode(z)
+
+    def _get_node(self, x):
+        if isinstance(x, (int, float)):
+            x = self.search(self.root, x)
+        return x
+
+    def count(self, l, h):
+        assert l < h
+        count = self.rank(h) - self.rank(l)
+        has_l = self.search(self.root, l)
+        if has_l is None or (has_l is None and self.search(self.root, h) is None):
+            return count
+        return count + 1
+
+    def delete(self, z):
+        z = self._get_node(z)
+        if z.left is None:
+            self.transplant(z, z.right)
+        elif z.right is None:
+            self.transplant(z, z.left)
+        else:
+            y = self.min(z.right)
+            if y.p is not z:
+                self.transplant(y, y.right)
+                y.right = z.right
+                y.right.p = y
+            self.transplant(z, y)
+            y.left = z.left
+            y.left.p = y
+        if isinstance(z.p, BSTNode):
+            self.update_size(z.p)
+        return z
+
+    def insert(self, z):
+        x, y = self.root, None
+        if isinstance(z, (int, float)):
+            z = BSTNode(z)
+        while x is not None:
+            y = x
+            x = x.left if z.key < x.key else x.right
+        z.p = y
+        if y is None:
+            self.root = z
+        elif z.key < y.key:
+            y.left = z
+        else:
+            y.right = z
+        if isinstance(z.p, BSTNode):
+            self.update_size(z.p)
+        return z
+
+    def lca(self, l, h):
+        x = self.root
+        while x is not None and not l <= x.key <= h:
+            x = x.left if l < x.key else x.right
+        return x
+
+    def list(self, l, h):
+        result = [l]
+        node = self.successor(l)
+        while node is not None and node.key <= h:
+            result.append(node.key)
+            node = self.successor(node)
+        return result
+
+    def max(self, x):
+        x = self._get_node(x)
+        while x.right is not None:
+            x = x.right
+        return x
+
+    def min(self, x):
+        x = self._get_node(x)
+        while x.left is not None:
+            x = x.left
+        return x
+
+    def predecessor(self, x):
+        x = self._get_node(x)
+        if x.left is not None:
+            return self.max(x.left)
+        y = x.p
+        while y is not None and x is y.left:
+            x = y
+            y = y.p
+        return y
+
+    def rank(self, k):
+        r, x = 0, self.root
+        while x is not None:
+            if k < x.key:
+                x = x.left
+            else:
+                r += 1
+                if x.left is not None:
+                    r += x.left.size
+                if k == x.key:
+                    return r
+                x = x.right
+        return r
+
+    def search(self, x, k):
+        x = self._get_node(x)
+        while x is not None and k != x.k:
+            x = x.left if k < x.key else x.right
+        return x
+
+    def successor(self, x):
+        x = self._get_node(x)
+        if x.right is not None:
+            return self.min(x.right)
+        y = x.p
+        while y is not None and x is y.right:
+            x = y
+            y = y.p
+        return y
+
+    def transplant(self, u, v):
+        if u.p is None:
+            self.root = v
+        elif u is u.p.left:
+            u.p.left = v
+        else:
+            u.p.right = v
+        if v is not None:
+            v.p = u.p
+
+    def update_size(self, x):
+        if x is None:
+            return
+        x.size = 1 + ((x.left and x.left.size) or 0) + ((x.right and x.right.size) or 0)
+        self.update_size(x.left)
+        self.update_size(x.right)
+
+    def walk(self, x):
+        if x is not None:
+            node = self.min(x)
+            while node is not None:
+                print(node.key)
+                node = self.successor(node)
+
+
+class BSTNode:
+    def __init__(self, key, parent=None):
+        self.key, self.p, self.size = key, parent, 1
+        self.left = self.right = None
+
+
+class AVL(BST):
+    def __init__(self, z):
+        self.root = AVLNode(z)
+
+    def balance(self, x):
+        while x is not None:
+            self.update_height(x)
+            self.update_size(x)
+            if self.height(x.left) >= self.height(x.right) + 2:
+                if self.height(x.left.left) < self.height(x.left.right):
+                    self.rotate(x.left, True)
+                self.rotate(x, False)
+            elif self.height(x.right) >= self.height(x.left) + 2:
+                if self.height(x.right.right) < self.height(x.right.left):
+                    self.rotate(x.right, False)
+                self.rotate(x, True)
+            x = x.p
+
+    def delete(self, z):
+        z = super().delete(z)
+        self.balance(z.p)
+
+    def height(self, x):
+        return 0 if x is None else self._get_node(x).h
+
+    def insert(self, z):
+        self.balance(super().insert(AVLNode(z)))
+
+    def rotate(self, x, left_rotate):
+        x = self._get_node(x)
+        if left_rotate:
+            self.rotate_left(x)
+        else:
+            self.rotate_right(x)
+
+    def rotate_left(self, x):
+        y = x.right
+        x.right = y.left
+        if y.left is not None:
+            y.left.p = x
+        y.p = x.p
+        if x.p is None:
+            self.root = y
+        elif x is x.p.left:
+            x.p.left = y
+        else:
+            x.p.right = y
+        y.left = x
+        x.p = y
+        self.update_height(x)
+        self.update_height(y)
+        self.update_size(x)
+        self.update_size(y)
+
+    def rotate_right(self, x):
+        y = x.left
+        x.left = y.right
+        if y.right is not None:
+            y.right.p = x
+        y.p = x.p
+        if x.p is None:
+            self.root = y
+        elif x is x.p.right:
+            x.p.right = y
+        else:
+            x.p.left = y
+        y.right = x
+        x.p = y
+        self.update_height(x)
+        self.update_height(y)
+        self.update_size(x)
+        self.update_size(y)
+
+    def update_height(self, x):
+        x.h = max(self.height(x.left), self.height(x.right)) + 1
+
+
+class AVLNode(BSTNode):
+    def __init__(self, key, parent=None, height=0):
+        super().__init__(key, parent)
+        self.h = height

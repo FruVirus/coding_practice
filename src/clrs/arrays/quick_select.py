@@ -14,7 +14,6 @@ Complexity
 O(n) worst case
 """
 
-
 # Repository Library
 from src.clrs.sorting.comparison_sorting.insertion_sort import insertion_sort
 from src.clrs.sorting.comparison_sorting.quick_sort import partition
