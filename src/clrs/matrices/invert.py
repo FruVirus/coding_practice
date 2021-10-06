@@ -102,10 +102,7 @@ def invert_matrix(a):
     det_ = det(a)
     assert det_ != 0
     if len(a) == 2:
-        return [
-            [a[1][1] / det_, -a[0][1] / det_],
-            [-a[1][0] / det_, a[0][0] / det_],
-        ]
+        return [[a[1][1] / det_, -a[0][1] / det_], [-a[1][0] / det_, a[0][0] / det_]]
     adjoint = transpose(cofactor(a))
     n = len(adjoint)
     for r in range(n):
