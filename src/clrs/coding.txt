@@ -937,7 +937,7 @@ def row_hash(t, p, tcols, pcols, prows, radix, q):
 
 
 def rabin_karp(t, p, radix=256, q=101):
-    t, p, t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices = init(
+    t, p, t_list, n_tcols, n_pcols, _, prows, pcols, p_, indices = init(
         t, p, radix, q, False
     )
     col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
