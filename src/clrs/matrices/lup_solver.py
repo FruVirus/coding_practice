@@ -161,7 +161,8 @@ def lup_decomp(a):
     return p
 
 
-def lup_solver(a, b, p=None):
+def lup_solver(a, b, lup=True):
+    p = lu_decomp(a) if lup is False else lup_decomp(a)
     n = len(a)
     x, y = [0] * n, [0] * n
     for i in range(n):
