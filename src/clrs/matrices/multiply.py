@@ -16,6 +16,53 @@ n / 2 x n / 2 matrices, and by assuming that n is an exact power of 2, we are gu
 that as long as n >= 2, the dimension n / 2 is an integer. The divide-and-conquer
 algorithm also runs in Theta(n^3) time.
 
+Strassen's Method
+-----------------
+
+Strassen's method is to perform only 7 matrix multiplications instead of 8 as in the
+naive recursive algorithm. The cost of eliminating one matrix multiplication will be
+several new additions of n / 2 x n / 2 matrices, but still only a constant number of
+additions.
+
+1. Divide the input matrices A and B and output matrix C into n / 2 x n / 2
+sub-matrices. This step takes Theta(1) time by index calculation.
+
+2. Create 10 matrices S1, S2, ..., S10, each of which is n / 2 and n / 2 and is the sum
+or difference of two matrices created in step 1. We can create all 10 matrices in
+Theta(n^) time.
+
+3. Using the sub-matrices created in step 1 and the 10 matrices created in step 2,
+recursively compute seven matrix products P1, P2, ..., P7. Each matrix Pi is
+n / 2 x n / 2.
+
+4. Compute the desired sub-matrices C11, C12, C21, C22 of the result matrix C by
+adding and subtracting various combinations of the Pi matrices. We can compute all four
+sub-matrices in Theta(n^2) time.
+
+From a practical point of view, Strassen's algorithm is often not the method of choice
+for matrix multiplication, for four reasons:
+
+1. The constant factor hidden in the Theta(n^(lg(7))) running time is larger than the
+constant factor in the Theta(n^3) time for the naive matrix multiplication algorithm.
+
+2. When the matrices are sparse, methods tailored for sparse matrices are faster.
+
+3. Strassen's algorithm is not quite as numerically stable as the naive algorithm.
+
+4. The sub-matrices formed at the levels of recursion consume space.
+
+c00 = p + s - t + v
+c01 = r + t
+c10 = q + s
+c11 = p + r - q + u
+p = (a00 + a11) * (b00 + b11)
+q = (a10 + a11) * b00
+r = a00 * (b01 - b11)
+s = a11 * (b10 - b00)
+t = (a00 + a10) * b11
+u = (a10 - a00) * (b00 + b01)
+v = (a01 - a11) * (b10 + b11)
+
 Complexity
 ==========
 
