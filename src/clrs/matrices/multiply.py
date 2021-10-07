@@ -34,52 +34,52 @@ def matrix_multiply(a, b):
     return c
 
 
-def smmr(a, b):
-    n, n_acols, m, n_bcols = len(a), len(a[0]), len(b), len(b[0])
-    assert n_acols == m
-    c = [[0 for _ in range(n)] for _ in range(n_bcols)]
-    mmr(a, b, crow1, col1, A, row2, col2, B, C)
+def add(a, b):
+    n = len(a)
+    c = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            c[i][j] = a[i][j] + b[i][j]
     return c
 
 
-def mmr(row1, col1, A, row2, col2, B, C):
-    # Note that below variables are static
-    # i and j are used to know current cell of
-    # result matrix C[][]. k is used to know
-    # current column number of A[][] and row
-    # number of B[][] to be multiplied
-    global i
-    global j
-    global k
-
-    # If all rows traversed.
-    if (i >= row1):
-        return
-
-    # If i < row1
-    if (j < col2):
-        if (k < col1):
-            C[i][j] += A[i][k] * B[k][j]
-            k += 1
-            multiplyMatrixRec(row1, col1, A,
-                              row2, col2, B, C)
-
-        k = 0
-        j += 1
-        multiplyMatrixRec(row1, col1, A,
-                          row2, col2, B, C)
-
-    j = 0
-    i += 1
-    multiplyMatrixRec(row1, col1, A,
-                      row2, col2, B, C)
+def split(a):
+    a00 = a01 = a10 = a11 = a
+    while len(a00) > len(a) / 2:
+        a00 = a00[: len(a00) // 2]
+        a01 = a01[: len(a01) // 2]
+        a10 = a10[len(a10) // 2 :]
+        a11 = a11[len(a11) // 2 :]
+    while len(a00[0]) > len(a[0]) // 2:
+        for i in range(len(a00[0]) // 2):
+            a00[i] = a00[i][: len(a00[i]) // 2]
+            a01[i] = a01[i][len(a01[i]) // 2 :]
+            a10[i] = a10[i][: len(a10[i]) // 2]
+            a11[i] = a11[i][len(a11[i]) // 2 :]
+    return a00, a01, a10, a11
 
 
-a = [[1, 2, 3], [4, 5, 6]]
-b = [[1, 2], [3, 4], [5, 6]]
-c = matrix_multiply(a, b)
-print(c)
-a = [[1, 2], [3, 4]]
-b = [[1, 2], [3, 4]]
-c = smmr(a, b)
-print(c)
+def smmr(a, b, n):
+    assert (n & (n - 1) == 0) and n != 0
+    c = [[0 for _ in range(n)] for _ in range(n)]
+    if n <= 2:
+        c[0][0] = a[0][0] * b[0][0] + a[0][1] * b[1][0]
+        c[0][1] = a[0][0] * b[0][1] + a[0][1] * b[1][1]
+        c[1][0] = a[1][0] * b[0][0] + a[1][1] * b[1][0]
+        c[1][1] = a[1][0] * b[0][1] + a[1][1] * b[1][1]
+    else:
+        a00, a01, a10, a11 = split(a)
+        b00, b01, b10, b11 = split(b)
+        mid = n // 2
+        c00 = add(smmr(a00, b00, mid), smmr(a01, b10, mid))
+        c01 = add(smmr(a00, b01, mid), smmr(a01, b11, mid))
+        c10 = add(smmr(a10, b00, mid), smmr(a11, b10, mid))
+        c11 = add(smmr(a10, b01, mid), smmr(a11, b11, mid))
+        n = len(c00)
+        for i in range(n):
+            for j in range(n):
+                c[i][j] = c00[i][j]
+                c[i][j + n] = c01[i][j]
+                c[i + n][j] = c10[i][j]
+                c[i + n][j + n] = c11[i][j]
+    return c
