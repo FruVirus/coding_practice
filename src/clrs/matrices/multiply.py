@@ -70,7 +70,7 @@ Theta(n^3) time complexity
 """
 
 
-def matrix_multiply(a, b):
+def mm(a, b):
     n, n_acols, m, n_bcols = len(a), len(a[0]), len(b), len(b[0])
     assert n_acols == m
     c = [[0 for _ in range(n)] for _ in range(n_bcols)]
