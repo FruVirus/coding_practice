@@ -90,8 +90,8 @@ def det(a):
     return sum(((-1) ** c) * a[0][c] * det(minor(a, 0, c)) for c in range(len(a)))
 
 
-def minor(a, i, j):
-    return [row[:j] + row[j + 1 :] for row in a[:i] + a[i + 1 :]]
+def minor(a, r, c):
+    return [row[:c] + row[c + 1 :] for row in a[:r] + a[r + 1 :]]
 
 
 def transpose(a):
