@@ -89,33 +89,33 @@ As a practical matter, we solve the normal equation by multiplying y by A.T and 
 finding the LU decomposition of A.T * A. Then, we call lup_solver() with a = A.T * A and
 b = A.T * y
 
-If A has full rank, the matrix A.T * A is
-guaranteed to be non-singular, because it is symmetric and positive definite.
+If A has full rank, the matrix A.T * A is guaranteed to be non-singular, because it is
+symmetric and positive definite.
 """
 
+# pylint: disable=C0200
+
 # Repository Library
-from src.clrs.matrices.gaussian_elimination import gaussian_elimination
 from src.clrs.matrices.invert import transpose
+from src.clrs.matrices.lup_solver import lu_decomp, lup_solver
+from src.clrs.matrices.multiply import mm
 
 
-def is_symm_pos_def(a):
-    at = transpose(a)
-    if at != a:
-        return False
-    a_elim = gaussian_elimination(a)[0]
-    is_pos_def = True
-    for r in range(len(a_elim)):
-        for c in range(len(a_elim)):
-            if r == c:
-                if a_elim[r][c] <= 0:
-                    is_pos_def = False
-            break
-        if is_pos_def is False:
-            break
-    if is_pos_def is False:
-        return False
+def is_pos_def(a):
+    for r in range(len(a)):
+        for c in range(len(a[0])):
+            if r == c and a[r][c] <= 0:
+                return False
     return True
 
 
-a = [[2, -1, 0], [-1, 2, -1], [0, -1, 2]]
-print(is_symm_pos_def(a))
+def llss(data, deg=2):
+    a = [[0 for _ in range(deg + 1)] for _ in range(len(data))]
+    for i, (x, y) in enumerate(data):
+        for j in range(deg + 1):
+            a[i][j] = x ** j
+    ata = mm(transpose(a), a)
+    lu_decomp(ata)
+    assert is_pos_def(ata)
+    y = mm(transpose(a), transpose([[y for _, y in data]]))
+    return lup_solver(ata, [i[0] for i in y], decomp=False, lup=False)

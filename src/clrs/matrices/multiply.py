@@ -71,9 +71,8 @@ Theta(n^3) time complexity
 
 
 def mm(a, b):
-    rowa, cola, rowb, colb = len(a), len(a[0]), len(b), len(b[0])
-    assert cola == rowb
-    x = [[0 for _ in range(rowa)] for _ in range(colb)]
+    rowa, cola, colb = len(a), len(a[0]), len(b[0])
+    x = [[0 for _ in range(colb)] for _ in range(rowa)]
     for ra in range(rowa):
         for cb in range(colb):
             for ca in range(cola):

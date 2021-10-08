@@ -93,6 +93,33 @@ A = (1      0)      (a_11    w.T)
     (v/a_11 L') (0, U')
   = LU
 
+
+Rank
+----
+
+The diagonal elements of the matrix returned by lu_decomp() can be used to determine the
+rank of the passed in matrix.
+
+Rank is the number of independent columns/rows of a matrix. If a column/row is a
+multiple of another column/row or is a combination or other columns/rows, then that
+column/row is not independent and does not contribute to the rank of a matrix.
+
+Rank can be found by performing Gaussian elimination on the input matrix and then
+counting the number of non-zero elements on the diagonal. After we perform Gaussian
+elimination, the resulting matrix is in row echelon form.
+
+A matrix is full row rank when each of the rows of the matrix are linearly independent
+and full column rank when each of the columns of the matrix are linearly independent.
+For a square matrix these two concepts are equivalent and we say the matrix is full rank
+if all rows and columns are linearly independent. A square matrix is full rank if and
+only if its determinant is nonzero.
+
+For a non-square matrix with m rows and n columns, it will always be the case that
+either the rows or columns (whichever is larger in number) are linearly dependent. Hence
+when we say that a non-square matrix is full rank, we mean that the row and column rank
+are as high as possible, given the shape of the matrix. So if there are more rows than
+columns (m > n), then the matrix is full rank if the matrix is full column rank.
+
 LUP Decomposition
 -----------------
 
@@ -161,8 +188,9 @@ def lup_decomp(a):
     return p
 
 
-def lup_solver(a, b, lup=True):
-    p = lu_decomp(a) if lup is False else lup_decomp(a)
+def lup_solver(a, b, p=None, decomp=True, lup=True):
+    if decomp:
+        p = lu_decomp(a) if lup is False else lup_decomp(a)
     n = len(a)
     x, y = [0] * n, [0] * n
     for i in range(n):

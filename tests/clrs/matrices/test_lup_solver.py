@@ -2,7 +2,16 @@
 import math
 
 # Repository Library
-from clrs.matrices.lup_solver import lup_solver
+from clrs.matrices.lup_solver import lu_decomp, lup_solver
+
+
+def test_lu_decomp():
+    a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    lu_decomp(a)
+    assert a == [[1, 2, 3], [4.0, -3.0, -6.0], [7.0, 2.0, 0.0]]
+    a = [[1, 2], [2, 4]]
+    lu_decomp(a)
+    assert a == [[1, 2], [2.0, 0.0]]
 
 
 def test_lu_solver():
