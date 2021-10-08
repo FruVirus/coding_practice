@@ -71,23 +71,23 @@ Theta(n^3) time complexity
 
 
 def mm(a, b):
-    n, n_acols, m, n_bcols = len(a), len(a[0]), len(b), len(b[0])
-    assert n_acols == m
-    c = [[0 for _ in range(n)] for _ in range(n_bcols)]
-    for i in range(n):
-        for j in range(n_bcols):
-            for k in range(n_acols):
-                c[i][j] += a[i][k] * b[k][j]
-    return c
+    rowa, cola, rowb, colb = len(a), len(a[0]), len(b), len(b[0])
+    assert cola == rowb
+    x = [[0 for _ in range(rowa)] for _ in range(colb)]
+    for ra in range(rowa):
+        for cb in range(colb):
+            for ca in range(cola):
+                x[ra][cb] += a[ra][ca] * b[ca][cb]
+    return x
 
 
 def add(a, b):
     n = len(a)
-    c = [[0 for _ in range(n)] for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            c[i][j] = a[i][j] + b[i][j]
-    return c
+    x = [[0 for _ in range(n)] for _ in range(n)]
+    for r in range(n):
+        for c in range(n):
+            x[r][c] = a[r][c] + b[r][c]
+    return x
 
 
 def split(a):
@@ -108,12 +108,12 @@ def split(a):
 
 def smmr(a, b, n):
     assert (n & (n - 1) == 0) and n != 0
-    c = [[0 for _ in range(n)] for _ in range(n)]
+    x = [[0 for _ in range(n)] for _ in range(n)]
     if n <= 2:
-        c[0][0] = a[0][0] * b[0][0] + a[0][1] * b[1][0]
-        c[0][1] = a[0][0] * b[0][1] + a[0][1] * b[1][1]
-        c[1][0] = a[1][0] * b[0][0] + a[1][1] * b[1][0]
-        c[1][1] = a[1][0] * b[0][1] + a[1][1] * b[1][1]
+        x[0][0] = a[0][0] * b[0][0] + a[0][1] * b[1][0]
+        x[0][1] = a[0][0] * b[0][1] + a[0][1] * b[1][1]
+        x[1][0] = a[1][0] * b[0][0] + a[1][1] * b[1][0]
+        x[1][1] = a[1][0] * b[0][1] + a[1][1] * b[1][1]
     else:
         a00, a01, a10, a11 = split(a)
         b00, b01, b10, b11 = split(b)
@@ -123,10 +123,10 @@ def smmr(a, b, n):
         c10 = add(smmr(a10, b00, mid), smmr(a11, b10, mid))
         c11 = add(smmr(a10, b01, mid), smmr(a11, b11, mid))
         n = len(c00)
-        for i in range(n):
-            for j in range(n):
-                c[i][j] = c00[i][j]
-                c[i][j + n] = c01[i][j]
-                c[i + n][j] = c10[i][j]
-                c[i + n][j + n] = c11[i][j]
-    return c
+        for r in range(n):
+            for c in range(n):
+                x[r][c] = c00[r][c]
+                x[r][c + n] = c01[r][c]
+                x[r + n][c] = c10[r][c]
+                x[r + n][c + n] = c11[r][c]
+    return x

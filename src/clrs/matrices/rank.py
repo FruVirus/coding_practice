@@ -21,25 +21,25 @@ def rank(a):
     n, m = len(a), len(a[0])
     assert n == m
     curr_rank = m
-    for row in range(curr_rank):
-        if a[row][row] != 0:
-            for col in range(n):
-                if col != row:
-                    multiplier = a[col][row] / a[row][row]
+    for r in range(curr_rank):
+        if a[r][r] != 0:
+            for c in range(n):
+                if c != r:
+                    multiplier = a[c][r] / a[r][r]
                     for i in range(curr_rank):
-                        a[col][i] -= multiplier * a[row][i]
+                        a[c][i] -= multiplier * a[r][i]
         else:
-            for i in range(row + 1, n):
-                if a[i][row] != 0:
-                    swap_rows(a, row, i, curr_rank)
+            for i in range(r + 1, n):
+                if a[i][r] != 0:
+                    swap_rows(a, r, i, curr_rank)
                     break
             else:
                 curr_rank -= 1
                 for i in range(n):
-                    a[i][row] = a[i][curr_rank]
+                    a[i][r] = a[i][curr_rank]
     return curr_rank
 
 
-def swap_rows(a, row1, row2, col):
-    for i in range(col):
-        a[row1][i], a[row2][i] = a[row2][i], a[row1][i]
+def swap_rows(a, r1, r2, c):
+    for i in range(c):
+        a[r1][i], a[r2][i] = a[r2][i], a[r1][i]
