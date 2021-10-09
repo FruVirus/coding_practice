@@ -115,9 +115,7 @@ def smmr(a, b, n):
         x[1][0] = a[1][0] * b[0][0] + a[1][1] * b[1][0]
         x[1][1] = a[1][0] * b[0][1] + a[1][1] * b[1][1]
     else:
-        a00, a01, a10, a11 = split(a)
-        b00, b01, b10, b11 = split(b)
-        mid = n // 2
+        (a00, a01, a10, a11), (b00, b01, b10, b11), mid = split(a), split(b), n // 2
         c00 = add(smmr(a00, b00, mid), smmr(a01, b10, mid))
         c01 = add(smmr(a00, b01, mid), smmr(a01, b11, mid))
         c10 = add(smmr(a10, b00, mid), smmr(a11, b10, mid))
