@@ -19,8 +19,4 @@ pattern.
 
 
 def naive(t, p):
-    n, m, indices = len(t), len(p), []
-    for s in range(n - m):
-        if p == t[s : s + m]:
-            indices.append(s)
-    return indices
+    return [s for s in range(len(t) - len(p)) if p == t[s : s + len(p)]]
