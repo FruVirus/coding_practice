@@ -91,7 +91,7 @@ def add(a, b):
 
 def split(a):
     a00 = a01 = a10 = a11 = a
-    while len(a00) > len(a) / 2:
+    while len(a00) > len(a) // 2:
         a00 = a00[: len(a00) // 2]
         a01 = a01[: len(a01) // 2]
         a10 = a10[len(a10) // 2 :]
