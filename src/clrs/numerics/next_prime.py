@@ -33,7 +33,7 @@ def is_prime(n):
 def next_prime(n):
     if n <= 1:
         return 2
-    while True:
+    n += 1
+    while not is_prime(n):
         n += 1
-        if is_prime(n):
-            return n
+    return n
