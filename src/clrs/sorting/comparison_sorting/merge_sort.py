@@ -23,9 +23,7 @@ def merge_sort(a):
     if n == 1:
         return a
     mid = n // 2
-    l = merge_sort(a[:mid])
-    r = merge_sort(a[mid:])
-    return merge(l, r)
+    return merge(merge_sort(a[:mid]), merge_sort(a[mid:]))
 
 
 def merge(l, r):
