@@ -24,7 +24,13 @@ numbers smaller requires additional modular reduction operations, but the reduce
 makes each operation faster, saving time (as well as memory) overall.
 
 At each step of the for-loop (and before entering the for-loop), the condition
-d = a^c mod n remains true. When the loop terminates, we have c = b and thus,
+d = a^c mod n remains true (i.e., c = 1). When the loop terminates, we have c = b and
+thus, d = a^c mod n = a^b mod n.
+
+For example, suppose a = 7, b = 560, n = 561 and we want to compute 7^560 mod 561.
+The binary representation of 560 is 1 000 11 0000. When the for-loop gets to the second
+1 (going from left to right), we have d = 160 and c = 17, so that 160 = 7^17 mod 561. At
+the end of the for-loop, we have that the number c = 560 so that
 d = a^c mod n = a^b mod n.
 
 Complexity
