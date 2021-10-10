@@ -53,9 +53,7 @@ def get_t_u(n):
     x = n - 1
     t = 1
     u = x // 2 ** t
-    while True:
-        if u % 2 != 0 and 2 ** t * u == x:
-            break
+    while u % 2 == 0 or 2 ** t * u != x:
         t += 1
         u = x // 2 ** t
     return t, u
