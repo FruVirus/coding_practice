@@ -166,9 +166,7 @@ Theta(n^2) for solving the system
 def lu_decomp(a):
     n = len(a)
     for k in range(n):
-        for i in range(k + 1, n):
-            a[i][k] /= a[k][k]
-        schur_complement(a, k, n, False)
+        schur_complement(a, k, n)
 
 
 def lup_decomp(a):
@@ -201,9 +199,8 @@ def lup_solver(a, b, p=None, decomp=True, lup=True):
     return x
 
 
-def schur_complement(a, k, n, lup=True):
+def schur_complement(a, k, n):
     for i in range(k + 1, n):
-        if lup:
-            a[i][k] /= a[k][k]
+        a[i][k] /= a[k][k]
         for j in range(k + 1, n):
             a[i][j] -= a[i][k] * a[k][j]
