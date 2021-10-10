@@ -29,7 +29,7 @@ class Stack:
         if not self.table_double:
             assert not self.full()
         elif self.top == self.size - 1:
-            self.a = self.a + [None] * self.size
+            self.a += [None] * self.size
             self.size *= 2
         self.top += 1
 
