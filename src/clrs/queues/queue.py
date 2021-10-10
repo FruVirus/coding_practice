@@ -39,7 +39,7 @@ class Queue:
         if not self.table_double:
             assert not self.full()
         elif self.tail == self.size - 1:
-            self.a = self.a + [None] * self.size
+            self.a += [None] * self.size
             self.size *= 2
 
     def _reduce(self):
