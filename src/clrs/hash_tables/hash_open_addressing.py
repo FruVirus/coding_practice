@@ -125,11 +125,10 @@ class HashOpen(HashChain):
 
     def search(self, k):
         i = 0
-        while True:
-            hash_value = self.hash_func(k, i)
+        hash_value = self.hash_func(k, i)
+        while self.table[hash_value] is not None and i != self.size:
             if self.table[hash_value] == k:
                 return hash_value
             i += 1
-            if self.table[hash_value] is None or i == self.size:
-                break
+            hash_value = self.hash_func(k, i)
         return None
