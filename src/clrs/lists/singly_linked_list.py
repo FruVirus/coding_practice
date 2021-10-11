@@ -45,8 +45,7 @@ class SLL:
             prev.next = curr.next
 
     def insert(self, x):
-        x.next = self.head
-        self.head = x
+        x.next, self.head = self.head, x
 
     def search(self, k):
         x = self.head
