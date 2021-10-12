@@ -115,8 +115,7 @@ class BST:
             return self.max(x.left)
         y = x.p
         while y is not None and x is y.left:
-            x = y
-            y = y.p
+            x, y = y, y.p
         return y
 
     def rank(self, k):
@@ -145,8 +144,7 @@ class BST:
             return self.min(x.right)
         y = x.p
         while y is not None and x is y.right:
-            x = y
-            y = y.p
+            x, y = y, y.p
         return y
 
     def transplant(self, u, v):
