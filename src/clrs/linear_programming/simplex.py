@@ -30,14 +30,11 @@ inequality constraints, and the remaining constraints are equalities.
 def pivot(N, B, A, b, c, e, l, v=0):
     n, m, o = len(N), len(B), len(c)
     Ahat = [[0 for _ in range(n)] for _ in range(m)]
-    bhat = [0 for _ in range(n)]
-    chat = [0 for _ in range(o)]
-    Bhat = list(B)
-    Nhat = list(N)
+    bhat, chat = [0 for _ in range(n)], [0 for _ in range(o)]
+    Bhat, Nhat = list(B), list(N)
     Bhat[l] = N[e]
     Nhat[e] = B[l]
-    Bhat = sorted(Bhat)
-    Nhat = sorted(Nhat)
+    Bhat, Nhat = sorted(Bhat), sorted(Nhat)
     bhat[e] = b[l] / A[l][e]
     no_e = [x for i, x in enumerate(N) if i != e]
     no_l = [x for i, x in enumerate(B) if i != l]
