@@ -124,7 +124,7 @@ class BST:
             if k < x.key:
                 x = x.left
             else:
-                r += 1 + (x.left and x.left.size or 0)
+                r += 1 + ((x.left and x.left.size) or 0)
                 if k == x.key:
                     return r
                 x = x.right
