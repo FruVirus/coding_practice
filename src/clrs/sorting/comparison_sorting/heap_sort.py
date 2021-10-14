@@ -29,43 +29,11 @@ Not stable
 O(n * lg(n))
 """
 
-# Standard Library
-from operator import gt, lt
+# Repository Library
+from src.clrs.queues.heap_queue import HeapQueue
 
 
-class HeapSort:
-    def __init__(self, a, is_max):
-        self.a = a
-        self.heap_size = len(self.a)
-        self.is_max = is_max
-        self.compare_op = gt if self.is_max else lt
-        self.build()
-
-    def _exchange(self, i, j):
-        self.a[i], self.a[j] = self.a[j], self.a[i]
-
-    @staticmethod
-    def _left(i):
-        return 2 * i + 1
-
-    @staticmethod
-    def _right(i):
-        return 2 * i + 2
-
-    def build(self):
-        for i in range(len(self.a) // 2 - 1, -1, -1):
-            self.heapify(i)
-
-    def heapify(self, i):
-        l, r, largest = self._left(i), self._right(i), i
-        if l < self.heap_size and self.compare_op(self.a[l], self.a[i]):
-            largest = l
-        if r < self.heap_size and self.compare_op(self.a[r], self.a[largest]):
-            largest = r
-        if largest != i:
-            self._exchange(i, largest)
-            self.heapify(largest)
-
+class HeapSort(HeapQueue):
     def sort(self):
         assert self.heap_size > 0
         for i in range(len(self.a) - 1, 0, -1):
