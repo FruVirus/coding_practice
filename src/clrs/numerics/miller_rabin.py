@@ -48,7 +48,7 @@ import random
 from src.clrs.numerics.mod_exp import mod_exp
 
 
-def get_t_u(n):
+def get_tu(n):
     assert n % 2 != 0
     x = n - 1
     t = 1
@@ -60,7 +60,7 @@ def get_t_u(n):
 
 
 def witness(a, n):
-    t, u = get_t_u(n)
+    t, u = get_tu(n)
     x_prev = mod_exp(a, u, n)
     x_next = x_prev ** 2 % n
     for _ in range(t):
