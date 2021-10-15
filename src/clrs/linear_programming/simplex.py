@@ -27,7 +27,17 @@ inequality constraints, and the remaining constraints are equalities.
 """
 
 
-def pivot(N, B, A, b, c, e, l, v=0):
+def initialize_simplex(A, b, c):
+    N = [0, 1, 2]
+    B = [3, 4, 5]
+    A = [[1, 1, 3], [2, 2, 5], [4, 1, 2]]
+    b = [30, 24, 36]
+    c = [3, 1, 2]
+    v = 0
+    return N, B, A, b, c, v
+
+
+def pivot(N, B, A, b, c, e, l, v):
     n, m, o = len(N), len(B), len(c)
     Ahat = [[0 for _ in range(n)] for _ in range(m)]
     bhat, chat = [0 for _ in range(n)], [0 for _ in range(o)]
@@ -35,39 +45,95 @@ def pivot(N, B, A, b, c, e, l, v=0):
     Bhat[l] = N[e]
     Nhat[e] = B[l]
     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
-    bhat[e] = b[l] / A[l][e]
+    bhat[N[e]] = b[l] / A[l][e]
     no_e = [x for i, x in enumerate(N) if i != e]
     no_l = [x for i, x in enumerate(B) if i != l]
     for j in no_e:
-        x, y = Bhat.index(0), Nhat.index(j)
-        Ahat[x][y] = A[l][j] / A[l][e]
-    Ahat[e][l] = 1 / A[l][e]
+        x, x_ = Nhat.index(j), N.index(j)
+        Ahat[N[e]][x] = A[l][x_] / A[l][e]
+    Ahat[N[e]][N.index(l)] = 1 / A[l][e]
     for i in no_l:
         x, x_ = Bhat.index(i), B.index(i)
-        bhat[x] = b[x_] - A[x_][e] * bhat[e]
+        bhat[x] = b[x_] - A[x_][e] * bhat[N[e]]
         for j in no_e:
             y, y_ = Nhat.index(j), N.index(j)
-            Ahat[x][y] = A[x_][y_] - A[x_][e] * Ahat[e][y_]
-        Ahat[x][l] = -A[x_][e] * Ahat[e][l]
-    vhat = v + c[e] * bhat[e]
+            Ahat[x][y] = A[x_][y_] - A[x_][e] * Ahat[N[e]][y]
+        Ahat[x][N.index(l)] = -A[x_][e] * Ahat[N[e]][N.index(l)]
+    vhat = v + c[e] * bhat[N[e]]
     for j in no_e:
         x, x_ = Nhat.index(j), N.index(j)
-        chat[x] = c[x_] - c[e] * Ahat[e][x]
-    chat[l] = -c[e] * Ahat[e][l]
+        chat[x] = c[x_] - c[e] * Ahat[N[e]][x]
+    chat[N.index(l)] = -c[e] * Ahat[N[e]][N.index(l)]
     return Nhat, Bhat, Ahat, bhat, chat, vhat
 
 
-N = [0, 1, 2]
-B = [3, 4, 5]
-A = [[1, 1, 3], [2, 2, 5], [4, 1, 2]]
-b = [30, 24, 36]
-c = [3, 1, 2]
-e = N.index(0)
-l = B.index(5)
-Nhat, Bhat, Ahat, bhat, chat, vhat = pivot(N, B, A, b, c, e, l)
-assert Nhat == [1, 2, 5]
-assert Bhat == [0, 3, 4]
-assert Ahat == [[0.25, 0.5, 0.25], [0.5, 2.75, -0.25], [1.0, 4.5, -0.5]]
-assert bhat == [9.0, 21.0, 6.0]
-assert chat == [0.25, 0.5, -0.75]
-assert vhat == 27.0
+def simplex(A, b, c):
+    N, B, A, b, c, v = initialize_simplex(A, b, c)
+    n, m = len(N), len(B)
+    delta, x_bar = [0 for _ in range(m)], [0 for _ in range(n)]
+    while any(c[N.index(x)] > 0 for x in N):
+        e = min([N.index(x) for x in N if c[N.index(x)] > 0])
+        for i in B:
+            j = B.index(i)
+            delta[j] = b[j] / A[j][e] if A[j][e] > 0 else float("inf")
+        l = delta.index(min([delta[B.index(x)] for x in B]))
+        if delta[l] == float("inf"):
+            return "Unbounded!"
+        print("N: ", N)
+        print("B: ", B)
+        print("A: ", A)
+        print("b: ", b)
+        print("c: ", c)
+        print("e: ", e)
+        print("l: ", l)
+        print("v: ", v)
+        print("delta: ", delta)
+        print()
+        N, B, A, b, c, v = pivot(N, B, A, b, c, e, l, v)
+    for i in range(n):
+        x_bar[i] = b[i] if i in B else 0
+    return x_bar
+
+
+# A = [[1, 1, 3], [2, 2, 5], [4, 1, 2]]
+# b = [30, 24, 36]
+# c = [3, 1, 2]
+# print(simplex(A, b, c))
+
+# N = [0, 1, 2]
+# B = [3, 4, 5]
+# A = [[1, 1, 3], [2, 2, 5], [4, 1, 2]]
+# b = [30, 24, 36]
+# c = [3, 1, 2]
+# e = N.index(0)
+# l = B.index(5)
+# v = 0
+# N = [1, 2, 5]
+# B = [0, 3, 4]
+# A = [[0.25, 0.5, 0.25], [0.75, 2.5, -0.25], [1.5, 4.0, -0.5]]
+# b = [9.0, 21.0, 6.0]
+# c = [0.25, 0.5, -0.75]
+# e = N.index(2)
+# l = B.index(4)
+# v = 27.0
+N = [1, 4, 5]
+B = [0, 2, 3]
+A = [[1 / 16, -1 / 8, 5 / 16], [3 / 8, 1 / 4, -1 / 8], [-3 / 16, -5 / 8, 1 / 16]]
+b = [33 / 4, 3 / 2, 69 / 4]
+c = [1 / 16, -1 / 8, -11 / 16]
+e = N.index(1)
+l = B.index(2)
+v = 111 / 4
+Nhat, Bhat, Ahat, bhat, chat, vhat = pivot(N, B, A, b, c, e, l, v)
+print(Nhat)
+print(Bhat)
+print(Ahat)
+print(bhat)
+print(chat)
+print(vhat)
+# assert Nhat == [1, 2, 5]
+# assert Bhat == [0, 3, 4]
+# assert Ahat == [[0.25, 0.5, 0.25], [0.75, 2.5, -0.25], [1.5, 4, -0.5]]
+# assert bhat == [9.0, 21.0, 6.0]
+# assert chat == [0.25, 0.5, -0.75]
+# assert vhat == 27.0
