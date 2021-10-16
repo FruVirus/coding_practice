@@ -36,25 +36,21 @@ def initialize_simplex(A, b, c):
     if b[k] >= 0:
         n, m = len(A[0]), len(A)
         return list(range(n)), list(range(n, n + m)), A, b, c, 0
+    Norig, corig = list(range(1, len(A[0]) + 1)), c
     N = list(range(len(A[0]) + 1))
-    N_orig = N[1:]
-    c_orig = c
-    B = [N[-1] + i + 1 for i in range(len(b))]
-    n = len(N)
-    Ahat = [[0 for _ in range(n)] for _ in range(len(B))]
+    B = [N[-1] + i for i in range(1, len(b) + 1)]
+    Ahat = [[0 for _ in range(len(N))] for _ in range(len(B))]
     for row in range(len(A)):
         for col in range(len(A[0]) + 1):
             Ahat[row][col] = -1 if col == 0 else A[row][col - 1]
     c = [0 for _ in range(len(c) + 1)]
     c[0] = -1
-    v = 0
-    l = n + k
-    N, B, A, b, c, v = pivot(N, B, Ahat, b, c, 0, l, v)
+    l = len(N) + k
+    N, B, A, b, c, v = pivot(N, B, Ahat, b, c, 0, l, 0)
     x_bar, N, B, A, b, c, v = simplex(A, b, c, N=N, B=B, v=v)
     if x_bar[0] == 0:
         if B[0] == 0:
-            i = 0
-            e = N[i]
+            i, e = 0, N[0]
             while A[0][N.index(e)] == 0:
                 i += 1
                 e = N[i]
@@ -65,23 +61,17 @@ def initialize_simplex(A, b, c):
         for row in range(len(A)):
             for col in range(1, len(A[0])):
                 Ahat[row][col - 1] = A[row][col]
-        sub = None
-        for i in N_orig:
-            if i in B:
-                sub = i
-                break
-        assert sub is not None
-        v += c_orig[N_orig.index(sub)] * b[B.index(sub)]
-        no_e = [x for x in N_orig if x != sub]
+        e = [i for i in Norig if i in B]
+        assert e
+        e = e[0]
+        Norige, Be = Norig.index(e), B.index(e)
+        v += corig[Norige] * b[Be]
+        no_e = [x for x in Norig if x != e]
         chat = [0 for _ in range(n)]
         for j in no_e:
-            Nhatj, Nj = N.index(j), N_orig.index(j)
-            chat[Nhatj] = (
-                c_orig[Nj] - c_orig[N_orig.index(sub)] * Ahat[B.index(sub)][Nhatj]
-            )
-        chat[N_orig.index(sub)] = (
-            -c_orig[N_orig.index(sub)] * Ahat[B.index(sub)][N_orig.index(sub)]
-        )
+            Nhatj, Nj = N.index(j), Norig.index(j)
+            chat[Nhatj] = corig[Nj] - corig[Norige] * Ahat[Be][Nhatj]
+        chat[Norige] = -corig[Norige] * Ahat[Be][Norige]
         return N, B, Ahat, b, chat, v
     return "Infeasible!"
 
