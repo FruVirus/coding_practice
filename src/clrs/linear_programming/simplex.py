@@ -47,7 +47,6 @@ def pivot(N, B, A, b, c, e, l, v):
     Bhat[Bl] = N[Ne]
     Nhat[Ne] = B[Bl]
     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
-    assert e in Bhat and l in Nhat
     Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
     bhat[Bhate] = b[Bl] / A[Bl][Ne]
     no_e, no_l = [x for x in N if x != e], [x for x in B if x != l]
