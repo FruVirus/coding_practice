@@ -54,7 +54,7 @@ def initialize_simplex(A, b, c):
             while A[0][N.index(e)] == 0:
                 i += 1
                 e = N[i]
-            N, B, A, b, c, v = pivot(N, B, A, b, c, e, l, v)
+            N, B, A, b, corig, v = pivot(N, B, A, b, c, e, l, v)
         N.pop(N.index(0))
         n, m = len(N), len(B)
         Ahat = [[0 for _ in range(n)] for _ in range(m)]
@@ -63,16 +63,15 @@ def initialize_simplex(A, b, c):
                 Ahat[row][col - 1] = A[row][col]
         e = [i for i in Norig if i in B]
         assert e
-        e = e[0]
-        Norige, Be = Norig.index(e), B.index(e)
-        v += corig[Norige] * b[Be]
-        no_e = [x for x in Norig if x != e]
+        Norige, Be = Norig.index(e[0]), B.index(e[0])
+        vhat = v + corig[Norige] * b[Be]
+        no_e = [x for x in Norig if x != e[0]]
         chat = [0 for _ in range(n)]
         for j in no_e:
             Nhatj, Nj = N.index(j), Norig.index(j)
             chat[Nhatj] = corig[Nj] - corig[Norige] * Ahat[Be][Nhatj]
         chat[Norige] = -corig[Norige] * Ahat[Be][Norige]
-        return N, B, Ahat, b, chat, v
+        return N, B, Ahat, b, chat, vhat
     return "Infeasible!"
 
 
