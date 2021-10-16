@@ -37,36 +37,6 @@ def initialize_simplex(A, b, c):
     return N, B, A, b, c, v
 
 
-# def pivot(N, B, A, b, c, e, l, v):
-#     n, m, o = len(N), len(B), len(c)
-#     Ahat = [[0 for _ in range(n)] for _ in range(m)]
-#     bhat, chat = [0 for _ in range(n)], [0 for _ in range(o)]
-#     Bhat, Nhat = list(B), list(N)
-#     Bhat[l] = N[e]
-#     Nhat[e] = B[l]
-#     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
-#     bhat[N[e]] = b[l] / A[l][e]
-#     no_e = [x for i, x in enumerate(N) if i != e]
-#     no_l = [x for i, x in enumerate(B) if i != l]
-#     for j in no_e:
-#         x, x_ = Nhat.index(j), N.index(j)
-#         Ahat[N[e]][x] = A[l][x_] / A[l][e]
-#     Ahat[N[e]][N.index(l)] = 1 / A[l][e]
-#     for i in no_l:
-#         x, x_ = Bhat.index(i), B.index(i)
-#         bhat[x] = b[x_] - A[x_][e] * bhat[N[e]]
-#         for j in no_e:
-#             y, y_ = Nhat.index(j), N.index(j)
-#             Ahat[x][y] = A[x_][y_] - A[x_][e] * Ahat[N[e]][y]
-#         Ahat[x][N.index(l)] = -A[x_][e] * Ahat[N[e]][N.index(l)]
-#     vhat = v + c[e] * bhat[N[e]]
-#     for j in no_e:
-#         x, x_ = Nhat.index(j), N.index(j)
-#         chat[x] = c[x_] - c[e] * Ahat[N[e]][x]
-#     chat[N.index(l)] = -c[e] * Ahat[N[e]][N.index(l)]
-#     return Nhat, Bhat, Ahat, bhat, chat, vhat
-
-
 def pivot(N, B, A, b, c, e, l, v):
     assert e in N
     assert l in B
@@ -74,32 +44,18 @@ def pivot(N, B, A, b, c, e, l, v):
     Ahat = [[0 for _ in range(n)] for _ in range(m)]
     bhat, chat = [0 for _ in range(n)], [0 for _ in range(o)]
     Bhat, Nhat = list(B), list(N)
-    # print(e, l)
-    # print(N)
-    # print(B)
-    # print()
     Bhat[B.index(l)] = N[N.index(e)]
     Nhat[N.index(e)] = B[B.index(l)]
     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
     assert e in Bhat
     assert l in Nhat
-    # print(Nhat)
-    # print(Bhat)
-    # print()
     bhat[Bhat.index(e)] = b[B.index(l)] / A[B.index(l)][N.index(e)]
-    # print(bhat)
-    # print()
     no_e, no_l = [x for x in N if x != e], [x for x in B if x != l]
-    # print(no_e)
-    # print(no_l)
-    # print()
     for j in no_e:
         Ahat[Bhat.index(e)][Nhat.index(j)] = (
             A[B.index(l)][N.index(j)] / A[B.index(l)][N.index(e)]
         )
     Ahat[Bhat.index(e)][Nhat.index(l)] = 1 / A[B.index(l)][N.index(e)]
-    # print(Ahat)
-    # print()
     for i in no_l:
         bhat[Bhat.index(i)] = (
             b[B.index(i)] - A[B.index(i)][N.index(e)] * bhat[Bhat.index(e)]
@@ -112,19 +68,12 @@ def pivot(N, B, A, b, c, e, l, v):
         Ahat[Bhat.index(i)][Nhat.index(l)] = (
             -A[B.index(i)][N.index(e)] * Ahat[Bhat.index(e)][Nhat.index(l)]
         )
-    # print(bhat)
-    # print(Ahat)
-    # print()
     vhat = v + c[N.index(e)] * bhat[Bhat.index(e)]
-    # print(vhat)
-    # print()
     for j in no_e:
         chat[Nhat.index(j)] = (
             c[N.index(j)] - c[N.index(e)] * Ahat[Bhat.index(e)][Nhat.index(j)]
         )
     chat[Nhat.index(l)] = -c[N.index(e)] * Ahat[Bhat.index(e)][Nhat.index(l)]
-    # print(chat)
-    # print()
     return Nhat, Bhat, Ahat, bhat, chat, vhat
 
 
@@ -143,16 +92,6 @@ def simplex(A, b, c):
         l = B[delta.index(min([delta[B.index(i)] for i in B]))]
         if delta[B.index(l)] == float("inf"):
             return "Unbounded!"
-        print("N: ", N)
-        print("B: ", B)
-        print("A: ", A)
-        print("b: ", b)
-        print("c: ", c)
-        print("e: ", e)
-        print("l: ", l)
-        print("v: ", v)
-        print("delta: ", delta)
-        print()
         N, B, A, b, c, v = pivot(N, B, A, b, c, e, l, v)
     for index, i in enumerate(B):
         x_bar[i] = b[index]
