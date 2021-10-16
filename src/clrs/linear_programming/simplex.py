@@ -38,42 +38,35 @@ def initialize_simplex(A, b, c):
 
 
 def pivot(N, B, A, b, c, e, l, v):
-    assert e in N
-    assert l in B
+    assert e in N and l in B
     n, m, o = len(N), len(B), len(c)
     Ahat = [[0 for _ in range(n)] for _ in range(m)]
     bhat, chat = [0 for _ in range(n)], [0 for _ in range(o)]
     Bhat, Nhat = list(B), list(N)
-    Bhat[B.index(l)] = N[N.index(e)]
-    Nhat[N.index(e)] = B[B.index(l)]
+    Bl, Ne = B.index(l), N.index(e)
+    Bhat[Bl] = N[Ne]
+    Nhat[Ne] = B[Bl]
     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
-    assert e in Bhat
-    assert l in Nhat
-    bhat[Bhat.index(e)] = b[B.index(l)] / A[B.index(l)][N.index(e)]
+    assert e in Bhat and l in Nhat
+    Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
+    bhat[Bhate] = b[Bl] / A[Bl][Ne]
     no_e, no_l = [x for x in N if x != e], [x for x in B if x != l]
     for j in no_e:
-        Ahat[Bhat.index(e)][Nhat.index(j)] = (
-            A[B.index(l)][N.index(j)] / A[B.index(l)][N.index(e)]
-        )
-    Ahat[Bhat.index(e)][Nhat.index(l)] = 1 / A[B.index(l)][N.index(e)]
+        Nhatj, Nj = Nhat.index(j), N.index(j)
+        Ahat[Bhate][Nhatj] = A[Bl][Nj] / A[Bl][Ne]
+    Ahat[Bhate][Nhatl] = 1 / A[Bl][Ne]
     for i in no_l:
-        bhat[Bhat.index(i)] = (
-            b[B.index(i)] - A[B.index(i)][N.index(e)] * bhat[Bhat.index(e)]
-        )
+        Bhati, Bi = Bhat.index(i), B.index(i)
+        bhat[Bhati] = b[Bi] - A[Bi][Ne] * bhat[Bhate]
         for j in no_e:
-            Ahat[Bhat.index(i)][Nhat.index(j)] = (
-                A[B.index(i)][N.index(j)]
-                - A[B.index(i)][N.index(e)] * Ahat[Bhat.index(e)][Nhat.index(j)]
-            )
-        Ahat[Bhat.index(i)][Nhat.index(l)] = (
-            -A[B.index(i)][N.index(e)] * Ahat[Bhat.index(e)][Nhat.index(l)]
-        )
-    vhat = v + c[N.index(e)] * bhat[Bhat.index(e)]
+            Nhatj, Nj = Nhat.index(j), N.index(j)
+            Ahat[Bhati][Nhatj] = A[Bi][Nj] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
+        Ahat[Bhati][Nhatl] = -A[Bi][Ne] * Ahat[Bhate][Nhatl]
+    vhat = v + c[Ne] * bhat[Bhate]
     for j in no_e:
-        chat[Nhat.index(j)] = (
-            c[N.index(j)] - c[N.index(e)] * Ahat[Bhat.index(e)][Nhat.index(j)]
-        )
-    chat[Nhat.index(l)] = -c[N.index(e)] * Ahat[Bhat.index(e)][Nhat.index(l)]
+        Nhatj, Nj = Nhat.index(j), N.index(j)
+        chat[Nhatj] = c[Nj] - c[Ne] * Ahat[Bhate][Nhatj]
+    chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
     return Nhat, Bhat, Ahat, bhat, chat, vhat
 
 
@@ -83,12 +76,10 @@ def simplex(A, b, c):
     delta, x_bar = [0 for _ in range(m)], [0 for _ in range(n + m)]
     while any(c[N.index(x)] > 0 for x in N):
         e = min([x for x in N if c[N.index(x)] > 0])
+        Ne = N.index(e)
         for i in B:
-            delta[B.index(i)] = (
-                b[B.index(i)] / A[B.index(i)][N.index(e)]
-                if A[B.index(i)][N.index(e)] > 0
-                else float("inf")
-            )
+            Bi = B.index(i)
+            delta[Bi] = b[Bi] / A[Bi][Ne] if A[Bi][Ne] > 0 else float("inf")
         l = B[delta.index(min([delta[B.index(i)] for i in B]))]
         if delta[B.index(l)] == float("inf"):
             return "Unbounded!"
