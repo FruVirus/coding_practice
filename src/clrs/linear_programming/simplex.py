@@ -26,22 +26,71 @@ we shall convert it into a form in which the non-negativity constraints are the 
 inequality constraints, and the remaining constraints are equalities.
 """
 
+# pylint: disable=C0200
+
 
 def initialize_simplex(A, b, c):
-    N = [0, 1, 2]
-    B = [3, 4, 5]
-    A = [[1, 1, 3], [2, 2, 5], [4, 1, 2]]
-    b = [30, 24, 36]
-    c = [3, 1, 2]
+    assert len(A) == len(b)
+    assert len(A[0]) == len(c)
+    k = b.index(min(b))
+    if b[k] >= 0:
+        n, m = len(A[0]), len(A)
+        return list(range(n)), list(range(n, n + m)), A, b, c, 0
+    N = list(range(len(A[0]) + 1))
+    N_orig = N[1:]
+    c_orig = c
+    B = [N[-1] + i + 1 for i in range(len(b))]
+    n = len(N)
+    Ahat = [[0 for _ in range(n)] for _ in range(len(B))]
+    for row in range(len(A)):
+        for col in range(len(A[0]) + 1):
+            Ahat[row][col] = -1 if col == 0 else A[row][col - 1]
+    c = [0 for _ in range(len(c) + 1)]
+    c[0] = -1
     v = 0
-    return N, B, A, b, c, v
+    l = n + k
+    N, B, A, b, c, v = pivot(N, B, Ahat, b, c, 0, l, v)
+    x_bar, N, B, A, b, c, v = simplex(A, b, c, N=N, B=B, v=v)
+    if x_bar[0] == 0:
+        if B[0] == 0:
+            i = 0
+            e = N[i]
+            while A[0][N.index(e)] == 0:
+                i += 1
+                e = N[i]
+            N, B, A, b, c, v = pivot(N, B, A, b, c, e, l, v)
+        N.pop(N.index(0))
+        n, m = len(N), len(B)
+        Ahat = [[0 for _ in range(n)] for _ in range(m)]
+        for row in range(len(A)):
+            for col in range(1, len(A[0])):
+                Ahat[row][col - 1] = A[row][col]
+        sub = None
+        for i in N_orig:
+            if i in B:
+                sub = i
+                break
+        assert sub is not None
+        v += c_orig[N_orig.index(sub)] * b[B.index(sub)]
+        no_e = [x for x in N_orig if x != sub]
+        chat = [0 for _ in range(n)]
+        for j in no_e:
+            Nhatj, Nj = N.index(j), N_orig.index(j)
+            chat[Nhatj] = (
+                c_orig[Nj] - c_orig[N_orig.index(sub)] * Ahat[B.index(sub)][Nhatj]
+            )
+        chat[N_orig.index(sub)] = (
+            -c_orig[N_orig.index(sub)] * Ahat[B.index(sub)][N_orig.index(sub)]
+        )
+        return N, B, Ahat, b, chat, v
+    return "Infeasible!"
 
 
 def pivot(N, B, A, b, c, e, l, v):
     assert e in N and l in B
     n, m, o = len(N), len(B), len(c)
     Ahat = [[0 for _ in range(n)] for _ in range(m)]
-    bhat, chat = [0 for _ in range(n)], [0 for _ in range(o)]
+    bhat, chat = [0 for _ in range(m)], [0 for _ in range(o)]
     Bhat, Nhat = list(B), list(N)
     Bl, Ne = B.index(l), N.index(e)
     Bhat[Bl] = N[Ne]
@@ -69,8 +118,9 @@ def pivot(N, B, A, b, c, e, l, v):
     return Nhat, Bhat, Ahat, bhat, chat, vhat
 
 
-def simplex(A, b, c):
-    N, B, A, b, c, v = initialize_simplex(A, b, c)
+def simplex(A, b, c, N=None, B=None, v=None):
+    if any(x is None for x in [N, B, v]):
+        N, B, A, b, c, v = initialize_simplex(A, b, c)
     n, m = len(N), len(B)
     delta, x_bar = [0 for _ in range(m)], [0 for _ in range(n + m)]
     while any(c[N.index(x)] > 0 for x in N):
@@ -85,4 +135,10 @@ def simplex(A, b, c):
         N, B, A, b, c, v = pivot(N, B, A, b, c, e, l, v)
     for index, i in enumerate(B):
         x_bar[i] = b[index]
-    return x_bar
+    return x_bar, N, B, A, b, c, v
+
+
+A = [[2, -1], [1, -5]]
+b = [2, -4]
+c = [2, -1]
+print(initialize_simplex(A, b, c))

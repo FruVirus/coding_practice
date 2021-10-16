@@ -2,6 +2,10 @@
 from clrs.linear_programming.simplex import pivot, simplex
 
 
+def test_initialize_simplex():
+    pass
+
+
 def test_pivot():
     N = [0, 1, 2]
     B = [3, 4, 5]
@@ -59,3 +63,7 @@ def test_simplex():
     b = [30, 24, 36]
     c = [3, 1, 2]
     assert simplex(A, b, c) == [8, 4, 0, 18, 0, 0]
+    # A = [[1, 1, 0], [0, -1, 1]]
+    # b = [8, 0]
+    # c = [1, 1, 1]
+    # assert simplex(A, b, c) == [0, 8, 8, 0, 0]
