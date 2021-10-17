@@ -54,6 +54,7 @@ def initialize_simplex(A, b, c):
     x_bar, N, B, A, b, c, v = simplex(A, b, c, N=N, B=B, v=v)
     if x_bar[0] == 0:
         if B[0] == 0:
+            print(666)
             i, e = 0, N[0]
             while A[0][N.index(e)] == 0:
                 i += 1
@@ -119,9 +120,11 @@ def update_cv(N, c, e, l, v, Nhat, Bhat, Ahat, bhat, chat, no_e):
 
 def simplex(A, b, c, N=None, B=None, v=None):
     if any(x is None for x in [N, B, v]):
-        N, B, A, b, c, v = initialize_simplex(A, b, c)
-    n, m = len(N), len(B)
-    delta, x_bar = [0 for _ in range(m)], [0 for _ in range(n + m)]
+        val = initialize_simplex(A, b, c)
+        if isinstance(val, str):
+            return val
+        N, B, A, b, c, v = val
+    delta = [0 for _ in range(len(B))]
     while any(c[N.index(x)] > 0 for x in N):
         e = min([x for x in N if c[N.index(x)] > 0])
         Ne = N.index(e)
@@ -132,12 +135,13 @@ def simplex(A, b, c, N=None, B=None, v=None):
         if delta[B.index(l)] == float("inf"):
             return "Unbounded!"
         N, B, A, b, c, v = pivot(N, B, A, b, c, e, l, v)
+    x_bar = [0 for _ in range(max(N + B) + 1)]
     for index, i in enumerate(B):
         x_bar[i] = b[index]
     return x_bar, N, B, A, b, c, v
 
 
-A = [[2, -1], [1, -5]]
-b = [2, -4]
-c = [2, -1]
-N, B, A, b, c, v = initialize_simplex(A, b, c)
+# A = [[1, -1], [-1, -1], [-1, 4]]
+# b = [2, -3, 8]
+# c = [1, 3]
+# print(simplex(A, b, c)[0])
