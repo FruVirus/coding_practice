@@ -50,15 +50,15 @@ def initialize_simplex(A, b, c):
     chat = [0 for _ in range(len(c) + 1)]
     chat[0] = -1
     l = len(Nhat) + k
-    Nhat, Bhat, A, b, chat, v = pivot(Nhat, Bhat, Ahat, b, chat, 0, l, 0)
-    x_bar, Nhat, Bhat, A, b, chat, v = simplex(A, b, chat, Nhat, Bhat, v)
+    Nhat, Bhat, A, bhat, chat, v = pivot(Nhat, Bhat, Ahat, b, chat, 0, l, 0)
+    x_bar, Nhat, Bhat, A, bhat, chat, v = simplex(A, bhat, chat, Nhat, Bhat, v)
     if x_bar[0] == 0:
         if Bhat[0] == 0:
             i, e = 0, Nhat[0]
             while A[0][Nhat.index(e)] == 0:
                 i += 1
                 e = Nhat[i]
-            Nhat, Bhat, A, b, chat, v = pivot(Nhat, Bhat, A, b, c, e, l, v)
+            Nhat, Bhat, A, bhat, chat, v = pivot(Nhat, Bhat, A, bhat, c, e, l, v)
         Nhat.pop(Nhat.index(0))
         n, m = len(Nhat), len(Bhat)
         Ahat = [[0 for _ in range(n)] for _ in range(m)]
@@ -69,8 +69,8 @@ def initialize_simplex(A, b, c):
         assert e
         Ne, Nhatl, Bhate = N.index(e[0]), Nhat.index(l), Bhat.index(e[0])
         no_e = exclude(N, e[0])
-        c, v = update_cv(N, c, v, Nhat, Ahat, b, Ne, Nhatl, Bhate, no_e)
-        return Nhat, Bhat, Ahat, b, c, v
+        c, v = update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e)
+        return Nhat, Bhat, Ahat, bhat, c, v
     return "Infeasible!"
 
 
