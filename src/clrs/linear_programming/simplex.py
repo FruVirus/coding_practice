@@ -29,6 +29,10 @@ inequality constraints, and the remaining constraints are equalities.
 # pylint: disable=C0200
 
 
+def exclude(list_, item):
+    return [x for x in list_ if x != item]
+
+
 def initialize_simplex(A, b, c):
     assert len(A) == len(b)
     assert len(A[0]) == len(c)
@@ -37,7 +41,7 @@ def initialize_simplex(A, b, c):
         n, m = len(A[0]), len(A)
         return list(range(n)), list(range(n, n + m)), A, b, c, 0
     Norig, corig = list(range(1, len(A[0]) + 1)), c
-    N = list(range(len(A[0]) + 1))
+    N = [0] + Norig
     B = [N[-1] + i for i in range(1, len(b) + 1)]
     Ahat = [[0 for _ in range(len(N))] for _ in range(len(B))]
     for row in range(len(A)):
@@ -65,7 +69,7 @@ def initialize_simplex(A, b, c):
         assert e
         Norige, Be = Norig.index(e[0]), B.index(e[0])
         vhat = v + corig[Norige] * b[Be]
-        no_e = [x for x in Norig if x != e[0]]
+        no_e = exclude(Norig, e[0])
         chat = [0 for _ in range(n)]
         for j in no_e:
             Nhatj, Nj = N.index(j), Norig.index(j)
@@ -87,7 +91,7 @@ def pivot(N, B, A, b, c, e, l, v):
     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
     Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
     bhat[Bhate] = b[Bl] / A[Bl][Ne]
-    no_e, no_l = [x for x in N if x != e], [x for x in B if x != l]
+    no_e, no_l = exclude(N, e), exclude(B, l)
     for j in no_e:
         Nhatj, Nj = Nhat.index(j), N.index(j)
         Ahat[Bhate][Nhatj] = A[Bl][Nj] / A[Bl][Ne]
@@ -99,12 +103,18 @@ def pivot(N, B, A, b, c, e, l, v):
             Nhatj, Nj = Nhat.index(j), N.index(j)
             Ahat[Bhati][Nhatj] = A[Bi][Nj] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
         Ahat[Bhati][Nhatl] = -A[Bi][Ne] * Ahat[Bhate][Nhatl]
+    chat, vhat = update_cv(N, c, e, l, v, Nhat, Bhat, Ahat, bhat, chat, no_e)
+    return Nhat, Bhat, Ahat, bhat, chat, vhat
+
+
+def update_cv(N, c, e, l, v, Nhat, Bhat, Ahat, bhat, chat, no_e):
+    Ne, Nhatl, Bhate = N.index(e), Nhat.index(l), Bhat.index(e)
     vhat = v + c[Ne] * bhat[Bhate]
     for j in no_e:
         Nhatj, Nj = Nhat.index(j), N.index(j)
         chat[Nhatj] = c[Nj] - c[Ne] * Ahat[Bhate][Nhatj]
     chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
-    return Nhat, Bhat, Ahat, bhat, chat, vhat
+    return chat, vhat
 
 
 def simplex(A, b, c, N=None, B=None, v=None):
@@ -125,3 +135,9 @@ def simplex(A, b, c, N=None, B=None, v=None):
     for index, i in enumerate(B):
         x_bar[i] = b[index]
     return x_bar, N, B, A, b, c, v
+
+
+A = [[2, -1], [1, -5]]
+b = [2, -4]
+c = [2, -1]
+N, B, A, b, c, v = initialize_simplex(A, b, c)
