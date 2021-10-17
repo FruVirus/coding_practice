@@ -40,38 +40,39 @@ def initialize_simplex(A, b, c):
     if b[k] >= 0:
         n, m = len(A[0]), len(A)
         return list(range(n)), list(range(n, n + m)), A, b, c, 0
-    Norig, corig = list(range(1, len(A[0]) + 1)), c
-    N = [0] + Norig
-    B = [N[-1] + i for i in range(1, len(b) + 1)]
-    Ahat = [[0 for _ in range(len(N))] for _ in range(len(B))]
+    N = list(range(1, len(A[0]) + 1))
+    Nhat = [0] + N
+    B = [Nhat[-1] + i for i in range(1, len(b) + 1)]
+    Ahat = [[0 for _ in range(len(Nhat))] for _ in range(len(B))]
     for row in range(len(A)):
         for col in range(len(A[0]) + 1):
             Ahat[row][col] = -1 if col == 0 else A[row][col - 1]
-    c = [0 for _ in range(len(c) + 1)]
-    c[0] = -1
-    l = len(N) + k
-    N, B, A, b, c, v = pivot(N, B, Ahat, b, c, 0, l, 0)
-    x_bar, N, B, A, b, c, v = simplex(A, b, c, N, B, v)
+    chat = [0 for _ in range(len(c) + 1)]
+    chat[0] = -1
+    l = len(Nhat) + k
+    Nhat, B, A, b, chat, v = pivot(Nhat, B, Ahat, b, chat, 0, l, 0)
+    x_bar, Nhat, B, A, b, chat, v = simplex(A, b, chat, Nhat, B, v)
+
     if x_bar[0] == 0:
         if B[0] == 0:
-            print(666)
-            i, e = 0, N[0]
-            while A[0][N.index(e)] == 0:
+            i, e = 0, Nhat[0]
+            while A[0][Nhat.index(e)] == 0:
                 i += 1
-                e = N[i]
-            N, B, A, b, corig, v = pivot(N, B, A, b, c, e, l, v)
-        N.pop(N.index(0))
-        n, m = len(N), len(B)
+                e = Nhat[i]
+            Nhat, B, A, b, corig, v = pivot(Nhat, B, A, b, c, e, l, v)
+
+        Nhat.pop(Nhat.index(0))
+        n, m = len(Nhat), len(B)
         Ahat = [[0 for _ in range(n)] for _ in range(m)]
         for row in range(len(A)):
             for col in range(1, len(A[0])):
                 Ahat[row][col - 1] = A[row][col]
-        e = [i for i in Norig if i in B]
+        e = [i for i in N if i in B]
         assert e
-        Norige, Nl, Be = Norig.index(e[0]), N.index(l), B.index(e[0])
-        no_e = exclude(Norig, e[0])
-        c, v = update_cv(Norig, corig, v, N, Ahat, b, Norige, Nl, Be, no_e)
-        return N, B, Ahat, b, c, v
+        Ne, Nl, Be = N.index(e[0]), Nhat.index(l), B.index(e[0])
+        no_e = exclude(N, e[0])
+        c, v = update_cv(N, c, v, N, Ahat, b, Ne, Nl, Be, no_e)
+        return Nhat, B, Ahat, b, c, v
     return "Infeasible!"
 
 
