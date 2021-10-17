@@ -51,7 +51,7 @@ def initialize_simplex(A, b, c):
     c[0] = -1
     l = len(N) + k
     N, B, A, b, c, v = pivot(N, B, Ahat, b, c, 0, l, 0)
-    x_bar, N, B, A, b, c, v = simplex(A, b, c, N=N, B=B, v=v)
+    x_bar, N, B, A, b, c, v = simplex(A, b, c, N, B, v)
     if x_bar[0] == 0:
         if B[0] == 0:
             print(666)
@@ -68,27 +68,20 @@ def initialize_simplex(A, b, c):
                 Ahat[row][col - 1] = A[row][col]
         e = [i for i in Norig if i in B]
         assert e
-        Norige, Be = Norig.index(e[0]), B.index(e[0])
-        vhat = v + corig[Norige] * b[Be]
+        Norige, Nl, Be = Norig.index(e[0]), N.index(l), B.index(e[0])
         no_e = exclude(Norig, e[0])
-        chat = [0 for _ in range(n)]
-        for j in no_e:
-            Nhatj, Nj = N.index(j), Norig.index(j)
-            chat[Nhatj] = corig[Nj] - corig[Norige] * Ahat[Be][Nhatj]
-        chat[Norige] = -corig[Norige] * Ahat[Be][Norige]
-        return N, B, Ahat, b, chat, vhat
+        c, v = update_cv(Norig, corig, v, N, Ahat, b, Norige, Nl, Be, no_e)
+        return N, B, Ahat, b, c, v
     return "Infeasible!"
 
 
 def pivot(N, B, A, b, c, e, l, v):
     assert e in N and l in B
-    n, m, o = len(N), len(B), len(c)
-    Ahat = [[0 for _ in range(n)] for _ in range(m)]
-    bhat, chat = [0 for _ in range(m)], [0 for _ in range(o)]
+    n, m = len(N), len(B)
+    Ahat, bhat = [[0 for _ in range(n)] for _ in range(m)], [0 for _ in range(m)]
     Bhat, Nhat = list(B), list(N)
     Bl, Ne = B.index(l), N.index(e)
-    Bhat[Bl] = N[Ne]
-    Nhat[Ne] = B[Bl]
+    Bhat[Bl], Nhat[Ne] = N[Ne], B[Bl]
     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
     Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
     bhat[Bhate] = b[Bl] / A[Bl][Ne]
@@ -104,18 +97,18 @@ def pivot(N, B, A, b, c, e, l, v):
             Nhatj, Nj = Nhat.index(j), N.index(j)
             Ahat[Bhati][Nhatj] = A[Bi][Nj] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
         Ahat[Bhati][Nhatl] = -A[Bi][Ne] * Ahat[Bhate][Nhatl]
-    chat, vhat = update_cv(N, c, e, l, v, Nhat, Bhat, Ahat, bhat, chat, no_e)
-    return Nhat, Bhat, Ahat, bhat, chat, vhat
+    c, v = update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e)
+    return Nhat, Bhat, Ahat, bhat, c, v
 
 
-def update_cv(N, c, e, l, v, Nhat, Bhat, Ahat, bhat, chat, no_e):
-    Ne, Nhatl, Bhate = N.index(e), Nhat.index(l), Bhat.index(e)
-    vhat = v + c[Ne] * bhat[Bhate]
+def update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e):
+    v += c[Ne] * bhat[Bhate]
+    chat = [0 for _ in range(len(c))]
     for j in no_e:
         Nhatj, Nj = Nhat.index(j), N.index(j)
         chat[Nhatj] = c[Nj] - c[Ne] * Ahat[Bhate][Nhatj]
     chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
-    return chat, vhat
+    return chat, v
 
 
 def simplex(A, b, c, N=None, B=None, v=None):
@@ -132,16 +125,12 @@ def simplex(A, b, c, N=None, B=None, v=None):
             Bi = B.index(i)
             delta[Bi] = b[Bi] / A[Bi][Ne] if A[Bi][Ne] > 0 else float("inf")
         l = B[delta.index(min([delta[B.index(i)] for i in B]))]
-        if delta[B.index(l)] == float("inf"):
+        Bl = B.index(l)
+        print(delta, Bl)
+        if delta[Bl] == float("inf"):
             return "Unbounded!"
         N, B, A, b, c, v = pivot(N, B, A, b, c, e, l, v)
-    x_bar = [0 for _ in range(max(N + B) + 1)]
+    x_bar = [0 for _ in range(max(N[-1], B[-1]) + 1)]
     for index, i in enumerate(B):
         x_bar[i] = b[index]
     return x_bar, N, B, A, b, c, v
-
-
-# A = [[1, -1], [-1, -1], [-1, 4]]
-# b = [2, -3, 8]
-# c = [1, 3]
-# print(simplex(A, b, c)[0])
