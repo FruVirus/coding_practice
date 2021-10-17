@@ -53,6 +53,8 @@ def initialize_simplex(A, b, c):
     Nhat, Bhat, A_, bhat, chat, v = pivot(Nhat, Bhat, Ahat, b, chat, 0, l, 0)
     x_bar, Nhat, Bhat, A_, bhat, chat, v = simplex(A_, bhat, chat, Nhat, Bhat, v)
     if x_bar[0] == 0:
+        print(Bhat)
+        exit()
         if Bhat[0] == 0:
             i, e = 0, Nhat[0]
             while A[0][Nhat.index(e)] == 0:
@@ -133,3 +135,9 @@ def simplex(A, b, c, N=None, B=None, v=None):
     for index, i in enumerate(B):
         x_bar[i] = b[index]
     return x_bar, N, B, A, b, c, v
+
+
+A = [[1, -1], [-1, -1], [-1, 4]]
+b = [8, -3, 2]
+c = [1, 3]
+initialize_simplex(A, b, c)
