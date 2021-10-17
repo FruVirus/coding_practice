@@ -34,8 +34,7 @@ def exclude(list_, item):
 
 
 def initialize_simplex(A, b, c):
-    assert len(A) == len(b)
-    assert len(A[0]) == len(c)
+    assert len(A) == len(b) and len(A[0]) == len(c)
     k = b.index(min(b))
     if b[k] >= 0:
         n, m = len(A[0]), len(A)
