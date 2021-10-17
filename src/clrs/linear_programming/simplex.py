@@ -57,7 +57,7 @@ def initialize_simplex(A, b, c):
             while A[0][Nhat.index(e)] == 0:
                 i += 1
                 e = Nhat[i]
-            Nhat, Bhat, A_, bhat, chat, v = pivot(Nhat, Bhat, A_, bhat, c, e, l, v)
+            Nhat, Bhat, A_, bhat, chat, v = pivot(Nhat, Bhat, A_, bhat, chat, e, l, v)
         Nhat.pop(Nhat.index(0))
         n, m = len(Nhat), len(Bhat)
         Ahat = [[0 for _ in range(n)] for _ in range(m)]
