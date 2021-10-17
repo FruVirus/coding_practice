@@ -52,15 +52,13 @@ def initialize_simplex(A, b, c):
     l = len(Nhat) + k
     Nhat, Bhat, A, b, chat, v = pivot(Nhat, Bhat, Ahat, b, chat, 0, l, 0)
     x_bar, Nhat, Bhat, A, b, chat, v = simplex(A, b, chat, Nhat, Bhat, v)
-
     if x_bar[0] == 0:
         if Bhat[0] == 0:
             i, e = 0, Nhat[0]
             while A[0][Nhat.index(e)] == 0:
                 i += 1
                 e = Nhat[i]
-            Nhat, Bhat, A, b, corig, v = pivot(Nhat, Bhat, A, b, c, e, l, v)
-
+            Nhat, Bhat, A, b, chat, v = pivot(Nhat, Bhat, A, b, c, e, l, v)
         Nhat.pop(Nhat.index(0))
         n, m = len(Nhat), len(Bhat)
         Ahat = [[0 for _ in range(n)] for _ in range(m)]
