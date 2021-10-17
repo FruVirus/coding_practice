@@ -24,6 +24,100 @@ To efficiently solve a linear program with the simplex algorithm, we prefer to e
 it in a form in which some of the constraints are equality constraints. More precisely,
 we shall convert it into a form in which the non-negativity constraints are the only
 inequality constraints, and the remaining constraints are equalities.
+
+Fundamental Theorem of Linear Programming
+-----------------------------------------
+
+Any linear program, L, given in standard form, either:
+
+1. has an optimal solution with a finite object value,
+2. is infeasible, or
+3. is unbounded
+
+If L is infeasible, the simplex algorithm returns "Infeasible!". If L is unbounded, the
+simplex algorithm returns "Unbounded!". Otherwise, the simplex algorithm returns an
+optimal solution with a finite objective value.
+
+initialize_simplex()
+--------------------
+
+A linear program can be feasible, yet the initial basic solution might not be feasible
+(e.g., the initial basic solution might set the solution to be negative and violate the
+non-negativity constraints). In order to determine whether a linear program has any
+feasible solutions, we formulate an auxility linear program, L'. For L', we can find a
+slack form for which the basic solution is feasible. Furthermore, the solution of L'
+determines whether L is feasible and if so, it provides a feasible solution with which
+we can initialize simplex().
+
+L is feasible iff the optimal objective value of L' is 0. If the optimal objective value
+of L' is negative, then L does not have a feasible solution.
+
+The input to initialize_simple() is a linear program L in standard form.
+
+pivot()
+-------
+
+A pivot operation chooses a non-basic variable x_e, called the entering variable, and a
+basic variable x_l, called the leaving variable, and exchanges their roles in the linear
+program.
+
+The entries of A and Ahat in pivot() are actually the negatives of the coefficients that
+appear in the slack form (or the same as the coefficients that appear in the standard
+form).
+
+pivot() is only ever called when A[l][e] is not 0.
+
+simplex()
+---------
+
+simplex() takes as input a linear program in standard form and return an n-vector,
+x_bar, that is an optimal solution to the linear program. Each iteration of the
+while-loop in simplex() exchanges the role of a basic and non-basic variable by calling
+pivot(). The slack form is equivalent to the one from the previous iteration which, by
+the loop invariant, is equivalent to the initial slack form.
+
+Degeneracy and Cycling
+----------------------
+
+No iteration of simplex() can decrease the objective value associated with the basic
+solution. However, it is possible that an iteration leaves the objective value
+unchanged. This phenomenon is called degeneracy.
+
+Degeneracy can prevent the simplex algorithm from terminating, because it can lead to a
+phenomenon known as cycling: the slack forms at two different iterations of simplex()
+are identical. Because of degeneracy, the simplex algorithm could choose a sequence of
+pivot operations that leave the objective value unchanged but repeat a slack form within
+the sequence. Since simplex() is a deterministic algorithm, if it cycles, then it will
+cycle through the same series of slack forms forever, never terminating.
+
+Cycling is the only reason that simplex() might not terminate. if simplex() fails to
+terminate in at most (n + m) choose m iterations, then it cycles. There are n + m
+variables and |B| = m; therefore, there are at most (n + m) choose m ways to choose B.
+
+We can prevent cycling by perturbing the input slightly so that it is impossible to have
+two solutions with the same object value. Another option is to break ties by always
+choosing the variable with the smallest index, a strategy known as Bland's rule.
+
+Duality
+-------
+
+Linear-programming duality enables us to prove that a solution is indeed optimal. Given
+a linear program in which the objective is to maximize, we can formulate a dual linear
+program in which the objective is to minimize and whose optimal vlaue is identical to
+that of the original (primal) linear program.
+
+To form the dual, we change the maximization to a minimization, exhcnage the roles of
+coefficients on the RHS and the objective function, and replace each <= by a >=. Each of
+the m constraints in the primal has an associated variable y_i in the dual, and each of
+the n constraints in the dual has an associated variable x_j in the primal.
+
+The optimal value of the dual linear program is always equal to the optimal value of the
+primal linear program. Furthermore, the simplex algorithm actually implicitly solves
+both the primal and dual programs simultaneously, thereby providing a proof of
+optimality.
+
+The negatives of the coefficients of the primal objective function are the values of the
+dual variables.
 """
 
 # pylint: disable=C0200
