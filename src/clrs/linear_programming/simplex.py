@@ -144,7 +144,10 @@ def initialize_simplex(A, b, c):
     chat[0] = -1
     l = len(Nhat) + k
     Nhat, Bhat, A_, bhat, chat, v = pivot(Nhat, Bhat, Ahat, b, chat, 0, l, 0)
-    x_bar, Nhat, Bhat, A_, bhat, chat, v = simplex(A_, bhat, chat, Nhat, Bhat, v)
+    val = simplex(A_, bhat, chat, Nhat, Bhat, v)
+    if isinstance(val, str):
+        return val
+    x_bar, Nhat, Bhat, A_, bhat, chat, v = val
     if x_bar[0] == 0:
         if Bhat[0] == 0:
             i, e = 0, Nhat[0]
@@ -225,3 +228,9 @@ def simplex(A, b, c, N=None, B=None, v=None):
     for index, i in enumerate(B):
         x_bar[i] = b[index]
     return x_bar, N, B, A, b, c, v
+
+
+A = [[2, -8, 0, -10], [-5, -2, 0, 0], [-3, 5, -10, 2]]
+b = [-50, -100, -25]
+c = [-1, -1, -1, -1]
+simplex(A, b, c)
