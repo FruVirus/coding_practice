@@ -50,21 +50,21 @@ def initialize_simplex(A, b, c):
     chat = [0 for _ in range(len(c) + 1)]
     chat[0] = -1
     l = len(Nhat) + k
-    Nhat, Bhat, A, bhat, chat, v = pivot(Nhat, Bhat, Ahat, b, chat, 0, l, 0)
-    x_bar, Nhat, Bhat, A, bhat, chat, v = simplex(A, bhat, chat, Nhat, Bhat, v)
+    Nhat, Bhat, A_, bhat, chat, v = pivot(Nhat, Bhat, Ahat, b, chat, 0, l, 0)
+    x_bar, Nhat, Bhat, A_, bhat, chat, v = simplex(A_, bhat, chat, Nhat, Bhat, v)
     if x_bar[0] == 0:
         if Bhat[0] == 0:
             i, e = 0, Nhat[0]
             while A[0][Nhat.index(e)] == 0:
                 i += 1
                 e = Nhat[i]
-            Nhat, Bhat, A, bhat, chat, v = pivot(Nhat, Bhat, A, bhat, c, e, l, v)
+            Nhat, Bhat, A_, bhat, chat, v = pivot(Nhat, Bhat, A_, bhat, c, e, l, v)
         Nhat.pop(Nhat.index(0))
         n, m = len(Nhat), len(Bhat)
         Ahat = [[0 for _ in range(n)] for _ in range(m)]
-        for row in range(len(A)):
-            for col in range(1, len(A[0])):
-                Ahat[row][col - 1] = A[row][col]
+        for row in range(len(A_)):
+            for col in range(1, len(A_[0])):
+                Ahat[row][col - 1] = A_[row][col]
         e = [i for i in N if i in Bhat]
         assert e
         Ne, Nhatl, Bhate = N.index(e[0]), Nhat.index(l), Bhat.index(e[0])
