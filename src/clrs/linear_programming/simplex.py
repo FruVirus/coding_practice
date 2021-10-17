@@ -69,7 +69,7 @@ def initialize_simplex(A, b, c):
         assert e
         Ne, Nhatl, Bhate = N.index(e[0]), Nhat.index(l), Bhat.index(e[0])
         no_e = exclude(N, e[0])
-        c, v = update_cv(N, c, v, N, Ahat, b, Ne, Nhatl, Bhate, no_e)
+        c, v = update_cv(N, c, v, Nhat, Ahat, b, Ne, Nhatl, Bhate, no_e)
         return Nhat, Bhat, Ahat, b, c, v
     return "Infeasible!"
 
