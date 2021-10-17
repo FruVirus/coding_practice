@@ -125,9 +125,3 @@ def simplex(A, b, c, N=None, B=None, v=None):
     for index, i in enumerate(B):
         x_bar[i] = b[index]
     return x_bar, N, B, A, b, c, v
-
-
-A = [[2, -1], [1, -5]]
-b = [2, -4]
-c = [2, -1]
-print(initialize_simplex(A, b, c))
