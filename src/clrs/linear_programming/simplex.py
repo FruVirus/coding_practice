@@ -134,39 +134,70 @@ def initialize_simplex(A, b, c):
         n, m = len(A[0]), len(A)
         return list(range(n)), list(range(n, n + m)), A, b, c, 0
     N = list(range(1, len(A[0]) + 1))
-    Nhat = [0] + N
-    Bhat = [Nhat[-1] + i for i in range(1, len(b) + 1)]
-    Ahat = [[0 for _ in range(len(Nhat))] for _ in range(len(Bhat))]
+    Naux = [0] + N
+    Baux = [Naux[-1] + i for i in range(1, len(b) + 1)]
+    Aaux = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
     for row in range(len(A)):
         for col in range(len(A[0]) + 1):
-            Ahat[row][col] = -1 if col == 0 else A[row][col - 1]
-    chat = [0 for _ in range(len(c) + 1)]
-    chat[0] = -1
-    l = len(Nhat) + k
-    Nhat, Bhat, A_, bhat, chat, v = pivot(Nhat, Bhat, Ahat, b, chat, 0, l, 0)
-    val = simplex(A_, bhat, chat, Nhat, Bhat, v)
+            Aaux[row][col] = -1 if col == 0 else A[row][col - 1]
+    baux = b
+    caux = [0 for _ in range(len(c) + 1)]
+    caux[0] = -1
+    e = 0
+    l = len(Naux) + k
+    vaux = 0
+    Naux, Baux, Aaux, baux, caux, vaux = pivot(Naux, Baux, Aaux, baux, caux, e, l, vaux)
+    val = simplex(Aaux, baux, caux, Naux, Baux, vaux)
     if isinstance(val, str):
         return val
-    x_bar, Nhat, Bhat, A_, bhat, chat, v = val
+    x_bar, Naux, Baux, Aaux, baux, caux, vaux = val
     if x_bar[0] == 0:
-        if Bhat[0] == 0:
-            i, e = 0, Nhat[0]
-            while A[0][Nhat.index(e)] == 0:
+        if Baux[0] == 0:
+            i, e = 0, Naux[0]
+            while A[0][Naux.index(e)] == 0:
                 i += 1
-                e = Nhat[i]
-            Nhat, Bhat, A_, bhat, chat, v = pivot(Nhat, Bhat, A_, bhat, chat, e, l, v)
-        Nhat.pop(Nhat.index(0))
-        n, m = len(Nhat), len(Bhat)
+                e = Naux[i]
+            Naux, Baux, Aaux, baux, caux, vaux = pivot(
+                Naux, Baux, Aaux, baux, caux, e, l, vaux
+            )
+        Naux.pop(Naux.index(0))
+        n, m = len(Naux), len(Baux)
         Ahat = [[0 for _ in range(n)] for _ in range(m)]
-        for row in range(len(A_)):
-            for col in range(1, len(A_[0])):
-                Ahat[row][col - 1] = A_[row][col]
-        e = [i for i in N if i in Bhat]
-        assert e
-        Ne, Nhatl, Bhate = N.index(e[0]), Nhat.index(l), Bhat.index(e[0])
-        no_e = exclude(N, e[0])
-        c, v = update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e)
-        return Nhat, Bhat, Ahat, bhat, c, v
+        for row in range(len(Aaux)):
+            for col in range(1, len(Aaux[0])):
+                Ahat[row][col - 1] = Aaux[row][col]
+        caux = [0 for _ in range(len(Naux))]
+        for i in N:
+            if i in Baux:
+                for Bauxi, j in enumerate(Ahat[Baux.index(i)]):
+                    caux[Bauxi] += j
+        for Ni, i in enumerate(N):
+            if i == Naux[Ni]:
+                caux[Ni] = c[Ni] + caux[Ni]
+        for Bauxi, i in enumerate(Baux):
+            cdict.append([Ahat[Bauxi][Nauxj] for Nauxj, j in enumerate(Naux)])
+        print(c)
+        print(N)
+        print(Baux)
+        print(Naux)
+        print(Ahat)
+        print(cdict)
+        exit()
+        for i in range(len(cdict[0])):
+            cval = abs(c[i]) if c[i] < 0 else c[i]
+            for j in range(len(cdict)):
+                caux[i] += cval * cdict[j][i]
+        for Ni, i in enumerate(N):
+            if i in Naux:
+                cval = abs(c[Ni]) if c[Ni] > 0 else c[Ni]
+                caux[Naux.index(i)] += cval
+        print(Naux)
+        print(Baux)
+        print(baux)
+        print(caux)
+        print(vaux)
+        vaux = sum(c[bauxi] * i for bauxi, i in enumerate(baux))
+        return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
 
 
@@ -203,6 +234,9 @@ def update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e):
         Nhatj, Nj = Nhat.index(j), N.index(j)
         chat[Nhatj] = c[Nj] - c[Ne] * Ahat[Bhate][Nhatj]
     chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
+    for chati, i in enumerate(chat):
+        if abs(i) < 1e-12:
+            chat[chati] = 0
     return chat, v
 
 
@@ -213,13 +247,12 @@ def simplex(A, b, c, N=None, B=None, v=None):
             return val
         N, B, A, b, c, v = val
     delta = [0 for _ in range(len(B))]
-    while any(c[N.index(x)] > 0 for x in N):
-        e = min([x for x in N if c[N.index(x)] > 0])
+    while any(c[i] > 0 for i in range(len(N))):
+        e = min([x for i, x in enumerate(N) if c[i] > 0])
         Ne = N.index(e)
-        for i in B:
-            Bi = B.index(i)
+        for Bi, i in enumerate(B):
             delta[Bi] = b[Bi] / A[Bi][Ne] if A[Bi][Ne] > 0 else float("inf")
-        l = B[delta.index(min([delta[B.index(i)] for i in B]))]
+        l = B[delta.index(min(delta))]
         Bl = B.index(l)
         if delta[Bl] == float("inf"):
             return "Unbounded!"
@@ -230,7 +263,60 @@ def simplex(A, b, c, N=None, B=None, v=None):
     return x_bar, N, B, A, b, c, v
 
 
-A = [[2, -8, 0, -10], [-5, -2, 0, 0], [-3, 5, -10, 2]]
-b = [-50, -100, -25]
-c = [-1, -1, -1, -1]
-simplex(A, b, c)
+A = [[2, -1], [1, -5]]
+b = [2, -4]
+c = [2, -1]
+N, B, A, b, c, v = initialize_simplex(A, b, c)
+print()
+print()
+print(N)
+print(B)
+print(A)
+print(b)
+print(c)
+print(v)
+
+
+# A = [[-1, 1], [-1, -1], [-1, 4]]
+# b = [-1, -3, 2]
+# c = [1, 3]
+# assert simplex(A, b, c) == "Unbounded!"
+
+# N = [1, 2, 3, 4, 6]
+# # N = [0, 1, 2, 3, 4]
+# B = [0, 5, 7]
+# # B = [5, 6, 7]
+# A = [[5, 2, 0, 0, 1], [7, -6, 0, -10, -1], [2, 7, -10, 2, -1]]
+# b = [100, 50, 75]
+# c = [5, 2, 0, 0, -1]
+# v = 0
+# print(simplex(A, b, c, N, B, v))
+
+# N = [2, 3, 4, 5, 6]
+# B = [0, 1, 7]
+# A = [
+#     [44 / 7, 0, 50 / 7, -5 / 7, -2 / 7],
+#     [-6 / 7, 0, -10 / 7, 1 / 7, -1 / 7],
+#     [61 / 7, -10, 34 / 7, -2 / 7, -5 / 7],
+# ]
+# b = [450/7, 50/7, 425/7]
+# c = [44/7, 0, 50/7, -5/7, -2/7]
+# v = -450/7
+# print(simplex(A, b, c, N, B, v))
+
+# N = [4, 5, 6, 7]
+# B = [1, 2, 3]
+# A = [
+#     [-5 / 11, 1 / 22, -2 / 11, 0],
+#     [25 / 22, -5 / 44, -1 / 22, 0],
+#     [111 / 220, -31 / 440, 7 / 220, -1 / 10],
+# ]
+# b = [175/11, 225/22, 125/44]
+# c = [41/220, -61/440, -43/220, -1/10]
+# v = -1275/44
+# print(simplex(A, b, c, N, B, v))
+
+# A = [[2, -8, 0, -10], [-5, -2, 0, 0], [-3, 5, -10, 2]]
+# b = [-50, -100, -25]
+# c = [-1, -1, -1, -1]
+# print(simplex(A, b, c))
