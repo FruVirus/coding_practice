@@ -174,29 +174,8 @@ def initialize_simplex(A, b, c):
         for Ni, i in enumerate(N):
             if i == Naux[Ni]:
                 caux[Ni] = c[Ni] + caux[Ni]
-        for Bauxi, i in enumerate(Baux):
-            cdict.append([Ahat[Bauxi][Nauxj] for Nauxj, j in enumerate(Naux)])
-        print(c)
-        print(N)
-        print(Baux)
-        print(Naux)
-        print(Ahat)
-        print(cdict)
-        exit()
-        for i in range(len(cdict[0])):
-            cval = abs(c[i]) if c[i] < 0 else c[i]
-            for j in range(len(cdict)):
-                caux[i] += cval * cdict[j][i]
-        for Ni, i in enumerate(N):
-            if i in Naux:
-                cval = abs(c[Ni]) if c[Ni] > 0 else c[Ni]
-                caux[Naux.index(i)] += cval
-        print(Naux)
-        print(Baux)
-        print(baux)
-        print(caux)
-        print(vaux)
-        vaux = sum(c[bauxi] * i for bauxi, i in enumerate(baux))
+        x = [i for i in N if i in Baux][0]
+        vaux += c[N.index(x)] * baux[Baux.index(x)]
         return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
 
