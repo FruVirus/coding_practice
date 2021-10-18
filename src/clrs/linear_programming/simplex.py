@@ -167,15 +167,28 @@ def initialize_simplex(A, b, c):
             for col in range(1, len(Aaux[0])):
                 Ahat[row][col - 1] = Aaux[row][col]
         caux = [0 for _ in range(len(Naux))]
+        print("N: ", N)
+        print("Ahat: ", Ahat)
+        print("c: ", c)
+        print("Naux: ", Naux)
+        print("Baux: ", Baux)
+        print("baux: ", baux)
+        print("caux: ", caux)
+        print("vaux: ", vaux)
+        print()
         for i in N:
             if i in Baux:
-                for Bauxi, j in enumerate(Ahat[Baux.index(i)]):
-                    caux[Bauxi] += j
-        for Ni, i in enumerate(N):
-            if i == Naux[Ni]:
-                caux[Ni] = c[Ni] + caux[Ni]
-        x = [i for i in N if i in Baux][0]
-        vaux += c[N.index(x)] * baux[Baux.index(x)]
+                cval = c[N.index(i)]
+                sgn = -1 if cval < 0 else 1
+                vaux += sgn * baux[Baux.index(i)]
+            if i in Baux:
+                cval = c[N.index(i)]
+                sgn = -1 if cval < 0 else 1
+                for x in range(len(Ahat)):
+                    caux[N.index(i)] += Ahat[x][N.index(i)]
+        print(caux)
+        print(vaux)
+        exit()
         return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
 
@@ -242,24 +255,15 @@ def simplex(A, b, c, N=None, B=None, v=None):
     return x_bar, N, B, A, b, c, v
 
 
+# A = [[2, -8, 0, -10], [-5, -2, 0, 0], [-3, 5, -10, 2]]
+# b = [-50, -100, -25]
+# c = [-1, -1, -1, -1]
+# print(initialize_simplex(A, b, c))
+
 A = [[2, -1], [1, -5]]
 b = [2, -4]
 c = [2, -1]
-N, B, A, b, c, v = initialize_simplex(A, b, c)
-print()
-print()
-print(N)
-print(B)
-print(A)
-print(b)
-print(c)
-print(v)
-
-
-# A = [[-1, 1], [-1, -1], [-1, 4]]
-# b = [-1, -3, 2]
-# c = [1, 3]
-# assert simplex(A, b, c) == "Unbounded!"
+print(initialize_simplex(A, b, c))
 
 # N = [1, 2, 3, 4, 6]
 # # N = [0, 1, 2, 3, 4]
