@@ -215,8 +215,7 @@ def update_caux(N, c, Naux, Baux, Ahat):
         cval = -c[N.index(i)]
         for j, x in enumerate(row):
             row[j] *= cval
-        for j, x in enumerate(row):
-            caux[j] += x
+            caux[j] += row[j]
     return caux
 
 
