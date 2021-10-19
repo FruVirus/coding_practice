@@ -155,7 +155,15 @@ def initialize_simplex(A, b, c):
         Aaux, baux, caux, Naux, Baux, vaux
     )
     if x_bar[0] == 0:
-        return return_aux(N, A, c, Naux, Baux, Aaux, baux, caux, l, vaux)
+        if Baux[0] == 0:
+            i, e = 0, Naux[0]
+            while A[0][Naux.index(e)] == 0:
+                i += 1
+                e = Naux[i]
+            Naux, Baux, Aaux, baux, caux, vaux = pivot(
+                Naux, Baux, Aaux, baux, caux, e, l, vaux
+            )
+        return return_aux(N, c, Naux, Baux, Aaux, baux, vaux)
     return "Infeasible!"
 
 
@@ -166,15 +174,7 @@ def pivot(N, B, A, b, c, e, l, v):
     return Nhat, Bhat, Ahat, bhat, chat, vhat
 
 
-def return_aux(N, A, c, Naux, Baux, Aaux, baux, caux, l, vaux):
-    if Baux[0] == 0:
-        i, e = 0, Naux[0]
-        while A[0][Naux.index(e)] == 0:
-            i += 1
-            e = Naux[i]
-        Naux, Baux, Aaux, baux, caux, vaux = pivot(
-            Naux, Baux, Aaux, baux, caux, e, l, vaux
-        )
+def return_aux(N, c, Naux, Baux, Aaux, baux, vaux):
     Naux.pop(Naux.index(0))
     n, m = len(Aaux[0]), len(Aaux)
     Ahat = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
