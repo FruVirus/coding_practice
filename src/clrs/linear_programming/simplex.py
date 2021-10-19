@@ -139,8 +139,7 @@ def initialize_aux(A, k, n, m):
             Aaux[row][col] = -1 if col == 0 else A[row][col - 1]
     caux = [0 for _ in range(n + 1)]
     caux[0] = -1
-    l = len(Naux) + k
-    return N, Naux, Baux, Aaux, caux, l
+    return N, Naux, Baux, Aaux, caux, len(Naux) + k
 
 
 def initialize_simplex(A, b, c):
@@ -161,32 +160,9 @@ def initialize_simplex(A, b, c):
 
 def pivot(N, B, A, b, c, e, l, v):
     assert e in N and l in B
-    n, m = len(N), len(B)
-    Ahat, bhat = [[0 for _ in range(n)] for _ in range(m)], [0 for _ in range(m)]
-    Bhat, Nhat = list(B), list(N)
-    Bl, Ne = B.index(l), N.index(e)
-    Bhat[Bl], Nhat[Ne] = N[Ne], B[Bl]
-    Bhat, Nhat = sorted(Bhat), sorted(Nhat)
-    Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
-    bhat[Bhate] = b[Bl] / A[Bl][Ne]
-    no_e, no_l = exclude(N, e), exclude(B, l)
-    for j in no_e:
-        Ahat[Bhate][Nhat.index(j)] = A[Bl][N.index(j)] / A[Bl][Ne]
-    Ahat[Bhate][Nhatl] = 1 / A[Bl][Ne]
-    for i in no_l:
-        Bhati, Bi = Bhat.index(i), B.index(i)
-        bhat[Bhati] = b[Bi] - A[Bi][Ne] * bhat[Bhate]
-        for j in no_e:
-            Nhatj = Nhat.index(j)
-            Ahat[Bhati][Nhatj] = A[Bi][N.index(j)] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
-        Ahat[Bhati][Nhatl] = -A[Bi][Ne] * Ahat[Bhate][Nhatl]
-    v += c[Ne] * bhat[Bhate]
-    chat = [0 for _ in range(len(c))]
-    for j in no_e:
-        Nhatj = Nhat.index(j)
-        chat[Nhatj] = c[N.index(j)] - c[Ne] * Ahat[Bhate][Nhatj]
-    chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
-    return Nhat, Bhat, Ahat, bhat, chat, v
+    Nhat, Bhat, Ahat, bhat = update_constraints(N, B, A, b, e, l)
+    chat, vhat = update_objective(N, c, e, l, v, Nhat, Bhat, Ahat, bhat)
+    return Nhat, Bhat, Ahat, bhat, chat, vhat
 
 
 def return_aux(N, A, c, Naux, Baux, Aaux, baux, caux, l, vaux):
@@ -213,6 +189,40 @@ def return_aux(N, A, c, Naux, Baux, Aaux, baux, caux, l, vaux):
         for j, x in enumerate(Ahat[Baux.index(i)]):
             caux[j] += x * cval
     return Naux, Baux, Ahat, baux, caux, vaux
+
+
+def update_constraints(N, B, A, b, e, l):
+    n, m = len(N), len(B)
+    Ahat, bhat = [[0 for _ in range(n)] for _ in range(m)], [0 for _ in range(m)]
+    Bhat, Nhat = list(B), list(N)
+    Bl, Ne = B.index(l), N.index(e)
+    Bhat[Bl], Nhat[Ne] = N[Ne], B[Bl]
+    Bhat, Nhat = sorted(Bhat), sorted(Nhat)
+    Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
+    bhat[Bhate] = b[Bl] / A[Bl][Ne]
+    no_e, no_l = exclude(N, e), exclude(B, l)
+    for j in no_e:
+        Ahat[Bhate][Nhat.index(j)] = A[Bl][N.index(j)] / A[Bl][Ne]
+    Ahat[Bhate][Nhatl] = 1 / A[Bl][Ne]
+    for i in no_l:
+        Bhati, Bi = Bhat.index(i), B.index(i)
+        bhat[Bhati] = b[Bi] - A[Bi][Ne] * bhat[Bhate]
+        for j in no_e:
+            Nhatj = Nhat.index(j)
+            Ahat[Bhati][Nhatj] = A[Bi][N.index(j)] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
+        Ahat[Bhati][Nhatl] = -A[Bi][Ne] * Ahat[Bhate][Nhatl]
+    return Nhat, Bhat, Ahat, bhat
+
+
+def update_objective(N, c, e, l, v, Nhat, Bhat, Ahat, bhat):
+    Ne, Nhatl, Bhate, no_e = N.index(e), Nhat.index(l), Bhat.index(e), exclude(N, e)
+    v += c[Ne] * bhat[Bhate]
+    chat = [0 for _ in range(len(c))]
+    for j in no_e:
+        Nhatj = Nhat.index(j)
+        chat[Nhatj] = c[N.index(j)] - c[Ne] * Ahat[Bhate][Nhatj]
+    chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
+    return chat, v
 
 
 def simplex(A, b, c, N=None, B=None, v=None):
