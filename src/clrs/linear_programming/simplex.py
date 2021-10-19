@@ -129,7 +129,8 @@ def include(l1, l2):
     return [x for x in l1 if x in l2]
 
 
-def initialize_aux(A, k, n, m):
+def initialize_aux(A, k):
+    n, m = len(A[0]), len(A)
     N = list(range(1, n + 1))
     Naux = [0] + N
     Baux = [Naux[-1] + i for i in range(1, m + 1)]
@@ -148,7 +149,7 @@ def initialize_simplex(A, b, c):
     k = b.index(min(b))
     if b[k] >= 0:
         return list(range(n)), list(range(n, n + m)), A, b, c, 0
-    N, Naux, Baux, Aaux, caux, l = initialize_aux(A, k, n, m)
+    N, Naux, Baux, Aaux, caux, l = initialize_aux(A, k)
     Naux, Baux, Aaux, baux, caux, vaux = pivot(Naux, Baux, Aaux, b, caux, 0, l, 0)
     x_bar, Naux, Baux, Aaux, baux, caux, vaux = simplex(
         Aaux, baux, caux, Naux, Baux, vaux
