@@ -166,27 +166,8 @@ def initialize_simplex(A, b, c):
         for row in range(len(Aaux)):
             for col in range(1, len(Aaux[0])):
                 Ahat[row][col - 1] = Aaux[row][col]
-        print()
-        print("N: ", N)
-        print("Ahat: ", Ahat)
-        print("c: ", c)
-        print("Naux: ", Naux)
-        print("Baux: ", Baux)
-        print("baux: ", baux)
-        print("caux: ", caux)
-        print("vaux: ", vaux)
-        print()
         caux = update_caux(N, c, Naux, Baux, Ahat)
         vaux = update_vaux(N, c, Baux, baux, vaux)
-        print("N: ", N)
-        print("Ahat: ", Ahat)
-        print("c: ", c)
-        print("Naux: ", Naux)
-        print("Baux: ", Baux)
-        print("baux: ", baux)
-        print("caux: ", caux)
-        print("vaux: ", vaux)
-        print()
         return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
 
@@ -224,10 +205,8 @@ def update_caux(N, c, Naux, Baux, Ahat):
             caux[Naux.index(i)] = c[N.index(i)]
     for i in N:
         if i in Baux:
-            row = Ahat[Baux.index(i)]
-            cval = c[N.index(i)]
-            sgn = -1 if cval < 0 else 1
-            cval *= sgn
+            row = list(Ahat[Baux.index(i)])
+            cval = -1 * c[N.index(i)]
             for x in range(len(row)):
                 row[x] = cval * row[x]
             for j, x in enumerate(row):
