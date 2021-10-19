@@ -166,8 +166,8 @@ def initialize_simplex(A, b, c):
         for row in range(len(Aaux)):
             for col in range(1, len(Aaux[0])):
                 Ahat[row][col - 1] = Aaux[row][col]
-        caux = update_caux(N, c, Naux, Baux, Ahat)
         vaux += sum(-baux[Baux.index(i)] for i in [x for x in N if x in Baux])
+        caux = update_caux(N, c, Naux, Baux, Ahat)
         return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
 
