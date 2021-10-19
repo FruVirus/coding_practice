@@ -181,15 +181,14 @@ def pivot(N, B, A, b, c, e, l, v):
     bhat[Bhate] = b[Bl] / A[Bl][Ne]
     no_e, no_l = exclude(N, e), exclude(B, l)
     for j in no_e:
-        Nhatj, Nj = Nhat.index(j), N.index(j)
-        Ahat[Bhate][Nhatj] = A[Bl][Nj] / A[Bl][Ne]
+        Ahat[Bhate][Nhat.index(j)] = A[Bl][N.index(j)] / A[Bl][Ne]
     Ahat[Bhate][Nhatl] = 1 / A[Bl][Ne]
     for i in no_l:
         Bhati, Bi = Bhat.index(i), B.index(i)
         bhat[Bhati] = b[Bi] - A[Bi][Ne] * bhat[Bhate]
         for j in no_e:
-            Nhatj, Nj = Nhat.index(j), N.index(j)
-            Ahat[Bhati][Nhatj] = A[Bi][Nj] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
+            Nhatj = Nhat.index(j)
+            Ahat[Bhati][Nhatj] = A[Bi][N.index(j)] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
         Ahat[Bhati][Nhatl] = -A[Bi][Ne] * Ahat[Bhate][Nhatl]
     v += c[Ne] * bhat[Bhate]
     c = update_c(N, c, Nhat, Ahat, Ne, Nhatl, Bhate, no_e)
@@ -199,8 +198,8 @@ def pivot(N, B, A, b, c, e, l, v):
 def update_c(N, c, Nhat, Ahat, Ne, Nhatl, Bhate, no_e):
     chat = [0 for _ in range(len(c))]
     for j in no_e:
-        Nhatj, Nj = Nhat.index(j), N.index(j)
-        chat[Nhatj] = c[Nj] - c[Ne] * Ahat[Bhate][Nhatj]
+        Nhatj = Nhat.index(j)
+        chat[Nhatj] = c[N.index(j)] - c[Ne] * Ahat[Bhate][Nhatj]
     chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
     return chat
 
