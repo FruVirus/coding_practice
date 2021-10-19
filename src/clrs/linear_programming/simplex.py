@@ -140,13 +140,10 @@ def initialize_simplex(A, b, c):
     for row in range(m):
         for col in range(n + 1):
             Aaux[row][col] = -1 if col == 0 else A[row][col - 1]
-    baux = b
     caux = [0 for _ in range(n + 1)]
     caux[0] = -1
-    e = 0
     l = len(Naux) + k
-    vaux = 0
-    Naux, Baux, Aaux, baux, caux, vaux = pivot(Naux, Baux, Aaux, baux, caux, e, l, vaux)
+    Naux, Baux, Aaux, baux, caux, vaux = pivot(Naux, Baux, Aaux, b, caux, 0, l, 0)
     val = simplex(Aaux, baux, caux, Naux, Baux, vaux)
     if isinstance(val, str):
         return val
