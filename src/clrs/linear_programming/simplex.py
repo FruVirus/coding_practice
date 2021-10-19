@@ -206,7 +206,7 @@ def update_caux(N, c, Naux, Baux, Ahat):
     for i in N:
         if i in Baux:
             row = list(Ahat[Baux.index(i)])
-            cval = -1 * c[N.index(i)]
+            cval = -c[N.index(i)]
             for x in range(len(row)):
                 row[x] = cval * row[x]
             for j, x in enumerate(row):
