@@ -194,8 +194,18 @@ def pivot(N, B, A, b, c, e, l, v):
             Nhatj, Nj = Nhat.index(j), N.index(j)
             Ahat[Bhati][Nhatj] = A[Bi][Nj] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
         Ahat[Bhati][Nhatl] = -A[Bi][Ne] * Ahat[Bhate][Nhatl]
-    c, v = update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e)
+    v += c[Ne] * bhat[Bhate]
+    c = update_c(N, c, Nhat, Ahat, Ne, Nhatl, Bhate, no_e)
     return Nhat, Bhat, Ahat, bhat, c, v
+
+
+def update_c(N, c, Nhat, Ahat, Ne, Nhatl, Bhate, no_e):
+    chat = [0 for _ in range(len(c))]
+    for j in no_e:
+        Nhatj, Nj = Nhat.index(j), N.index(j)
+        chat[Nhatj] = c[Nj] - c[Ne] * Ahat[Bhate][Nhatj]
+    chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
+    return chat
 
 
 def update_caux(N, c, Naux, Baux, Ahat):
@@ -210,16 +220,6 @@ def update_caux(N, c, Naux, Baux, Ahat):
         for j, x in enumerate(row):
             caux[j] += x
     return caux
-
-
-def update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e):
-    v += c[Ne] * bhat[Bhate]
-    chat = [0 for _ in range(len(c))]
-    for j in no_e:
-        Nhatj, Nj = Nhat.index(j), N.index(j)
-        chat[Nhatj] = c[Nj] - c[Ne] * Ahat[Bhate][Nhatj]
-    chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
-    return chat, v
 
 
 def simplex(A, b, c, N=None, B=None, v=None):
