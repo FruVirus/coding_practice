@@ -221,9 +221,6 @@ def update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e):
         Nhatj, Nj = Nhat.index(j), N.index(j)
         chat[Nhatj] = c[Nj] - c[Ne] * Ahat[Bhate][Nhatj]
     chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
-    for chati, i in enumerate(chat):
-        if abs(i) < 1e-12:
-            chat[chati] = 0
     return chat, v
 
 
@@ -243,7 +240,7 @@ def simplex(A, b, c, N=None, B=None, v=None):
             return val
         N, B, A, b, c, v = val
     delta = [0 for _ in range(len(B))]
-    while any(c[i] > 0 for i in range(len(N))):
+    while any(c[i] > 1e-12 for i in range(len(N))):
         e = min([x for i, x in enumerate(N) if c[i] > 0])
         Ne = N.index(e)
         for Bi, i in enumerate(B):
