@@ -167,7 +167,7 @@ def initialize_simplex(A, b, c):
             for col in range(1, len(Aaux[0])):
                 Ahat[row][col - 1] = Aaux[row][col]
         caux = update_caux(N, c, Naux, Baux, Ahat)
-        vaux = update_vaux(N, Baux, baux, vaux)
+        vaux += sum(-baux[Baux.index(i)] for i in [x for x in N if x in Baux])
         return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
 
@@ -200,17 +200,15 @@ def pivot(N, B, A, b, c, e, l, v):
 
 def update_caux(N, c, Naux, Baux, Ahat):
     caux = [0 for _ in range(len(Naux))]
-    for i in N:
-        if i in Naux:
-            caux[Naux.index(i)] = c[N.index(i)]
-    for i in N:
-        if i in Baux:
-            row = list(Ahat[Baux.index(i)])
-            cval = -c[N.index(i)]
-            for x in range(len(row)):
-                row[x] = cval * row[x]
-            for j, x in enumerate(row):
-                caux[j] += x
+    for i in [x for x in N if x in Naux]:
+        caux[Naux.index(i)] = c[N.index(i)]
+    for i in [x for x in N if x in Baux]:
+        row = list(Ahat[Baux.index(i)])
+        cval = -c[N.index(i)]
+        for x in range(len(row)):
+            row[x] = cval * row[x]
+        for j, x in enumerate(row):
+            caux[j] += x
     return caux
 
 
@@ -222,13 +220,6 @@ def update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e):
         chat[Nhatj] = c[Nj] - c[Ne] * Ahat[Bhate][Nhatj]
     chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
     return chat, v
-
-
-def update_vaux(N, Baux, baux, vaux):
-    for i in N:
-        if i in Baux:
-            vaux += -baux[Baux.index(i)]
-    return vaux
 
 
 def simplex(A, b, c, N=None, B=None, v=None):
