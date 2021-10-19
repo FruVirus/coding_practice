@@ -223,8 +223,6 @@ def simplex(A, b, c, N=None, B=None, v=None):
         N, B, A, b, c, v = val
     delta = [0 for _ in range(len(B))]
     while any(c[i] > 1e-12 for i in range(len(N))):
-        print(A)
-        print(c)
         e = min([x for i, x in enumerate(N) if c[i] > 0])
         Ne = N.index(e)
         for Bi, i in enumerate(B):
