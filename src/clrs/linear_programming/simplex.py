@@ -127,6 +127,10 @@ def exclude(list_, item):
     return [x for x in list_ if x != item]
 
 
+def include(l1, l2):
+    return [x for x in l1 if x in l2]
+
+
 def initialize_simplex(A, b, c):
     n, m = len(A[0]), len(A)
     assert m == len(b) and n == len(c)
@@ -163,7 +167,7 @@ def initialize_simplex(A, b, c):
         for row in range(m):
             for col in range(1, n):
                 Ahat[row][col - 1] = Aaux[row][col]
-        vaux += sum(-baux[Baux.index(i)] for i in [x for x in N if x in Baux])
+        vaux += sum(-baux[Baux.index(i)] for i in include(N, Baux))
         caux = update_caux(N, c, Naux, Baux, Ahat)
         return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
@@ -206,9 +210,9 @@ def update_c(N, c, Nhat, Ahat, Ne, Nhatl, Bhate, no_e):
 
 def update_caux(N, c, Naux, Baux, Ahat):
     caux = [0 for _ in range(len(Naux))]
-    for i in [x for x in N if x in Naux]:
+    for i in include(N, Naux):
         caux[Naux.index(i)] = c[N.index(i)]
-    for i in [x for x in N if x in Baux]:
+    for i in include(N, Baux):
         row = list(Ahat[Baux.index(i)])
         cval = -c[N.index(i)]
         for x in range(len(row)):
