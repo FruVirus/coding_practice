@@ -129,7 +129,8 @@ def include(l1, l2):
     return [x for x in l1 if x in l2]
 
 
-def initialize_aux(N, A, k, n, m):
+def initialize_aux(A, k, n, m):
+    N = list(range(1, n + 1))
     Naux = [0] + N
     Baux = [Naux[-1] + i for i in range(1, m + 1)]
     Aaux = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
@@ -139,7 +140,7 @@ def initialize_aux(N, A, k, n, m):
     caux = [0 for _ in range(n + 1)]
     caux[0] = -1
     l = len(Naux) + k
-    return Naux, Baux, Aaux, caux, l
+    return N, Naux, Baux, Aaux, caux, l
 
 
 def initialize_simplex(A, b, c):
@@ -148,8 +149,7 @@ def initialize_simplex(A, b, c):
     k = b.index(min(b))
     if b[k] >= 0:
         return list(range(n)), list(range(n, n + m)), A, b, c, 0
-    N = list(range(1, n + 1))
-    Naux, Baux, Aaux, caux, l = initialize_aux(N, A, k, n, m)
+    N, Naux, Baux, Aaux, caux, l = initialize_aux(A, k, n, m)
     Naux, Baux, Aaux, baux, caux, vaux = pivot(Naux, Baux, Aaux, b, caux, 0, l, 0)
     x_bar, Naux, Baux, Aaux, baux, caux, vaux = simplex(
         Aaux, baux, caux, Naux, Baux, vaux
@@ -181,8 +181,12 @@ def pivot(N, B, A, b, c, e, l, v):
             Ahat[Bhati][Nhatj] = A[Bi][N.index(j)] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
         Ahat[Bhati][Nhatl] = -A[Bi][Ne] * Ahat[Bhate][Nhatl]
     v += c[Ne] * bhat[Bhate]
-    c = update_c(N, c, Nhat, Ahat, Ne, Nhatl, Bhate, no_e)
-    return Nhat, Bhat, Ahat, bhat, c, v
+    chat = [0 for _ in range(len(c))]
+    for j in no_e:
+        Nhatj = Nhat.index(j)
+        chat[Nhatj] = c[N.index(j)] - c[Ne] * Ahat[Bhate][Nhatj]
+    chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
+    return Nhat, Bhat, Ahat, bhat, chat, v
 
 
 def return_aux(N, A, c, Naux, Baux, Aaux, baux, caux, l, vaux):
@@ -201,20 +205,6 @@ def return_aux(N, A, c, Naux, Baux, Aaux, baux, caux, l, vaux):
         for col in range(1, n):
             Ahat[row][col - 1] = Aaux[row][col]
     vaux += sum(-baux[Baux.index(i)] for i in include(N, Baux))
-    caux = update_caux(N, c, Naux, Baux, Ahat)
-    return Naux, Baux, Ahat, baux, caux, vaux
-
-
-def update_c(N, c, Nhat, Ahat, Ne, Nhatl, Bhate, no_e):
-    chat = [0 for _ in range(len(c))]
-    for j in no_e:
-        Nhatj = Nhat.index(j)
-        chat[Nhatj] = c[N.index(j)] - c[Ne] * Ahat[Bhate][Nhatj]
-    chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
-    return chat
-
-
-def update_caux(N, c, Naux, Baux, Ahat):
     caux = [0 for _ in range(len(Naux))]
     for i in include(N, Naux):
         caux[Naux.index(i)] = c[N.index(i)]
@@ -222,7 +212,7 @@ def update_caux(N, c, Naux, Baux, Ahat):
         cval = -c[N.index(i)]
         for j, x in enumerate(Ahat[Baux.index(i)]):
             caux[j] += x * cval
-    return caux
+    return Naux, Baux, Ahat, baux, caux, vaux
 
 
 def simplex(A, b, c, N=None, B=None, v=None):
