@@ -222,8 +222,18 @@ def simplex(A, b, c, N=None, B=None, v=None):
         if isinstance(val, str):
             return val
         N, B, A, b, c, v = val
+    print(N)
+    print(B)
+    print(A)
+    print(b)
+    print(c)
+    print(v)
+    print(c)
+    print()
     delta = [0 for _ in range(len(B))]
     while any(c[i] > 1e-12 for i in range(len(N))):
+        print(A)
+        print(c)
         e = min([x for i, x in enumerate(N) if c[i] > 0])
         Ne = N.index(e)
         for Bi, i in enumerate(B):
@@ -236,3 +246,9 @@ def simplex(A, b, c, N=None, B=None, v=None):
     for index, i in enumerate(B):
         x_bar[i] = b[index]
     return x_bar, N, B, A, b, c, v
+
+
+A = [[1, 1], [1, 0], [0, 1]]
+b = [20, 12, 16]
+c = [18, 12.5]
+print(simplex(A, b, c))
