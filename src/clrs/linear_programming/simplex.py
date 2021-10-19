@@ -213,9 +213,8 @@ def update_caux(N, c, Naux, Baux, Ahat):
     for i in include(N, Baux):
         row = list(Ahat[Baux.index(i)])
         cval = -c[N.index(i)]
-        for j, x in enumerate(row):
-            row[j] *= cval
-            caux[j] += row[j]
+        for j, _ in enumerate(row):
+            caux[j] += row[j] * cval
     return caux
 
 
