@@ -138,7 +138,7 @@ def initialize_aux(A, k):
     for row in range(m):
         for col in range(n + 1):
             Aaux[row][col] = -1 if col == 0 else A[row][col - 1]
-    caux = [0 for _ in range(n + 1)]
+    caux = [0 for _ in range(len(Naux))]
     caux[0] = -1
     return N, Naux, Baux, Aaux, caux, len(Naux) + k
 
@@ -175,8 +175,8 @@ def pivot(N, B, A, b, c, e, l, v):
 
 
 def return_aux(N, c, Naux, Baux, Aaux, baux, vaux):
-    Naux.pop(Naux.index(0))
     n, m = len(Aaux[0]), len(Aaux)
+    Naux.pop(Naux.index(0))
     Ahat = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
     for row in range(m):
         for col in range(1, n):
