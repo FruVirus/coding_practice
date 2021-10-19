@@ -1,4 +1,3 @@
-"""
 Introduction
 ============
 
@@ -93,4 +92,29 @@ and, because of convexity, an optimal solution still occurs at a vertex of the s
 
 Linear programs can have no solutions, no finite optimal solution, or a situation where
 the origin is not a feasible solution.
-"""
+
+Problem Types
+=============
+
+Linear programming problems is a system process of finding a maximum or minimum value of
+any variable in a function. It is also known by the name of optimization problem. LPP is
+helpful in developing and solving a decision making problem by mathematical techniques.
+
+The problem is generally given in a linear function which needs to be optimized subject
+to a set of different constraints. Major usage of LPP is in advising management how to
+make the most efficient and effective use of scarce resources.
+
+Problem Formulation
+===================
+
+Let us look at the steps of defining a linear programming problem generically:
+
+1. Identify the decision variables
+2. Write the objective function
+3. Mention the constraints
+4. Explicitly state the non-negativity restriction
+
+For a problem to be a linear programming problem, the decision variables, objective
+function and constraints all have to be linear functions.
+
+If all the three conditions are satisfied, it is called a linear programming problem.
