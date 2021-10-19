@@ -201,8 +201,8 @@ def update_constraints(N, B, A, b, e, l):
     Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
     bhat[Bhate] = b[Bl] / A[Bl][Ne]
     no_e, no_l = exclude(N, e), exclude(B, l)
-    for j in no_e:
-        Ahat[Bhate][Nhat.index(j)] = A[Bl][N.index(j)] / A[Bl][Ne]
+    for i in no_e:
+        Ahat[Bhate][Nhat.index(i)] = A[Bl][N.index(i)] / A[Bl][Ne]
     Ahat[Bhate][Nhatl] = 1 / A[Bl][Ne]
     for i in no_l:
         Bhati, Bi = Bhat.index(i), B.index(i)
@@ -218,9 +218,9 @@ def update_objective(N, c, e, l, v, Nhat, Bhat, Ahat, bhat):
     Ne, Nhatl, Bhate, no_e = N.index(e), Nhat.index(l), Bhat.index(e), exclude(N, e)
     v += c[Ne] * bhat[Bhate]
     chat = [0 for _ in range(len(c))]
-    for j in no_e:
-        Nhatj = Nhat.index(j)
-        chat[Nhatj] = c[N.index(j)] - c[Ne] * Ahat[Bhate][Nhatj]
+    for i in no_e:
+        Nhatj = Nhat.index(i)
+        chat[Nhatj] = c[N.index(i)] - c[Ne] * Ahat[Bhate][Nhatj]
     chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
     return chat, v
 
