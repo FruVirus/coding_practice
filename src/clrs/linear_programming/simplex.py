@@ -232,8 +232,7 @@ def simplex(A, b, c, N=None, B=None, v=None):
         for Bi, i in enumerate(B):
             delta[Bi] = b[Bi] / A[Bi][Ne] if A[Bi][Ne] > 0 else float("inf")
         l = B[delta.index(min(delta))]
-        Bl = B.index(l)
-        if delta[Bl] == float("inf"):
+        if delta[B.index(l)] == float("inf"):
             return "Unbounded!"
         N, B, A, b, c, v = pivot(N, B, A, b, c, e, l, v)
     x_bar = [0 for _ in range(max(N[-1], B[-1]) + 1)]
