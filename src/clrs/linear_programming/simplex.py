@@ -176,18 +176,33 @@ def initialize_simplex(A, b, c):
         print("caux: ", caux)
         print("vaux: ", vaux)
         print()
+        # for i in N:
+        #     if i in Naux:
+        #         caux[Naux.index(i)] = c[N.index(i)]
+        for i in N:
+            if i in Baux:
+                row = Ahat[Baux.index(i)]
+                # for x in range(len(row)):
+                #     row[x] = c[N.index(i)] * row[x]
+                for j, x in enumerate(row):
+                    caux[j] += x
+            else:
+                row = Ahat[Naux.index(i)]
+                for j, x in enumerate(row):
+                    caux[j] += x
         for i in N:
             if i in Baux:
                 cval = c[N.index(i)]
                 sgn = -1 if cval < 0 else 1
                 vaux += sgn * baux[Baux.index(i)]
-            if i in Baux:
-                cval = c[N.index(i)]
-                sgn = -1 if cval < 0 else 1
-                for x in range(len(Ahat)):
-                    caux[N.index(i)] += Ahat[x][N.index(i)]
-        print(caux)
-        print(vaux)
+        print("N: ", N)
+        print("Ahat: ", Ahat)
+        print("c: ", c)
+        print("Naux: ", Naux)
+        print("Baux: ", Baux)
+        print("baux: ", baux)
+        print("caux: ", caux)
+        print("vaux: ", vaux)
         exit()
         return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
