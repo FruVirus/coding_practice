@@ -16,7 +16,7 @@ do this multiplication.
 Complexity
 ==========
 
-O(|l1| + |l2|) vs. O(|l1|*|l2|) for a brute force inner product implementation.
+O(|l1| + |l2|) time complexity
 """
 
 
