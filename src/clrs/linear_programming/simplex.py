@@ -158,7 +158,7 @@ def initialize_simplex(A, b, c):
     if x_bar[0] == 0:
         if Baux[0] == 0:
             i, e = 0, Naux[0]
-            while A[0][Naux.index(e)] == 0:
+            while Aaux[0][Naux.index(e)] == 0:
                 i += 1
                 e = Naux[i]
             Naux, Baux, Aaux, baux, caux, vaux = pivot(
@@ -177,7 +177,7 @@ def pivot(N, B, A, b, c, e, l, v):
 
 def return_aux(N, c, Naux, Baux, Aaux, baux, vaux):
     n, m = len(Aaux[0]), len(Aaux)
-    Naux.pop(Naux.index(0))
+    Naux.pop(0)
     Ahat = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
     for row in range(m):
         for col in range(1, n):
