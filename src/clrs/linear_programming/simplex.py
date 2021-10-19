@@ -129,13 +129,7 @@ def include(l1, l2):
     return [x for x in l1 if x in l2]
 
 
-def initialize_simplex(A, b, c):
-    n, m = len(A[0]), len(A)
-    assert m == len(b) and n == len(c)
-    k = b.index(min(b))
-    if b[k] >= 0:
-        return list(range(n)), list(range(n, n + m)), A, b, c, 0
-    N = list(range(1, n + 1))
+def initialize_aux(N, A, k, n, m):
     Naux = [0] + N
     Baux = [Naux[-1] + i for i in range(1, m + 1)]
     Aaux = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
@@ -145,28 +139,23 @@ def initialize_simplex(A, b, c):
     caux = [0 for _ in range(n + 1)]
     caux[0] = -1
     l = len(Naux) + k
+    return Naux, Baux, Aaux, caux, l
+
+
+def initialize_simplex(A, b, c):
+    n, m = len(A[0]), len(A)
+    assert m == len(b) and n == len(c)
+    k = b.index(min(b))
+    if b[k] >= 0:
+        return list(range(n)), list(range(n, n + m)), A, b, c, 0
+    N = list(range(1, n + 1))
+    Naux, Baux, Aaux, caux, l = initialize_aux(N, A, k, n, m)
     Naux, Baux, Aaux, baux, caux, vaux = pivot(Naux, Baux, Aaux, b, caux, 0, l, 0)
     x_bar, Naux, Baux, Aaux, baux, caux, vaux = simplex(
         Aaux, baux, caux, Naux, Baux, vaux
     )
     if x_bar[0] == 0:
-        if Baux[0] == 0:
-            i, e = 0, Naux[0]
-            while A[0][Naux.index(e)] == 0:
-                i += 1
-                e = Naux[i]
-            Naux, Baux, Aaux, baux, caux, vaux = pivot(
-                Naux, Baux, Aaux, baux, caux, e, l, vaux
-            )
-        Naux.pop(Naux.index(0))
-        n, m = len(Aaux[0]), len(Aaux)
-        Ahat = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
-        for row in range(m):
-            for col in range(1, n):
-                Ahat[row][col - 1] = Aaux[row][col]
-        vaux += sum(-baux[Baux.index(i)] for i in include(N, Baux))
-        caux = update_caux(N, c, Naux, Baux, Ahat)
-        return Naux, Baux, Ahat, baux, caux, vaux
+        return return_aux(N, A, c, Naux, Baux, Aaux, baux, caux, l, vaux)
     return "Infeasible!"
 
 
@@ -196,6 +185,26 @@ def pivot(N, B, A, b, c, e, l, v):
     return Nhat, Bhat, Ahat, bhat, c, v
 
 
+def return_aux(N, A, c, Naux, Baux, Aaux, baux, caux, l, vaux):
+    if Baux[0] == 0:
+        i, e = 0, Naux[0]
+        while A[0][Naux.index(e)] == 0:
+            i += 1
+            e = Naux[i]
+        Naux, Baux, Aaux, baux, caux, vaux = pivot(
+            Naux, Baux, Aaux, baux, caux, e, l, vaux
+        )
+    Naux.pop(Naux.index(0))
+    n, m = len(Aaux[0]), len(Aaux)
+    Ahat = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
+    for row in range(m):
+        for col in range(1, n):
+            Ahat[row][col - 1] = Aaux[row][col]
+    vaux += sum(-baux[Baux.index(i)] for i in include(N, Baux))
+    caux = update_caux(N, c, Naux, Baux, Ahat)
+    return Naux, Baux, Ahat, baux, caux, vaux
+
+
 def update_c(N, c, Nhat, Ahat, Ne, Nhatl, Bhate, no_e):
     chat = [0 for _ in range(len(c))]
     for j in no_e:
@@ -222,14 +231,6 @@ def simplex(A, b, c, N=None, B=None, v=None):
         if isinstance(val, str):
             return val
         N, B, A, b, c, v = val
-    print(N)
-    print(B)
-    print(A)
-    print(b)
-    print(c)
-    print(v)
-    print(c)
-    print()
     delta = [0 for _ in range(len(B))]
     while any(c[i] > 1e-12 for i in range(len(N))):
         print(A)
@@ -246,9 +247,3 @@ def simplex(A, b, c, N=None, B=None, v=None):
     for index, i in enumerate(B):
         x_bar[i] = b[index]
     return x_bar, N, B, A, b, c, v
-
-
-A = [[1, 1], [1, 0], [0, 1]]
-b = [20, 12, 16]
-c = [18, 12.5]
-print(simplex(A, b, c))
