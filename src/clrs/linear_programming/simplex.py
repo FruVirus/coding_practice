@@ -166,7 +166,7 @@ def initialize_simplex(A, b, c):
         for row in range(len(Aaux)):
             for col in range(1, len(Aaux[0])):
                 Ahat[row][col - 1] = Aaux[row][col]
-        caux = [0 for _ in range(len(Naux))]
+        print()
         print("N: ", N)
         print("Ahat: ", Ahat)
         print("c: ", c)
@@ -176,25 +176,8 @@ def initialize_simplex(A, b, c):
         print("caux: ", caux)
         print("vaux: ", vaux)
         print()
-        # for i in N:
-        #     if i in Naux:
-        #         caux[Naux.index(i)] = c[N.index(i)]
-        for i in N:
-            if i in Baux:
-                row = Ahat[Baux.index(i)]
-                # for x in range(len(row)):
-                #     row[x] = c[N.index(i)] * row[x]
-                for j, x in enumerate(row):
-                    caux[j] += x
-            else:
-                row = Ahat[Naux.index(i)]
-                for j, x in enumerate(row):
-                    caux[j] += x
-        for i in N:
-            if i in Baux:
-                cval = c[N.index(i)]
-                sgn = -1 if cval < 0 else 1
-                vaux += sgn * baux[Baux.index(i)]
+        caux = update_caux(N, c, Naux, Baux, Ahat)
+        vaux = update_vaux(N, c, Baux, baux, vaux)
         print("N: ", N)
         print("Ahat: ", Ahat)
         print("c: ", c)
@@ -203,7 +186,7 @@ def initialize_simplex(A, b, c):
         print("baux: ", baux)
         print("caux: ", caux)
         print("vaux: ", vaux)
-        exit()
+        print()
         return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
 
@@ -234,6 +217,24 @@ def pivot(N, B, A, b, c, e, l, v):
     return Nhat, Bhat, Ahat, bhat, c, v
 
 
+def update_caux(N, c, Naux, Baux, Ahat):
+    caux = [0 for _ in range(len(Naux))]
+    for i in N:
+        if i in Naux:
+            caux[Naux.index(i)] = c[N.index(i)]
+    for i in N:
+        if i in Baux:
+            row = Ahat[Baux.index(i)]
+            cval = c[N.index(i)]
+            sgn = -1 if cval < 0 else 1
+            cval *= sgn
+            for x in range(len(row)):
+                row[x] = cval * row[x]
+            for j, x in enumerate(row):
+                caux[j] += x
+    return caux
+
+
 def update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e):
     v += c[Ne] * bhat[Bhate]
     chat = [0 for _ in range(len(c))]
@@ -245,6 +246,15 @@ def update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e):
         if abs(i) < 1e-12:
             chat[chati] = 0
     return chat, v
+
+
+def update_vaux(N, c, Baux, baux, vaux):
+    for i in N:
+        if i in Baux:
+            cval = c[N.index(i)]
+            sgn = -1 if cval < 0 else 1
+            vaux += sgn * baux[Baux.index(i)]
+    return vaux
 
 
 def simplex(A, b, c, N=None, B=None, v=None):
@@ -270,51 +280,7 @@ def simplex(A, b, c, N=None, B=None, v=None):
     return x_bar, N, B, A, b, c, v
 
 
-# A = [[2, -8, 0, -10], [-5, -2, 0, 0], [-3, 5, -10, 2]]
-# b = [-50, -100, -25]
-# c = [-1, -1, -1, -1]
-# print(initialize_simplex(A, b, c))
-
-A = [[2, -1], [1, -5]]
-b = [2, -4]
-c = [2, -1]
-print(initialize_simplex(A, b, c))
-
-# N = [1, 2, 3, 4, 6]
-# # N = [0, 1, 2, 3, 4]
-# B = [0, 5, 7]
-# # B = [5, 6, 7]
-# A = [[5, 2, 0, 0, 1], [7, -6, 0, -10, -1], [2, 7, -10, 2, -1]]
-# b = [100, 50, 75]
-# c = [5, 2, 0, 0, -1]
-# v = 0
-# print(simplex(A, b, c, N, B, v))
-
-# N = [2, 3, 4, 5, 6]
-# B = [0, 1, 7]
-# A = [
-#     [44 / 7, 0, 50 / 7, -5 / 7, -2 / 7],
-#     [-6 / 7, 0, -10 / 7, 1 / 7, -1 / 7],
-#     [61 / 7, -10, 34 / 7, -2 / 7, -5 / 7],
-# ]
-# b = [450/7, 50/7, 425/7]
-# c = [44/7, 0, 50/7, -5/7, -2/7]
-# v = -450/7
-# print(simplex(A, b, c, N, B, v))
-
-# N = [4, 5, 6, 7]
-# B = [1, 2, 3]
-# A = [
-#     [-5 / 11, 1 / 22, -2 / 11, 0],
-#     [25 / 22, -5 / 44, -1 / 22, 0],
-#     [111 / 220, -31 / 440, 7 / 220, -1 / 10],
-# ]
-# b = [175/11, 225/22, 125/44]
-# c = [41/220, -61/440, -43/220, -1/10]
-# v = -1275/44
-# print(simplex(A, b, c, N, B, v))
-
-# A = [[2, -8, 0, -10], [-5, -2, 0, 0], [-3, 5, -10, 2]]
-# b = [-50, -100, -25]
-# c = [-1, -1, -1, -1]
-# print(simplex(A, b, c))
+A = [[1, -1], [-1, -1], [-1, 4]]
+b = [8, -3, 2]
+c = [1, 3]
+print(simplex(A, b, c))
