@@ -120,8 +120,6 @@ The negatives of the coefficients of the primal objective function are the value
 dual variables.
 """
 
-# pylint: disable=C0200
-
 
 def exclude(list_, item):
     return [x for x in list_ if x != item]
@@ -215,8 +213,8 @@ def update_caux(N, c, Naux, Baux, Ahat):
     for i in include(N, Baux):
         row = list(Ahat[Baux.index(i)])
         cval = -c[N.index(i)]
-        for x in range(len(row)):
-            row[x] = cval * row[x]
+        for j, x in enumerate(row):
+            row[j] *= cval
         for j, x in enumerate(row):
             caux[j] += x
     return caux
