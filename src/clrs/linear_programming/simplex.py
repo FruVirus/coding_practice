@@ -167,7 +167,7 @@ def initialize_simplex(A, b, c):
             for col in range(1, len(Aaux[0])):
                 Ahat[row][col - 1] = Aaux[row][col]
         caux = update_caux(N, c, Naux, Baux, Ahat)
-        vaux = update_vaux(N, c, Baux, baux, vaux)
+        vaux = update_vaux(N, Baux, baux, vaux)
         return Naux, Baux, Ahat, baux, caux, vaux
     return "Infeasible!"
 
@@ -224,12 +224,10 @@ def update_cv(N, c, v, Nhat, Ahat, bhat, Ne, Nhatl, Bhate, no_e):
     return chat, v
 
 
-def update_vaux(N, c, Baux, baux, vaux):
+def update_vaux(N, Baux, baux, vaux):
     for i in N:
         if i in Baux:
-            cval = c[N.index(i)]
-            sgn = -1 if cval < 0 else 1
-            vaux += sgn * baux[Baux.index(i)]
+            vaux += -baux[Baux.index(i)]
     return vaux
 
 
