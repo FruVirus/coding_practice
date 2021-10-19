@@ -146,10 +146,9 @@ def initialize_simplex(A, b, c):
     caux[0] = -1
     l = len(Naux) + k
     Naux, Baux, Aaux, baux, caux, vaux = pivot(Naux, Baux, Aaux, b, caux, 0, l, 0)
-    val = simplex(Aaux, baux, caux, Naux, Baux, vaux)
-    if isinstance(val, str):
-        return val
-    x_bar, Naux, Baux, Aaux, baux, caux, vaux = val
+    x_bar, Naux, Baux, Aaux, baux, caux, vaux = simplex(
+        Aaux, baux, caux, Naux, Baux, vaux
+    )
     if x_bar[0] == 0:
         if Baux[0] == 0:
             i, e = 0, Naux[0]

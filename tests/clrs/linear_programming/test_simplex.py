@@ -130,3 +130,23 @@ def test_simplex():
         0,
         0,
     ]
+    A = [[-1, -1], [2, 2]]
+    b = [2, -10]
+    c = [3, -2]
+    assert simplex(A, b, c) == "Infeasible!"
+    A = [[2, -1], [1, 2]]
+    b = [-1, -2]
+    c = [1, -1]
+    assert simplex(A, b, c) == "Infeasible!"
+    A = [[-1, -1], [-1, 0], [0, -1]]
+    b = [20, 12, 16]
+    c = [18, 12.5]
+    assert simplex(A, b, c) == "Unbounded!"
+    A = [[-1, 1], [-2, -1]]
+    b = [1, 2]
+    c = [5, -3]
+    assert simplex(A, b, c) == "Unbounded!"
+    A = [[2, 7.5, 3], [20, 5, 10]]
+    b = [-10000, -30000]
+    c = [-1, -1, -1]
+    assert simplex(A, b, c) == "Infeasible!"
