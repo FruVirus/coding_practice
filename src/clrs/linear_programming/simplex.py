@@ -128,20 +128,20 @@ def exclude(list_, item):
 
 
 def initialize_simplex(A, b, c):
-    assert len(A) == len(b) and len(A[0]) == len(c)
+    n, m = len(A[0]), len(A)
+    assert m == len(b) and n == len(c)
     k = b.index(min(b))
     if b[k] >= 0:
-        n, m = len(A[0]), len(A)
         return list(range(n)), list(range(n, n + m)), A, b, c, 0
-    N = list(range(1, len(A[0]) + 1))
+    N = list(range(1, n + 1))
     Naux = [0] + N
-    Baux = [Naux[-1] + i for i in range(1, len(b) + 1)]
+    Baux = [Naux[-1] + i for i in range(1, m + 1)]
     Aaux = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
-    for row in range(len(A)):
-        for col in range(len(A[0]) + 1):
+    for row in range(m):
+        for col in range(n + 1):
             Aaux[row][col] = -1 if col == 0 else A[row][col - 1]
     baux = b
-    caux = [0 for _ in range(len(c) + 1)]
+    caux = [0 for _ in range(n + 1)]
     caux[0] = -1
     e = 0
     l = len(Naux) + k
@@ -161,10 +161,10 @@ def initialize_simplex(A, b, c):
                 Naux, Baux, Aaux, baux, caux, e, l, vaux
             )
         Naux.pop(Naux.index(0))
-        n, m = len(Naux), len(Baux)
-        Ahat = [[0 for _ in range(n)] for _ in range(m)]
-        for row in range(len(Aaux)):
-            for col in range(1, len(Aaux[0])):
+        n, m = len(Aaux[0]), len(Aaux)
+        Ahat = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
+        for row in range(m):
+            for col in range(1, n):
                 Ahat[row][col - 1] = Aaux[row][col]
         vaux += sum(-baux[Baux.index(i)] for i in [x for x in N if x in Baux])
         caux = update_caux(N, c, Naux, Baux, Ahat)
