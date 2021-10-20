@@ -219,7 +219,7 @@ def update_constraints(N, B, A, b, e, l):
 def update_objective(N, c, e, l, v, Nhat, Bhat, Ahat, bhat):
     Ne, Nhatl, Bhate = N.index(e), Nhat.index(l), Bhat.index(e)
     v += c[Ne] * bhat[Bhate]
-    chat = [0 for _ in range(len(c))]
+    chat = [0 for _ in range(len(Nhat))]
     for i in exclude(N, e):
         Nhati = Nhat.index(i)
         chat[Nhati] = c[N.index(i)] - c[Ne] * Ahat[Bhate][Nhati]
