@@ -182,10 +182,10 @@ def return_aux(N, c, Naux, Baux, Aaux, baux, vaux):
     for row in range(m):
         for col in range(1, n):
             Ahat[row][col - 1] = Aaux[row][col]
-    vaux += sum(-baux[Baux.index(i)] for i in include(N, Baux))
+    vaux += sum(-baux[i] for i, _ in enumerate(include(N, Baux)))
     caux = [0 for _ in range(len(Naux))]
-    for i in include(N, Naux):
-        caux[Naux.index(i)] = c[N.index(i)]
+    for i, _ in enumerate(include(N, Naux)):
+        caux[i] = c[i]
     for i in include(N, Baux):
         cval = -c[N.index(i)]
         for j, x in enumerate(Ahat[Baux.index(i)]):
@@ -217,12 +217,12 @@ def update_constraints(N, B, A, b, e, l):
 
 
 def update_objective(N, c, e, l, v, Nhat, Bhat, Ahat, bhat):
-    Ne, Nhatl, Bhate, no_e = N.index(e), Nhat.index(l), Bhat.index(e), exclude(N, e)
+    Ne, Nhatl, Bhate = N.index(e), Nhat.index(l), Bhat.index(e)
     v += c[Ne] * bhat[Bhate]
     chat = [0 for _ in range(len(c))]
-    for i in no_e:
-        Nhatj = Nhat.index(i)
-        chat[Nhatj] = c[N.index(i)] - c[Ne] * Ahat[Bhate][Nhatj]
+    for i in exclude(N, e):
+        Nhati = Nhat.index(i)
+        chat[Nhati] = c[N.index(i)] - c[Ne] * Ahat[Bhate][Nhati]
     chat[Nhatl] = -c[Ne] * Ahat[Bhate][Nhatl]
     return chat, v
 
