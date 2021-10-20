@@ -237,7 +237,7 @@ def simplex(A, b, c, N=None, B=None, v=None):
     while any(c[i] > 1e-12 for i in range(len(N))):
         e = min([x for i, x in enumerate(N) if c[i] > 0])
         Ne = N.index(e)
-        for Bi, i in enumerate(B):
+        for Bi, _ in enumerate(B):
             delta[Bi] = b[Bi] / A[Bi][Ne] if A[Bi][Ne] > 0 else float("inf")
         l = B[delta.index(min(delta))]
         if delta[B.index(l)] == float("inf"):
