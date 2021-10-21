@@ -207,7 +207,7 @@ def update_constraints(N, B, A, b, e, l):
     for i in no_l:
         Bhati, Bi = Bhat.index(i), B.index(i)
         pivot_var = A[Bi][Ne]
-        bhat[Bhati] = b[Bi] - A[Bi][Ne] * bhat[Bhate]
+        bhat[Bhati] = b[Bi] - pivot_var * bhat[Bhate]
         for j in no_e:
             Nhatj = Nhat.index(j)
             Ahat[Bhati][Nhatj] = A[Bi][N.index(j)] - pivot_var * Ahat[Bhate][Nhatj]
