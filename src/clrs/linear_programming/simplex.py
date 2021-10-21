@@ -195,9 +195,9 @@ def return_aux(N, c, Naux, Baux, Aaux, baux, vaux):
 
 def update_constraints(N, B, A, b, e, l):
     n, m = len(N), len(B)
+    Bl, Ne = B.index(l), N.index(e)
     Ahat, bhat = [[0 for _ in range(n)] for _ in range(m)], [0 for _ in range(m)]
     Bhat, Nhat = list(B), list(N)
-    Bl, Ne = B.index(l), N.index(e)
     Bhat[Bl], Nhat[Ne] = N[Ne], B[Bl]
     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
     Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
