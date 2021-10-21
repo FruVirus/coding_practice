@@ -200,18 +200,18 @@ def update_constraints(N, B, A, b, e, l):
     Bhat[Bl], Nhat[Ne] = N[Ne], B[Bl]
     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
     Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
-    bhat[Bhate] = b[Bl] / A[Bl][Ne]
-    no_e, no_l = exclude(N, e), exclude(B, l)
+    pivot_var, no_e, no_l = A[Bl][Ne], exclude(N, e), exclude(B, l)
     for i in no_e:
-        Ahat[Bhate][Nhat.index(i)] = A[Bl][N.index(i)] / A[Bl][Ne]
-    Ahat[Bhate][Nhatl] = 1 / A[Bl][Ne]
+        Ahat[Bhate][Nhat.index(i)] = A[Bl][N.index(i)] / pivot_var
+    Ahat[Bhate][Nhatl], bhat[Bhate] = 1 / pivot_var, b[Bl] / pivot_var
     for i in no_l:
         Bhati, Bi = Bhat.index(i), B.index(i)
+        pivot_var = A[Bi][Ne]
         bhat[Bhati] = b[Bi] - A[Bi][Ne] * bhat[Bhate]
         for j in no_e:
             Nhatj = Nhat.index(j)
-            Ahat[Bhati][Nhatj] = A[Bi][N.index(j)] - A[Bi][Ne] * Ahat[Bhate][Nhatj]
-        Ahat[Bhati][Nhatl] = -A[Bi][Ne] * Ahat[Bhate][Nhatl]
+            Ahat[Bhati][Nhatj] = A[Bi][N.index(j)] - pivot_var * Ahat[Bhate][Nhatj]
+        Ahat[Bhati][Nhatl] = -pivot_var * Ahat[Bhate][Nhatl]
     return Nhat, Bhat, Ahat, bhat
 
 
