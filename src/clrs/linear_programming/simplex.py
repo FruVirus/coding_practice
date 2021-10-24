@@ -134,12 +134,12 @@ def initialize_aux(A, k):
     N = list(range(1, n + 1))
     Naux = [0] + N
     Baux = [Naux[-1] + i for i in range(1, m + 1)]
-    Aaux = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
+    Aaux = [[0] * len(Naux) for _ in range(len(Baux))]
     for row in range(len(Baux)):
         Aaux[row][0] = -1
         for col in range(1, len(Naux)):
             Aaux[row][col] = A[row][col - 1]
-    caux = [0 for _ in range(len(Naux))]
+    caux = [0] * len(Naux)
     caux[0] = -1
     return N, Naux, Baux, Aaux, caux, len(Naux) + k
 
@@ -178,12 +178,12 @@ def pivot(N, B, A, b, c, e, l, v):
 def return_aux(N, c, Naux, Baux, Aaux, baux, vaux):
     n, m = len(Aaux[0]), len(Aaux)
     Naux.pop(0)
-    Ahat = [[0 for _ in range(len(Naux))] for _ in range(len(Baux))]
+    Ahat = [[0] * len(Naux) for _ in range(len(Baux))]
     for row in range(m):
         for col in range(1, n):
             Ahat[row][col - 1] = Aaux[row][col]
     vaux += sum(-baux[i] for i, _ in enumerate(include(N, Baux)))
-    caux = [0 for _ in range(len(Naux))]
+    caux = [0] * len(Naux)
     for i, _ in enumerate(include(N, Naux)):
         caux[i] = c[i]
     for i in include(N, Baux):
@@ -195,7 +195,7 @@ def return_aux(N, c, Naux, Baux, Aaux, baux, vaux):
 
 def update_constraints(N, B, A, b, e, l):
     n, m, Bl, Ne = len(N), len(B), B.index(l), N.index(e)
-    Ahat, bhat = [[0 for _ in range(n)] for _ in range(m)], [0 for _ in range(m)]
+    Ahat, bhat = [[0] * n for _ in range(m)], [0] * m
     Bhat, Nhat = list(B), list(N)
     Bhat[Bl], Nhat[Ne] = N[Ne], B[Bl]
     Bhat, Nhat = sorted(Bhat), sorted(Nhat)
@@ -218,7 +218,7 @@ def update_constraints(N, B, A, b, e, l):
 def update_objective(N, c, e, l, v, Nhat, Bhat, Ahat, bhat):
     Ne, Nhatl, Bhate = N.index(e), Nhat.index(l), Bhat.index(e)
     v += c[Ne] * bhat[Bhate]
-    chat = [0 for _ in range(len(Nhat))]
+    chat = [0] * len(Nhat)
     for i in exclude(N, e):
         Nhati = Nhat.index(i)
         chat[Nhati] = c[N.index(i)] - c[Ne] * Ahat[Bhate][Nhati]
@@ -232,7 +232,7 @@ def simplex(A, b, c, N=None, B=None, v=None):
         if isinstance(val, str):
             return val
         N, B, A, b, c, v = val
-    delta = [0 for _ in range(len(B))]
+    delta = [0] * len(B)
     while any(c[i] > 1e-12 for i in range(len(N))):
         e = min([x for i, x in enumerate(N) if c[i] > 0])
         Ne = N.index(e)
@@ -242,7 +242,7 @@ def simplex(A, b, c, N=None, B=None, v=None):
         if delta[B.index(l)] == float("inf"):
             return "Unbounded!"
         N, B, A, b, c, v = pivot(N, B, A, b, c, e, l, v)
-    x_bar = [0 for _ in range(max(N[-1], B[-1]) + 1)]
+    x_bar = [0] * (max(N[-1], B[-1]) + 1)
     for index, i in enumerate(B):
         x_bar[i] = b[index]
     return x_bar, N, B, A, b, c, v

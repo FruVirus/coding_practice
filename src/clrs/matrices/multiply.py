@@ -73,7 +73,7 @@ Theta(n^3) time complexity
 def mm(a, b):
     rowa, cola, rowb, colb = len(a), len(a[0]), len(b), len(b[0])
     assert cola == rowb
-    x = [[0 for _ in range(colb)] for _ in range(rowa)]
+    x = [[0] * colb for _ in range(rowa)]
     for ra in range(rowa):
         for cb in range(colb):
             for ca in range(cola):
@@ -83,7 +83,7 @@ def mm(a, b):
 
 def add(a, b):
     n = len(a)
-    x = [[0 for _ in range(n)] for _ in range(n)]
+    x = [[0] * n for _ in range(n)]
     for r in range(n):
         for c in range(n):
             x[r][c] = a[r][c] + b[r][c]
@@ -108,7 +108,7 @@ def split(a):
 
 def smmr(a, b, n):
     assert (n & (n - 1) == 0) and n != 0
-    x = [[0 for _ in range(n)] for _ in range(n)]
+    x = [[0] * n for _ in range(n)]
     if n <= 2:
         x[0][0] = a[0][0] * b[0][0] + a[0][1] * b[1][0]
         x[0][1] = a[0][0] * b[0][1] + a[0][1] * b[1][1]

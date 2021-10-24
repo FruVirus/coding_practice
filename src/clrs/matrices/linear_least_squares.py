@@ -110,7 +110,7 @@ def is_pos_def(a):
 
 
 def llss(data, deg=2):
-    a = [[0 for _ in range(deg + 1)] for _ in range(len(data))]
+    a = [[0] * (deg + 1) for _ in range(len(data))]
     for i, (x, y) in enumerate(data):
         for j in range(deg + 1):
             a[i][j] = x ** j
