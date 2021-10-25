@@ -19,7 +19,6 @@ Complexity
 O(lg(n)) time.
 """
 
-
 # Repository Library
 from src.clrs.trees.bst import BST, BSTNode
 
@@ -71,8 +70,7 @@ class AVL(BST):
             x.p.left = y
         else:
             x.p.right = y
-        y.left = x
-        x.p = y
+        y.left, x.p = x, y
         self.update_height(x)
         self.update_height(y)
         self.update_size(x)
@@ -90,8 +88,7 @@ class AVL(BST):
             x.p.right = y
         else:
             x.p.left = y
-        y.right = x
-        x.p = y
+        y.right, x.p = x, y
         self.update_height(x)
         self.update_height(y)
         self.update_size(x)
