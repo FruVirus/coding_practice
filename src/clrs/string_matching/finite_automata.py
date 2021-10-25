@@ -21,7 +21,7 @@ Matching time: O(n)
 
 def compute_transition(p, m, sigma):
     lps = 0
-    tf = [[0 for _ in range(sigma)] for _ in range(m + 1)]
+    tf = [[0] * sigma for _ in range(m + 1)]
     tf[0][ord(p[0])] = 1
     for i in range(1, m + 1):
         for j in range(sigma):
