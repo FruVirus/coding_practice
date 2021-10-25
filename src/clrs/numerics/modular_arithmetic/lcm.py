@@ -12,7 +12,7 @@ O(lg(b)) recursive calls.
 """
 
 # Repository Library
-from src.clrs.numerics.gcd import gcd
+from src.clrs.numerics.modular_arithmetic.gcd import gcd
 
 
 def lcm(a, b):

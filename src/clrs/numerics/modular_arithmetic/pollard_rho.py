@@ -28,7 +28,7 @@ Theta(sqrt(p)) arithmetic operations, where p is a factor of n
 import random
 
 # Repository Library
-from src.clrs.numerics.gcd import gcd
+from src.clrs.numerics.modular_arithmetic.gcd import gcd
 
 
 def pollard_rho(n, max_iters=10000):

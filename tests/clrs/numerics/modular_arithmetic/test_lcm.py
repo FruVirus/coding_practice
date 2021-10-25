@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.numerics.lcm import lcm_multi
+from clrs.numerics.modular_arithmetic.lcm import lcm_multi
 
 
 def test_lcm_multi():

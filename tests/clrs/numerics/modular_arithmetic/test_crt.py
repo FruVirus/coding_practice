@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.numerics.crt import crt
+from clrs.numerics.modular_arithmetic.crt import crt
 
 
 def test_crt():

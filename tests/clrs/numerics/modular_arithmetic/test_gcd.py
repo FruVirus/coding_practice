@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.numerics.gcd import gcd_binary, gcd_multi
+from clrs.numerics.modular_arithmetic.gcd import gcd_binary, gcd_multi
 
 
 def test_gcd_binary():

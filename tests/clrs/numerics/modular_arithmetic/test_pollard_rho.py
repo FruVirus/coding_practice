@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.numerics.pollard_rho import pollard_rho
+from clrs.numerics.modular_arithmetic.pollard_rho import pollard_rho
 
 
 def test_pollard_rho():

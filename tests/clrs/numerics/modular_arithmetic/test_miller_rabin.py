@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.numerics.miller_rabin import miller_rabin
+from clrs.numerics.modular_arithmetic.miller_rabin import miller_rabin
 
 
 def test_miller_rabin():

@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.numerics.mod_exp import mod_exp
+from clrs.numerics.modular_arithmetic.mod_exp import mod_exp
 
 
 def test_mod_exp():

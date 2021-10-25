@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.numerics.mod_linear_solver import mod_linear_solver
+from clrs.numerics.modular_arithmetic.mod_linear_solver import mod_linear_solver
 
 
 def test_mod_linear_solver():

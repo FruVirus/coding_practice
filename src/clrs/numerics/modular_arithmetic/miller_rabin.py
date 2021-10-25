@@ -45,7 +45,7 @@ O(s * beta^3) bit operations
 import random
 
 # Repository Library
-from src.clrs.numerics.mod_exp import mod_exp
+from src.clrs.numerics.modular_arithmetic.mod_exp import mod_exp
 
 
 def get_tu(n):

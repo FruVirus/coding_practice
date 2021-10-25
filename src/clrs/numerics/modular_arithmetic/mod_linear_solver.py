@@ -33,7 +33,7 @@ O(lg(n) + gcd(a, n)) = O(lg(n) + O(lg(b)) recursive calls)
 """
 
 # Repository Library
-from src.clrs.numerics.gcd import gcd
+from src.clrs.numerics.modular_arithmetic.gcd import gcd
 
 
 def mod_linear_solver(a, b, n):

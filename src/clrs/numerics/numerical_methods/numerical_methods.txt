@@ -1,0 +1,23 @@
+Introduction
+============
+
+Numerical methods can be distinguished from other branches of analysis and computer
+science by three characteristics:
+
+1. They work with arbitrary real numbers (and vector spaces/extensions thereof): the
+desired results are not restricted to integers or exact rationals (although in practice
+we only ever compute rational approximations of irrational results).
+
+2. Like in computer science (= math + time = math + money), we are concerned not only
+with existence and correctness of the solutions (as in analysis), but with the time (and
+other computational resources, e.g. memory) required to compute the result.
+
+3. We are also concerned with accuracy of the results, because in practice we only ever
+have approximate answers:
+    a. Some algorithms may be intrinsically approximate—like the Newton’s Method for
+calculating square roots---they converge towards the desired result but never reach it
+in a finite number of steps. How fast they converge is a key question.
+    b. Arithmetic with real numbers is approximate on a computer, because we approximate
+the set R of real numbers by the set F of floating-point numbers, and the result of
+every elementary operation (+,−,×,÷) is rounded to the nearest element of F. We need to
+understand F and how accumulation of these rounding errors affects different algorithms
