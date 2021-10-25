@@ -66,7 +66,7 @@ class HeapQueue:
 
     @staticmethod
     def _parent(i):
-        return max(0, (i - 1) // 2)
+        return (i - 1) // 2
 
     @staticmethod
     def _right(i):
