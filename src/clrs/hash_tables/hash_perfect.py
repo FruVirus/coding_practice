@@ -76,10 +76,10 @@ class HashPerfect:
                 self.table[m] = [None] * n[m] ** 2
         for k in self.keys:
             hash_value, index = self.hash(k)
-            if index is not None:
-                self.table[hash_value][index] = k
-            else:
+            if index is None:
                 self.table[hash_value] = k
+            else:
+                self.table[hash_value][index] = k
 
     def _get_hash_value(self, a=None, b=None, m=None, p=None, k=None):
         a = a or self.a
