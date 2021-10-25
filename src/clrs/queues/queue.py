@@ -43,8 +43,7 @@ class Queue:
             self.size *= 2
 
     def _reduce(self):
-        x = self.a[self.head]
-        thresh = self.size // 4
+        x, thresh = self.a[self.head], self.size // 4
         if self.tail - self.head + 1 == thresh or thresh <= 1:
             start = self.head + 1
             end = start + self.size // 2
