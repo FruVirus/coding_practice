@@ -37,11 +37,9 @@ def find_cross(a, low, mid, high):
     for i in range(mid, low - 1, -1):
         lcsum += a[i]
         if lcsum > lsum:
-            lsum = lcsum
-            clow = i
+            lsum, clow = lcsum, i
     for i in range(mid + 1, high + 1):
         rcsum += a[i]
         if rcsum > rsum:
-            rsum = rcsum
-            chigh = i
+            rsum, chigh = rcsum, i
     return clow, chigh, lsum + rsum
