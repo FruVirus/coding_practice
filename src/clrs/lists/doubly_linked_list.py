@@ -41,5 +41,4 @@ class DLL(SLL):
         x.next = self.head
         if self.head is not None:
             self.head.prev = x
-        self.head = x
-        x.prev = None
+        self.head, x.prev = x, None

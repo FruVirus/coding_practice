@@ -170,7 +170,7 @@ def lu_decomp(a):
 
 def lup_decomp(a):
     n = len(a)
-    p = [i for i in range(n)]
+    p = list(range(n))
     for k in range(n):
         k_new = p_new = 0
         for i in range(k, n):
