@@ -164,15 +164,13 @@ Theta(n^2) for solving the system
 
 
 def lu_decomp(a):
-    n = len(a)
-    for k in range(n):
-        schur_complement(a, k, n)
+    for k in range(len(a)):
+        schur_complement(a, k, len(a))
 
 
 def lup_decomp(a):
-    n, p = len(a), []
-    for i in range(n):
-        p.append(i)
+    n = len(a)
+    p = [i for i in range(n)]
     for k in range(n):
         k_new = p_new = 0
         for i in range(k, n):
