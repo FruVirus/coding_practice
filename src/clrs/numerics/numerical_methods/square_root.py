@@ -24,14 +24,13 @@ convergence. In other words, the error roughly squares (and halves) on each iter
 
 
 def newtons_method(n, tol=None, d=None):
-    root, x = None, n
-    if tol is not None:
+    i, x = 0, n
+    root = 0.5 * (x + (n / x))
+    check = abs(root - x) >= tol if tol is not None else i != d - 2
+    while True:
+        if not check:
+            break
+        i, x = i + 1, root
         root = 0.5 * (x + (n / x))
-        while abs(root - x) >= tol:
-            x = root
-            root = 0.5 * (x + (n / x))
-    else:
-        for _ in range(d - 1):
-            root = 0.5 * (x + (n / x))
-            x = root
+        check = abs(root - x) >= tol if tol is not None else i != d - 2
     return root
