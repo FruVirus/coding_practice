@@ -25,8 +25,8 @@ convergence. In other words, the error roughly squares (and halves) on each iter
 
 def newtons_method(n, tol=None, d=None):
     i, x = 0, n
-    root = 0.5 * (x + (n / x))
+    root = 0.5 * (x + n / x)
     while abs(root - x) >= tol if tol is not None else i != d - 2:
         i, x = i + 1, root
-        root = 0.5 * (x + (n / x))
+        root = 0.5 * (x + n / x)
     return root
