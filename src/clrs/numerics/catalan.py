@@ -31,9 +31,4 @@ dynamic programming technique to store previously calculated values).
 
 
 def catalan(n):
-    if n <= 1:
-        return 1
-    cat_num = 0
-    for i in range(n):
-        cat_num += catalan(i) * catalan(n - i - 1)
-    return cat_num
+    return 1 if n <= 1 else sum(catalan(i) * catalan(n - i - 1) for i in range(n))
