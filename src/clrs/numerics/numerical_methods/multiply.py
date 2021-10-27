@@ -28,6 +28,6 @@ def multiply(x, y, is_naive=False):
     z0, z2 = multiply(x0, y0), multiply(x1, y1)
     if is_naive:
         z1 = multiply(x0, y1) + multiply(x1, y0)
-        return z0 + z1 * 10 ** n2 + z2 * 10 ** (2 * n2)
-    z1 = multiply(x0 + x1, y0 + y1)
-    return z0 + (z1 - z2 - z0) * 10 ** n2 + z2 * 10 ** (2 * n2)
+    else:
+        z1 = multiply(x0 + x1, y0 + y1) - z0 - z2
+    return z0 + z1 * 10 ** n2 + z2 * 10 ** (2 * n2)
