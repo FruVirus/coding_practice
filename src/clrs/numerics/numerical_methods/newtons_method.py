@@ -57,7 +57,7 @@ def newton(f, dfdx, x0, eps, max_iters=10000):
         fxn = f(xn)
         if abs(fxn) < eps:
             return xn
-        dfxn = dfdx(xn)
-        assert dfxn != 0
-        xn -= fxn / dfxn
+        dfdxn = dfdx(xn)
+        assert dfdxn != 0
+        xn -= fxn / dfdxn
     return None
