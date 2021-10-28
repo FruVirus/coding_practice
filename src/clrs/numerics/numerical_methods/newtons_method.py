@@ -51,7 +51,7 @@ Cubic Root: Theta(n^alpha) time complexity
 """
 
 
-def newton(f, dfdx, x0, eps, max_iters=10000):
+def newton(f, dfdx, x0, eps=1e-10, max_iters=10000):
     xn = x0
     for _ in range(max_iters):
         fxn = f(xn)
