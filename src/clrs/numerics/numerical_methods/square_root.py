@@ -85,6 +85,7 @@ def division(b, R, d=10):
 
 
 def square_root(n, R=16, tol=None, d=None):
+    assert tol or d
     i, x, root = 0, 1, 0.5 * (1 + n)
     while abs(root - x) >= tol if tol is not None else i != d - 2:
         i, x = i + 1, root
