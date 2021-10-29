@@ -18,16 +18,16 @@ Theta(n^(lg(3)) time complexity for Karatsuba
 """
 
 
-def multiply(x, y, is_naive=False):
+def multiply(x, y, base=10, is_naive=False):
     n, m = len(str(x)), len(str(y))
     if min(n, m) == 1:
         return x * y
     n2 = max(n, m) // 2
-    x1, x0 = x // 10 ** n2, x % 10 ** n2
-    y1, y0 = y // 10 ** n2, y % 10 ** n2
+    x1, x0 = x // base ** n2, x % base ** n2
+    y1, y0 = y // base ** n2, y % base ** n2
     z0, z2 = multiply(x0, y0), multiply(x1, y1)
     if is_naive:
         z1 = multiply(x0, y1) + multiply(x1, y0)
     else:
         z1 = multiply(x0 + x1, y0 + y1) - z0 - z2
-    return z0 + z1 * 10 ** n2 + z2 * 10 ** (2 * n2)
+    return z0 + z1 * base ** n2 + z2 * base ** (2 * n2)
