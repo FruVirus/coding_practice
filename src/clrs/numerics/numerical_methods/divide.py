@@ -59,6 +59,5 @@ def divide(b, R=128):
     while True:
         root = 2 * x - (b * x ** 2 >> R)
         if root == x:
-            break
+            return root / 2 ** R
         x = root
-    return root / 2 ** R
