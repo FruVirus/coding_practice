@@ -45,7 +45,7 @@ Division: Theta(n^alpha) time complexity
 
 
 def power_of_two(n):
-    if n < 1:
+    if n <= 1:
         return 0
     i, curr = 0, 1 << 0
     while curr <= n:
@@ -55,7 +55,7 @@ def power_of_two(n):
 
 
 def divide(b, R=128):
-    root, x = None, int(2 ** R >> power_of_two(b))
+    root, x = None, 2 ** R >> power_of_two(b)
     while True:
         root = 2 * x - (b * x ** 2 >> R)
         if root == x:
