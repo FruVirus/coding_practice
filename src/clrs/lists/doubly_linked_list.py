@@ -28,8 +28,7 @@ from src.clrs.lists.singly_linked_list import SLL
 
 class DLL(SLL):
     def delete(self, x):
-        if isinstance(x, (int, float)):
-            x = self.search(x)
+        x = self.search(x)
         if x.prev is not None:
             x.prev.next = x.next
         else:

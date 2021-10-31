@@ -34,8 +34,7 @@ class SLL:
         self.head = None
 
     def delete(self, x):
-        if isinstance(x, (int, float)):
-            x = self.search(x)
+        x = self.search(x)
         curr, prev = self.head, None
         while curr is not None and curr.k != x.k:
             prev, curr = curr, curr.next
@@ -48,6 +47,8 @@ class SLL:
         x.next, self.head = self.head, x
 
     def search(self, k):
+        if not isinstance(k, (int, float)):
+            return k
         x = self.head
         while x is not None and k != x.k:
             x = x.next
