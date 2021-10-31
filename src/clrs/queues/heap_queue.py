@@ -44,7 +44,6 @@ all others: O(1)
 Overall: O(n * lg(n))
 """
 
-
 # Standard Library
 from operator import gt, lt
 
@@ -54,7 +53,7 @@ class HeapQueue:
         self.a = a
         self.heap_size = len(self.a)
         self.is_max = is_max
-        self.compare_op = gt if self.is_max else lt
+        self.compare = gt if self.is_max else lt
         self.build()
 
     def _exchange(self, i, j):
@@ -77,9 +76,9 @@ class HeapQueue:
             self.heapify(i)
 
     def change(self, i, k):
-        assert self.compare_op(k, self.a[i])
+        assert self.compare(k, self.a[i])
         self.a[i] = k
-        while i > 0 and self.compare_op(self.a[i], self.a[self._parent(i)]):
+        while i > 0 and self.compare(self.a[i], self.a[self._parent(i)]):
             self._exchange(i, self._parent(i))
             i = self._parent(i)
 
@@ -97,9 +96,9 @@ class HeapQueue:
 
     def heapify(self, i):
         l, r, index = self._left(i), self._right(i), i
-        if l < self.heap_size and self.compare_op(self.a[l], self.a[i]):
+        if l < self.heap_size and self.compare(self.a[l], self.a[i]):
             index = l
-        if r < self.heap_size and self.compare_op(self.a[r], self.a[index]):
+        if r < self.heap_size and self.compare(self.a[r], self.a[index]):
             index = r
         if index != i:
             self._exchange(i, index)
