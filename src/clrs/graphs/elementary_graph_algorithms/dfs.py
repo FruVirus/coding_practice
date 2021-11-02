@@ -99,7 +99,7 @@ edge; otherwise, it is a cross edge.
 
 An undirected graph may entail some ambiguity in how we classify edges, since (u, v) and
 (v, u) are really the same edge. IN such a case, we classify the edge as the first type
-in the classiciation list that applies. Equivalently, we classify the edge according to
+in the classification list that applies. Equivalently, we classify the edge according to
 whichever of (u, v) or (v, u) the search encounters first. Forward and cross edges never
 occur in a DFS of an undirected graph.
 
@@ -123,18 +123,40 @@ from src.clrs.graphs.elementary_graph_algorithms.graph import Graph
 
 
 class DFSGraph(Graph):
-    def dfs(self):
+    def __init__(self, num_vertices, directed=False):
+        super().__init__(num_vertices, directed)
+        self.time = 0
 
-        for k, v in self.vertices.items():
-            v.c, v.d, v.p = (0, float("inf"), None) if k != s else (1, 0, None)
-        self.queue.enqueue(s)
-        while not self.queue.empty():
-            u = self.queue.dequeue()
-            u_node = self.vertices[u]
-            v = self.adj_list[u].head
-            while v is not None:
-                v_node = self.vertices[v.k]
-                if v_node.c == 0:
-                    v_node.c, v_node.d, v_node.p = 1, u_node.d + 1, u_node
-                    self.queue.enqueue(v.k)
-                v = v.next
+    def dfs(self):
+        for u in self.vertices.values():
+            u.c, u.p = 0, None
+        for u, u_node in self.vertices.items():
+            if u_node.c == 0:
+                self.dfs_visit(u, u_node)
+
+    def dfs_visit(self, u, u_node):
+        self.time += 1
+        u_node.c, u_node.d = 1, self.time
+        v = self.adj_list[u].head
+        while v is not None:
+            v_node = self.vertices[v.k]
+            if v_node.c == 0:
+                v_node.p = u_node
+                self.dfs_visit(v_node.k, v_node)
+            v = v.next
+        u_node.c = 2
+        self.time += 1
+        u_node.f = self.time
+
+
+num_vertices = 6
+graph = DFSGraph(num_vertices, True)
+graph.add_edge(0, 3)
+graph.add_edge(0, 1)
+graph.add_edge(1, 4)
+graph.add_edge(2, 4)
+graph.add_edge(2, 5)
+graph.add_edge(3, 1)
+graph.add_edge(4, 3)
+graph.add_edge(5, 5)
+graph.dfs()
