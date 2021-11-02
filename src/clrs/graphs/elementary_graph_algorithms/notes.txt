@@ -1,0 +1,77 @@
+22.1 Representations of graphs
+==============================
+
+We can choose between two standard ways to represent a graph G = (V, E): as a collection
+of adjacency lists or as an adjacency matrix. Either way applies to both directed and
+undirected graphs. Because the adjacency -list representation provides a compact way to
+represent sparse graphs---those for which |E| is much less than |V|^2---it is usually
+the method of choice. We may prefer an adjacency matrix representation, however, when
+the graph is dense---|E| is close to |V|^2---or when we need to be able to tell quickly
+if there is an edge connecting two given vertices.
+
+The adjacency-list representation of a graph G = (V, E) consists of an array Adj of |V|
+lists, one for each vertex in V. For each u in V, the adjacency list Adj[u] contains all
+the vertices v such that there is an edge (u, v) in E. That is, Adj[u] contains all of
+the vertices adjacent to u in G.
+
+If G is a directed graph, the sum of the lengths of all the adjacency lists is |E|. If G
+is an undirected graph, the sum of the lengths of all the adjacency lists is 2|E|. For
+both directed and undirected graphs, the adjacency-list representation has the desirable
+property that the amount of memory it requires it Theta(V + E).
+
+A potential disadvantage of the adjacency-list representation is that it provides no
+quicker way to determine whether a given edge (u, v) is present in the graph than to
+search for v in the adjacency list Adj[u]. An adjacency-matrix representation of the
+graph remedies this disadvantage, but at the cost of using asymptotically more memory.
+
+For the adjacency-matrix representation of a graph G = (V, E), we assume that the
+vertices are numbered 1, 2, ..., |V| in some arbitrary manner. Then the adjacency-matrix
+representation of a graph G consists of a |V| x |V| matrix A = (a_ij) such that a_ij = 1
+if (i, j) in E, else 0. The adjacency-matrix representation of a graph requires
+Theta(V^2)  memory, independent of the number of edges in the graph.
+
+Since in an undirected graph, (u, v) and (v, u) represent the same edge, the
+adjacency-matrix A of an undirected graph is its own transpose: A = A.T. In some
+applications, it pays to store only the entries on and above the diagonal of the
+adjacency matrix, thereby cutting the memory needed to store the graph almost in half.
+
+Although the adjacency-list representation is asymptotically at least as space-efficient
+as the adjacency-matrix representation, adjacency matrices are simpler, and so we may
+prefer them when graphs are reasonably small. Moreover, adjacency matrices carry a
+further advantage for unweighted graphs: they require only one bit per entry.
+
+22.2 Breadth-first search
+=========================
+
+Give a graph G = (V, E) and a distinguished source vertex s, breadth-first search (BFS)
+systematically explores the edges of G to "discover" every vertex that is reachable from
+s. It computes the distance (smallest number of edges) from s to each reachable vertex.
+It also produces a "breadth-first tree" with root s that contains all reachable
+vertices. For any vertex v reachable from s, the simple path in the breadth-first tree
+from s to v corresponds to a "shortest path" from s to v in G, that is, a path
+containing the smallest number of edges. The algorithm works on both directed and
+undirected graphs.
+
+Breadth-first search is so named because it expands the frontier between discovered and
+undiscovered vertices uniformly across the breadth of the frontier. That is, the
+algorithm discovers all vertices at distance k from s before discovering any vertices at
+distance k + 1.
+
+To keep track of progress, BFS colors each vertex white, gray, or black. All vertices
+start out white and may later become gray and then black. A vertex is discovered the
+first time it is encountered during the search, at which time it becomes nonwhite. Gray
+and black vertices, therefore, have been discovered, but BFS distinguishes between them
+to ensure that the search proceeds in a breadth-first manner. If (u, v) in E and vertex
+u is black, then vertex v is either gray or black; that is, all vertices adjacent to
+black vertices have been discovered. Gray vertices may have some adjacent white
+vertices; they represent the frontier between discovered and undiscovered vertices.
+
+BFS constructs a breadth-first tree, initially containing only its root, which is the
+source vertex s. Whenever the search discovers a white vertex v in the course of
+scanning the adjacency list of an already discovered vertex u, the vertex v and the edge
+(u, v) are added to the tree. We say that u is the predecessor or parent of v in the
+breadth-first tree. Since a vertex is discovered at most once, it has at most one
+parent.
+
+The algorithm uses a FIFO queue to manage the set of gray vertices. The same result is
+obtained if we do not distinguish between gray and black vertices.
