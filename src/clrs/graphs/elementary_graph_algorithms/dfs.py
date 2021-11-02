@@ -147,16 +147,3 @@ class DFSGraph(Graph):
         u_node.c = 2
         self.time += 1
         u_node.f = self.time
-
-
-num_vertices = 6
-graph = DFSGraph(num_vertices, True)
-graph.add_edge(0, 3)
-graph.add_edge(0, 1)
-graph.add_edge(1, 4)
-graph.add_edge(2, 4)
-graph.add_edge(2, 5)
-graph.add_edge(3, 1)
-graph.add_edge(4, 3)
-graph.add_edge(5, 5)
-graph.dfs()
