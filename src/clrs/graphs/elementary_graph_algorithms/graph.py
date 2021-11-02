@@ -1,5 +1,12 @@
-22.1 Representations of graphs
-==============================
+"""
+Overview
+========
+
+A graph consists of vertices V and edges E that connect its vertices.
+
+Searching a graph means systematically following the edges of the graph so as to visit
+the vertices of the graph. A graph-searching algorithm can discover much about the
+structure of a graph.
 
 We can choose between two standard ways to represent a graph G = (V, E): as a collection
 of adjacency lists or as an adjacency matrix. Either way applies to both directed and
@@ -40,38 +47,38 @@ as the adjacency-matrix representation, adjacency matrices are simpler, and so w
 prefer them when graphs are reasonably small. Moreover, adjacency matrices carry a
 further advantage for unweighted graphs: they require only one bit per entry.
 
-22.2 Breadth-first search
-=========================
+Complexity
+==========
 
-Give a graph G = (V, E) and a distinguished source vertex s, breadth-first search (BFS)
-systematically explores the edges of G to "discover" every vertex that is reachable from
-s. It computes the distance (smallest number of edges) from s to each reachable vertex.
-It also produces a "breadth-first tree" with root s that contains all reachable
-vertices. For any vertex v reachable from s, the simple path in the breadth-first tree
-from s to v corresponds to a "shortest path" from s to v in G, that is, a path
-containing the smallest number of edges. The algorithm works on both directed and
-undirected graphs.
+Space
+-----
 
-Breadth-first search is so named because it expands the frontier between discovered and
-undiscovered vertices uniformly across the breadth of the frontier. That is, the
-algorithm discovers all vertices at distance k from s before discovering any vertices at
-distance k + 1.
+Adjacency list: Theta(V + E)
+Adjacency matrix: Theta(V^2)
+"""
 
-To keep track of progress, BFS colors each vertex white, gray, or black. All vertices
-start out white and may later become gray and then black. A vertex is discovered the
-first time it is encountered during the search, at which time it becomes nonwhite. Gray
-and black vertices, therefore, have been discovered, but BFS distinguishes between them
-to ensure that the search proceeds in a breadth-first manner. If (u, v) in E and vertex
-u is black, then vertex v is either gray or black; that is, all vertices adjacent to
-black vertices have been discovered. Gray vertices may have some adjacent white
-vertices; they represent the frontier between discovered and undiscovered vertices.
+# Repository Library
+from src.clrs.lists.singly_linked_list import SLL, Node
+from src.clrs.queues.queue import Queue
 
-BFS constructs a breadth-first tree, initially containing only its root, which is the
-source vertex s. Whenever the search discovers a white vertex v in the course of
-scanning the adjacency list of an already discovered vertex u, the vertex v and the edge
-(u, v) are added to the tree. We say that u is the predecessor or parent of v in the
-breadth-first tree. Since a vertex is discovered at most once, it has at most one
-parent.
 
-The algorithm uses a FIFO queue to manage the set of gray vertices. The same result is
-obtained if we do not distinguish between gray and black vertices.
+class Graph:
+    def __init__(self, num_vertices, is_dag=False):
+        self.num_vertices = num_vertices
+        self.is_dag = is_dag
+        self.adj_list = [SLL() for _ in range(self.num_vertices)]
+        self.adj_matrix = [[0] * self.num_vertices for _ in range(self.num_vertices)]
+        self.queue = Queue(self.num_vertices)
+        self.vertices = {}
+
+    def add_edge(self, u, v):
+        self.add_vertex(u)
+        self.add_vertex(v)
+        self.adj_list[u].insert(self.vertices[v])
+        self.adj_matrix[u][v] = 1
+        if not self.is_dag:
+            self.adj_list[v].insert(self.vertices[u])
+            self.adj_matrix[v][u] = 1
+
+    def add_vertex(self, v):
+        self.vertices[v] = Node(v)

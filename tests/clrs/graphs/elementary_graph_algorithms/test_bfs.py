@@ -2,12 +2,12 @@
 import pytest
 
 # Repository Library
-from clrs.graphs.elementary_graph_algorithms.bfs import Graph
+from clrs.graphs.elementary_graph_algorithms.bfs import BFSGraph
 
 
-def test_bfs():
+def test_bfsgraph():
     num_vertices = 5
-    graph = Graph(num_vertices, False)
+    graph = BFSGraph(num_vertices, False)
     graph.add_edge(0, 1)
     graph.add_edge(0, 4)
     graph.add_edge(1, 2)
@@ -34,7 +34,7 @@ def test_bfs():
         [1, 1, 0, 1, 0],
     ]
     num_vertices = 6
-    graph = Graph(num_vertices, True)
+    graph = BFSGraph(num_vertices, True)
     graph.add_vertex(0)
     graph.add_vertex(1)
     graph.add_vertex(2)
@@ -71,7 +71,7 @@ def test_bfs():
         [0, 0, 0, 0, 0, 1],
     ]
     num_vertices = 8
-    graph = Graph(num_vertices, False)
+    graph = BFSGraph(num_vertices, False)
     graph.add_edge(0, 1)
     graph.add_edge(0, 2)
     graph.add_edge(1, 3)
