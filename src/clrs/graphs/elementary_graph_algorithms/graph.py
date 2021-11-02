@@ -63,9 +63,9 @@ from src.clrs.queues.queue import Queue
 
 
 class Graph:
-    def __init__(self, num_vertices, is_dag=False):
+    def __init__(self, num_vertices, directed=False):
         self.num_vertices = num_vertices
-        self.is_dag = is_dag
+        self.directed = directed
         self.adj_list = [SLL() for _ in range(self.num_vertices)]
         self.adj_matrix = [[0] * self.num_vertices for _ in range(self.num_vertices)]
         self.queue = Queue(self.num_vertices)
@@ -76,7 +76,7 @@ class Graph:
         self.add_vertex(v)
         self.adj_list[u].insert(self.vertices[v])
         self.adj_matrix[u][v] = 1
-        if not self.is_dag:
+        if not self.directed:
             self.adj_list[v].insert(self.vertices[u])
             self.adj_matrix[v][u] = 1
 

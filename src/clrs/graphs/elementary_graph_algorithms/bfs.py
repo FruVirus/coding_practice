@@ -56,6 +56,9 @@ distance for all v in V. Moreover, for any vertex v != s that is reachable from 
 of the shortest paths from s to v is a shortest path from s to v.p followed by the edge
 (v.p, v).
 
+Although BFS could proceed from multiple sources, BFS usually serves to find
+shortest-path distances (and the associated predecessor subgraph) from a given source.
+
 Complexity
 ==========
 
