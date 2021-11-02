@@ -1,6 +1,6 @@
 """
-Overview
-========
+22.2 Breadth-first search
+=========================
 
 Given a graph G = (V, E) and a distinguished source vertex s, breadth-first search (BFS)
 systematically explores the edges of G to "discover" every vertex that is reachable from
@@ -49,15 +49,18 @@ The results of BFS may depend upon the order in which the neighbors of a given v
 are visited; the breadth-first tree may vary, but the distances d computed by the
 algorithm will not.
 
+Although BFS could proceed from multiple sources, BFS usually serves to find
+shortest-path distances (and the associated predecessor subgraph) from a given source.
+
+Shortest paths
+--------------
+
 Let G = (V, E) be a directed or undirected graph, and suppose that BFS is run on G from
 a given source vertex s in V. Thus, during its execution, BFS discovers every vertex v
 in V that is reachable from the source s, and upon termination, v.d is the shortest path
 distance for all v in V. Moreover, for any vertex v != s that is reachable from s, one
 of the shortest paths from s to v is a shortest path from s to v.p followed by the edge
 (v.p, v).
-
-Although BFS could proceed from multiple sources, BFS usually serves to find
-shortest-path distances (and the associated predecessor subgraph) from a given source.
 
 Complexity
 ==========
@@ -80,8 +83,6 @@ print_path(): Linear in the number of vertices in the path printed since each re
 call is for a path one vertex shorter.
 """
 
-# pylint: disable=R1722
-
 # Repository Library
 from src.clrs.graphs.elementary_graph_algorithms.graph import Graph
 
@@ -101,14 +102,3 @@ class BFSGraph(Graph):
                     v_node.c, v_node.d, v_node.p = 1, u_node.d + 1, u_node
                     self.queue.enqueue(v.k)
                 v = v.next
-
-    def print_path(self, s, v):
-        s, v = self.vertices[s], self.vertices[v]
-        if v is s:
-            print(s.k)
-        elif v.p is None:
-            print("No path")
-            exit(0)
-        else:
-            self.print_path(s.k, v.p.k)
-            print(v.k)

@@ -1,6 +1,6 @@
 """
-Overview
-========
+22.1 Representation of Graphs
+=============================
 
 A graph consists of vertices V and edges E that connect its vertices.
 
@@ -47,6 +47,12 @@ as the adjacency-matrix representation, adjacency matrices are simpler, and so w
 prefer them when graphs are reasonably small. Moreover, adjacency matrices carry a
 further advantage for unweighted graphs: they require only one bit per entry.
 
+Graphs can also be weighted. The graph edges can each have an associated weight,
+typically given by a weight function. We simply store the weight w(u, v) of the edge
+(u, v) in E with vertex v in u's adjacency list. An adjacency matrix can represent a
+weighted graph as well by simply storing the weight w(u, v) of the edge (u, v) in E as
+the entry in row u and column v of the adjacency matrix.
+
 Complexity
 ==========
 
@@ -56,6 +62,8 @@ Space
 Adjacency list: Theta(V + E)
 Adjacency matrix: Theta(V^2)
 """
+
+# pylint: disable=R1722
 
 # Repository Library
 from src.clrs.lists.singly_linked_list import SLL, Node
@@ -82,3 +90,14 @@ class Graph:
 
     def add_vertex(self, v):
         self.vertices[v] = Node(v)
+
+    def print_path(self, s, v):
+        s, v = self.vertices[s], self.vertices[v]
+        if v is s:
+            print(s.k)
+        elif v.p is None:
+            print("No path")
+            exit(0)
+        else:
+            self.print_path(s.k, v.p.k)
+            print(v.k)
