@@ -103,6 +103,11 @@ in the classification list that applies. Equivalently, we classify the edge acco
 whichever of (u, v) or (v, u) the search encounters first. Forward and cross edges never
 occur in a DFS of an undirected graph.
 
+22.4 Topological sort
+=====================
+
+
+
 Complexity
 ==========
 
@@ -120,14 +125,18 @@ dfs(): O(V + E)
 
 # Repository Library
 from src.clrs.graphs.elementary_graph_algorithms.graph import Graph
+from src.clrs.lists.singly_linked_list import SLL
 
 
 class DFSGraph(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
         self.time = 0
+        self.top_sort_ll = None
 
     def dfs(self):
+        if self.top_sort_ll is None:
+            self.top_sort_ll = SLL()
         for u in self.vertices.values():
             u.c, u.p = 0, None
         for u, u_node in self.vertices.items():
@@ -147,3 +156,9 @@ class DFSGraph(Graph):
         u_node.c = 2
         self.time += 1
         u_node.f = self.time
+        self.top_sort_ll.insert(u_node)
+
+    def top_sort(self):
+        if self.top_sort_ll is None:
+            self.dfs()
+        return self.top_sort_ll
