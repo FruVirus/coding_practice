@@ -67,16 +67,15 @@ Adjacency matrix: Theta(V^2)
 
 # Repository Library
 from src.clrs.lists.singly_linked_list import SLL, Node
-from src.clrs.queues.queue import Queue
 
 
 class Graph:
     def __init__(self, num_vertices, directed=False):
         self.num_vertices = num_vertices
-        self.directed = directed
         self.adj_list = [SLL() for _ in range(self.num_vertices)]
         self.adj_matrix = [[0] * self.num_vertices for _ in range(self.num_vertices)]
-        self.queue = Queue(self.num_vertices)
+        self.directed = directed
+        self.is_dag = True
         self.vertices = {}
 
     def add_edge(self, u, v):
