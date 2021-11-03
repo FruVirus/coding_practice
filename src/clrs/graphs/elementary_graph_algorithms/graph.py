@@ -53,8 +53,22 @@ typically given by a weight function. We simply store the weight w(u, v) of the 
 weighted graph as well by simply storing the weight w(u, v) of the edge (u, v) in E as
 the entry in row u and column v of the adjacency matrix.
 
+Transpose of Graph
+------------------
+
+The transpose of a directed graph G = (V, E) is the graph G.T = (V, E.T), where the
+direction of the edges are reversed. Given an adjacency-list representation of G, the
+time to create G.T is O(V + E). Given an adjacency-matrix representation of G, the time
+to create G.T is O(V^2).
+
 Complexity
 ==========
+
+Time
+----
+
+Adjacency list transpose: O(V + E)
+Adjacency matrix transpose: O(V^2)
 
 Space
 -----
@@ -73,7 +87,11 @@ class Graph:
     def __init__(self, num_vertices, directed=False):
         self.num_vertices = num_vertices
         self.adj_list = [SLL() for _ in range(self.num_vertices)]
+        self.adj_list_transpose = [SLL() for _ in range(self.num_vertices)]
         self.adj_matrix = [[0] * self.num_vertices for _ in range(self.num_vertices)]
+        self.adj_matrix_transpose = [
+            [0] * self.num_vertices for _ in range(self.num_vertices)
+        ]
         self.directed = directed
         self.is_dag = True
         self.vertices = {}
@@ -100,3 +118,12 @@ class Graph:
         else:
             self.print_path(s.k, v.p.k)
             print(v.k)
+
+    def transpose(self):
+        assert self.directed
+        for u in self.vertices:
+            v = self.adj_list[u].head
+            while v is not None:
+                self.adj_list_transpose[v.k].insert(Node(u))
+                v = v.next
+        self.adj_matrix_transpose = list(map(list, zip(*self.adj_matrix)))

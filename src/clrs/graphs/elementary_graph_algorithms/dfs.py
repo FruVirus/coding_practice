@@ -115,17 +115,34 @@ appear in reverse order of their finishing times.
 
 A directed graph G is acyclic iff a DFS of G yields no back edges.
 
+22.5 Strongly connected components
+==================================
+
+A classic application of DFS is to decompose a directed graph into its strongly
+connected components using two depth-first searches. Many algorithms that work with
+directed graphs being with such a decomposition. After decomposing the graph into
+strongly connected components, such algorithms run separately on each one and then
+combine the solutions according to the structure of connections among components.
+
+A strongly connected component of a directed graph G = (V, E) is a maximal set of
+vertices C such that for every pair of vertices u and v in C, u and v are reachable from
+each other.
+
+The algorithm for finding the strongly connected components of a graph G = (V, E) uses
+the transpose of G. G and G.T have exactly the same strongly connected components: u and
+v are reachable from each other in G iff they are reachable from each other in G.T.
+
 Complexity
 ==========
 
 Time
 ----
 
-The for-loops in dfs() take time Theta(V) each. dfs_visit() is called exactly once for
-each vertex v in V, since the vertex u on which dfs_visit() is invoked must be white and
-the first thing dfs_visit() does is paint vertex u gray. During an execution of
-dfs_visit(), the for-loop executes |Adj[v]| times and the sum of |Adj[v]| for all v in V
-is Theta(E).
+The for-loops in dfs() take time Theta(V) each. dfs_recurse() is called exactly once for
+each vertex v in V, since the vertex u on which dfs_recurse() is invoked must be white
+and the first thing dfs_recurse() does is paint vertex u gray. During an execution of
+dfs_recurse(), the for-loop executes |Adj[v]| times and the sum of |Adj[v]| for all v in
+V is Theta(E). dfs_recurse() is called exactly once for each vertex v in V.
 
 We can perform a topological sort in time Theta(V + E), since DFS takes Theta(V + E)
 time and it takes O(1) time to insert each of the |V| vertices onto the front of the
