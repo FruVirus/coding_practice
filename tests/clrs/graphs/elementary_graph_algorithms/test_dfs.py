@@ -29,13 +29,8 @@ def test_dfsgraph():
     assert graph.vertices[4].f == 6
     assert graph.vertices[5].d == 10
     assert graph.vertices[5].f == 11
-    ll = graph.top_sort()
-    top_sort = []
-    node = ll.head
-    while node is not None:
-        top_sort.append(node.k)
-        node = node.next
-    assert top_sort == [2, 5, 0, 1, 4, 3]
+    graph.top_sort()
+    assert not graph.is_dag
     num_vertices = 6
     graph = DFSGraph(num_vertices, True)
     graph.add_edge(0, 3)
@@ -43,9 +38,18 @@ def test_dfsgraph():
     graph.add_edge(1, 4)
     graph.add_edge(2, 4)
     graph.add_edge(2, 5)
-    graph.add_edge(3, 1)
     graph.add_edge(4, 3)
-    graph.add_edge(5, 5)
+    graph.dfs()
+    graph.top_sort()
+    assert graph.is_dag
+    num_vertices = 6
+    graph = DFSGraph(num_vertices, True)
+    graph.add_edge(0, 3)
+    graph.add_edge(0, 1)
+    graph.add_edge(1, 4)
+    graph.add_edge(2, 4)
+    graph.add_edge(2, 5)
+    graph.add_edge(4, 3)
     ll = graph.top_sort()
     top_sort = []
     node = ll.head

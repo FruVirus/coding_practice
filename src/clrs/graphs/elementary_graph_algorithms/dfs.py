@@ -106,7 +106,14 @@ occur in a DFS of an undirected graph.
 22.4 Topological sort
 =====================
 
+A topological sort of a directed acyclic graph (DAG) is a linear ordering of all its
+vertices such that if G contains an edge (u, v), then u appears before v in the
+ordering. If the graph contains a cycle, then no linear ordering is possible. We can
+view a topological sort of a graph as an ordering of its vertices along a horizontal
+line so that all directed edges go from left to right. The topologically sorted vertices
+appear in reverse order of their finishing times.
 
+A directed graph G is acyclic iff a DFS of G yields no back edges.
 
 Complexity
 ==========
@@ -120,7 +127,12 @@ the first thing dfs_visit() does is paint vertex u gray. During an execution of
 dfs_visit(), the for-loop executes |Adj[v]| times and the sum of |Adj[v]| for all v in V
 is Theta(E).
 
+We can perform a topological sort in time Theta(V + E), since DFS takes Theta(V + E)
+time and it takes O(1) time to insert each of the |V| vertices onto the front of the
+linked list.
+
 dfs(): O(V + E)
+top_sort: O(V + E)
 """
 
 # Repository Library
@@ -131,12 +143,10 @@ from src.clrs.lists.singly_linked_list import SLL
 class DFSGraph(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
-        self.time = 0
-        self.top_sort_ll = None
+        self.time, self.top_sort_ll = 0, None
 
     def dfs(self):
-        if self.top_sort_ll is None:
-            self.top_sort_ll = SLL()
+        self.is_dag, self.top_sort_ll = True, self.top_sort_ll or SLL()
         for u in self.vertices.values():
             u.c, u.p = 0, None
         for u, u_node in self.vertices.items():
@@ -152,6 +162,8 @@ class DFSGraph(Graph):
             if v_node.c == 0:
                 v_node.p = u_node
                 self.dfs_visit(v_node.k, v_node)
+            if v_node.c == 1:
+                self.is_dag = False
             v = v.next
         u_node.c = 2
         self.time += 1
