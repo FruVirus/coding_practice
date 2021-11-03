@@ -13,7 +13,7 @@ def test_dfsgraph():
     graph.add_edge(3, 1)
     graph.add_edge(4, 3)
     graph.add_edge(5, 5)
-    graph.dfs_recurse()
+    graph.dfs()
     graph.print_path(0, 4)
     for i in range(num_vertices):
         assert graph.vertices[i].c == 2
@@ -39,7 +39,7 @@ def test_dfsgraph():
     graph.add_edge(2, 4)
     graph.add_edge(2, 5)
     graph.add_edge(4, 3)
-    graph.dfs_recurse()
+    graph.dfs()
     graph.top_sort()
     assert graph.is_dag
     num_vertices = 6

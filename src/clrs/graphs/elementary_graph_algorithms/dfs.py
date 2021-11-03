@@ -138,24 +138,22 @@ top_sort: O(V + E)
 # Repository Library
 from src.clrs.graphs.elementary_graph_algorithms.graph import Graph
 from src.clrs.lists.singly_linked_list import SLL
-from src.clrs.stacks.stack import Stack
 
 
 class DFSGraph(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
-        self.stack = Stack(self.num_vertices)
         self.time, self.top_sort_ll = 0, None
 
-    def dfs_recurse(self):
+    def dfs(self):
         self.is_dag, self.top_sort_ll = True, self.top_sort_ll or SLL()
         for u in self.vertices.values():
             u.c, u.p = 0, None
         for u, u_node in self.vertices.items():
             if u_node.c == 0:
-                self.dfs_visit(u, u_node)
+                self.dfs_recurse(u, u_node)
 
-    def dfs_visit(self, u, u_node):
+    def dfs_recurse(self, u, u_node):
         self.time += 1
         u_node.c, u_node.d = 1, self.time
         v = self.adj_list[u].head
@@ -163,16 +161,15 @@ class DFSGraph(Graph):
             v_node = self.vertices[v.k]
             if v_node.c == 0:
                 v_node.p = u_node
-                self.dfs_visit(v_node.k, v_node)
+                self.dfs_recurse(v.k, v_node)
             if v_node.c == 1:
                 self.is_dag = False
             v = v.next
-        u_node.c = 2
         self.time += 1
-        u_node.f = self.time
+        u_node.c, u_node.f = 2, self.time
         self.top_sort_ll.insert(u_node)
 
     def top_sort(self):
         if self.top_sort_ll is None:
-            self.dfs_recurse()
+            self.dfs()
         return self.top_sort_ll
