@@ -138,14 +138,16 @@ top_sort: O(V + E)
 # Repository Library
 from src.clrs.graphs.elementary_graph_algorithms.graph import Graph
 from src.clrs.lists.singly_linked_list import SLL
+from src.clrs.stacks.stack import Stack
 
 
 class DFSGraph(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
+        self.stack = Stack(self.num_vertices)
         self.time, self.top_sort_ll = 0, None
 
-    def dfs(self):
+    def dfs_recurse(self):
         self.is_dag, self.top_sort_ll = True, self.top_sort_ll or SLL()
         for u in self.vertices.values():
             u.c, u.p = 0, None
@@ -172,5 +174,5 @@ class DFSGraph(Graph):
 
     def top_sort(self):
         if self.top_sort_ll is None:
-            self.dfs()
+            self.dfs_recurse()
         return self.top_sort_ll
