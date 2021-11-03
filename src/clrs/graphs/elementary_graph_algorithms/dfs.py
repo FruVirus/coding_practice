@@ -138,25 +138,28 @@ top_sort: O(V + E)
 # Repository Library
 from src.clrs.graphs.elementary_graph_algorithms.graph import Graph
 from src.clrs.lists.singly_linked_list import SLL
+from src.clrs.stacks.stack import Stack
 
 
 class DFSGraph(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
-        self.time, self.top_sort_ll = 0, None
+        self.stack, self.time, self.top_sort_ll = Stack(self.num_vertices), 0, None
 
-    def dfs(self):
+    def dfs(self, recurse=False):
         self.is_dag, self.top_sort_ll = True, self.top_sort_ll or SLL()
         for u in self.vertices.values():
             u.c, u.p = 0, None
         for u, u_node in self.vertices.items():
             if u_node.c == 0:
-                self.dfs_recurse(u, u_node)
+                if recurse:
+                    self.dfs_recurse(u, u_node)
+                else:
+                    self.dfs_stack(u, u_node)
 
     def dfs_recurse(self, u, u_node):
         self.time += 1
-        u_node.c, u_node.d = 1, self.time
-        v = self.adj_list[u].head
+        u_node.c, u_node.d, v = 1, self.time, self.adj_list[u].head
         while v is not None:
             v_node = self.vertices[v.k]
             if v_node.c == 0:
@@ -169,7 +172,34 @@ class DFSGraph(Graph):
         u_node.c, u_node.f = 2, self.time
         self.top_sort_ll.insert(u_node)
 
-    def top_sort(self):
+    def dfs_stack(self, u, u_node):
+        self.time += 1
+        u_node.c, u_node.d = 1, self.time
+        self.stack.push(u)
+        while not self.stack.empty():
+            u = self.stack.a[self.stack.top]
+            u_node, v = self.vertices[u], self.first_white(u)
+            self.time += 1
+            if v is None:
+                u_node.c, u_node.f = 2, self.time
+                self.top_sort_ll.insert(u_node)
+                self.stack.pop()
+            else:
+                v.c, v.d, v.p = 1, self.time, u_node
+                self.stack.push(v.k)
+
+    def first_white(self, s):
+        v = self.adj_list[s].head
+        while v is not None:
+            v_node = self.vertices[v.k]
+            if v_node.c == 1:
+                self.is_dag = False
+            if v_node.c == 0:
+                return v_node
+            v = v.next
+        return None
+
+    def top_sort(self, recurse=False):
         if self.top_sort_ll is None:
-            self.dfs()
+            self.dfs(recurse)
         return self.top_sort_ll
