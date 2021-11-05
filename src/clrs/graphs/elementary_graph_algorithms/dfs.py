@@ -132,6 +132,21 @@ The algorithm for finding the strongly connected components of a graph G = (V, E
 the transpose of G. G and G.T have exactly the same strongly connected components: u and
 v are reachable from each other in G iff they are reachable from each other in G.T.
 
+The linear-time algorithm for strongly connected components computes the SCCs of a
+directed graph G = (V, E) using two depth-first searches, one on G and one on G.T.
+
+The strongly connected components graph of G (G_SCC) is obtained by contracting all
+edges whose incident vertices are within the same strongly connected component of G.
+Thus, G_SCC must be a DAG whereas G can be either a DAG or a directed graph.
+
+Let C and C' be distinct strongly connected components in a directed graph G = (V, E).
+Suppose that there is an edge (u, v) in E, where u in C and v in C'. Then f(C) > f(C'),
+where f() denotes the latest finishing time of a vertex.
+
+Let C and C' be distinct strongly connected components in a directed graph G = (V, E).
+Suppose that there is an edge (u, v) in E.T, where u in C and v in C'. Then,
+f(C) < f(C').
+
 Complexity
 ==========
 
@@ -149,34 +164,50 @@ time and it takes O(1) time to insert each of the |V| vertices onto the front of
 linked list.
 
 dfs(): O(V + E)
-top_sort: O(V + E)
+top_sort(): O(V + E)
+scc(): O(V + E)
 """
 
 # Repository Library
 from src.clrs.graphs.elementary_graph_algorithms.graph import Graph
-from src.clrs.lists.singly_linked_list import SLL
+from src.clrs.lists.singly_linked_list import SLL, Node
 from src.clrs.stacks.stack import Stack
 
 
 class DFSGraph(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
-        self.stack, self.time, self.top_sort_ll = Stack(self.num_vertices), 0, None
+        self.scc_list = []
+        self.stack = Stack(self.num_vertices)
+        self.time = 0
+        self.top_sort_ll = None
 
-    def dfs(self, recurse=False):
+    def _get_vertex_list(self, transpose=False):
+        if not transpose:
+            return list(self.vertices.keys())
+        return [
+            v.k for v in sorted(self.vertices.values(), key=lambda x: x.f, reverse=True)
+        ]
+
+    def dfs(self, recurse=False, return_scc=False, transpose=False):
         self.is_dag, self.top_sort_ll = True, self.top_sort_ll or SLL()
+        vertex_list = self._get_vertex_list(transpose)
         for u in self.vertices.values():
             u.c, u.p = 0, None
-        for u, u_node in self.vertices.items():
+        for u in vertex_list:
+            u_node = self.vertices[u]
             if u_node.c == 0:
+                if return_scc:
+                    self.scc_list.append(u)
                 if recurse:
-                    self.dfs_recurse(u, u_node)
+                    self.dfs_recurse(u, u_node, transpose)
                 else:
-                    self.dfs_stack(u, u_node)
+                    self.dfs_stack(u, u_node, transpose)
 
-    def dfs_recurse(self, u, u_node):
+    def dfs_recurse(self, u, u_node, transpose=False):
         self.time += 1
-        u_node.c, u_node.d, v = 1, self.time, self.adj_list[u].head
+        u_node.c, u_node.d = 1, self.time
+        v = self.adj_list_transpose[u].head if transpose else self.adj_list[u].head
         while v is not None:
             v_node = self.vertices[v.k]
             if v_node.c == 0:
@@ -189,24 +220,24 @@ class DFSGraph(Graph):
         u_node.c, u_node.f = 2, self.time
         self.top_sort_ll.insert(u_node)
 
-    def dfs_stack(self, u, u_node):
+    def dfs_stack(self, u, u_node, transpose=False):
         self.time += 1
         u_node.c, u_node.d = 1, self.time
         self.stack.push(u)
         while not self.stack.empty():
             u = self.stack.a[self.stack.top]
-            u_node, v = self.vertices[u], self.first_white(u)
+            u_node, v = self.vertices[u], self.first_white(u, transpose)
             self.time += 1
             if v is None:
                 u_node.c, u_node.f = 2, self.time
-                self.top_sort_ll.insert(u_node)
+                self.top_sort_ll.insert(Node(u_node.k))
                 self.stack.pop()
             else:
                 v.c, v.d, v.p = 1, self.time, u_node
                 self.stack.push(v.k)
 
-    def first_white(self, s):
-        v = self.adj_list[s].head
+    def first_white(self, s, transpose=False):
+        v = self.adj_list_transpose[s].head if transpose else self.adj_list[s].head
         while v is not None:
             v_node = self.vertices[v.k]
             if v_node.c == 1:
@@ -216,7 +247,12 @@ class DFSGraph(Graph):
             v = v.next
         return None
 
+    def scc(self):
+        assert self.directed
+        self.dfs()
+        self.transpose()
+        self.dfs(return_scc=True, transpose=True)
+
     def top_sort(self, recurse=False):
         if self.top_sort_ll is None:
             self.dfs(recurse)
-        return self.top_sort_ll

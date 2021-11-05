@@ -50,9 +50,9 @@ def test_dfsgraph():
     graph.add_edge(2, 4)
     graph.add_edge(2, 5)
     graph.add_edge(4, 3)
-    ll = graph.top_sort(recurse=True)
+    graph.top_sort(recurse=True)
     top_sort = []
-    node = ll.head
+    node = graph.top_sort_ll.head
     while node is not None:
         top_sort.append(node.k)
         node = node.next
@@ -106,10 +106,28 @@ def test_dfsgraph():
     graph.add_edge(2, 4)
     graph.add_edge(2, 5)
     graph.add_edge(4, 3)
-    ll = graph.top_sort()
+    graph.top_sort()
     top_sort = []
-    node = ll.head
+    node = graph.top_sort_ll.head
     while node is not None:
         top_sort.append(node.k)
         node = node.next
     assert top_sort == [2, 5, 0, 1, 4, 3]
+    num_vertices = 8
+    graph = DFSGraph(num_vertices, True)
+    graph.add_edge(0, 1)
+    graph.add_edge(1, 2)
+    graph.add_edge(1, 4)
+    graph.add_edge(1, 5)
+    graph.add_edge(2, 3)
+    graph.add_edge(2, 6)
+    graph.add_edge(3, 2)
+    graph.add_edge(3, 7)
+    graph.add_edge(4, 0)
+    graph.add_edge(4, 5)
+    graph.add_edge(5, 6)
+    graph.add_edge(6, 5)
+    graph.add_edge(6, 7)
+    graph.add_edge(7, 7)
+    graph.scc()
+    assert graph.scc_list == [0, 2, 5, 7]
