@@ -137,15 +137,48 @@ directed graph G = (V, E) using two depth-first searches, one on G and one on G.
 
 The strongly connected components graph of G (G_SCC) is obtained by contracting all
 edges whose incident vertices are within the same strongly connected component of G.
-Thus, G_SCC must be a DAG whereas G can be either a DAG or a directed graph.
+Thus, G_SCC must be a DAG whereas G can be either a DAG or a directed graph. If G_SCC is
+not a DAG after contracting all edges, then the strongly connected components that are
+formed is incorrect since they are not all inclusive.
+
+By visiting vertices in the second DFS in decreasing order of the finishing times that
+were computed in the first DFS, we are, in essence, visiting the vertices of the
+component graph (each of which corresponds to a strongly connected component of G) in
+topologically sorted order.
 
 Let C and C' be distinct strongly connected components in a directed graph G = (V, E).
 Suppose that there is an edge (u, v) in E, where u in C and v in C'. Then f(C) > f(C'),
-where f() denotes the latest finishing time of a vertex.
+where f() denotes the latest finishing time of a vertex. In other words, each edge that
+goes between different SCCs in G goes from a component with a later finishing time to a
+component with an earlier finishing time.
 
 Let C and C' be distinct strongly connected components in a directed graph G = (V, E).
 Suppose that there is an edge (u, v) in E.T, where u in C and v in C'. Then,
-f(C) < f(C').
+f(C) < f(C'). In other words, each edge that goes between different SCCs in G.T goes
+from a component with an earlier finishing time to a component with a later finishing
+time.
+
+The key steps to understanding why the SCC algorithm works:
+
+1. When we perform the second DFS on G.T, we start with the strongly connected component
+C whose finishing time f(C) is maximum.
+
+2. The search starts from some vertex x in C, and it visits all vertices in C
+
+3. G.T contains no edges from C to any other strongly connected component, and so the
+search from x will not visit vertices in any other component. Thus, the tree rooted at x
+contains exactly the vertices of C only.
+
+4. Having completed visiting all vertices in C, the search selects as a root a vertex
+from some other strongly connected component C' whose finishing time f(C') is maximum
+over all components other than C.
+
+5. Again, the search will visit all vertices in C'. Once again, the only edges in G.T
+from C' to any other component must be to C, which we have already visited.
+
+6. In general, when the DFS of G.T visits any strongly connected component, any edges
+out of that component must be to components that the search already visited. Each
+depth-first tree, therefore, will be exactly one strongly connected component.
 
 Complexity
 ==========
@@ -190,7 +223,7 @@ class DFSGraph(Graph):
         ]
 
     def dfs(self, recurse=False, return_scc=False, transpose=False):
-        self.is_dag, self.top_sort_ll = True, self.top_sort_ll or SLL()
+        self.is_dag, self.top_sort_ll = True, SLL()
         vertex_list = self._get_vertex_list(transpose)
         for u in self.vertices.values():
             u.c, u.p = 0, None
@@ -212,13 +245,13 @@ class DFSGraph(Graph):
             v_node = self.vertices[v.k]
             if v_node.c == 0:
                 v_node.p = u_node
-                self.dfs_recurse(v.k, v_node)
+                self.dfs_recurse(v.k, v_node, transpose)
             if v_node.c == 1:
                 self.is_dag = False
             v = v.next
         self.time += 1
         u_node.c, u_node.f = 2, self.time
-        self.top_sort_ll.insert(u_node)
+        self.top_sort_ll.insert(Node(u_node.k))
 
     def dfs_stack(self, u, u_node, transpose=False):
         self.time += 1
@@ -247,11 +280,11 @@ class DFSGraph(Graph):
             v = v.next
         return None
 
-    def scc(self):
+    def scc(self, recurse=False):
         assert self.directed
-        self.dfs()
+        self.dfs(recurse)
         self.transpose()
-        self.dfs(return_scc=True, transpose=True)
+        self.dfs(recurse, True, True)
 
     def top_sort(self, recurse=False):
         if self.top_sort_ll is None:
