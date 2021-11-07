@@ -23,8 +23,8 @@ def multiply(x, y, base=10, is_naive=False):
     if min(n, m) == 1:
         return x * y
     n2 = max(n, m) // 2
-    x1, x0 = x // base ** n2, x % base ** n2
-    y1, y0 = y // base ** n2, y % base ** n2
+    denom = base ** n2
+    x1, x0, y1, y0 = x // denom, x % denom, y // denom, y % denom
     z0, z2 = multiply(x0, y0), multiply(x1, y1)
     if is_naive:
         z1 = multiply(x0, y1) + multiply(x1, y0)
