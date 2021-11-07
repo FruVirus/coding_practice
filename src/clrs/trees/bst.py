@@ -34,9 +34,7 @@ class BST:
         self.root = BSTNode(z)
 
     def _get_node(self, x):
-        if isinstance(x, (int, float)):
-            x = self.search(self.root, x)
-        return x
+        return self.search(self.root, x) if isinstance(x, (int, float)) else x
 
     def count(self, l, h):
         assert l < h
