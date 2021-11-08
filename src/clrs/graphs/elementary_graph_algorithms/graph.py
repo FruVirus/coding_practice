@@ -61,6 +61,44 @@ direction of the edges are reversed. Given an adjacency-list representation of G
 time to create G.T is O(V + E). Given an adjacency-matrix representation of G, the time
 to create G.T is O(V^2).
 
+Connected Components
+--------------------
+
+An undirected graph is connected if every vertex is reachable from all other vertices.
+The connected components of an undirected graph are the equivalence classes of vertices
+under the "is reachable from" relation. An undirected graph is connected if it has
+exactly one connected component. The connected components of a graph can be determined
+by using disjoint-set data structures.
+
+connected_components() initially places each vertex v in its own set. Then, for each
+edge (u, v), it unites the sets containing u and v. By processing all the edges, two
+vertices are in teh same connected component iff the corresponding objects are in the
+same set.
+
+In a disjoint-set representation, each set is represented by rooted trees, with each
+node containing one member and each tree representing one set. Each member points only
+to its parent. The root of each tree contains the representative and is its own parent.
+
+In addition, we need to keep track of ranks. With each node x, we maintain the integer
+value x.rank, which is an upper bound on the height of x (the number of edges in the
+longest simple path from a descendant leaf to x).
+
+make_set() simply creates a tree with just one node. find_set() follows parent pointers
+until we find the root of the tree. union() causes the root of one tree to point to the
+root of the other; we make the root with smaller rank point to the root with larger
+rank.
+
+When make_set() creates a singleton set, the single node in the corresponding tree has
+an initial rank of 0. Each find_set() operation leaves all ranks unchanged. The union()
+operation has two cases, depending on whether the roots of the trees have equal rank. If
+the roots have unequal rank, we make the root with high rank the parent of the root with
+lower rank, but the ranks themselves remain unchanged. If, instead, the roots have equal
+ranks, we arbitrarily choose one of the roots as the parent and increment its rank.
+
+find_set() is a two-pass method: as it recurses, it makes one pass up the find path to
+find the root, and as the recursion unwinds, it makes a second pass back down the find
+path to update each node to point directly to the root.
+
 Complexity
 ==========
 
@@ -93,10 +131,14 @@ class Graph:
             [0] * self.num_vertices for _ in range(self.num_vertices)
         ]
         self.directed = directed
+        self.edges = set()
         self.is_dag = True
         self.vertices = {}
+        self.weights = {}
 
-    def add_edge(self, u, v):
+    def add_edge(self, u, v, w=None):
+        self.edges.add((u, v))
+        self.weights[(u, v)] = w
         self.add_vertex(u)
         self.add_vertex(v)
         self.adj_list[u].insert(self.vertices[v])
@@ -107,6 +149,31 @@ class Graph:
 
     def add_vertex(self, v):
         self.vertices[v] = Node(v)
+
+    def connected_components(self):
+        self.make_set()
+        for edge in self.edges:
+            u, v = self.vertices[edge[0]], self.vertices[edge[1]]
+            if self.find_set(u) != self.find_set(v):
+                self.union(u, v)
+
+    def find_set(self, x):
+        if x is not x.p:
+            x.p = self.find_set(x.p)
+        return x.p
+
+    @staticmethod
+    def link(x, y):
+        if x.rank > y.rank:
+            y.p = x
+        else:
+            x.p = y
+            if x.rank == y.rank:
+                y.rank += 1
+
+    def make_set(self):
+        for v in self.vertices.values():
+            v.p, v.rank = v, 0
 
     def print_path(self, s, v):
         s, v = self.vertices[s], self.vertices[v]
@@ -119,6 +186,9 @@ class Graph:
             self.print_path(s.k, v.p.k)
             print(v.k)
 
+    def same_component(self, u, v):
+        return self.find_set(self.vertices[u]) is self.find_set(self.vertices[v])
+
     def transpose(self):
         assert self.directed
         for u in self.vertices:
@@ -127,3 +197,6 @@ class Graph:
                 self.adj_list_transpose[v.k].insert(Node(u))
                 v = v.next
         self.adj_matrix_transpose = list(map(list, zip(*self.adj_matrix)))
+
+    def union(self, x, y):
+        self.link(self.find_set(x), self.find_set(y))
