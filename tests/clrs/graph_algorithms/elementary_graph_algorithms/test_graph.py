@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.graphs.elementary_graph_algorithms.graph import Graph
+from clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 
 
 def test_graph_tranpose():

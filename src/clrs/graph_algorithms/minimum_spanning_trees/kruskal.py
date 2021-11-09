@@ -51,7 +51,7 @@ kruskal(): O(E * lg(V))
 """
 
 # Repository Library
-from src.clrs.graphs.elementary_graph_algorithms.graph import Graph
+from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 
 
 class MST(Graph):

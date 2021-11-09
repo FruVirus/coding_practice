@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.graphs.elementary_graph_algorithms.dfs import DFSGraph
+from clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFSGraph
 
 
 def test_dfsgraph():

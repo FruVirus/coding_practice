@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.graphs.mst.kruskal import MST
+from clrs.graph_algorithms.minimum_spanning_trees.kruskal import MST
 
 
 def test_kruskal():

@@ -2,7 +2,7 @@
 import pytest
 
 # Repository Library
-from clrs.graphs.elementary_graph_algorithms.bfs import BFSGraph
+from clrs.graph_algorithms.elementary_graph_algorithms.bfs import BFSGraph
 
 
 def test_bfsgraph():
