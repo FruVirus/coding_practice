@@ -137,18 +137,20 @@ class Graph:
         self.weights = {}
 
     def add_edge(self, u, v, w=None):
-        self.edges.add((u, v))
-        self.weights[(u, v)] = w
         self.add_vertex(u)
         self.add_vertex(v)
         self.adj_list[u].insert(self.vertices[v])
         self.adj_matrix[u][v] = 1
+        self.edges.add((u, v))
+        self.weights[(u, v)] = w
         if not self.directed:
             self.adj_list[v].insert(self.vertices[u])
             self.adj_matrix[v][u] = 1
+            self.weights[(v, u)] = w
 
     def add_vertex(self, v):
-        self.vertices[v] = Node(v)
+        if v not in self.vertices:
+            self.vertices[v] = Node(v)
 
     def connected_components(self):
         self.make_set()

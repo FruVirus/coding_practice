@@ -33,73 +33,9 @@ Time
 prim(): XXX
 """
 
-# Standard Library
-from operator import gt, lt
-
 # Repository Library
 from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
-
-
-class HeapQueue:
-    def __init__(self, a, is_max):
-        self.a = a
-        self.heap_size = len(self.a)
-        self.is_max = is_max
-        self.compare = gt if self.is_max else lt
-        self.build()
-
-    def _exchange(self, i, j):
-        self.a[i], self.a[j] = self.a[j], self.a[i]
-
-    @staticmethod
-    def _left(i):
-        return 2 * i + 1
-
-    @staticmethod
-    def _parent(i):
-        return (i - 1) // 2
-
-    @staticmethod
-    def _right(i):
-        return 2 * i + 2
-
-    def build(self):
-        for i in range(len(self.a) // 2 - 1, -1, -1):
-            self.heapify(i)
-
-    def change(self, i, k):
-        assert self.compare(k, self.a[i])
-        self.a[i] = k
-        while i > 0 and self.compare(self.a[i], self.a[self._parent(i)]):
-            self._exchange(i, self._parent(i))
-            i = self._parent(i)
-
-    def extract(self):
-        assert self.heap_size > 0
-        self.heap_size -= 1
-        x = self.a[0]
-        self.a[0] = self.a[self.heap_size]
-        self.heapify(0)
-        self.a.pop(-1)
-        return x
-
-    def get(self):
-        return self.a[0]
-
-    def heapify(self, i):
-        l, r, index = self._left(i), self._right(i), i
-        if l < self.heap_size and self.compare(self.a[l], self.a[i]):
-            index = l
-        if r < self.heap_size and self.compare(self.a[r], self.a[index]):
-            index = r
-        if index != i:
-            self._exchange(i, index)
-            self.heapify(index)
-
-    def insert(self, k):
-        self.a.append(-float("inf") if self.is_max else float("inf"))
-        self.change(self.heap_size, k)
-        self.heap_size += 1
+from src.clrs.queues.heap_queue import HeapQueue
 
 
 class MST(Graph):
@@ -108,23 +44,19 @@ class MST(Graph):
         for v in self.vertices.values():
             v.key, v.p = float("inf"), None
         self.vertices[root].key = 0
-        q = HeapQueue([(v.k, v.key) for v in self.vertices.values()], False)
+        q = HeapQueue([(v.key, v.k) for v in self.vertices.values()], False)
         while q.heap_size != 0:
             u = q.extract()
-            u_node, v = self.vertices[u[0]], self.adj_list[u[0]].head
+            u_node, v = self.vertices[u[1]], self.adj_list[u[1]].head
             while v is not None:
-                v_node = self.vertices[v.k]
-                if (v_node.k, v_node.key) in q.a and self.weights[
-                    (u[0], v_node.k)
-                ] < v_node.key:
-                    v_node.p = u_node
-                    x = q.a.index((v_node.k, v_node.key))
-                    v_node.key = self.weights[(u[0], v.k)]
-                    q.change(x, (v_node.k, v_node.key))
+                if (v.key, v.k) in q.a and self.weights[(u[1], v.k)] < v.key:
+                    v.p = u_node
+                    i = q.a.index((v.key, v.k))
+                    v.key = self.weights[(u[1], v.k)]
+                    q.change(i, (v.key, v.k))
                 v = v.next
-            print(q.a)
         for v in [v for k, v in self.vertices.items() if k != root]:
-            mst.add((v.p.k, v.k))
+            mst.add((v.k, v.p.k))
         return mst
 
 
@@ -133,7 +65,7 @@ graph = MST(num_vertices)
 graph.add_edge(2, 3, 7)
 graph.add_edge(1, 3, 4)
 graph.add_edge(0, 2, 8)
-graph.add_edge(0, 1, 9)
+graph.add_edge(0, 1, 4)
 
 # graph.add_edge(1, 2, 8)
 # graph.add_edge(1, 7, 11)
@@ -150,4 +82,4 @@ graph.add_edge(0, 1, 9)
 mst = graph.prim()
 print(mst)
 # assert mst == {(0, 1), (1, 2), (3, 4), (2, 3), (6, 7), (5, 6), (2, 5), (2, 8)}
-# assert len(mst) == num_vertices - 1
+assert len(mst) == num_vertices - 1
