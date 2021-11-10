@@ -1,0 +1,145 @@
+24 Single-Source Shortest Paths
+===============================
+
+In a shortest-paths problem, we are given a weighted, directed graph G = (V, E), with
+weight function w: E -> R mapping edges to real-valued weights. The weight w(p) of path
+p = <v0, v1, ..., vk> is the sum of the weights of its constituent edges. A shortest
+path from vertex u to vertex v is then defined as any path p with weight w(p) =
+delta(u, v), where delta(u, v) is the shortest-path weight from u to v.
+
+Edge weights can represent metrics such as distances, time, cost, penalities, loss, or
+any other quantity that accumulates linearly along a path and that we would want to
+minimize.
+
+The BFS algorithm is a shortest-paths algorithm that works on unweighted graphs; i.e.,
+graphs in which each edge has unit weight.
+
+Variants
+--------
+
+We focus on the single-source shortest-paths problem: given a graph G = (V, E), we want
+to find a shortest path from a given source vertex s in V to each vertex v in V. The
+algorithm for the single-source problem can solve many other problems, including the
+following variants:
+
+Single-destination shortest-paths problem: Find a shortest path to a given destination
+vertex t from each vertex v. By reversing the direction of each edge in the graph, we
+can reduce this problem to a single-source problem.
+
+Single-pair shortest-path problem: Find a shortest path from u to v for given vertices
+u and v. If we solve the single-source problem with source vertex u, we solve this
+problem also. Moreover, all known algorithms for this problem have the same worse-case
+asymptotic running time as the best single-source algorithms.
+
+All-pairs shortest-paths problem: Find a shortest path from u to v for every pair of
+vertices u and v. Although we can solve this problem by running a single-source
+algorithm once from each vertex, we can usually solve it faster using all-pairs
+algorithms.
+
+Optimal substructure of a shortest path
+---------------------------------------
+
+Shortest-paths algorithms typically rely on the property that a shortest path between
+two vertices contains other shortest paths within it; i.e., the subpaths of shortest
+paths are also shortest paths themselves. Optimal substructure is one of the key
+indicators that dynamic programming and the greedy method might apply.
+
+Negative-weight edges
+---------------------
+
+If the graph G = (V, E) contains no negative-weight cycles reachable from the source s,
+then for all v in V, the shortest-path weight delta(s, v) remains well defined, even if
+it has a negative value. If the graph contains a negative-weight cycle reachable from s,
+however, shortest-path weights are not well defined. No path from s to a vertex on the
+cycle can be a shortest path---we can always find a path with lower weight by following
+the proposed "shortest" path and then traversing the negative-weight cycle. If there is
+a negative-weight cycle on some path from s to v, we define delta(s, v) = -float("inf").
+
+Cycles
+------
+
+A shortest path cannot contain a negative-weight cycle. Nor can it contain a
+positive-weight cycle, since removing the cycle from the path produces a path with the
+same source and destination vertices and a lower path weight.
+
+That leaves only 0-weight cycles. We can remove a 0-weight cycle from any path to
+produce another path whose weight is the same. Thus, if there is a shortest path from a
+source vertex s to a destination vertex v that contains a 0-weight cycle, then there is
+another shortest path from s to v without this cycle. As along as a shortest path has
+0-weight cycles, we can repeatedly remove these cycles from the path until we have a
+shortest path that is cycle-free. There, without loss of generality we can assume that
+when we are finding shortest paths, they have no cycles, i.e., they are simple paths.
+Since any acyclic path in a graph G = (V, E) contains at most |V| distinct vertices, it
+also contains at most |V| - 1 edges. Thus, we can restrict our attention to shortest
+paths of at most |V| - 1 edges.
+
+Representing shortest paths
+---------------------------
+
+We represent shortest paths similarly to how we represented breadth-first trees. Give a
+graph G = (V, E), we maintain for each vertex v in V a predecessor v.p that is either
+another vertex or None. THe shortest-paths algorithms set the p attributes so that the
+chain of predecessors originating at a vertex v runs backwards along a shortest path
+from s to v. THus, given a vertex v for which v.p != None, the print_path() procedure
+will print a shortest path from s to v.
+
+In the midst of executing a shortest-paths algorithm, however, the p values might not
+indicate shortest paths. At termination, however, the predecessor subgraph induced by
+the p values is a "shortest-paths tree"---informally, a rooted tree containing a
+shortest path from the source s to every vertex that is reachable from s. A
+shortest-paths tree is like the breadth-first tree, but it contains shortest paths from
+from the source defined in terms of edge weights instead of number of edges. A
+shortest-paths tree rooted at s is a directed subgraph G' = (V', E'), where V' is a
+subset of V and E' is a subset of E, such that
+
+1. V' is the set of vertices reachable from s in G,
+
+2. G' forms a rooted tree with root s, and
+
+3. for all v in V', the unique simple path from s to v in G' is a shortest path from s
+to v in G.
+
+Shortest paths are not necessarily unique, and neither are shortest-paths trees.
+
+Relaxation
+----------
+
+For each vertex v in V, we maintain an attribute v.d, which is an upper bound on the
+weight of a shortest path from source s to v. We call v.d a shortest-path estimate. The
+process of relaxing an edge (u, v) consists of testing whether we can improve the
+shortest path to v found so far by going through u and, if so, updating v.d and v.p. A
+relaxation step may decrease the value of the shortest path estimate v.d and update v's
+predecessor attribute v.p.
+
+Relaxation is the only means by which shortest-path estimates and predecessors change.
+Dijkstra's algorithm and the shortest-paths algorithm for DAGs relax each edge exactly
+once. The Bellman-Ford algorithm realxes each edge |V| - 1 times.
+
+Properties of shortest paths and relaxation
+-------------------------------------------
+
+Triangle inequality
+    For any edge (u, v) in E, we have delta(s, v) <= delta(s, u) + w(u, v).
+
+Upper-bound property
+    We always have v.d >= delta(s, v) for all vertices v in V, and once v.d achieves the
+value delta(s, v), it never changes.
+
+No-path property
+    If there is no path from s to v, then we always have v.d = delta(s, v) =
+float("inf").
+
+Convergence property
+    if s -> u -> v is a shortest path in G for som u, v, in V, anad if u.d = delta(s, u)
+at any time prior to relaxing edge (u, v), then v.d = delta(s, v) at all times
+afterward.
+
+Path-relaxation property
+    If p = <v0, v1, ..., vk> is a shortest path from s = v0 to vk, and we relax the
+edges of p in the order (v0, v1), (v1, v2), ..., (v_(k - 1), vk), then v_k.d =
+delta(s, vk). This property holds regardless of any other relaxation steps that occur,
+even if they are intermixed with relaxations of the edges of p.
+
+Predecessor-subgraph property
+    Once v.d = delta(s, v) for all v in V, the predecessor subgraph is a shortest-paths
+tree rooted at s.
