@@ -63,16 +63,16 @@ def gcd_binary(a, b):
 
 
 def gcd_multi(*args):
-    c_list, i = [None] * len(args), -1
+    clist, i = [None] * len(args), -1
     while len(args) > 2:
         d, x, y = gcd(args[-2], args[-1])
-        c_list[i] = y if c_list[i] is None else c_list[i] * y
+        clist[i] = y if clist[i] is None else clist[i] * y
         if abs(i - 1) != len(args):
-            c_list[i - 1] = x if c_list[i - 1] is None else c_list[i - 1] * x
+            clist[i - 1] = x if clist[i - 1] is None else clist[i - 1] * x
         args = args[:-2] + (d,)
         i -= 1
     d, x, y = gcd(args[0], args[1])
-    c_list[0] = x
-    for i in range(1, len(c_list)):
-        c_list[i] = y if c_list[i] is None else c_list[i] * y
-    return d, c_list
+    clist[0] = x
+    for i in range(1, len(clist)):
+        clist[i] = y if clist[i] is None else clist[i] * y
+    return d, clist
