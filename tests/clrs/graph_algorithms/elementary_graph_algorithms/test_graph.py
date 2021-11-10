@@ -2,7 +2,7 @@
 from clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 
 
-def test_graph_tranpose():
+def test_graph_transpose():
     num_vertices = 6
     graph = Graph(num_vertices, True)
     graph.add_edge(0, 3)

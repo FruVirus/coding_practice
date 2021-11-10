@@ -149,8 +149,7 @@ class Graph:
             self.weights[(v, u)] = w
 
     def add_vertex(self, v):
-        if v not in self.vertices:
-            self.vertices[v] = Node(v)
+        self.vertices[v] = Node(v)
 
     def connected_components(self):
         self.make_set()

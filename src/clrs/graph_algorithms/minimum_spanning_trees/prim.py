@@ -52,43 +52,40 @@ class MST(Graph):
     def prim(self):
         root, mst = 0, set()
         for v in self.vertices.values():
-            v.key, v.p, v.bit = float("inf"), None, 0
+            v.key, v.p = float("inf"), None
         self.vertices[root].key = 0
         q = HeapQueue([(v.key, v.k) for v in self.vertices.values()], False)
         while q.heap_size != 0:
             u = q.extract()
             u_node, v = self.vertices[u[1]], self.adj_list[u[1]].head
             while v is not None:
-                if v.bit == 0 and self.weights[(u[1], v.k)] < v.key:
-                    v.p, i = u_node, q.a.index((v.key, v.k))
-                    v.key = self.weights[(u[1], v.k)]
-                    q.change(i, (v.key, v.k))
-                v.bit, v = 1, v.next
+                v_node = self.vertices[v.k]
+                if (v_node.key, v.k) in q.a and self.weights[(u[1], v.k)] < v_node.key:
+                    v_node.p, i = u_node, q.a.index((v_node.key, v.k))
+                    v_node.key = self.weights[(u[1], v.k)]
+                    q.change(i, (v_node.key, v.k))
+                v = v.next
         for v in [v for k, v in self.vertices.items() if k != root]:
             mst.add((v.k, v.p.k))
         return mst
 
 
-num_vertices = 4
+num_vertices = 9
 graph = MST(num_vertices)
-graph.add_edge(2, 3, 7)
-graph.add_edge(1, 3, 4)
-graph.add_edge(0, 2, 8)
 graph.add_edge(0, 1, 4)
-
-# graph.add_edge(1, 2, 8)
-# graph.add_edge(1, 7, 11)
-# graph.add_edge(2, 3, 7)
-# graph.add_edge(2, 5, 4)
-# graph.add_edge(2, 8, 2)
-# graph.add_edge(3, 4, 9)
-# graph.add_edge(3, 5, 14)
-# graph.add_edge(4, 5, 10)
-# graph.add_edge(5, 6, 2)
-# graph.add_edge(6, 7, 1)
-# graph.add_edge(6, 8, 6)
-# graph.add_edge(7, 8, 7)
+graph.add_edge(0, 7, 8)
+graph.add_edge(1, 2, 8)
+graph.add_edge(1, 7, 11)
+graph.add_edge(2, 3, 7)
+graph.add_edge(2, 5, 4)
+graph.add_edge(2, 8, 2)
+graph.add_edge(3, 4, 9)
+graph.add_edge(3, 5, 14)
+graph.add_edge(4, 5, 10)
+graph.add_edge(5, 6, 2)
+graph.add_edge(6, 7, 1)
+graph.add_edge(6, 8, 6)
+graph.add_edge(7, 8, 7)
 mst = graph.prim()
-print(mst)
-# assert mst == {(0, 1), (1, 2), (3, 4), (2, 3), (6, 7), (5, 6), (2, 5), (2, 8)}
+assert mst == {(2, 1), (6, 5), (4, 3), (7, 6), (1, 0), (8, 2), (3, 2), (5, 2)}
 assert len(mst) == num_vertices - 1
