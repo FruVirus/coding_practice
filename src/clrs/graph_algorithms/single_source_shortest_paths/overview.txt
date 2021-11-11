@@ -113,7 +113,7 @@ predecessor attribute v.p.
 
 Relaxation is the only means by which shortest-path estimates and predecessors change.
 Dijkstra's algorithm and the shortest-paths algorithm for DAGs relax each edge exactly
-once. The Bellman-Ford algorithm realxes each edge |V| - 1 times.
+once. The Bellman-Ford algorithm relaxes each edge |V| - 1 times.
 
 Properties of shortest paths and relaxation
 -------------------------------------------
