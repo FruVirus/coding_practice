@@ -19,6 +19,24 @@ The total number of paths in a DAG can be computed by counting the number of pat
 start point is at each vertex v. Assume that initially, we have v.paths = 0 for all v in
 V.
 
+An interesting application of single-source shortest paths in DAGs arises in determining
+critical paths in PERT chart analysis. Edges represent jobs to be performed, and edge
+weights represent the time required to perform particular jobs. If edge (u, v) enters
+vertex v and edge (v, x) leaves v, then job (u, v) must be performed before job (v, x).
+A path through this DAG represents a sequences of jobs that must be performed in a
+particular order. A critical path is a longest path through the DAG, corresponding to
+the longest time to perform any sequence of jobs. Thus, the weight of a critical path
+provides a lower bound on the total time to perform all the jobs. We can find a critical
+path by either:
+
+1. negating the edge weights and running dag(), or
+
+2. running dag(), with the modification that we replace float("inf") by -float("inf") in
+init_single_source() and ">" by "<" in relax().
+
+After the process, calling print_path(s, v) will print the critical path between the
+source s and a given vertex v in the graph.
+
 Complexity
 ==========
 
