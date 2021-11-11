@@ -163,6 +163,11 @@ class Graph:
             x.p = self.find_set(x.p)
         return x.p
 
+    def init_single_source(self, s):
+        for v in self.vertices.values():
+            v.d, v.p = float("inf"), None
+        self.vertices[s].d = 0
+
     @staticmethod
     def link(x, y):
         if x.rank > y.rank:
@@ -186,6 +191,11 @@ class Graph:
         else:
             self.print_path(s.k, v.p.k)
             print(v.k)
+
+    def relax(self, u, v):
+        w = self.weights[(u.k, v.k)]
+        if v.d > u.d + w:
+            v.d, v.p = u.d + w, u
 
     def same_component(self, u, v):
         return self.find_set(self.vertices[u]) is self.find_set(self.vertices[v])

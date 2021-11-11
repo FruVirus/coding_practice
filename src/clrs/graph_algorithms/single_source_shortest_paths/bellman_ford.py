@@ -53,16 +53,6 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 
 
 class BellmanFord(Graph):
-    def init_single_source(self, s):
-        for v in self.vertices.values():
-            v.d, v.p = float("inf"), None
-        self.vertices[s].d = 0
-
-    def relax(self, u, v):
-        w = self.weights[(u.k, v.k)]
-        if v.d > u.d + w:
-            v.d, v.p = u.d + w, u
-
     def bellman_ford(self, s):
         self.init_single_source(s)
         for _ in range(len(self.vertices) - 1):
