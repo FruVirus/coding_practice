@@ -12,17 +12,29 @@ vertices. If the DAG contains a path from vertex u to vertex v, then u precedes 
 topological sort. We make just one pass over the vertices in the topologically sorted
 order. As we process each vertex, we relax each edge that leaves the vertex.
 
+After calling bellman_ford(), calling print_path(s, v) will print the shortest path
+between the source s and a given vertex v in the graph.
+
+The total number of paths in a DAG can be computed by counting the number of paths whose
+start point is at each vertex v. Assume that initially, we have v.paths = 0 for all v in
+V.
+
 Complexity
 ==========
 
-XXX
+top_sort() takes Theta(V + E) time. init_single_source() takes Theta(V) time. The outer
+while-loop makes one iteration per vertex. Altogether, the inner while-loop relaxes each
+edge exactly once (using aggregate analysis). Because each iteration of the inner
+while-loop takes Theta(1) time, the total running time is Theta(V + E), which is linear
+in the size of an adjacency-list representation of the graph.
 
 Time
 ----
 
-bellman_ford(): O(|V| * |E|), O(|V|^3) for complete graphs
+dag(): Theta(|V| + |E|)
 init_single_source(): Theta(|V|)
-relax(): O(1)
+num_total_paths(): O(|V| + |E|)
+top_sort(): O(|V| + |E|)
 """
 
 # Repository Library
@@ -40,3 +52,19 @@ class DAG(DFSGraph):
                 self.relax(u_node, self.vertices[v.k])
                 v = v.next
             node = node.next
+
+    def num_total_paths(self):
+        for v in self.vertices.values():
+            v.paths = 0
+        self.top_sort()
+        node, top_sort = self.top_sort_ll.head, []
+        while node is not None:
+            top_sort.append(node.k)
+            node = node.next
+        for u in reversed(top_sort):
+            u_node, v = self.vertices[u], self.adj_list[u].head
+            while v is not None:
+                v_node = self.vertices[v.k]
+                v_node.paths = u_node.paths + 1 + v_node.paths
+                v = v.next
+        return sum(v.paths for v in self.vertices.values())

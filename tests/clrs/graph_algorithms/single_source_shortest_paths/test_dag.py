@@ -30,3 +30,4 @@ def test_dag():
             assert v.d == 5 and v.p.k == 3
         if v.k == 5:
             assert v.d == 3 and v.p.k == 4
+    assert graph.num_total_paths() == 10
