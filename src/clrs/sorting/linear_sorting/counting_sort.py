@@ -42,12 +42,12 @@ def counting_sort(a, k=None, exp=None, base=None):
     n, base = len(a), base or (k + 1)
     b, c = [0] * n, [0] * base
     for i in range(n):
-        index = a[i] if k is not None else (a[i] // exp) % base
+        index = (a[i] // exp) % base if k is None else a[i]
         c[index] += 1
     for i in range(1, base):
         c[i] += c[i - 1]
     for i in range(n - 1, -1, -1):
-        index = a[i] if k is not None else (a[i] // exp) % base
+        index = (a[i] // exp) % base if k is None else a[i]
         b[c[index] - 1] = a[i]
         c[index] -= 1
     return b
