@@ -37,8 +37,7 @@ O(n)
 
 
 def counting_sort(a, k=None, exp=None, base=None):
-    if k is None:
-        assert exp is not None and base is not None
+    assert k or (exp and base)
     n, base = len(a), base or (k + 1)
     b, c = [0] * n, [0] * base
     for i in range(n):
