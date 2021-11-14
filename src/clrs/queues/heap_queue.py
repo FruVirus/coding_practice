@@ -85,11 +85,9 @@ class HeapQueue:
     def extract(self):
         assert self.heap_size > 0
         self.heap_size -= 1
-        x = self.a[0]
-        self.a[0] = self.a[self.heap_size]
+        self._exchange(0, self.heap_size)
         self.heapify(0)
-        self.a.pop(-1)
-        return x
+        return self.a.pop(-1)
 
     def get(self):
         return self.a[0]
