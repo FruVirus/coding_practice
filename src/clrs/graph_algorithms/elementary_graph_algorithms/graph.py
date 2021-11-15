@@ -150,8 +150,8 @@ class Graph:
 
     def connected_components(self):
         self.make_set()
-        for edge in self.edges:
-            u, v = self.vertices[edge[0]], self.vertices[edge[1]]
+        for u, v in self.edges:
+            u, v = self.vertices[u], self.vertices[v]
             if self.find_set(u) != self.find_set(v):
                 self.union(u, v)
 
@@ -162,8 +162,7 @@ class Graph:
 
     def init_single_source(self, s):
         for v in self.vertices.values():
-            v.d, v.p = float("inf"), None
-        self.vertices[s].d = 0
+            v.d, v.p = float("inf") if v.k != s else 0, None
 
     @staticmethod
     def link(x, y):
