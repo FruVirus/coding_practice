@@ -211,7 +211,7 @@ class DFSGraph(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
         self.scc_list = []
-        self.stack = Stack(self.num_vertices)
+        self.stack = Stack(num_vertices)
         self.time = 0
         self.top_sort_ll = None
 

@@ -91,7 +91,7 @@ from src.clrs.queues.queue import Queue
 class BFSGraph(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
-        self.queue = Queue(self.num_vertices)
+        self.queue = Queue(num_vertices)
 
     def bfs(self, s):
         for k, v in self.vertices.items():
