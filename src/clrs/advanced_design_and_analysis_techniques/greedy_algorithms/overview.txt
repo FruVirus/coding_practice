@@ -1,0 +1,10 @@
+16 Greedy Algorithms
+====================
+
+Like dynamic-programming algorithms, greedy algorithms typically apply to optimization
+problems in which we make a set of choices in order to arrive at an optimal solution.
+The idea of a greedy algorithm is to make each choice in a locally optimal manner. A
+greedy approach provides an optimal solution for many problems much more quickly than
+would a dynamic-programming approach. We cannot always easily tell whether a greedy
+approach will be effective, however. In particular, greedy algorithms do not always
+yield globally-optimal solutions.

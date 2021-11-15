@@ -1,0 +1,9 @@
+15 Dynamic Programming
+======================
+
+Dynamic programming typically applies to optimization problems in which we make a set of
+choices in order to arrive at an optimal solution. As we make each choice, sub-problems
+of the same form often arise. Dynamic programming is effective when a given sub-problem
+may arise from more than one partial set of choices; the key technique is to store the
+solution to each sub-problem in case it should reappear. This simple idea can sometimes
+transform exponential-time algorithms into polynomial-time algorithms.
