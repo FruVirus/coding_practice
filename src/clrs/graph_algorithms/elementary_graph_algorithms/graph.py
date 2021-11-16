@@ -124,12 +124,11 @@ from src.clrs.lists.singly_linked_list import SLL, Node
 class Graph:
     def __init__(self, num_vertices, directed=False):
         self.adj_list = [SLL() for _ in range(num_vertices)]
-        self.adj_list_transpose = [SLL() for _ in range(num_vertices)]
         self.adj_matrix = [[0] * num_vertices for _ in range(num_vertices)]
-        self.adj_matrix_transpose = [[0] * num_vertices for _ in range(num_vertices)]
         self.directed = directed
         self.edges = set()
         self.is_dag = True
+        self.num_vertices = num_vertices
         self.vertices = {}
         self.weights = {}
 
@@ -199,6 +198,10 @@ class Graph:
 
     def transpose(self):
         assert self.directed
+        self.adj_list_transpose = [SLL() for _ in range(self.num_vertices)]
+        self.adj_matrix_transpose = [
+            [0] * self.num_vertices for _ in range(self.num_vertices)
+        ]
         for u in self.vertices:
             v = self.adj_list[u].head
             while v is not None:
