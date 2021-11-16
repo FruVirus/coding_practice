@@ -90,7 +90,7 @@ from src.clrs.queues.queue import Queue
 
 class BFS(Graph):
     def bfs(self, s):
-        for k, v in self.vertices.items():
+        for v in self.vertices.values():
             v.c, v.d, v.p = 0, float("inf"), None
         self.vertices[s].c, self.vertices[s].d = 1, 0
         q = Queue(self.num_vertices)
