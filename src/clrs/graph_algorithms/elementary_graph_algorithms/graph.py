@@ -47,6 +47,12 @@ as the adjacency-matrix representation, adjacency matrices are simpler, and so w
 prefer them when graphs are reasonably small. Moreover, adjacency matrices carry a
 further advantage for unweighted graphs: they require only one bit per entry.
 
+The adjacency list representation provides a compact way to represent sparse
+graphs---those for which |E| is much less than |V^2|---it is usually the method of
+choice. We may prefer an adjacency matrix representation, however, when the graph is
+dense---|E| is close to |V^2|---or when we need to be able to tell quickly if there is
+an edge connecting two given vertices.
+
 Graphs can also be weighted. The graph edges can each have an associated weight,
 typically given by a weight function. We simply store the weight w(u, v) of the edge
 (u, v) in E with vertex v in u's adjacency list. An adjacency matrix can represent a
