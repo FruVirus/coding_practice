@@ -58,9 +58,9 @@ class MST(Graph):
     def kruskal(self):
         mst = set()
         self.make_set()
-        for edge in dict(sorted(self.weights.items(), key=lambda x: x[1])):
-            u, v = self.vertices[edge[0]], self.vertices[edge[1]]
-            if self.find_set(u) != self.find_set(v):
-                mst.add(edge)
+        for u, v in dict(sorted(self.weights.items(), key=lambda x: x[1])):
+            u, v = self.vertices[u], self.vertices[v]
+            if self.find_set(u) is not self.find_set(v):
+                mst.add((u.k, v.k))
                 self.union(u, v)
         return mst

@@ -56,10 +56,10 @@ class BellmanFord(Graph):
     def bellman_ford(self, s):
         self.init_single_source(s)
         for _ in range(len(self.vertices) - 1):
-            for edge in self.edges:
-                self.relax(self.vertices[edge[0]], self.vertices[edge[1]])
-        for edge in self.edges:
-            u, v = self.vertices[edge[0]], self.vertices[edge[1]]
+            for u, v in self.edges:
+                self.relax(self.vertices[u], self.vertices[v])
+        for u, v in self.edges:
+            u, v = self.vertices[u], self.vertices[v]
             if v.d > u.d + self.weights[(u.k, v.k)]:
                 return False
         return True

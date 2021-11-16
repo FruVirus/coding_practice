@@ -82,7 +82,6 @@ class DAG(DFS):
         for u in reversed(top_sort):
             u_node, v = self.vertices[u], self.adj_list[u].head
             while v is not None:
-                v_node = self.vertices[v.k]
-                v_node.paths = u_node.paths + 1 + v_node.paths
+                self.vertices[v.k].paths += 1 + u_node.paths
                 v = v.next
         return sum(v.paths for v in self.vertices.values())
