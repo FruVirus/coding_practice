@@ -210,10 +210,7 @@ from src.clrs.stacks.stack import Stack
 class DFS(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
-        self.scc_list = []
-        self.stack = Stack(num_vertices)
-        self.time = 0
-        self.top_sort_ll = None
+        self.scc_list, self.time, self.top_sort_ll = [], 0, None
 
     def _get_vertex_list(self, transpose=False):
         if not transpose:
@@ -223,11 +220,10 @@ class DFS(Graph):
         ]
 
     def dfs(self, recurse=False, return_scc=False, transpose=False):
-        self.is_dag, self.top_sort_ll = True, SLL()
-        vertex_list = self._get_vertex_list(transpose)
+        self.top_sort_ll = SLL()
         for u in self.vertices.values():
             u.c, u.p = 0, None
-        for u in vertex_list:
+        for u in self._get_vertex_list(transpose):
             u_node = self.vertices[u]
             if u_node.c == 0:
                 if return_scc:
@@ -256,18 +252,19 @@ class DFS(Graph):
     def dfs_stack(self, u, u_node, transpose=False):
         self.time += 1
         u_node.c, u_node.d = 1, self.time
-        self.stack.push(u)
-        while not self.stack.empty():
-            u = self.stack.a[self.stack.top]
+        s = Stack(self.num_vertices)
+        s.push(u)
+        while not s.empty():
+            u = s.a[s.top]
             u_node, v = self.vertices[u], self.first_white(u, transpose)
             self.time += 1
             if v is None:
                 u_node.c, u_node.f = 2, self.time
                 self.top_sort_ll.insert(Node(u_node.k))
-                self.stack.pop()
+                s.pop()
             else:
                 v.c, v.d, v.p = 1, self.time, u_node
-                self.stack.push(v.k)
+                s.push(v.k)
 
     def first_white(self, s, transpose=False):
         v = self.adj_list_transpose[s].head if transpose else self.adj_list[s].head
