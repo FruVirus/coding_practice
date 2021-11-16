@@ -88,7 +88,7 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 from src.clrs.queues.queue import Queue
 
 
-class BFSGraph(Graph):
+class BFS(Graph):
     def __init__(self, num_vertices, directed=False):
         super().__init__(num_vertices, directed)
         self.queue = Queue(num_vertices)

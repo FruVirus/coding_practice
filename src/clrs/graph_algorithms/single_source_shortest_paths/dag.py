@@ -56,10 +56,10 @@ top_sort(): O(|V| + |E|)
 """
 
 # Repository Library
-from src.clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFSGraph
+from src.clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFS
 
 
-class DAG(DFSGraph):
+class DAG(DFS):
     def dag(self, s):
         self.top_sort()
         self.init_single_source(s)

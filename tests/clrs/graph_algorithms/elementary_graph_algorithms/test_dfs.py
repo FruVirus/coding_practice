@@ -1,10 +1,10 @@
 # Repository Library
-from clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFSGraph
+from clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFS
 
 
-def test_dfsgraph():
+def test_dfs():
     num_vertices = 6
-    graph = DFSGraph(num_vertices, True)
+    graph = DFS(num_vertices, True)
     graph.add_edge(0, 3)
     graph.add_edge(0, 1)
     graph.add_edge(1, 4)
@@ -32,7 +32,7 @@ def test_dfsgraph():
     graph.top_sort(recurse=True)
     assert not graph.is_dag
     num_vertices = 6
-    graph = DFSGraph(num_vertices, True)
+    graph = DFS(num_vertices, True)
     graph.add_edge(0, 3)
     graph.add_edge(0, 1)
     graph.add_edge(1, 4)
@@ -43,7 +43,7 @@ def test_dfsgraph():
     graph.top_sort(recurse=True)
     assert graph.is_dag
     num_vertices = 6
-    graph = DFSGraph(num_vertices, True)
+    graph = DFS(num_vertices, True)
     graph.add_edge(0, 3)
     graph.add_edge(0, 1)
     graph.add_edge(1, 4)
@@ -58,7 +58,7 @@ def test_dfsgraph():
         node = node.next
     assert top_sort == [2, 5, 0, 1, 4, 3]
     num_vertices = 6
-    graph = DFSGraph(num_vertices, True)
+    graph = DFS(num_vertices, True)
     graph.add_edge(0, 3)
     graph.add_edge(0, 1)
     graph.add_edge(1, 4)
@@ -88,7 +88,7 @@ def test_dfsgraph():
     graph.top_sort()
     assert not graph.is_dag
     num_vertices = 6
-    graph = DFSGraph(num_vertices, True)
+    graph = DFS(num_vertices, True)
     graph.add_edge(0, 3)
     graph.add_edge(0, 1)
     graph.add_edge(1, 4)
@@ -99,7 +99,7 @@ def test_dfsgraph():
     graph.top_sort()
     assert graph.is_dag
     num_vertices = 6
-    graph = DFSGraph(num_vertices, True)
+    graph = DFS(num_vertices, True)
     graph.add_edge(0, 3)
     graph.add_edge(0, 1)
     graph.add_edge(1, 4)
@@ -114,7 +114,7 @@ def test_dfsgraph():
         node = node.next
     assert top_sort == [2, 5, 0, 1, 4, 3]
     num_vertices = 8
-    graph = DFSGraph(num_vertices, True)
+    graph = DFS(num_vertices, True)
     graph.add_edge(0, 1)
     graph.add_edge(1, 2)
     graph.add_edge(1, 4)
@@ -132,7 +132,7 @@ def test_dfsgraph():
     graph.scc()
     assert graph.scc_list == [0, 2, 5, 7]
     num_vertices = 8
-    graph = DFSGraph(num_vertices, True)
+    graph = DFS(num_vertices, True)
     graph.add_edge(0, 1)
     graph.add_edge(1, 2)
     graph.add_edge(1, 4)
