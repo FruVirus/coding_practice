@@ -91,7 +91,8 @@ from src.clrs.queues.queue import Queue
 class BFS(Graph):
     def bfs(self, s):
         for k, v in self.vertices.items():
-            v.c, v.d, v.p = (0, float("inf"), None) if k != s else (1, 0, None)
+            v.c, v.d, v.p = 0, float("inf"), None
+        self.vertices[s].c, self.vertices[s].d = 1, 0
         q = Queue(self.num_vertices)
         q.enqueue(s)
         while not q.empty():
