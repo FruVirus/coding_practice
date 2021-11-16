@@ -97,8 +97,7 @@ class BFS(Graph):
         q.enqueue(s)
         while not q.empty():
             u = q.dequeue()
-            u_node = self.vertices[u]
-            v = self.adj_list[u].head
+            u_node, v = self.vertices[u], self.adj_list[u].head
             while v is not None:
                 v_node = self.vertices[v.k]
                 if v_node.c == 0:
