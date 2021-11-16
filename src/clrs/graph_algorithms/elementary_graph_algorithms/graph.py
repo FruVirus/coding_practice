@@ -152,7 +152,7 @@ class Graph:
         self.make_set()
         for u, v in self.edges:
             u, v = self.vertices[u], self.vertices[v]
-            if self.find_set(u) != self.find_set(v):
+            if self.find_set(u) is not self.find_set(v):
                 self.union(u, v)
 
     def find_set(self, x):
