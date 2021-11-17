@@ -239,7 +239,7 @@ class DFS(Graph):
             v = v.next
         time += 1
         u_node.c, u_node.f = 2, time
-        top_sort.insert(Node(u_node.k))
+        top_sort.insert(Node(u))
         return time
 
     def dfs_stack(self, u_node, time, top_sort, transpose=False):
