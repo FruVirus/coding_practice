@@ -216,21 +216,19 @@ class DFS(Graph):
         ]
 
     def dfs(self, recurse=False, return_scc=False, transpose=False):
-        scc_list, time, top_sort_ll = [], 0, SLL()
+        scc, time, top_sort = [], 0, SLL()
+        dfs_ = self.dfs_recurse if recurse else self.dfs_stack
         for u in self.vertices.values():
             u.c, u.p = 0, None
         for u in self._get_vertex_list(transpose):
             u_node = self.vertices[u]
             if u_node.c == 0:
                 if return_scc:
-                    scc_list.append(u)
-                if recurse:
-                    time = self.dfs_recurse(u, u_node, time, top_sort_ll, transpose)
-                else:
-                    time = self.dfs_stack(u, u_node, time, top_sort_ll, transpose)
-        return scc_list, top_sort_ll
+                    scc.append(u)
+                time = dfs_(u, u_node, time, top_sort, transpose)
+        return scc, top_sort
 
-    def dfs_recurse(self, u, u_node, time, top_sort_ll, transpose=False):
+    def dfs_recurse(self, u, u_node, time, top_sort, transpose=False):
         time += 1
         u_node.c, u_node.d = 1, time
         v = self.adj_list_transpose[u].head if transpose else self.adj_list[u].head
@@ -238,16 +236,16 @@ class DFS(Graph):
             v_node = self.vertices[v.k]
             if v_node.c == 0:
                 v_node.p = u_node
-                time = self.dfs_recurse(v.k, v_node, time, top_sort_ll, transpose)
+                time = self.dfs_recurse(v.k, v_node, time, top_sort, transpose)
             if v_node.c == 1:
                 self.is_dag = False
             v = v.next
         time += 1
         u_node.c, u_node.f = 2, time
-        top_sort_ll.insert(Node(u_node.k))
+        top_sort.insert(Node(u_node.k))
         return time
 
-    def dfs_stack(self, u, u_node, time, top_sort_ll, transpose=False):
+    def dfs_stack(self, u, u_node, time, top_sort, transpose=False):
         time += 1
         u_node.c, u_node.d = 1, time
         s = Stack(self.num_vertices)
@@ -258,7 +256,7 @@ class DFS(Graph):
             time += 1
             if v is None:
                 u_node.c, u_node.f = 2, time
-                top_sort_ll.insert(Node(u_node.k))
+                top_sort.insert(Node(u_node.k))
                 s.pop()
             else:
                 v.c, v.d, v.p = 1, time, u_node
