@@ -213,15 +213,14 @@ class DFS(Graph):
             return sorted(self.vertices.values(), key=lambda x: x.f, reverse=True)
         return list(self.vertices.values())
 
-    def dfs(self, recurse=False, return_scc=False, transpose=False):
+    def dfs(self, recurse=False, transpose=False):
         scc, time, top_sort = [], 0, SLL()
         dfs_ = self.dfs_recurse if recurse else self.dfs_stack
         for v in self.vertices.values():
             v.c, v.p = 0, None
         for v in self._get_vertex(transpose):
             if v.c == 0:
-                if return_scc:
-                    scc.append(v.k)
+                scc.append(v.k)
                 time = dfs_(v, time, top_sort, transpose)
         return scc, top_sort
 
@@ -275,7 +274,7 @@ class DFS(Graph):
         assert self.directed
         self.dfs(recurse)
         self.transpose()
-        return self.dfs(recurse, True, True)
+        return self.dfs(recurse, True)
 
     def top_sort(self, recurse=False):
         return self.dfs(recurse)[1]
