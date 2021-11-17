@@ -252,7 +252,7 @@ class DFS(Graph):
             time += 1
             if v is None:
                 u_node.c, u_node.f = 2, time
-                top_sort.insert(Node(u_node.k))
+                top_sort.insert(Node(u))
                 s.pop()
             else:
                 v.c, v.d, v.p = 1, time, u_node
