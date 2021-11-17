@@ -208,35 +208,32 @@ from src.clrs.stacks.stack import Stack
 
 
 class DFS(Graph):
-    def _get_vertex_list(self, transpose=False):
-        if not transpose:
-            return list(self.vertices.keys())
-        return [
-            v.k for v in sorted(self.vertices.values(), key=lambda x: x.f, reverse=True)
-        ]
+    def _get_vertex(self, transpose=False):
+        if transpose:
+            return sorted(self.vertices.values(), key=lambda x: x.f, reverse=True)
+        return list(self.vertices.values())
 
     def dfs(self, recurse=False, return_scc=False, transpose=False):
         scc, time, top_sort = [], 0, SLL()
         dfs_ = self.dfs_recurse if recurse else self.dfs_stack
         for u in self.vertices.values():
             u.c, u.p = 0, None
-        for u in self._get_vertex_list(transpose):
-            u_node = self.vertices[u]
+        for u_node in self._get_vertex(transpose):
             if u_node.c == 0:
                 if return_scc:
-                    scc.append(u)
-                time = dfs_(u, u_node, time, top_sort, transpose)
+                    scc.append(u_node.k)
+                time = dfs_(u_node, time, top_sort, transpose)
         return scc, top_sort
 
-    def dfs_recurse(self, u, u_node, time, top_sort, transpose=False):
+    def dfs_recurse(self, u_node, time, top_sort, transpose=False):
         time += 1
-        u_node.c, u_node.d = 1, time
+        u, u_node.c, u_node.d = u_node.k, 1, time
         v = self.adj_list_transpose[u].head if transpose else self.adj_list[u].head
         while v is not None:
             v_node = self.vertices[v.k]
             if v_node.c == 0:
                 v_node.p = u_node
-                time = self.dfs_recurse(v.k, v_node, time, top_sort, transpose)
+                time = self.dfs_recurse(v_node, time, top_sort, transpose)
             if v_node.c == 1:
                 self.is_dag = False
             v = v.next
@@ -245,9 +242,9 @@ class DFS(Graph):
         top_sort.insert(Node(u_node.k))
         return time
 
-    def dfs_stack(self, u, u_node, time, top_sort, transpose=False):
+    def dfs_stack(self, u_node, time, top_sort, transpose=False):
         time += 1
-        u_node.c, u_node.d = 1, time
+        u, u_node.c, u_node.d = u_node.k, 1, time
         s = Stack(self.num_vertices)
         s.push(u)
         while not s.empty():
