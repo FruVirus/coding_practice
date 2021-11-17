@@ -216,13 +216,13 @@ class DFS(Graph):
     def dfs(self, recurse=False, return_scc=False, transpose=False):
         scc, time, top_sort = [], 0, SLL()
         dfs_ = self.dfs_recurse if recurse else self.dfs_stack
-        for u in self.vertices.values():
-            u.c, u.p = 0, None
-        for u_node in self._get_vertex(transpose):
-            if u_node.c == 0:
+        for v in self.vertices.values():
+            v.c, v.p = 0, None
+        for v in self._get_vertex(transpose):
+            if v.c == 0:
                 if return_scc:
-                    scc.append(u_node.k)
-                time = dfs_(u_node, time, top_sort, transpose)
+                    scc.append(v.k)
+                time = dfs_(v, time, top_sort, transpose)
         return scc, top_sort
 
     def dfs_recurse(self, u_node, time, top_sort, transpose=False):
