@@ -205,15 +205,12 @@ class Graph:
     def transpose(self):
         assert self.directed
         self.adj_list_transpose = [SLL() for _ in range(self.num_vertices)]
-        self.adj_matrix_transpose = [
-            [0] * self.num_vertices for _ in range(self.num_vertices)
-        ]
+        self.adj_matrix_transpose = list(map(list, zip(*self.adj_matrix)))
         for u in self.vertices:
             v = self.adj_list[u].head
             while v is not None:
                 self.adj_list_transpose[v.k].insert(Node(u))
                 v = v.next
-        self.adj_matrix_transpose = list(map(list, zip(*self.adj_matrix)))
 
     def union(self, x, y):
         self.link(self.find_set(x), self.find_set(y))
