@@ -211,7 +211,7 @@ class DFS(Graph):
     def _get_vertex(self, transpose=False):
         if transpose:
             return sorted(self.vertices.values(), key=lambda x: x.f, reverse=True)
-        return list(self.vertices.values())
+        return self.vertices.values()
 
     def dfs(self, recurse=False, transpose=False):
         scc, time, top_sort = [], 0, SLL()
