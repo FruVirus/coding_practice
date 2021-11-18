@@ -167,3 +167,25 @@ def test_dfs():
         (2, 5): "Tree/Forward",
         (3, 5): "Cross",
     }
+    num_vertices = 7
+    graph = DFS(num_vertices, False)
+    graph.add_edge(0, 6)
+    graph.add_edge(0, 1)
+    graph.add_edge(3, 4)
+    graph.add_edge(3, 5)
+    graph.add_edge(1, 2)
+    graph.add_edge(2, 3)
+    graph.add_edge(2, 0)
+    graph.add_edge(2, 5)
+    graph.add_edge(6, 2)
+    assert graph.get_edge_types() == {
+        (0, 1): "Tree/Forward",
+        (6, 2): "Back",
+        (1, 2): "Back",
+        (3, 4): "Tree/Forward",
+        (2, 0): "Back",
+        (0, 6): "Tree/Forward",
+        (2, 3): "Tree/Forward",
+        (2, 5): "Tree/Forward",
+        (3, 5): "Back",
+    }
