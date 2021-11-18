@@ -274,13 +274,14 @@ class DFS(Graph):
         self.dfs(recurse)
         edge_types = {}
         for u, v in self.edges:
-            u, v = self.vertices[u], self.vertices[v]
+            edge_type, u, v = None, self.vertices[u], self.vertices[v]
             if u.d < v.d < v.f < u.f:
-                edge_types[(u.k, v.k)] = "Tree/Forward"
+                edge_type = "Tree/Forward"
             elif v.d <= u.d < u.f <= v.f:
-                edge_types[(u.k, v.k)] = "Back"
+                edge_type = "Back"
             elif v.d < v.f < u.d < u.f:
-                edge_types[(u.k, v.k)] = "Cross"
+                edge_type = "Cross"
+            edge_types[(u.k, v.k)] = edge_type
         return edge_types
 
     def scc(self, recurse=False):
