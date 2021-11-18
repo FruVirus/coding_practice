@@ -54,7 +54,7 @@ kruskal(): O(E * lg(V))
 from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 
 
-class MST(Graph):
+class Kruskal(Graph):
     def kruskal(self):
         mst = set()
         self.make_set()

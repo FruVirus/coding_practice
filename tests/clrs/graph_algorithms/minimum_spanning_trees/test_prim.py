@@ -1,10 +1,10 @@
 # Repository Library
-from clrs.graph_algorithms.minimum_spanning_trees.prim import MST
+from clrs.graph_algorithms.minimum_spanning_trees.prim import Prim
 
 
 def test_prim():
     num_vertices = 9
-    graph = MST(num_vertices)
+    graph = Prim(num_vertices)
     graph.add_edge(0, 1, 4)
     graph.add_edge(0, 7, 8)
     graph.add_edge(1, 2, 8)

@@ -1,10 +1,10 @@
 # Repository Library
-from clrs.graph_algorithms.minimum_spanning_trees.kruskal import MST
+from clrs.graph_algorithms.minimum_spanning_trees.kruskal import Kruskal
 
 
 def test_kruskal():
     num_vertices = 9
-    graph = MST(num_vertices)
+    graph = Kruskal(num_vertices)
     graph.add_edge(0, 1, 4)
     graph.add_edge(0, 7, 8)
     graph.add_edge(1, 2, 8)

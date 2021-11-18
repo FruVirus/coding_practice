@@ -48,7 +48,7 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 from src.clrs.queues.heap_queue import HeapQueue
 
 
-class MST(Graph):
+class Prim(Graph):
     def prim(self):
         root, mst = 0, set()
         for v in self.vertices.values():
