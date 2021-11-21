@@ -88,8 +88,7 @@ class BST:
         return x
 
     def list(self, l, h):
-        result = [l]
-        node = self.successor(l)
+        result, node = [l], self.successor(l)
         while node is not None and node.key <= h:
             result.append(node.key)
             node = self.successor(node)
