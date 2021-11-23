@@ -65,6 +65,7 @@ class Prim(Graph):
                     v_node.key = self.weights[(u[1], v.k)]
                     q.change(i, (v_node.key, v.k))
                 v = v.next
-        for v in [v for v in self.vertices.values() if v.p is not None]:
-            mst.add((v.k, v.p.k))
+        for v in self.vertices.values():
+            if v.p is not None:
+                mst.add((v.k, v.p.k))
         return mst
