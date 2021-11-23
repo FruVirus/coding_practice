@@ -142,7 +142,7 @@ def count_send(firstval=0, step=1):
 
 
 # The next() call belows returns 2.1 as the value since that is what the generator was
-# initalized with.
+# initialized with.
 counter = count_send(2.1, 0.3)
 print(next(counter))
 
