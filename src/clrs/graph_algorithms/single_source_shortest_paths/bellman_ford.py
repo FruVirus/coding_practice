@@ -55,7 +55,7 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 class BellmanFord(Graph):
     def bellman_ford(self, s):
         self.init_single_source(s)
-        for _ in range(len(self.vertices) - 1):
+        for _ in range(self.num_vertices - 1):
             for u, v in self.edges:
                 self.relax(self.vertices[u], self.vertices[v])
         for u, v in self.edges:
