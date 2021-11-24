@@ -61,22 +61,22 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFS
 
 class DAG(DFS):
     def dag(self, s):
-        node = self.top_sort().head
+        u = self.top_sort().head
         self.init_single_source(s)
-        while node is not None:
-            u_node, v = self.vertices[node.k], self.adj_list[node.k].head
+        while u is not None:
+            u_node, v = self.vertices[u.k], self.adj_list[u.k].head
             while v is not None:
                 self.relax(u_node, self.vertices[v.k])
                 v = v.next
-            node = node.next
+            u = u.next
 
     def num_total_paths(self):
         for v in self.vertices.values():
             v.paths = 0
-        node, top_sort = self.top_sort().head, []
-        while node is not None:
-            top_sort.append(node.k)
-            node = node.next
+        u, top_sort = self.top_sort().head, []
+        while u is not None:
+            top_sort.append(u.k)
+            u = u.next
         for u in reversed(top_sort):
             u_node, v = self.vertices[u], self.adj_list[u].head
             while v is not None:
