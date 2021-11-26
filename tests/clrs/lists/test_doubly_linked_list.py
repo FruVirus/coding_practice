@@ -19,3 +19,15 @@ def test_dll():
     assert dll.head.prev is None
     x = dll.search(666)
     assert x is None
+    dll = DLL()
+    dll.insert(Node(9))
+    dll.insert(Node(16))
+    x = Node(4)
+    dll.insert(x)
+    dll.insert(Node(1))
+    dll.reverse()
+    assert dll.size() == 4
+    assert dll.head.k == 9
+    dll.delete(16)
+    dll.delete(9)
+    assert dll.head.k == 4

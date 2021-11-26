@@ -19,6 +19,7 @@ Complexity
 
 delete() takes O(1) time.
 insert() takes O(1) time.
+reverse() take O(n) time.
 search() takes O(n) time.
 """
 
@@ -41,3 +42,12 @@ class DLL(SLL):
         if self.head is not None:
             self.head.prev = x
         self.head, x.prev = x, None
+
+    def reverse(self):
+        curr, temp = self.head, None
+        while curr is not None:
+            temp = curr.prev
+            curr.next, curr.prev = curr.prev, curr.next
+            curr = curr.prev
+        if temp is not None:
+            self.head = temp.prev

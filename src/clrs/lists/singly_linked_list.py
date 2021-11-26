@@ -20,6 +20,7 @@ Complexity
 
 delete() takes O(n) time.
 insert() takes O(1) time.
+reverse() takes O(n) time.
 search() takes O(n) time.
 """
 
