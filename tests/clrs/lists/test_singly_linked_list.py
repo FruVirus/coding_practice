@@ -17,3 +17,15 @@ def test_sll():
     assert sll.head.next.k == 9
     x = sll.search(666)
     assert x is None
+    sll = SLL()
+    sll.insert(Node(9))
+    sll.insert(Node(16))
+    x = Node(4)
+    sll.insert(x)
+    sll.insert(Node(1))
+    sll.reverse()
+    assert sll.size() == 4
+    assert sll.head.k == 9
+    sll.delete(16)
+    sll.delete(9)
+    assert sll.head.k == 4

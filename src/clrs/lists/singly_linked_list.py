@@ -46,6 +46,13 @@ class SLL:
     def insert(self, x):
         x.next, self.head = self.head, x
 
+    def reverse(self):
+        curr, prev = self.head, None
+        while curr is not None:
+            next, curr.next = curr.next, prev
+            curr, prev = next, curr
+        self.head = prev
+
     def search(self, k):
         if not isinstance(k, (int, float)):
             return k
