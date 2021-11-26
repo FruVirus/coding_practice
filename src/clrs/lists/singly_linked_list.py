@@ -48,11 +48,11 @@ class SLL:
         x.next, self.head = self.head, x
 
     def reverse(self):
-        curr, prev = self.head, None
+        curr, temp = self.head, None
         while curr is not None:
-            next, curr.next = curr.next, prev
-            curr, prev = next, curr
-        self.head = prev
+            next, curr.next = curr.next, temp
+            curr, temp = next, curr
+        self.head = temp
 
     def search(self, k):
         if not isinstance(k, (int, float)):
