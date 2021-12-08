@@ -40,7 +40,7 @@ class BST:
         assert l < h
         count = self.rank(h) - self.rank(l)
         has_l = self.search(self.root, l)
-        if has_l is None or (has_l is None and self.search(self.root, h) is None):
+        if has_l is None or not (has_l or self.search(self.root, h)):
             return count
         return count + 1
 
