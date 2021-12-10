@@ -53,7 +53,7 @@ matrix_chain_top_down(): O(n^2) for m table and O(n^2) for s table.
 """
 
 
-def matrix_chain_bottom_up(p, n, m, s):
+def matrix_chain_bottom_up(p, m, s, n):
     for l in range(1, n):
         for i in range(n - l):
             j = i + l
@@ -64,15 +64,15 @@ def matrix_chain_bottom_up(p, n, m, s):
                     m[i][j], s[i][j] = q, k + 1
 
 
-def matrix_chain_top_down(p, i, j, m, s):
+def matrix_chain_top_down(p, m, s, i, j):
     if m[i][j] < float("inf"):
         return m[i][j]
     if i == j:
         m[i][j] = 0
     else:
         for k in range(i, j):
-            m1 = matrix_chain_top_down(p, i, k, m, s)
-            m2 = matrix_chain_top_down(p, k + 1, j, m, s)
+            m1 = matrix_chain_top_down(p, m, s, i, k)
+            m2 = matrix_chain_top_down(p, m, s, k + 1, j)
             q = m1 + m2 + p[i] * p[k + 1] * p[j + 1]
             if q < m[i][j]:
                 m[i][j], s[i][j] = q, k + 1
@@ -83,10 +83,10 @@ def matrix_chain_solution(p, i=None, j=None, top_down=False):
     n = len(p) - 1
     if top_down:
         m, s = [[float("inf")] * n for _ in range(n)], [[0] * n for _ in range(n)]
-        matrix_chain_top_down(p, i, j, m, s)
+        matrix_chain_top_down(p, m, s, i, j)
     else:
         m, s = [[0] * n for _ in range(n)], [[0] * n for _ in range(n)]
-        matrix_chain_bottom_up(p, n, m, s)
+        matrix_chain_bottom_up(p, m, s, n)
     return m, s
 
 
