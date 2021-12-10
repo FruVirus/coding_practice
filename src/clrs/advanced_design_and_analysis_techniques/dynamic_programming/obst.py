@@ -49,26 +49,28 @@ def obst_bottom_up(p, q, n):
     w = [[0] * n for _ in range(n)]
     root = [[0] * n for _ in range(n)]
     for i in range(n):
-        w[i][i] = q[i]
-    for l in range(n):
+        e[i][i] = w[i][i] = q[i]
+    for l in range(1, n):
         for i in range(n - l):
             j = i + l
-            e[i][j] = float("inf")
-            w[i][j] = w[i][j - 1] + p[j] + q[j]
+            e[i][j], w[i][j] = float("inf"), w[i][j - 1] + p[j] + q[j]
             for r in range(i, j):
-                t = e[i][r - 1] + e[r + 1][j] + w[i][j]
+                t = e[i][r] + e[r + 1][j] + w[i][j]
                 if t < e[i][j]:
-                    e[i][j], root[i][j] = t, r
-    return e, root
+                    e[i][j], root[i][j] = t, r + 1
+    return e, root, w
 
 
-# p = [None, 0.15, 0.10, 0.05, 0.10, 0.20]
-# q = [0.05, 0.10, 0.05, 0.05, 0.05, 0.10]
-# n = len(p) - 1
-p = [None, 3, 3, 1, 1]
-q = [2, 3, 1, 1, 1]
-n = len(p)
-e, r = obst_bottom_up(p, q, n)
-print(e)
-print()
-print(r)
+def obst_solution(root, i, j, last=0, obst=None):
+    obst = obst or []
+    if i == j:
+        return obst
+    if last == 0:
+        obst.append(str(root[i][j]) + " is the root")
+    elif j < last:
+        obst.append(str(root[i][j]) + " is the left child of " + str(last))
+    else:
+        obst.append(str(root[i][j]) + " is the right child of " + str(last))
+    obst = obst_solution(root, i, root[i][j] - 1, root[i][j], obst)
+    obst = obst_solution(root, root[i][j], j, root[i][j], obst)
+    return obst
