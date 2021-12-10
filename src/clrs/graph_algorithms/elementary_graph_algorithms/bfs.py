@@ -79,8 +79,6 @@ Time
 ----
 
 bfs(): O(V + E)
-print_path(): Linear in the number of vertices in the path printed since each recursive
-call is for a path one vertex shorter.
 """
 
 # Repository Library

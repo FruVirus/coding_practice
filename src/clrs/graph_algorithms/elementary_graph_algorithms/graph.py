@@ -113,6 +113,8 @@ Time
 
 Adjacency list transpose: O(V + E)
 Adjacency matrix transpose: O(V^2)
+print_path(): Linear in the number of vertices in the path printed since each recursive
+call is for a path one vertex shorter.
 
 Space
 -----
