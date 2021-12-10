@@ -109,4 +109,33 @@ Whenever a recursion tree for the natural recursive solution to a problem contai
 same subproblem repeatedly, and the total number of distinct subproblems is small,
 dynamic programming can improve efficiency, sometimes dramatically.
 
+Reconstructing an optimal solution
+----------------------------------
 
+As a practical matter, we often store which choice we made in each subproblem in a table
+so that we do not have to reconstruct this information from the costs that we stored.
+
+Memoization
+-----------
+
+As in the bottom-up approach, we maintain a table with subproblem solutions, but the
+control structure for filling in the table is more like the recursive algorithm.
+
+A memoized recursive algorithm maintains an entry in a table for the solution to each
+subproblem. Each table entry initially contains a special value to indicate that the
+entry has yet to be filled in. When the subproblem is first encountered as the recursive
+algorithm unfolds, its solution is computed and then stored in the table. Each
+subsequent time that we encounter this subproblem, we simply look up the value stored in
+the table and return it.
+
+This approach presupposes that we know the set of all possible subproblem parameters and
+that we have established the relationship between table positions and subproblems.
+Another, more general, approach is to memoize by using hashing with the subproblem
+parameters as keys.
+
+In general practice, if all subproblems must be solved at least once, a bottom-up
+dynamic-programming algorithm usually outperforms the corresponding top-down memoized
+algorithm by a constant factor, because the bottom-up algorithm has no overhead for
+recursion and less overhead for maintaining the table. Alternatively, if some
+subproblems in the subproblem space need not be solved at all, the top-down approach
+has the advantage of solving only those subproblems that are definitely required.
