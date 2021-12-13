@@ -7,6 +7,11 @@ with a given weight limit. Given a list of items with corresponding profits and 
 which items should we include in the knapsack so that we maximize our profit without
 going over the given weight limit?
 
+Once we take an item, we gain profit but lose knapsack capacity.
+If we don't take an item, we keep the same profit but do not lose knapsack capacity.
+If taking an item puts up over the capacity limit, then the profit is the current profit
+without the item.
+
 Complexity
 ==========
 
