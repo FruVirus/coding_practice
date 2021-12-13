@@ -20,6 +20,12 @@ Time
 
 ks_bottom_up(): O(n * c), where n is the number of items and c is the capacity.
 ks_top_down(): O(n * c), where n is the number of items and c is the capacity.
+
+Space
+-----
+
+ks_bottom_up(): O(c x n) for v table.
+ks_top_down(): O(c x n) for v table.
 """
 
 
