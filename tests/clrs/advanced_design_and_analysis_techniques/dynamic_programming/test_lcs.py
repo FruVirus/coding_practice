@@ -8,7 +8,7 @@ from clrs.advanced_design_and_analysis_techniques.dynamic_programming.lcs import
 def test_lcs_bottom_up():
     x = ["A", "B", "C", "B", "D", "A", "B"]
     y = ["B", "D", "C", "A", "B", "A"]
-    c = lcs_solution(x, y, 7, 6, top_down=False)
+    c = lcs_solution(x, y, top_down=False)
     assert c == [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 1, 1],
@@ -25,7 +25,7 @@ def test_lcs_bottom_up():
 def test_lcs_top_down():
     x = ["A", "B", "C", "B", "D", "A", "B"]
     y = ["B", "D", "C", "A", "B", "A"]
-    c = lcs_solution(x, y, 7, 6, top_down=True)
+    c = lcs_solution(x, y, top_down=True)
     assert c == [
         [float("inf"), 0, 0, 0, float("inf"), float("inf"), float("inf")],
         [0, 0, 0, 0, 1, float("inf"), float("inf")],

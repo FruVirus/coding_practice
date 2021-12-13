@@ -92,11 +92,11 @@ def lcs_top_down(c, x, y, i, j):
     return c[i][j]
 
 
-def lcs_solution(x, y, i=None, j=None, top_down=False):
+def lcs_solution(x, y, top_down=False):
     m, n = len(x), len(y)
     if top_down:
         c = [[float("inf")] * (n + 1) for _ in range(m + 1)]
-        lcs_top_down(c, x, y, i, j)
+        lcs_top_down(c, x, y, m, n)
     else:
         c = [[0] * (n + 1) for _ in range(m + 1)]
         lcs_bottom_up(c, x, y, m, n)
