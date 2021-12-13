@@ -58,7 +58,7 @@ Time
 
 lcs_bottom_up(): O(m x n).
 lcs_top_down(): O(m x n).
-print_lcs(): O(m + n).
+return_lcs(): O(m + n).
 
 Space
 -----
