@@ -100,7 +100,6 @@ def return_ss(w, c, v):
     n = len(v)
     ss = [0] * (n - 1)
     for i in range(n - 1, -1, -1):
-        for j in range(i - 1, -1, -1):
-            if v[j][c] != 1:
-                ss[j], c = 1, c - w[j]
+        if v[i][c] != 1:
+            ss[i], c = 1, c - w[i]
     return ss
