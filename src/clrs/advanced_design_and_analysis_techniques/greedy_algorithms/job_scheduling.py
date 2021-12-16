@@ -66,7 +66,7 @@ def js_bottom_up(d, w, num_jobs=None):
     a = sorted(a, key=lambda x: x[2], reverse=True)
     added, sol = [False] * num_jobs, ["-1"] * num_jobs
     for i in range(n):
-        for j in range(min(num_jobs - 1, a[i][1] - 1), -1, -1):
+        for j in reversed(range(min(num_jobs, a[i][1]))):
             if not added[j]:
                 added[j], sol[j] = True, a[i][0]
                 break
