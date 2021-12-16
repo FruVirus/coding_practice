@@ -68,16 +68,6 @@ def js_bottom_up(d, w, num_jobs=None):
     for i in range(n):
         for j in range(min(num_jobs - 1, a[i][1] - 1), -1, -1):
             if not added[j]:
-                added[j] = True
-                sol[j] = a[i][0]
+                added[j], sol[j] = True, a[i][0]
                 break
     return sol
-
-
-# d = [1, 2, 2, 3, 3]
-# w = [10, 20, 15, 5, 1]
-d = [2, 2, 1, 3, 3]
-w = [20, 15, 10, 5, 1]
-# d = [4, 2, 4, 3, 1, 4, 6]
-# w = [70, 60, 50, 40, 30, 20, 10]
-print(js_bottom_up(d, w))
