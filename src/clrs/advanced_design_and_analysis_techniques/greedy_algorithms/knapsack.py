@@ -35,12 +35,11 @@ Time
 ----
 
 ks_bottom_up(): O(n * lg n).
+ks_top_down(): O(n * lg n).
 """
 
 
-def ks_bottom_up(p, w, c):
-    p_w, sol = [i / j for i, j in zip(p, w)], []
-    p_w_index = sorted(range(len(p_w)), key=lambda x: p_w[x], reverse=True)
+def ks_bottom_up(c, w, p_w_index, sol):
     for i in p_w_index:
         if c - w[i] >= 0:
             c -= w[i]
@@ -48,4 +47,21 @@ def ks_bottom_up(p, w, c):
         else:
             sol.append((i, c / w[i]))
             break
+    return sol
+
+
+def ks_top_down(c, w, p_w_index, sol):
+    if c - w[p_w_index[0]] >= 0:
+        sol.append((p_w_index[0], 1))
+        ks_top_down(c - w[p_w_index[0]], w, p_w_index[1:], sol)
+    else:
+        sol.append((p_w_index[0], c / w[p_w_index[0]]))
+    return sol
+
+
+def ks_solution(p, w, c, top_down=False):
+    p_w, sol = [i / j for i, j in zip(p, w)], []
+    p_w_index = sorted(range(len(p_w)), key=lambda x: p_w[x], reverse=True)
+    ks = ks_top_down if top_down else ks_bottom_up
+    ks(c, w, p_w_index, sol)
     return sol, sum(i[1] * p[i[0]] for i in sol)
