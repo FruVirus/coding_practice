@@ -65,28 +65,26 @@ def mc_bu(p, m, s, n):
 
 
 def mc_td(p, m, s, i, j):
-    if m[i][j] < float("inf"):
-        return m[i][j]
-    if i == j:
-        m[i][j] = 0
-    else:
-        for k in range(i, j):
-            m1 = mc_td(p, m, s, i, k)
-            m2 = mc_td(p, m, s, k + 1, j)
-            q = m1 + m2 + p[i] * p[k + 1] * p[j + 1]
-            if q < m[i][j]:
-                m[i][j], s[i][j] = q, k + 1
+    if m[i][j] == float("inf"):
+        if i == j:
+            m[i][j] = 0
+        else:
+            for k in range(i, j):
+                m1 = mc_td(p, m, s, i, k)
+                m2 = mc_td(p, m, s, k + 1, j)
+                q = m1 + m2 + p[i] * p[k + 1] * p[j + 1]
+                if q < m[i][j]:
+                    m[i][j], s[i][j] = q, k + 1
     return m[i][j]
 
 
 def mc(p, i=None, j=None, s=None, td=False):
     if s is None:
-        n = len(p) - 1
+        n, val = len(p) - 1, float("inf") if td else 0
+        m, s = [[val] * n for _ in range(n)], [[0] * n for _ in range(n)]
         if td:
-            m, s = [[float("inf")] * n for _ in range(n)], [[0] * n for _ in range(n)]
             mc_td(p, m, s, i, j)
         else:
-            m, s = [[0] * n for _ in range(n)], [[0] * n for _ in range(n)]
             mc_bu(p, m, s, n)
     if i == j:
         sol = "A_" + str(i)
