@@ -196,10 +196,10 @@ def return_aux(N, c, Naux, Baux, Aaux, baux, vaux):
 def update_constraints(N, B, A, b, e, l):
     n, m, Ne, Bl = len(N), len(B), N.index(e), B.index(l)
     Ahat, bhat = [[0] * n for _ in range(m)], [0] * m
-    Bhat, Nhat = list(B), list(N)
-    Bhat[Bl], Nhat[Ne] = N[Ne], B[Bl]
-    Bhat, Nhat = sorted(Bhat), sorted(Nhat)
-    Bhate, Nhatl = Bhat.index(e), Nhat.index(l)
+    Nhat, Bhat = list(N), list(B)
+    Nhat[Ne], Bhat[Bl] = B[Bl], N[Ne]
+    Nhat, Bhat = sorted(Nhat), sorted(Bhat)
+    Nhatl, Bhate = Nhat.index(l), Bhat.index(e)
     pivot_var, no_e, no_l = A[Bl][Ne], exclude(N, e), exclude(B, l)
     for i in no_e:
         Ahat[Bhate][Nhat.index(i)] = A[Bl][N.index(i)] / pivot_var
