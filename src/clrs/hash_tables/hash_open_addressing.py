@@ -76,7 +76,7 @@ class HashOpen(HashChain):
     def _insert(self, k, table):
         i = 0
         while i != self.size:
-            hash_value = self.hash_func(k, i)
+            hash_value = self.hash_func(i, k)
             if table[hash_value] in [None, self._DELETED]:
                 table[hash_value] = k
                 return hash_value
@@ -102,7 +102,7 @@ class HashOpen(HashChain):
         self.table[hash_value] = self._DELETED
         self._reduce()
 
-    def hash_double(self, k, i):
+    def hash_double(self, i, k):
         if (self.size & (self.size - 1) == 0) and self.size != 0:
             h1, h2 = self.hash_div(k), self.hash_mul(k)
             if h2 % 2 == 0:
@@ -113,10 +113,10 @@ class HashOpen(HashChain):
             h2 = 1 + (k % (self.size - 1))
         return (h1 + i * h2) % self.size
 
-    def hash_linear(self, k, i):
+    def hash_linear(self, i, k):
         return (self.ahf(k) + i) % self.size
 
-    def hash_quadratic(self, k, i):
+    def hash_quadratic(self, i, k):
         return (self.ahf(k) + i ** 2) % self.size
 
     def insert(self, k):
@@ -125,10 +125,10 @@ class HashOpen(HashChain):
 
     def search(self, k):
         i = 0
-        hash_value = self.hash_func(k, i)
+        hash_value = self.hash_func(i, k)
         while self.table[hash_value] is not None and i != self.size:
             if self.table[hash_value] == k:
                 return hash_value
             i += 1
-            hash_value = self.hash_func(k, i)
+            hash_value = self.hash_func(i, k)
         return None
