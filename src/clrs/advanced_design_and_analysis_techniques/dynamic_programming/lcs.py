@@ -92,7 +92,7 @@ def lcs(x, y, c=None, i=None, j=None, sol=None, td=False):
     sol = sol or []
     if c is None:
         m, n = len(x), len(y)
-        val, lcs_ = float("inf") if td else 0, lcs_td if td else lcs_bu
+        val, lcs_ = (float("inf"), lcs_td) if td else (0, lcs_bu)
         c = [[val] * (n + 1) for _ in range(m + 1)]
         lcs_(x, y, c, m, n)
     if c[i][j] != 0:
