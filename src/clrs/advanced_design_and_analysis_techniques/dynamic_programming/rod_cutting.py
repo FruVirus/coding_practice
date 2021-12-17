@@ -159,7 +159,6 @@ def rod_cut_bu(p, n, r, s):
             if q < t:
                 q, s[i] = t, j
         r[i] = q
-    return r
 
 
 def rod_cut_td(p, n, r, s):
