@@ -150,7 +150,7 @@ cut_rod_top_down: Theta(n^2)
 """
 
 
-def cut_rod_bottom_up(p, n, r, s):
+def rod_cut_bu(p, n, r, s):
     r[0] = 0
     for i in range(1, n + 1):
         q = -float("inf")
@@ -162,23 +162,22 @@ def cut_rod_bottom_up(p, n, r, s):
     return r
 
 
-def cut_rod_top_down(p, n, r, s):
+def rod_cut_td(p, n, r, s):
     if r[n] >= 0:
-        return r[n]
-    if n == 0:
-        q = r[n] = 0
-        return q
-    q = -float("inf")
-    for i in range(n):
-        t = p[i] + cut_rod_top_down(p, n - i - 1, r, s)
-        if q < t:
-            q, s[n] = t, i + 1
-    r[n] = q
+        q = r[n]
+    elif n == 0:
+        q = 0
+    else:
+        q = -float("inf")
+        for i in range(n):
+            t = p[i] + rod_cut_td(p, n - i - 1, r, s)
+            if q < t:
+                q, s[n] = t, i + 1
     return q
 
 
-def cut_rod_solution(p, n, top_down=False):
-    cut_rod = cut_rod_top_down if top_down else cut_rod_bottom_up
+def rod_cut(p, n, top_down=False):
+    cut_rod = rod_cut_td if top_down else rod_cut_bu
     r, s, solution = [-float("inf")] * (n + 1), [0] * (n + 1), []
     cut_rod(p, n, r, s)
     while n > 0:
