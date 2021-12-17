@@ -178,9 +178,9 @@ def rod_cut_td(p, n, r, s):
 
 def rod_cut(p, n, td=False):
     cut_rod = rod_cut_td if td else rod_cut_bu
-    r, s, solution = [-float("inf")] * (n + 1), [0] * (n + 1), []
+    r, s, sol = [-float("inf")] * (n + 1), [0] * (n + 1), []
     cut_rod(p, n, r, s)
     while n > 0:
-        solution.append(s[n])
+        sol.append(s[n])
         n -= s[n]
-    return solution
+    return sol
