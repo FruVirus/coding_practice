@@ -192,7 +192,7 @@ def lup_solver(a, b, p=None, decomp=True, lup=True):
     for i in range(n):
         b_ = b[i] if p is None else b[p[i]]
         y[i] = b_ - sum(a[i][j] * y[j] for j in range(i))
-    for i in range(n - 1, -1, -1):
+    for i in reversed(range(n)):
         x[i] = (y[i] - sum(a[i][j] * x[j] for j in range(i + 1, n))) / a[i][i]
     return x
 
