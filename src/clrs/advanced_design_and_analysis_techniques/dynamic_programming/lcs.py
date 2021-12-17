@@ -93,13 +93,12 @@ def lcs_td(c, x, y, i, j):
 
 
 def lcs(x, y, c=None, i=None, j=None, sol=None, td=False):
+    sol = sol or []
     if c is None:
         m, n = len(x), len(y)
-        val = float("inf") if td else 0
-        lcs_ = lcs_td if td else lcs_bu
+        val, lcs_ = float("inf") if td else 0, lcs_td if td else lcs_bu
         c = [[val] * (n + 1) for _ in range(m + 1)]
         lcs_(c, x, y, m, n)
-    sol = sol or []
     if c[i][j] != 0:
         if x[i - 1] == y[j - 1]:
             sol = lcs(x, y, c, i - 1, j - 1, sol)
