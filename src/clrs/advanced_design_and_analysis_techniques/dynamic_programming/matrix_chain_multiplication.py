@@ -89,8 +89,5 @@ def mc(p, i=None, j=None, s=None, td=False):
     if i == j:
         sol = "A_" + str(i)
     else:
-        sol = "("
-        sol += mc(p, i, s[i][j] - 1, s)
-        sol += mc(p, s[i][j], j, s)
-        sol += ")"
+        sol = "(" + mc(p, i, s[i][j] - 1, s) + mc(p, s[i][j], j, s) + ")"
     return sol
