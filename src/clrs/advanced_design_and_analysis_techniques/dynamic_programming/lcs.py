@@ -75,7 +75,6 @@ def lcs_bu(x, y, c, m, n):
                 c[i][j] = 1 + c[i - 1][j - 1]
             else:
                 c[i][j] = max(c[i - 1][j], c[i][j - 1])
-    return c
 
 
 def lcs_td(x, y, c, i, j):
