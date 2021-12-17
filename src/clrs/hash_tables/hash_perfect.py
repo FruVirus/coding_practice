@@ -69,8 +69,7 @@ class HashPerfect:
     def _create_table(self):
         n, self.table = [0] * self.m, [None] * self.m
         for k in self.keys:
-            hash_value = self._get_hash_value(k=k)
-            n[hash_value] += 1
+            n[self._get_hash_value(k=k)] += 1
         for m in range(self.m):
             if n[m] > 1:
                 self.table[m] = [None] * n[m] ** 2
