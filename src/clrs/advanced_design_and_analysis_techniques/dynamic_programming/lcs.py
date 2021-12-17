@@ -68,27 +68,24 @@ lcs_td(): O(m x n) for c table.
 """
 
 
-def lcs_bu(c, x, y, m, n):
+def lcs_bu(x, y, c, m, n):
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             if x[i - 1] == y[j - 1]:
                 c[i][j] = 1 + c[i - 1][j - 1]
-            elif c[i - 1][j] >= c[i][j - 1]:
-                c[i][j] = c[i - 1][j]
             else:
-                c[i][j] = c[i][j - 1]
+                c[i][j] = max(c[i - 1][j], c[i][j - 1])
     return c
 
 
-def lcs_td(c, x, y, i, j):
-    if c[i][j] != float("inf"):
-        return c[i][j]
-    if i == 0 or j == 0:
-        c[i][j] = 0
-    elif x[i - 1] == y[j - 1]:
-        c[i][j] = 1 + lcs_td(c, x, y, i - 1, j - 1)
-    else:
-        c[i][j] = max(lcs_td(c, x, y, i - 1, j), lcs_td(c, x, y, i, j - 1))
+def lcs_td(x, y, c, i, j):
+    if c[i][j] == float("inf"):
+        if i == 0 or j == 0:
+            c[i][j] = 0
+        elif x[i - 1] == y[j - 1]:
+            c[i][j] = 1 + lcs_td(x, y, c, i - 1, j - 1)
+        else:
+            c[i][j] = max(lcs_td(x, y, c, i - 1, j), lcs_td(x, y, c, i, j - 1))
     return c[i][j]
 
 
@@ -98,7 +95,7 @@ def lcs(x, y, c=None, i=None, j=None, sol=None, td=False):
         m, n = len(x), len(y)
         val, lcs_ = float("inf") if td else 0, lcs_td if td else lcs_bu
         c = [[val] * (n + 1) for _ in range(m + 1)]
-        lcs_(c, x, y, m, n)
+        lcs_(x, y, c, m, n)
     if c[i][j] != 0:
         if x[i - 1] == y[j - 1]:
             sol = lcs(x, y, c, i - 1, j - 1, sol)
