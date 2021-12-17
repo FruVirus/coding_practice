@@ -51,7 +51,7 @@ class SLL:
         curr, temp = self.head, None
         while curr is not None:
             next, curr.next = curr.next, temp
-            temp, curr = curr, next
+            curr, temp = next, curr
         self.head = temp
 
     def search(self, k):
