@@ -145,12 +145,12 @@ exactly once.
 Time
 ----
 
-rod_cut_bu: Theta(n^2)
-rod_cut_td: Theta(n^2)
+rc_bu: Theta(n^2)
+rc_td: Theta(n^2)
 """
 
 
-def rod_cut_bu(p, n, r, s):
+def rc_bu(p, n, r, s):
     r[0] = 0
     for i in range(1, n + 1):
         q = -float("inf")
@@ -161,7 +161,7 @@ def rod_cut_bu(p, n, r, s):
         r[i] = q
 
 
-def rod_cut_td(p, n, r, s):
+def rc_td(p, n, r, s):
     if r[n] >= 0:
         q = r[n]
     elif n == 0:
@@ -169,16 +169,16 @@ def rod_cut_td(p, n, r, s):
     else:
         q = -float("inf")
         for i in range(n):
-            t = p[i] + rod_cut_td(p, n - i - 1, r, s)
+            t = p[i] + rc_td(p, n - i - 1, r, s)
             if q < t:
                 q, s[n] = t, i + 1
     return q
 
 
-def rod_cut(p, n, td=False):
-    cut_rod = rod_cut_td if td else rod_cut_bu
+def rc(p, n, td=False):
+    rod_cut = rc_td if td else rc_bu
     r, s, sol = [-float("inf")] * (n + 1), [0] * (n + 1), []
-    cut_rod(p, n, r, s)
+    rod_cut(p, n, r, s)
     while n > 0:
         sol.append(s[n])
         n -= s[n]
