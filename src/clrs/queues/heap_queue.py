@@ -51,9 +51,9 @@ from operator import gt, lt
 class HeapQueue:
     def __init__(self, a, is_max):
         self.a = a
-        self.heap_size = len(self.a)
         self.is_max = is_max
         self.compare = gt if self.is_max else lt
+        self.heap_size = len(self.a)
         self.build()
 
     def _exchange(self, i, j):
