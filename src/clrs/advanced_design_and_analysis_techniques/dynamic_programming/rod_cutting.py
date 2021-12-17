@@ -176,8 +176,8 @@ def rod_cut_td(p, n, r, s):
     return q
 
 
-def rod_cut(p, n, top_down=False):
-    cut_rod = rod_cut_td if top_down else rod_cut_bu
+def rod_cut(p, n, td=False):
+    cut_rod = rod_cut_td if td else rod_cut_bu
     r, s, solution = [-float("inf")] * (n + 1), [0] * (n + 1), []
     cut_rod(p, n, r, s)
     while n > 0:
