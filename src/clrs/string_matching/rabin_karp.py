@@ -23,10 +23,7 @@ from src.clrs.numerics.next_prime import is_prime, next_prime
 
 
 def check_equal(t, p, t_, p_, row, col, pcols, prows, indices):
-    if p_ != t_:
-        return
-    t = [t[i][col : col + pcols] for i in range(row, row + prows)]
-    if p == t:
+    if p_ == t_ and p == [t[i][col : col + pcols] for i in range(row, row + prows)]:
         indices.append([row, col])
 
 
