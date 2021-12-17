@@ -30,7 +30,7 @@ def test_bucket_sort(a):
     ],
 )
 def test_counting_sort(a, k):
-    assert counting_sort.counting_sort(a, k) == sorted(a)
+    assert counting_sort.counting_sort(a, k=k) == sorted(a)
 
 
 def test_pigeonhole_sort():

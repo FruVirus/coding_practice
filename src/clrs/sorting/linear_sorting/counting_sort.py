@@ -36,8 +36,8 @@ O(n)
 """
 
 
-def counting_sort(a, k=None, exp=None, base=None):
-    assert k or (exp and base)
+def counting_sort(a, base=None, exp=None, k=None):
+    assert k or (base and exp)
     n, base = len(a), base or (k + 1)
     b, c = [0] * n, [0] * base
     for i in range(n):

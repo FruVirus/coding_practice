@@ -20,6 +20,6 @@ from src.clrs.sorting.linear_sorting.counting_sort import counting_sort
 def radix_sort(a, base=10):
     exp = 1
     while max(a) / exp > 1:
-        a = counting_sort(a, exp=exp, base=base)
+        a = counting_sort(a, base, exp)
         exp *= base
     return a
