@@ -67,9 +67,7 @@ def witness(a, n):
         if x_next == 1 and x_prev not in [1, n - 1]:
             return True
         x_prev, x_next = x_next, x_prev ** 2 % n
-    if x_next != 1:
-        return True
-    return False
+    return x_next != 1
 
 
 def miller_rabin(n, s=9):
