@@ -145,8 +145,8 @@ exactly once.
 Time
 ----
 
-cut_rod_bottom_up: Theta(n^2)
-cut_rod_top_down: Theta(n^2)
+rod_cut_bu: Theta(n^2)
+rod_cut_td: Theta(n^2)
 """
 
 

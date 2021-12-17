@@ -56,19 +56,19 @@ up the c table, which has m x n entries. Thus, the total time is O(m x n).
 Time
 ----
 
-lcs_bottom_up(): O(m x n).
-lcs_top_down(): O(m x n).
+lcs_bu(): O(m x n).
+lcs_td(): O(m x n).
 return_lcs(): O(m + n).
 
 Space
 -----
 
-lcs_bottom_up(): O(m x n) for c table.
-lcs_top_down(): O(m x n) for c table.
+lcs_bu(): O(m x n) for c table.
+lcs_td(): O(m x n) for c table.
 """
 
 
-def lcs_bottom_up(c, x, y, m, n):
+def lcs_bu(c, x, y, m, n):
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             if x[i - 1] == y[j - 1]:
@@ -80,38 +80,34 @@ def lcs_bottom_up(c, x, y, m, n):
     return c
 
 
-def lcs_top_down(c, x, y, i, j):
+def lcs_td(c, x, y, i, j):
     if c[i][j] != float("inf"):
         return c[i][j]
     if i == 0 or j == 0:
         c[i][j] = 0
     elif x[i - 1] == y[j - 1]:
-        c[i][j] = 1 + lcs_top_down(c, x, y, i - 1, j - 1)
+        c[i][j] = 1 + lcs_td(c, x, y, i - 1, j - 1)
     else:
-        c[i][j] = max(lcs_top_down(c, x, y, i - 1, j), lcs_top_down(c, x, y, i, j - 1))
+        c[i][j] = max(lcs_td(c, x, y, i - 1, j), lcs_td(c, x, y, i, j - 1))
     return c[i][j]
 
 
-def lcs_solution(x, y, top_down=False):
-    m, n = len(x), len(y)
-    if top_down:
-        c = [[float("inf")] * (n + 1) for _ in range(m + 1)]
-        lcs_top_down(c, x, y, m, n)
-    else:
-        c = [[0] * (n + 1) for _ in range(m + 1)]
-        lcs_bottom_up(c, x, y, m, n)
-    return c
-
-
-def return_lcs(c, x, y, i, j, lcs=None):
-    lcs = lcs or []
-    if c[i][j] == 0:
-        return lcs
-    if x[i - 1] == y[j - 1]:
-        lcs = return_lcs(c, x, y, i - 1, j - 1, lcs)
-        lcs.append(x[i - 1])
-    elif c[i - 1][j] >= c[i][j - 1]:
-        lcs = return_lcs(c, x, y, i - 1, j, lcs)
-    else:
-        lcs = return_lcs(c, x, y, i, j - 1, lcs)
-    return lcs
+def lcs(x, y, c=None, i=None, j=None, sol=None, td=False):
+    if c is None:
+        m, n = len(x), len(y)
+        if td:
+            c = [[float("inf")] * (n + 1) for _ in range(m + 1)]
+            lcs_td(c, x, y, m, n)
+        else:
+            c = [[0] * (n + 1) for _ in range(m + 1)]
+            lcs_bu(c, x, y, m, n)
+    sol = sol or []
+    if c[i][j] != 0:
+        if x[i - 1] == y[j - 1]:
+            sol = lcs(x, y, c, i - 1, j - 1, sol)
+            sol.append(x[i - 1])
+        elif c[i - 1][j] >= c[i][j - 1]:
+            sol = lcs(x, y, c, i - 1, j, sol)
+        else:
+            sol = lcs(x, y, c, i, j - 1, sol)
+    return sol
