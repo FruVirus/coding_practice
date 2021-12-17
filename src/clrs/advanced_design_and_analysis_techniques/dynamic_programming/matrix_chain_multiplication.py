@@ -79,23 +79,20 @@ def mc_td(p, m, s, i, j):
     return m[i][j]
 
 
-def mc(p, i=None, j=None, top_down=False):
-    n = len(p) - 1
-    if top_down:
-        m, s = [[float("inf")] * n for _ in range(n)], [[0] * n for _ in range(n)]
-        mc_td(p, m, s, i, j)
-    else:
-        m, s = [[0] * n for _ in range(n)], [[0] * n for _ in range(n)]
-        mc_bu(p, m, s, n)
-    return m, s
-
-
-def return_optimal_parens(s, i, j):
+def mc(p, i=None, j=None, s=None, td=False):
+    if s is None:
+        n = len(p) - 1
+        if td:
+            m, s = [[float("inf")] * n for _ in range(n)], [[0] * n for _ in range(n)]
+            mc_td(p, m, s, i, j)
+        else:
+            m, s = [[0] * n for _ in range(n)], [[0] * n for _ in range(n)]
+            mc_bu(p, m, s, n)
     if i == j:
-        str_ = "A_" + str(i)
+        sol = "A_" + str(i)
     else:
-        str_ = "("
-        str_ += return_optimal_parens(s, i, s[i][j] - 1)
-        str_ += return_optimal_parens(s, s[i][j], j)
-        str_ += ")"
-    return str_
+        sol = "("
+        sol += mc(p, i, s[i][j] - 1, s)
+        sol += mc(p, s[i][j], j, s)
+        sol += ")"
+    return sol
