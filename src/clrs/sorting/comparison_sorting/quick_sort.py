@@ -75,5 +75,5 @@ def partition(a, low, high, pivot_index=None, random_partition=True):
         if a[j] <= x:
             i += 1
             a[i], a[j] = a[j], a[i]
-    a[i + 1], a[high] = a[high], a[i + 1]
+    a[high], a[i + 1] = a[i + 1], a[high]
     return i + 1
