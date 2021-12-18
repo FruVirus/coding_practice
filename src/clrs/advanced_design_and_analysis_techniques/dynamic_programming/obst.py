@@ -64,12 +64,13 @@ def obst_bu(p, q, n):
 def obst(r, i, j, last=0, sol=None):
     sol = sol or []
     if i != j:
+        node = str(r[i][j])
         if last == 0:
-            sol.append(str(r[i][j]) + " is the root")
+            sol.append(node + " is the root")
         elif j < last:
-            sol.append(str(r[i][j]) + " is the left child of " + str(last))
+            sol.append(node + " is the left child of " + str(last))
         else:
-            sol.append(str(r[i][j]) + " is the right child of " + str(last))
+            sol.append(node + " is the right child of " + str(last))
         sol = obst(r, i, r[i][j] - 1, r[i][j], sol)
         sol = obst(r, r[i][j], j, r[i][j], sol)
     return sol
