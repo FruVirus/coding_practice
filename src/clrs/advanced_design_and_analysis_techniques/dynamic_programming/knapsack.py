@@ -77,14 +77,13 @@ def ks_bu(p, w, c, n, v):
 
 
 def ks_td(p, w, c, n, v):
-    if n == 0 or c == 0:
-        v[n][c] = 0
-    elif w[n - 1] > c:
-        v[n][c] = ks_td(p, w, c, n - 1, v)
-    else:
-        without_item = ks_td(p, w, c, n - 1, v)
-        with_item = ks_td(p, w, c - w[n - 1], n - 1, v) + p[n - 1]
-        v[n][c] = max(with_item, without_item)
+    if not (n == 0 or c == 0):
+        if w[n - 1] > c:
+            v[n][c] = ks_td(p, w, c, n - 1, v)
+        else:
+            without_item = ks_td(p, w, c, n - 1, v)
+            with_item = ks_td(p, w, c - w[n - 1], n - 1, v) + p[n - 1]
+            v[n][c] = max(with_item, without_item)
     return v[n][c]
 
 
