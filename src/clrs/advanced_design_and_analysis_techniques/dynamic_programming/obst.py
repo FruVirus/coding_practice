@@ -63,14 +63,13 @@ def obst_bottom_up(p, q, n):
 
 def obst_solution(root, i, j, last=0, obst=None):
     obst = obst or []
-    if i == j:
-        return obst
-    if last == 0:
-        obst.append(str(root[i][j]) + " is the root")
-    elif j < last:
-        obst.append(str(root[i][j]) + " is the left child of " + str(last))
-    else:
-        obst.append(str(root[i][j]) + " is the right child of " + str(last))
-    obst = obst_solution(root, i, root[i][j] - 1, root[i][j], obst)
-    obst = obst_solution(root, root[i][j], j, root[i][j], obst)
+    if i != j:
+        if last == 0:
+            obst.append(str(root[i][j]) + " is the root")
+        elif j < last:
+            obst.append(str(root[i][j]) + " is the left child of " + str(last))
+        else:
+            obst.append(str(root[i][j]) + " is the right child of " + str(last))
+        obst = obst_solution(root, i, root[i][j] - 1, root[i][j], obst)
+        obst = obst_solution(root, root[i][j], j, root[i][j], obst)
     return obst
