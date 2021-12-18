@@ -59,7 +59,7 @@ def mc_bu(p, m, s, n):
             j = i + l
             m[i][j] = float("inf")
             for k in range(i, j):
-                q = m[i][k] + m[k + 1][j] + p[i] * p[k + 1] * p[j + 1]
+                q = m[i][k] + m[k + 1][j] + p[i] * p[j + 1] * p[k + 1]
                 if q < m[i][j]:
                     m[i][j], s[i][j] = q, k + 1
 
@@ -72,7 +72,7 @@ def mc_td(p, m, s, i, j):
             for k in range(i, j):
                 m1 = mc_td(p, m, s, i, k)
                 m2 = mc_td(p, m, s, k + 1, j)
-                q = m1 + m2 + p[i] * p[k + 1] * p[j + 1]
+                q = m1 + m2 + p[i] * p[j + 1] * p[k + 1]
                 if q < m[i][j]:
                     m[i][j], s[i][j] = q, k + 1
     return m[i][j]
