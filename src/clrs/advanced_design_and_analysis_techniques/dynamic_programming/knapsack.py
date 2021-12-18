@@ -92,8 +92,8 @@ def ks_td(p, w, c, n, v):
 def ks(p, w, c, td=False):
     n = len(p)
     v = [[0] * (c + 1) for _ in range(n + 1)]
-    ks = ks_td if td else ks_bu
-    ks(p, w, c, n, v)
+    ks_ = ks_td if td else ks_bu
+    ks_(p, w, c, n, v)
     n = len(v)
     sol, val = [0] * (n - 1), v[-1][-1]
     for i in range(n - 1, -1, -1):
