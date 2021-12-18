@@ -46,30 +46,30 @@ obst_bu(): O(n^2) for w table, O(n^2) for e table, and O(n^2) for root table.
 
 def obst_bu(p, q, n):
     e = [[0] * n for _ in range(n)]
+    r = [[0] * n for _ in range(n)]
     w = [[0] * n for _ in range(n)]
-    root = [[0] * n for _ in range(n)]
     for i in range(n):
         e[i][i] = w[i][i] = q[i]
     for l in range(1, n):
         for i in range(n - l):
             j = i + l
             e[i][j], w[i][j] = float("inf"), w[i][j - 1] + p[j] + q[j]
-            for r in range(i, j):
-                t = e[i][r] + e[r + 1][j] + w[i][j]
+            for k in range(i, j):
+                t = e[i][k] + e[k + 1][j] + w[i][j]
                 if t < e[i][j]:
-                    e[i][j], root[i][j] = t, r + 1
-    return e, root, w
+                    e[i][j], r[i][j] = t, k + 1
+    return e, r, w
 
 
-def obst(root, i, j, last=0, sol=None):
+def obst(r, i, j, last=0, sol=None):
     sol = sol or []
     if i != j:
         if last == 0:
-            sol.append(str(root[i][j]) + " is the root")
+            sol.append(str(r[i][j]) + " is the root")
         elif j < last:
-            sol.append(str(root[i][j]) + " is the left child of " + str(last))
+            sol.append(str(r[i][j]) + " is the left child of " + str(last))
         else:
-            sol.append(str(root[i][j]) + " is the right child of " + str(last))
-        sol = obst(root, i, root[i][j] - 1, root[i][j], sol)
-        sol = obst(root, root[i][j], j, root[i][j], sol)
+            sol.append(str(r[i][j]) + " is the right child of " + str(last))
+        sol = obst(r, i, r[i][j] - 1, r[i][j], sol)
+        sol = obst(r, r[i][j], j, r[i][j], sol)
     return sol
