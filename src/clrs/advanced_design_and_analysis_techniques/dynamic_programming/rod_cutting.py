@@ -176,8 +176,8 @@ def rc_td(p, n, r, s):
 
 
 def rc(p, n, td=False):
-    rod_cut = rc_td if td else rc_bu
     r, s, sol = [-float("inf")] * (n + 1), [0] * (n + 1), []
+    rod_cut = rc_td if td else rc_bu
     rod_cut(p, n, r, s)
     while n > 0:
         sol.append(s[n])
