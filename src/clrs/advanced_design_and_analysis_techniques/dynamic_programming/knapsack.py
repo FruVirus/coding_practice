@@ -96,8 +96,8 @@ def ks(p, w, c, td=False):
     ks_(p, w, c, n, v)
     n = len(v)
     sol, val = [0] * (n - 1), v[-1][-1]
-    for i in range(n - 1, -1, -1):
-        for j in range(i - 1, -1, -1):
+    for i in reversed(range(n)):
+        for j in reversed(range(i)):
             if val in v[j]:
                 sol[j] = 0
                 break
