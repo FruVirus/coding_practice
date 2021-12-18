@@ -35,16 +35,16 @@ Complexity
 Time
 ----
 
-obst_bottom_up(): O(n^3).
+obst_bu(): O(n^3).
 
 Space
 -----
 
-obst_bottom_up(): O(n^2) for w table, O(n^2) for e table, and O(n^2) for root table.
+obst_bu(): O(n^2) for w table, O(n^2) for e table, and O(n^2) for root table.
 """
 
 
-def obst_bottom_up(p, q, n):
+def obst_bu(p, q, n):
     e = [[0] * n for _ in range(n)]
     w = [[0] * n for _ in range(n)]
     root = [[0] * n for _ in range(n)]
@@ -61,15 +61,15 @@ def obst_bottom_up(p, q, n):
     return e, root, w
 
 
-def obst_solution(root, i, j, last=0, obst=None):
-    obst = obst or []
+def obst(root, i, j, last=0, sol=None):
+    sol = sol or []
     if i != j:
         if last == 0:
-            obst.append(str(root[i][j]) + " is the root")
+            sol.append(str(root[i][j]) + " is the root")
         elif j < last:
-            obst.append(str(root[i][j]) + " is the left child of " + str(last))
+            sol.append(str(root[i][j]) + " is the left child of " + str(last))
         else:
-            obst.append(str(root[i][j]) + " is the right child of " + str(last))
-        obst = obst_solution(root, i, root[i][j] - 1, root[i][j], obst)
-        obst = obst_solution(root, root[i][j], j, root[i][j], obst)
-    return obst
+            sol.append(str(root[i][j]) + " is the right child of " + str(last))
+        sol = obst(root, i, root[i][j] - 1, root[i][j], sol)
+        sol = obst(root, root[i][j], j, root[i][j], sol)
+    return sol
