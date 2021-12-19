@@ -44,15 +44,15 @@ ksum_td(): O(c * n * k) for v table.
 def ksum_bu(w, c, n, k, v):
     for i in range(1, n + 1):
         for j in range(1, c + 1):
+            loc = j - w[i - 1]
             for k_ in range(1, k + 1):
-                loc = j - w[i - 1]
                 val = -float("inf") if loc < 0 else v[i - 1][loc][k_ - 1]
                 v[i][j][k_] = max(v[i - 1][j][k_], val)
 
 
 def ksum_td(w, c, n, k, v):
-    if n == 0 or (c == 0 and k == 0):
-        v[n][c][k] = 1 if c == 0 and k == 0 else 0
+    if n == 0 or c == k == 0:
+        v[n][c][k] = 1 if c == k == 0 else 0
     elif w[n - 1] > c:
         v[n][c][k] = ksum_td(w, c, n - 1, k, v)
     else:
