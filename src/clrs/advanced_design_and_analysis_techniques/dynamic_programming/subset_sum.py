@@ -52,54 +52,49 @@ Complexity
 Time
 ----
 
-ss_bottom_up(): O(n * c), where n is the number of items and c is the capacity.
-ss_top_down(): O(n * c), where n is the number of items and c is the capacity.
+ss_bu(): O(n * c), where n is the number of items and c is the capacity.
+ss_td(): O(n * c), where n is the number of items and c is the capacity.
 
 Space
 -----
 
-ss_bottom_up(): O(c * n) for v table.
-ss_top_down(): O(c * n) for v table.
+ss_bu(): O(c * n) for v table.
+ss_td(): O(c * n) for v table.
 """
 
 
-def ss_bottom_up(w, c, n, v):
+def ss_bu(w, c, n, v):
     for i in range(1, n + 1):
         for j in range(1, c + 1):
             loc = j - w[i - 1]
             val = -float("inf") if loc < 0 else v[i - 1][loc]
             v[i][j] = max(v[i - 1][j], val)
-    return v
 
 
-def ss_top_down(w, c, n, v):
+def ss_td(w, c, n, v):
     if n == 0 or c == 0:
         v[n][c] = 1 if c == 0 else 0
     elif w[n - 1] > c:
-        v[n][c] = ss_top_down(w, c, n - 1, v)
+        v[n][c] = ss_td(w, c, n - 1, v)
     else:
-        without_item = ss_top_down(w, c, n - 1, v)
-        with_item = ss_top_down(w, c - w[n - 1], n - 1, v)
+        without_item = ss_td(w, c, n - 1, v)
+        with_item = ss_td(w, c - w[n - 1], n - 1, v)
         v[n][c] = max(with_item, without_item)
     return v[n][c]
 
 
-def ss_solution(w, c, top_down=False):
+def ss(w, c, td=False):
     n = len(w)
     v = [[0] * (c + 1) for _ in range(n + 1)]
     for i in range(n + 1):
         v[i][0] = 1
-    ss = ss_top_down if top_down else ss_bottom_up
-    ss(w, c, n, v)
-    return v
-
-
-def return_ss(w, c, v):
+    ss_ = ss_td if td else ss_bu
+    ss_(w, c, n, v)
     if v[-1][-1] != 1:
         return None
     n = len(v)
-    ss = [0] * (n - 1)
-    for i in range(n - 1, -1, -1):
+    sol = [0] * (n - 1)
+    for i in reversed(range(n)):
         if v[i][c] != 1:
-            ss[i], c = 1, c - w[i]
-    return ss
+            sol[i], c = 1, c - w[i]
+    return sol
