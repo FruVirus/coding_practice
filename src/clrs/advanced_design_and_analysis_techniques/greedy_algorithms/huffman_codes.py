@@ -82,7 +82,7 @@ requires time O(lg n) and the loop executes n - 1 times.
 Time
 ----
 
-huffman_bottom_up(): O(n * lg n).
+huffman_bu(): O(n * lg n).
 """
 
 # Repository Library
@@ -116,7 +116,7 @@ class Node:
         self.left = self.right = None
 
 
-def huffman_bottom_up(c):
+def huffman_bu(c):
     q = HuffmanQueue([Node(k, v) for k, v in c.items()], False)
     for _ in range(len(c) - 1):
         z = Node()
@@ -129,8 +129,8 @@ def huffman_bottom_up(c):
     return q.extract()
 
 
-def huffman_solution(c):
-    code, root = {k: [] for k in c.keys()}, huffman_bottom_up(c)
+def huffman(c):
+    code, root = {k: [] for k in c.keys()}, huffman_bu(c)
     for k in c.keys():
         node = root
         while node.c != k:
