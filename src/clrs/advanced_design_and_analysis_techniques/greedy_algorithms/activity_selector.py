@@ -61,12 +61,12 @@ Theta(n) time, going through each activity exactly once.
 Time
 ----
 
-as_bottom_up(): Theta(n).
-as_top_down(): Theta(n).
+as_bu(): Theta(n).
+as_td(): Theta(n).
 """
 
 
-def as_bottom_up(s, f):
+def as_bu(s, f):
     n, k, sol = len(s), 1, [1]
     for m in range(1, n):
         if s[m] >= f[k]:
@@ -75,11 +75,11 @@ def as_bottom_up(s, f):
     return sol
 
 
-def as_top_down(s, f, k, n, sol=None):
+def as_td(s, f, k, n, sol=None):
     m, sol = k + 1, sol or []
     while m <= n and s[m] < f[k]:
         m += 1
     if m <= n:
         sol.append(m)
-        as_top_down(s, f, m, n, sol)
+        as_td(s, f, m, n, sol)
     return sol
