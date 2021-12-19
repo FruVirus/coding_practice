@@ -55,11 +55,11 @@ Each of the O(n) independence checks made in the for-loop takes O(n) time.
 Time
 ----
 
-js_bottom_up(): O(n^2).
+js_bu(): O(n^2).
 """
 
 
-def js_bottom_up(d, w, num_jobs=None):
+def js_bu(d, w, num_jobs=None):
     n = len(d)
     num_jobs = num_jobs or n
     a = [[str(i), x, y] for i, x, y in zip(range(n), d, w)]
