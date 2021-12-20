@@ -130,6 +130,6 @@ def huffman_bu(c):
     for k in c.keys():
         node = root
         while node.c != k:
-            node, val = (node.left, 0) if k in node.left.c else (node.right, 1)
-            sol[k].append(val)
+            node, code = (node.left, 0) if k in node.left.c else (node.right, 1)
+            sol[k].append(code)
     return sol
