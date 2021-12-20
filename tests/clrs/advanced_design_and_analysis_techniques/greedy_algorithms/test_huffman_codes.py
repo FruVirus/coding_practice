@@ -1,12 +1,12 @@
 # Repository Library
 from clrs.advanced_design_and_analysis_techniques.greedy_algorithms.huffman_codes import (  # noqa: E501
-    huffman,
+    huffman_bu,
 )
 
 
 def test_huffman_bu():
     c = {"a": 45, "b": 13, "c": 12, "d": 16, "e": 9, "f": 75}
-    assert huffman(c) == {
+    assert huffman_bu(c) == {
         "a": [1, 0],
         "b": [1, 1, 1, 0],
         "c": [1, 1, 0, 1],
