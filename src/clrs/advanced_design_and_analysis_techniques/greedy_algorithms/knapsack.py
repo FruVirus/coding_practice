@@ -39,7 +39,7 @@ ks_td(): O(n * lg n).
 """
 
 
-def ks_bu(c, w, p_w_index, sol):
+def ks_bu(w, c, p_w_index, sol):
     for i in p_w_index:
         if c - w[i] >= 0:
             c -= w[i]
@@ -49,10 +49,10 @@ def ks_bu(c, w, p_w_index, sol):
             break
 
 
-def ks_td(c, w, p_w_index, sol):
+def ks_td(w, c, p_w_index, sol):
     if c - w[p_w_index[0]] >= 0:
         sol.append((p_w_index[0], 1))
-        ks_td(c - w[p_w_index[0]], w, p_w_index[1:], sol)
+        ks_td(w, c - w[p_w_index[0]], p_w_index[1:], sol)
     else:
         sol.append((p_w_index[0], c / w[p_w_index[0]]))
 
@@ -61,5 +61,5 @@ def ks(p, w, c, td=False):
     p_w, sol = [i / j for i, j in zip(p, w)], []
     p_w_index = sorted(range(len(p_w)), key=lambda x: p_w[x], reverse=True)
     ks_ = ks_td if td else ks_bu
-    ks_(c, w, p_w_index, sol)
+    ks_(w, c, p_w_index, sol)
     return sol, sum(i[1] * p[i[0]] for i in sol)
