@@ -72,8 +72,8 @@ def ks_bu(p, w, c, n, v):
     for i in range(1, n + 1):
         for j in range(1, c + 1):
             loc = j - w[i - 1]
-            val = -float("inf") if loc < 0 else v[i - 1][loc]
-            v[i][j] = max(v[i - 1][j], val + p[i - 1])
+            val = -float("inf") if loc < 0 else v[i - 1][loc] + p[i - 1]
+            v[i][j] = max(v[i - 1][j], val)
 
 
 def ks_td(p, w, c, n, v):
