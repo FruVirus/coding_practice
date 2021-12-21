@@ -47,7 +47,7 @@ class Queue:
         if self.tail - self.head + 1 == thresh or thresh <= 1:
             start = self.head + 1
             end = start + self.size // 2
-            self.a = [self.a[i] for i in range(start, end)]
+            self.a = self.a[start:end]
             self.size //= 2
             self.tail -= self.head + 1
             self.head = 0
