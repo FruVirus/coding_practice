@@ -59,7 +59,7 @@ def row_hash(t, p, tcols, pcols, prows, radix, q):
     for list_, a, cols in zip((t_list, p_list), (t, p), (tcols, pcols)):
         for i in range(cols):
             h = 0
-            for j in range(prows - 1, -1, -1):
+            for j in reversed(range(prows)):
                 h += (radix ** (prows - j - 1) * ord(a[j][i])) % q
             list_.append(h % q)
     return t_list, p_list
