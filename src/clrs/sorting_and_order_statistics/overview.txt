@@ -1,0 +1,47 @@
+Introduction
+============
+
+The sorting problem takes as input a sequence of n numbers <a_1, a_2, ..., a_n> and
+outputs a permutation (reordering) <a_1', a_2', ..., a_n'> of the input sequence such
+that a_1' <= a_2' <= ... <= a_n'.
+
+The input sequence is usually an n-element array, although it may be represented in some
+other fashion, such as a linked list.
+
+The structure of the data
+-------------------------
+
+In practice, the numbers to be sorted are rarely in isolated values. Each is usually
+part of a collection of data called a record. Each record contains a key, which is the
+value to be sorted. The remainder of the record consists of satellite data, which are
+usually carried around with the key. In practice, when a sorting algorithm permutes the
+keys, it must permute the satellite data as well. If each record includes a large amount
+of satellite data, we often permute an array of pointers to the records rather than the
+records themselves in order to minimize data movement.
+
+A sorting algorithm describes the method by which we determine the sorted order,
+regardless of whether we are sorting individual numbers or large records containing many
+bytes of satellite data.
+
+Sorting algorithms
+------------------
+
+A sorting algorithm sorts in place if only a constant number of elements of the input
+array are ever stored outside of the array.
+
+Insertion sort, merge sort, heap sort, and quick sort are all comparison sorts: they
+determine the sorted order of an input array by comparing elements. Comparison sorting
+algorithms have a lower bound of Omega(n * lg n) on their worst-case running times.
+
+We can beat this lower bound of Omega(n * lg n) if we can gather information about the
+sorted order of the input by means other than comparing elements. The counting sort
+algorithm, for example, assumes that the input numbers are in the set {0, 1, ..., k}. By
+using array indexing as a tool for determining relative order, counting sort can sort n
+numbers in Theta(k + n) time. Thus, when k = O(n), counting sort runs in time that is
+linear in the size of the input array. A related algorithm, radix sort, can be used to
+extend the range of counting sort. If there are n integers to sort, each integer has d
+digits, and each digit can take on up to k possible values, then radix sort can sort the
+numbers in Theta (d * (n + k)) time. When d is a constant and k is O(n), radix sort runs
+in linear time. A third algorithm, bucket sort, requires knowledge of the probabilistic
+distribution of numbers in the input array. It can sort n real numbers uniformly
+distributed in the half-open interval [0, 1) in average-case O(n) time.

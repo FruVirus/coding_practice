@@ -24,7 +24,9 @@ O(n) average case running time
 """
 
 # Repository Library
-from src.clrs.sorting.comparison_sorting.insertion_sort import insertion_sort
+from src.clrs.sorting_and_order_statistics.comparison_sorting.insertion_sort import (
+    insertion_sort,
+)
 
 
 def bucket_sort(a):

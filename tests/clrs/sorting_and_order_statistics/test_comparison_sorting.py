@@ -1,11 +1,11 @@
 # Repository Library
-from clrs.sorting.comparison_sorting import (
+from clrs.sorting_and_order_statistics.comparison_sorting import (
     bubble_sort,
     insertion_sort,
     merge_sort,
     quick_sort,
 )
-from clrs.sorting.comparison_sorting.heap_sort import HeapSort
+from clrs.sorting_and_order_statistics.comparison_sorting.heap_sort import HeapSort
 from tests.conftest import PARAM
 
 
