@@ -35,7 +35,10 @@ combine them.
 The procedure find_cross() essentially builds the maximum subarray starting from mid
 outwards towards low and outwards towards high.
 
-The procedure find_max_iterative()
+The procedure find_max_iterative() runs in Theta(n) by starting at the left end of the
+array and progressing toward the right while keeping track of the maximum subarray seen
+so far. If csum becomes negative, then the index of clow is updated. If csum is greater
+than max_sum, then max_sum is updated to be csum.
 
 Complexity
 ==========
