@@ -36,7 +36,7 @@ def fa(t, p, sigma=256):
     n, m, q, indices = len(t), len(p), 0, []
     tf = compute_transition(p, m, sigma)
     for i in range(n):
-        q = tf[q][ord(t[i])]
+        q = tf[q][ord(p[i])]
         if q == m:
             indices.append(i - m + 1)
     return indices
