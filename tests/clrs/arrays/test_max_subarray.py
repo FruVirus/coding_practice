@@ -1,16 +1,54 @@
 # Repository Library
-from clrs.arrays.max_subarray import find_max
-from tests.conftest import PARAM
+from clrs.arrays.max_subarray import find_max, find_max_iterative
 
 
-@PARAM(
-    "a, result",
-    [
-        (
-            [13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 700],
-            (7, 15, 727.0),
-        ),
-    ],
-)
-def test_max_subarray(a, result):
-    assert find_max(a, 0, len(a) - 1) == result
+def test_find_max():
+    a = [
+        100,
+        113,
+        110,
+        85,
+        105,
+        102,
+        86,
+        63,
+        81,
+        101,
+        94,
+        106,
+        101,
+        94,
+        106,
+        101,
+        79,
+        94,
+        90,
+        97,
+    ]
+    assert find_max(a) == (7, 10, 43)
+
+
+def test_find_max_iterative():
+    a = [
+        100,
+        113,
+        110,
+        85,
+        105,
+        102,
+        86,
+        63,
+        81,
+        101,
+        94,
+        106,
+        101,
+        94,
+        106,
+        101,
+        79,
+        94,
+        90,
+        97,
+    ]
+    assert find_max_iterative(a) == (7, 10, 43)
