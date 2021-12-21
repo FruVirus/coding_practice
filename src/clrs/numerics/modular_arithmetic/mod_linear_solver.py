@@ -39,8 +39,8 @@ from src.clrs.numerics.modular_arithmetic.gcd import gcd
 def mod_linear_solver(a, b, n):
     assert a > 0 and n > 0
     d, x = gcd(a, n)[:2]
-    solutions = None
+    sol = None
     if b % d == 0:
         x0 = x * (b / d) % n
-        solutions = [(x0 + i * (n / d)) % n for i in range(d)]
-    return solutions
+        sol = [(x0 + i * (n / d)) % n for i in range(d)]
+    return sol
