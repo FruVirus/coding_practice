@@ -50,10 +50,9 @@ from src.clrs.queues.heap_queue import HeapQueue
 
 class Prim(Graph):
     def prim(self):
-        root, mst = 0, set()
         for v in self.vertices.values():
             v.key, v.p = float("inf"), None
-        self.vertices[root].key = 0
+        self.vertices[0].key = 0
         q = HeapQueue([(v.key, v.k) for v in self.vertices.values()], False)
         while q.heap_size != 0:
             u = q.extract()
@@ -65,7 +64,4 @@ class Prim(Graph):
                     v_node.key = self.weights[(u[1], v.k)]
                     q.change(i, (v_node.key, v.k))
                 v = v.next
-        for v in self.vertices.values():
-            if v.p is not None:
-                mst.add((v.k, v.p.k))
-        return mst
+        return set((v.k, v.p.k) for v in self.vertices.values() if v.p is not None)
