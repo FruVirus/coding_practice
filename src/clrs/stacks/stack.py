@@ -36,7 +36,7 @@ class Stack:
     def _reduce(self):
         assert not self.empty()
         if self.table_double and self.top == self.size // 4:
-            self.a = [self.a[i] for i in range(self.size // 2)]
+            self.a = self.a[: self.size // 2]
             self.size //= 2
         self.top -= 1
 
