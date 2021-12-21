@@ -72,7 +72,7 @@ class HeapQueue:
         return 2 * i + 2
 
     def build(self):
-        for i in range(len(self.a) // 2 - 1, -1, -1):
+        for i in reversed(range(len(self.a) // 2)):
             self.heapify(i)
 
     def change(self, i, k):
