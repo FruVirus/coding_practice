@@ -31,11 +31,9 @@ from src.clrs.sorting_and_order_statistics.comparison_sorting.insertion_sort imp
 
 def bucket_sort(a):
     n, largest = len(a), max(a)
-    b = [[] for _ in range(n)]
-    size = largest // n + (largest % n > 0)
+    b, size, x = [[] for _ in range(n)], largest // n + (largest % n > 0), []
     for i in range(n):
         b[int(a[i] / size)].append(a[i])
-    x = []
     for i in range(n):
         if b[i]:
             insertion_sort(b[i])
