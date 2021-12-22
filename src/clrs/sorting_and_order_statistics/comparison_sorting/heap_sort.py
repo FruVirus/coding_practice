@@ -1,32 +1,42 @@
 """
-Overview
-========
+6 Heapsort
+==========
 
-HeapSort is a class that implements heap sorting on an unordered input array.
+Like merge sort, but unlike insertion sort, heapsort's running time is O(n * lg n). Like
+insertion sort, but unlike merge sort, heapsort sorts in place: only a constant number
+of array elements are stored outside the input array at any time.
 
-1. _exchange() is a helper method to exchange two elements in the queue array.
+Heapsort uses a data structure called a "heap" to manage information. Not only is the
+heap data structure useful for heapsort, but it also makes an efficient priority queue.
 
-2. _left() and _right() computes the indices of a node's left child and right child,
-respectively, given the node index i.
+6.3 The heapsort algorithm
+==========================
 
-3. build(), which runs in O(n) time, produces a heap (either maximum or minimum) from an
-unordered input array using heapify() and builds the heap in a bottom-up manner.
-heapify(), which runs in O(lg(n)) time, maintains the heap (either maximum or minimum)
-property. Whenever heapify() is called, the two subtrees of that node are both heaps
-(either maximum or minimum).
+The heapsort algorithm starts by using build() to build a max-heap on the input array
+A[1...n], where n = A.length. Since the maximum element of the array is stored at the
+root A[1], we can put it into its correct final position by exchanging it with A[n]. If
+we now discard node n from the heap---and we can do so by simply decrementing
+A.heap-size---we observe that the children of the root remain max-heaps, but the new
+root element might violate the max-heap property. All we need to do to restore the
+max-heap property, however, is call heapify(), which leaves a max-heap in A[1...n - 1].
+The heapsort algorithm then repeats this process for the max-heap of size n - 1 down to
+a heap of size 2.
 
-4. sort(), which which runs in O(n * lg(n)) time, sorts an unordered array in place. It
-sorts the unordered input array by first building an initial heap, then moving the 0-th
-item in the heap array to the i-th element. Each time the movement is conducted, the
-heap array is rebuilt with a smaller heap size.
+sort() sorts the unordered input array by first building an initial heap, then moving
+the 0-th item in the heap array to the i-th element of the for-loop. Each time the
+movement is conducted, the heap array is rebuilt with a smaller heap size.
 
-Heap sort is an asymptotically optimal comparison sort.
+Heapsort is an asymptotically optimal comparison sort.
+
+Heapsort is not stable.
 
 Complexity
 ==========
 
-Not stable
-O(n * lg(n))
+Time
+----
+
+sort(): O(n * lg n).
 """
 
 # Repository Library

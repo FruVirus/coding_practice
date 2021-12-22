@@ -92,18 +92,18 @@ from src.clrs.queues.heap_queue import HeapQueue
 class HuffmanQueue(HeapQueue):
     def change(self, i, k):
         self.a[i] = k
-        while i > 0 and self.compare(self.get_freq(i), self.get_freq(self._parent(i))):
+        while i > 0 and self.compare(self.freq(self._parent(i)), self.freq(i)):
             self._exchange(i, self._parent(i))
             i = self._parent(i)
 
-    def get_freq(self, i):
+    def freq(self, i):
         return self.a[i].freq if isinstance(self.a[i], Node) else self.a[i]
 
     def heapify(self, i):
         l, r, index = self._left(i), self._right(i), i
-        if l < self.heap_size and self.compare(self.get_freq(l), self.get_freq(i)):
+        if l < self.heap_size and not self.compare(self.freq(l), self.freq(i)):
             index = l
-        if r < self.heap_size and self.compare(self.get_freq(r), self.get_freq(index)):
+        if r < self.heap_size and not self.compare(self.freq(r), self.freq(index)):
             index = r
         if index != i:
             self._exchange(i, index)
