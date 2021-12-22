@@ -127,7 +127,7 @@ def test_dfs():
     graph.add_edge(6, 5)
     graph.add_edge(6, 7)
     graph.add_edge(7, 7)
-    assert graph.scc()[0] == [0, 2, 5, 7]
+    assert graph.scc() == [0, 2, 5, 7]
     num_vertices = 8
     graph = DFS(num_vertices, True)
     graph.add_edge(0, 1)
@@ -144,7 +144,7 @@ def test_dfs():
     graph.add_edge(6, 5)
     graph.add_edge(6, 7)
     graph.add_edge(7, 7)
-    assert graph.scc(recurse=True)[0] == [0, 2, 5, 7]
+    assert graph.scc(recurse=True) == [0, 2, 5, 7]
     num_vertices = 7
     graph = DFS(num_vertices, True)
     graph.add_edge(0, 6)

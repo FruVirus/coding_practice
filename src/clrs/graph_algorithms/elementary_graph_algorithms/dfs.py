@@ -288,7 +288,7 @@ class DFS(Graph):
         assert self.directed
         self.dfs(recurse)
         self.transpose()
-        return self.dfs(recurse, True)
+        return self.dfs(recurse, True)[0]
 
     def top_sort(self, recurse=False):
         return self.dfs(recurse)[1]
