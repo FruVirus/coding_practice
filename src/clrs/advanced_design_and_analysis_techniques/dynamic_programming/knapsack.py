@@ -97,7 +97,6 @@ def ks(p, w, c, td=False):
     for i in reversed(range(n)):
         for j in reversed(range(i)):
             if val in v[j]:
-                sol[j] = 0
                 break
         else:
             sol[i - 1], val = 1, val - p[i - 1]
