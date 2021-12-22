@@ -45,7 +45,7 @@ def counting_sort(a, base=None, exp=None, k=None):
         c[index] += 1
     for i in range(1, base):
         c[i] += c[i - 1]
-    for i in range(n - 1, -1, -1):
+    for i in reversed(range(n)):
         index = (a[i] // exp) % base if k is None else a[i]
         b[c[index] - 1] = a[i]
         c[index] -= 1
