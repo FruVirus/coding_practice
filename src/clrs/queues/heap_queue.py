@@ -95,6 +95,12 @@ traverses this path, it repeatedly compares an element to its parent, exchanging
 keys and continuing if the element's key is larger, and terminating if the element's key
 is smaller, since the max-heap property now holds.
 
+The procedure delete() deletes a key referenced by the index i. If the key at index i is
+greater than or equal to the key at the end of the array, then we exchange keys and
+re-heapify at index i to ensure that the subtree rooted at the parent of i remains a
+max-heap. Otherwise, we simply change the key value at index i to be the key value at
+the end of the array since we know that this operation will maintain the heap property.
+
 The procedure extract() extracts the maximum/minimum element from the heap. For
 max-heaps, the priority is that the largest number will always be maintained at the root
 node. With each heap element extraction, the largest number is taken out and removed
