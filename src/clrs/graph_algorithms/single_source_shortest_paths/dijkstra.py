@@ -82,6 +82,6 @@ class Dijkstra(Graph):
                 old_d = v_node.d
                 self.relax(u_node, v_node)
                 if v_node.d != old_d:
-                    i = q.a.index((old_d, v.k))
+                    i = q.a[: q.heap_size].index((old_d, v.k))
                     q.change(i, (v_node.d, v.k))
                 v = v.next
