@@ -38,7 +38,7 @@ def pollard_rho(n, max_iters=10000):
         i += 1
         x = (x ** 2 - 1) % n
         d = gcd(y - x, n)[0]
-        if d not in [1, n] and d not in factors:
+        if d not in factors and d not in [1, n]:
             factors.append(d)
         if i == k:
             y, k = x, 2 * k
