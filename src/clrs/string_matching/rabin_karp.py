@@ -28,17 +28,13 @@ def check_equal(t, p, t_, p_, row, col, pcols, prows, indices):
 
 
 def col_hash(list_, n_pcols, radix, q):
-    h = 0
-    for i in range(n_pcols):
-        h += (radix ** (n_pcols - i - 1) * list_[i]) % q
-    return h % q
+    return sum((radix ** (n_pcols - i - 1) * list_[i]) % q for i in range(n_pcols)) % q
 
 
 def col_rolling_hash(t_list, t_, col, n_pcols, radix, q):
     t_ = (t_ * radix + t_list[col]) % q
     t_ -= (radix ** n_pcols * t_list[col - n_pcols]) % q
-    t_ %= q
-    return t_
+    return t_ % q
 
 
 def init(t, p, radix, q, is_2d=True):
