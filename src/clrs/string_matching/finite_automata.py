@@ -26,8 +26,7 @@ def compute_transition(p, m, sigma):
         for j in range(sigma):
             tf[i][j] = tf[lps][j]
         if i < m:
-            tf[i][ord(p[i])] = i + 1
-            lps = tf[lps][ord(p[i])]
+            lps, tf[i][ord(p[i])] = tf[lps][ord(p[i])], i + 1
     return tf
 
 
