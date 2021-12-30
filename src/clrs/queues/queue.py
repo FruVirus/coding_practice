@@ -60,10 +60,7 @@ class Queue:
         if self.table_double:
             return self._reduce()
         x = self.a[self.head]
-        if self.head == self.size - 1:
-            self.head = 0
-        else:
-            self.head += 1
+        self.head = 0 if self.head == self.size - 1 else self.head + 1
         return x
 
     def empty(self):
@@ -72,10 +69,7 @@ class Queue:
     def enqueue(self, x):
         self._grow()
         self.a[self.tail] = x
-        if self.tail == self.size - 1:
-            self.tail = 0
-        else:
-            self.tail += 1
+        self.tail = 0 if self.tail == self.size - 1 else self.tail + 1
 
     def full(self):
         if self.head == self.tail + 1:
