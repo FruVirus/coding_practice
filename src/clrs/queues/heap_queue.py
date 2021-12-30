@@ -176,8 +176,8 @@ class HeapQueue:
 
     def extract(self):
         assert self.heap_size > 0
-        x = self.get()
         self.heap_size -= 1
+        x = self.get()
         self._exchange(0, self.heap_size)
         self.heapify(0)
         return x
