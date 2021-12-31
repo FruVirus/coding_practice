@@ -44,8 +44,7 @@ def init(t, p, radix, q, is_2d=True):
     if not is_2d:
         t, p = [t], [p]
     trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
-    t_list, p_list = row_hash(t, p, tcols, pcols, prows, radix, q)
-    n_tcols, n_pcols = len(t_list), len(p_list)
+    t_list, p_list, n_tcols, n_pcols = row_hash(t, p, tcols, pcols, prows, radix, q)
     indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
     return t, p, t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices
 
@@ -58,7 +57,7 @@ def row_hash(t, p, tcols, pcols, prows, radix, q):
             for j in reversed(range(prows)):
                 h += (radix ** (prows - j - 1) * ord(a[j][i])) % q
             list_.append(h % q)
-    return t_list, p_list
+    return t_list, p_list, len(t_list), len(p_list)
 
 
 def rabin_karp(t, p, radix=256, q=101):
