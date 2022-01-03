@@ -1,6 +1,6 @@
 """
-2.1: Insertion sort
-===================
+2.1 Insertion sort
+==================
 
 Insertion sort is an efficient algorithm for sorting a small number of elements.
 Insertion sort works the way many people sort a hand of playing cards. We start with an

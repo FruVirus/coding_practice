@@ -18,9 +18,7 @@ O(n) worst case
 from src.clrs.sorting_and_order_statistics.comparison_sorting.insertion_sort import (
     insertion_sort,
 )
-from src.clrs.sorting_and_order_statistics.comparison_sorting.quick_sort import (
-    partition,
-)
+from src.clrs.sorting_and_order_statistics.comparison_sorting.quicksort import partition
 
 
 def get_median(a):

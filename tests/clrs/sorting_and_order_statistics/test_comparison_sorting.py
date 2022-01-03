@@ -3,7 +3,7 @@ from clrs.sorting_and_order_statistics.comparison_sorting import (
     bubble_sort,
     insertion_sort,
     merge_sort,
-    quick_sort,
+    quicksort,
 )
 from clrs.sorting_and_order_statistics.comparison_sorting.heap_sort import HeapSort
 from tests.conftest import PARAM
@@ -87,8 +87,8 @@ def test_merge_sort(a):
         [-5, -4, -3, -2, -1],
     ],
 )
-def test_quick_sort(a):
-    quick_sort.quicksort(a, 0, len(a) - 1)
+def test_quicksort(a):
+    quicksort.quicksort(a, 0, len(a) - 1)
     assert a == sorted(a)
 
 

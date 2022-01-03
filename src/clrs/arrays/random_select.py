@@ -11,9 +11,7 @@ E[O(n)] time
 """
 
 # Repository Library
-from src.clrs.sorting_and_order_statistics.comparison_sorting.quick_sort import (
-    partition,
-)
+from src.clrs.sorting_and_order_statistics.comparison_sorting.quicksort import partition
 
 
 def random_select(a, low, high, i):
