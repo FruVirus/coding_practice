@@ -48,3 +48,22 @@ numbers in Theta (d * (n + k)) time. When d is a constant and k is O(n), radix s
 in linear time. A third algorithm, bucket sort, requires knowledge of the probabilistic
 distribution of numbers in the input array. It can sort n real numbers uniformly
 distributed in the half-open interval [0, 1) in average-case O(n) time.
+
+8 Sorting in Linear Time
+========================
+
+Comparison sorts make comparisons (i.e., <, >, =, etc.) between the input elements in
+order to sort them. Any comparison sort must make Omega(n * lg n) comparisons in the
+worst case to sort n elements. Thus, merge sort and heapsort are asymptotically optimal,
+and no comparison sort exists that is faster by more than a constant factor.
+
+Counting sort, radix sort, and bucket sort run in linear time. Of course, these
+algorithms use operations other than comparisons to determine the sorted order.
+Consequently, the Omega(n * lg n) lower bound does not apply to them.
+
+8.1 Lower bounds for sorting
+============================
+
+In a comparison sort, we use only comparisons between elements to gain order information
+about an input sequence <a_1, a_2, ..., a_n>. We may not inspect the values of the
+elements or gain order information about them in any other way.
