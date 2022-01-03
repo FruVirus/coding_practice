@@ -8,8 +8,11 @@ two. The input array is assumed to be sorted in increasing order.
 Complexity
 ==========
 
-bs_iterative(): O(lg n)
-bs_recursive(): O(lg n)
+Time
+----
+
+bs_iterative(): O(lg n).
+bs_recursive(): O(lg n).
 """
 
 

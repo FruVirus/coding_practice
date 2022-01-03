@@ -3,7 +3,8 @@ Overview
 ========
 
 Computes a fast inner product of two lists assuming that each list has been sorted by
-their first elements. In other words:
+their first elements. The first element corresponds to the dimension and the second
+element corresponds to the value in that dimension. In other words:
 
 l1 = [[3, 2], [4, 1], [6, 1], [8, 1], [9, 1]] and
 l2 = [[2, 1], [3, 1], [6, 1], [7, 1], [8, 1]] should give 4.0.
@@ -16,7 +17,10 @@ do this multiplication.
 Complexity
 ==========
 
-O(|l1| + |l2|) time complexity
+Time
+----
+
+sorted_inner_product(): O(|l1| + |l2|).
 """
 
 
