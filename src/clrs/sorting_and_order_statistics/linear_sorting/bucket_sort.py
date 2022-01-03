@@ -1,6 +1,6 @@
 """
-Overview
-========
+8.4 Bucket sort
+===============
 
 Bucket sort assumes that the input is drawn from a uniform distribution and has an
 average-case running time of O(n). Whereas counting sort assumes that the input consists
@@ -14,28 +14,32 @@ uniformly and independently distributed over [0, 1), we do not expect many numbe
 fall into each bucket. To produce the output, we simply sort the numbers in each bucket
 and then go through the buckets in order, list the elements in each.
 
-Bucket sort uses insertion sort. Thus, the complexity of bucket sort is determined by
-the complexity of the n calls to insertion sort.
-
 Complexity
 ==========
 
-O(n) average case running time
+Time
+----
+
+bucket_sort(): O(n) average case. O(n * lg n) if an optimal comparison sort is used.
+
+Space
+-----
+
+bucket_sort(): O(n) for the B array of buckets.
 """
 
 # Repository Library
-from src.clrs.sorting_and_order_statistics.comparison_sorting.insertion_sort import (
-    insertion_sort,
+from src.clrs.sorting_and_order_statistics.comparison_sorting.merge_sort import (
+    merge_sort,
 )
 
 
 def bucket_sort(a):
-    n, largest = len(a), max(a)
-    b, size, x = [[] for _ in range(n)], largest // n + (largest % n > 0), []
+    n, x = len(a), []
+    b = [[] for _ in range(n)]
     for i in range(n):
-        b[int(a[i] / size)].append(a[i])
+        b[int(n * a[i])].append(a[i])
     for i in range(n):
         if b[i]:
-            insertion_sort(b[i])
-            x.extend(b[i])
+            x.extend(merge_sort(b[i]))
     return x

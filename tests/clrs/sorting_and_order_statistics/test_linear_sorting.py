@@ -8,13 +8,7 @@ from clrs.sorting_and_order_statistics.linear_sorting import (
 from tests.conftest import PARAM
 
 
-@PARAM(
-    "a",
-    [
-        [0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68],
-        [7.8, 1.7, 3.9, 2.6, 7.2, 9.4, 2.1, 1.2, 2.3, 6.8],
-    ],
-)
+@PARAM("a", [[0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68]])
 def test_bucket_sort(a):
     assert bucket_sort.bucket_sort(a) == sorted(a)
 
