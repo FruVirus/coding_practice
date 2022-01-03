@@ -57,9 +57,25 @@ partitioning is balanced, the algorithm runs asymptotically as fast as merge sor
 the partitioning is unbalanced, however, it can run asymptotically as slowly as
 insertion sort.
 
-Note that quicksort has in-place partition but is NOT an in-place algorithm due to the
-extra stack space required with each recursive call. The running time of quicksort is
-dominated by the time spent in the partition() function.
+7.4.2 Expected running time
+===========================
+
+The intuition behind why the expected running time of the randomized quicksort is
+O(n * lg n) is as follows: if, in each level of recursion, the split induced by the
+randomized partition puts any constant fraction of the elements on one side of the
+partition, then the recursion tree has depth Theta(lg n) and O(n) work is performed at
+each level.
+
+Running time and comparisons
+----------------------------
+
+The running time of quicksort is dominated by the time spent in the partition()
+procedure. Each time the partition procedure is called, it selects a pivot element, and
+this element is never included in any future recursive calls to quicksort() and
+partition().
+
+NB: Although quicksort has in-place partition, it is NOT an in-place algorithm due to
+the extra stack space required with each recursive call.
 
 Complexity
 ==========
@@ -82,10 +98,10 @@ import random
 
 
 def quicksort(a, low, high):
-    if low < high:
-        pivot = partition(a, low, high)
+    while low < high:
+        pivot = partition(a, low, high, random_partition=False)
         quicksort(a, low, pivot - 1)
-        quicksort(a, pivot + 1, high)
+        low = pivot + 1
 
 
 def partition(a, low, high, pivot_index=None, random_partition=True):
