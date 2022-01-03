@@ -3,7 +3,7 @@ Overview
 ========
 
 Pigeonhole sorting is a sorting algorithm that is suitable for sorting lists of elements
-where the number of elements (n) and the length of the range of possible key values (N)
+where the number of elements, n, and the length of the range of possible key values, N,
 are approximately the same. It requires O(n + N) time. It is similar to counting sort,
 but differs in that it moves items twice: once to the bucket array and again to the
 final destination, whereas counting sort builds an auxiliary array and then uses the
@@ -20,11 +20,20 @@ key.
     3. Iterate over the pigeonhole array in increasing order of keys, and for each
 pigeonhole, put its elements into the original array in increasing order.
 
+Pigeonhole sort is stable.
+
 Complexity
 ==========
 
-O(N + n) worst case time complexity
-O(N + n) worst case space complexity
+Time
+----
+
+pigeonhole_sort(): O(N + n) worst case.
+
+Space
+-----
+
+pigeonhole_sort(): O(N + n) for the pigeon holes array.
 """
 
 
