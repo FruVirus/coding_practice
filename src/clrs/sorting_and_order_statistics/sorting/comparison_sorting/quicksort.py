@@ -99,7 +99,7 @@ import random
 
 def quicksort(a, low, high):
     while low < high:
-        pivot = partition(a, low, high, random_partition=False)
+        pivot = partition(a, low, high)
         quicksort(a, low, pivot - 1)
         low = pivot + 1
 

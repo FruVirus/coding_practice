@@ -1,0 +1,17 @@
+9 Medians and Order Statistics
+==============================
+
+The i-th order statistic of a set of n elements is the i-th smallest element. For
+example, the minimum of a set of elements is the first order statistic (i = 1), and the
+maximum is the n-th order statistic (i = n).
+
+This chapter addresses the problem of selecting the i-th order statistic from a set of n
+distinct numbers. We formally specify the selection problem as follows:
+
+Input: A set A of n (distinct) numbers and an integer i, with 1 <= i <= n.
+
+Output: The element x in A that is larger than exactly i - 1 other elements of A.
+
+We can solve the selection problem in O(n * lg n) time, since we can sort the numbers
+using heapsort or merge sort and then simply index the i-th element in the output array.
+This chapter presents faster algorithms.
