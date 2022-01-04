@@ -122,10 +122,3 @@ class DLL(SLL):
             curr = curr.prev
         if temp is not None:
             self.head = temp.prev
-
-
-dll = DLL()
-dll.insert(Node(1))
-dll.insert(Node(4))
-dll.insert(Node(16))
-dll.insert(Node(9))
