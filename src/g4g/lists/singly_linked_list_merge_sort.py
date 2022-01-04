@@ -47,7 +47,13 @@ Complexity
 Time
 ----
 
-merge_sort(): O(n * lg n).
+merge(): Theta(n).
+merge_sort(): Theta(n * lg n).
+
+Space
+-----
+
+merge(): O(n).
 """
 
 # Repository Library

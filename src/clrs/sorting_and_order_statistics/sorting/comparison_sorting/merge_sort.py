@@ -34,6 +34,11 @@ Time
 
 merge(): Theta(n).
 merge_sort(): Theta(n * lg n).
+
+Space
+-----
+
+merge(): O(n).
 """
 
 
