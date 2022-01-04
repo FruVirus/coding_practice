@@ -202,10 +202,7 @@ scc(): O(V + E)
 """
 
 # Repository Library
-from src.clrs.data_structures.elementary_data_structures.singly_linked_list import (
-    SLL,
-    Node,
-)
+from src.clrs.data_structures.elementary_data_structures.linked_list import SLL, Node
 from src.clrs.data_structures.elementary_data_structures.stack import Stack
 from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 

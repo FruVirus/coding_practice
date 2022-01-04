@@ -42,8 +42,7 @@ search: Theta(1 + n / m)
 import random
 
 # Repository Library
-from src.clrs.data_structures.elementary_data_structures.doubly_linked_list import DLL
-from src.clrs.data_structures.elementary_data_structures.singly_linked_list import Node
+from src.clrs.data_structures.elementary_data_structures.linked_list import DLL, Node
 from src.clrs.selected_topics.number_theoretic_algorithms.next_prime import next_prime
 
 

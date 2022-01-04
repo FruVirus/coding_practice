@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.data_structures.elementary_data_structures.singly_linked_list import Node
+from clrs.data_structures.elementary_data_structures.linked_list import Node
 from clrs.data_structures.hash_tables.hash_chain import HashChain
 
 
