@@ -82,8 +82,8 @@ bfs(): O(V + E)
 """
 
 # Repository Library
+from src.clrs.data_structures.elementary_data_structures.queue import Queue
 from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
-from src.clrs.queues.queue import Queue
 
 
 class BFS(Graph):

@@ -126,7 +126,10 @@ Adjacency matrix: Theta(V^2)
 # pylint: disable=R1722
 
 # Repository Library
-from src.clrs.lists.singly_linked_list import SLL, Node
+from src.clrs.data_structures.elementary_data_structures.singly_linked_list import (
+    SLL,
+    Node,
+)
 
 
 class Graph:

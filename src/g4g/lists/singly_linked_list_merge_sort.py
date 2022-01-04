@@ -49,7 +49,10 @@ O(lg(n)) --> space
 """
 
 # Repository Library
-from src.clrs.lists.singly_linked_list import SLL, Node
+from src.clrs.data_structures.elementary_data_structures.singly_linked_list import (
+    SLL,
+    Node,
+)
 
 
 class SLLMergeSort(SLL):

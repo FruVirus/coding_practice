@@ -16,7 +16,7 @@ O(n) if a is already sorted
 """
 
 # Repository Library
-from src.clrs.lists.singly_linked_list import SLL
+from src.clrs.data_structures.elementary_data_structures.singly_linked_list import SLL
 
 
 class SLLInsertionSort(SLL):

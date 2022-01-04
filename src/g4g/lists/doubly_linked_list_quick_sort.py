@@ -30,7 +30,7 @@ partition():
 """
 
 # Repository Library
-from src.clrs.lists.doubly_linked_list import DLL
+from src.clrs.data_structures.elementary_data_structures.doubly_linked_list import DLL
 
 
 class DLLQuickSort(DLL):

@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.lists.singly_linked_list import Node
+from clrs.data_structures.elementary_data_structures.singly_linked_list import Node
 from g4g.lists.singly_linked_list_merge_sort import SLLMergeSort
 
 

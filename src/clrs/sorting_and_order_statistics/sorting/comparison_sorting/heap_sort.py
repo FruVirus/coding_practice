@@ -40,7 +40,7 @@ sort(): O(n * lg n).
 """
 
 # Repository Library
-from src.clrs.queues.heap_queue import HeapQueue
+from src.clrs.data_structures.elementary_data_structures.heap_queue import HeapQueue
 
 
 class HeapSort(HeapQueue):

@@ -44,8 +44,8 @@ prim(): O(E * lg(V))
 """
 
 # Repository Library
+from src.clrs.data_structures.elementary_data_structures.heap_queue import HeapQueue
 from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
-from src.clrs.queues.heap_queue import HeapQueue
 
 
 class Prim(Graph):
