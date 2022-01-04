@@ -58,7 +58,7 @@ class SLLMergeSort(SLL):
     @staticmethod
     def _get_middle(h):
         slow, fast = h, h.next
-        while fast is not None and fast.next is not None:
+        while not (fast is None or fast.next is None):
             slow, fast = slow.next, fast.next.next
         return slow
 
@@ -66,7 +66,7 @@ class SLLMergeSort(SLL):
     def merge(l, r):
         merged = Node(-1)
         temp = merged
-        while l is not None and r is not None:
+        while not (l is None or r is None):
             if l.k <= r.k:
                 temp.next, l = l, l.next
             else:
