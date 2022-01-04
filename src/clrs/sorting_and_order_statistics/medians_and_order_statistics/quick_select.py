@@ -15,10 +15,12 @@ O(n) worst case
 """
 
 # Repository Library
-from src.clrs.sorting_and_order_statistics.comparison_sorting.insertion_sort import (
+from src.clrs.sorting_and_order_statistics.sorting.comparison_sorting.insertion_sort import (  # noqa: E501
     insertion_sort,
 )
-from src.clrs.sorting_and_order_statistics.comparison_sorting.quicksort import partition
+from src.clrs.sorting_and_order_statistics.sorting.comparison_sorting.quicksort import (
+    partition,
+)
 
 
 def get_median(a):

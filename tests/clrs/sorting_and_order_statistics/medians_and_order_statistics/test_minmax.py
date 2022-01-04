@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.arrays.minmax import minmax
+from clrs.sorting_and_order_statistics.medians_and_order_statistics.minmax import minmax
 from tests.conftest import PARAM
 
 
