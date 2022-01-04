@@ -23,6 +23,15 @@ list. If L.head = None, the list is empty.
 The major difference between singly and doubly linked lists is that the former also
 requires O(n) time for deletion.
 
+A list may have one of several forms. It may be either singly or doubly linked, it may
+be sorted or not, and it may be circular or not. If a list is singly linked, we omit the
+prev pointer in each element. If a list is sorted, the linear order of the list
+corresponds to the linear order of keys stored in elements of the list; the minimum
+element is then the head of the list, and the maximum element is the tail. If the list
+is unsorted, the elements can appear in any order. In a circular list, the prev pointer
+of the head of the list points to the tail, and the next pointer of the tail points to
+the head.
+
 Complexity
 ==========
 
