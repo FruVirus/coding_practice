@@ -7,7 +7,7 @@ performance of a linked list makes some other algorithms (e.g., quicksort) perfo
 poorly, and others (e.g., heapsort) completely impossible.
 
 Let the head be the first node of the linked list to be sorted and the head reference be
-the pointer to head. Note that we need a reference to the head in merge_sort9) as the
+the pointer to head. Note that we need a reference to the head in merge_sort() as the
 implementation changes next links to sort the linked lists (instead of the manipulating
 the node keys), so the head node has to be changed if the key at the original head is
 not the smallest value in the linked list.
@@ -44,8 +44,10 @@ store the final head returned after merging.
 Complexity
 ==========
 
-O(n * lg(n)) --> time
-O(lg(n)) --> space
+Time
+----
+
+merge_sort(): O(n * lg n).
 """
 
 # Repository Library
@@ -83,15 +85,12 @@ class SLLMergeSort(SLL):
             return h
         mid = self._get_middle(h)
         mid_next, mid.next = mid.next, None
-        l = self.merge_sort(h)
-        r = self.merge_sort(mid_next)
-        return self.merge(l, r)
+        return self.merge(self.merge_sort(h), self.merge_sort(mid_next))
 
     def sort(self):
         result, sorted_list = self.merge_sort(self.head), []
-        if result is not None:
-            curr = result
-            while curr is not None:
-                sorted_list.append(curr.k)
-                curr = curr.next
+        curr = result
+        while curr is not None:
+            sorted_list.append(curr.k)
+            curr = curr.next
         return sorted_list
