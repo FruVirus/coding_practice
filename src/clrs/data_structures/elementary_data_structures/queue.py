@@ -1,9 +1,14 @@
 """
-Overview
-========
+10.1 Stacks and queues
+======================
 
-In a queue, the element deleted is always the one that has been set for the longest
-time: queue implements a first-in, first-out, or FIFO, policy.
+Stacks and queues are dynamic sets in which the element removed from the set by the
+delete() operation is pre-specified. In a queue, the element deleted is always the one
+that has been in the set for the longest time: the queue implements a first-in,
+first-out, or FIFO, policy.
+
+Queues
+------
 
 The queue has a head and a tail. When an element is enqueued, it takes its place at the
 tail of the queue. The element dequeued is always the one at the head of the queue.
@@ -24,7 +29,10 @@ NB: Queue mimics table doubling for practice even though it's redundant in Pytho
 Complexity
 ==========
 
-enqueue() and dequeue() each take O(1) time.
+Time
+----
+
+Queue: Each of the queue operations take O(1).
 """
 
 

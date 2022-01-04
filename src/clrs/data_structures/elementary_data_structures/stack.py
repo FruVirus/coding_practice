@@ -1,20 +1,29 @@
 """
-Overview
-========
+10.1 Stacks and queues
+======================
 
-In a stack, the element deleted from the set is the one most recently inserted: the
-stack implements a last-in, first-out, or LIFO, policy.
+Stacks and queues are dynamic sets in which the element removed from the set by the
+delete() operation is pre-specified. In a stack, the element deleted from the set is the
+one most recently inserted: the stack implements a last-in, first-out, or LIFO, policy.
 
-We can implement a stack of at most n elements with an array, S, of size n. The array
-has an attribute S.top that indexes the most recently inserted element. When S.top = -1,
-the stack contains no elements and is empty. When S.top == n, then the stack overflows.
+Stacks
+------
+
+We can implement a stack of at most n elements with an array, S[1...n]. The array has an
+attribute S.top that indexes the most recently inserted element. The stack consists of
+elements S[1...S.top], where S[1] is the element at the bottom of the stack and S[S.top]
+is the element at the top. When S.top = 0, the stack contains no elements and is empty.
+When S.top > n, then the stack overflows.
 
 NB: Stack mimics table doubling for practice even though it's redundant in Python.
 
 Complexity
 ==========
 
-Each of the stack operations take O(1).
+Time
+----
+
+Stack: Each of the stack operations take O(1).
 """
 
 
