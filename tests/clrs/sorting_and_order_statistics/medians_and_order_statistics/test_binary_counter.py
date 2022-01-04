@@ -1,5 +1,7 @@
 # Repository Library
-from clrs.arrays.binary_counter import binary_counter
+from clrs.sorting_and_order_statistics.medians_and_order_statistics.binary_counter import (  # noqa: E501
+    binary_counter,
+)
 
 
 def test_binary_counter():

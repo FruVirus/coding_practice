@@ -1,5 +1,7 @@
 # Repository Library
-from clrs.arrays.quick_select import quick_select
+from clrs.sorting_and_order_statistics.medians_and_order_statistics.quick_select import (  # noqa: E501
+    quick_select,
+)
 
 
 def test_quick_select():

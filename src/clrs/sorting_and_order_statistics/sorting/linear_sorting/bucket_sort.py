@@ -29,7 +29,7 @@ bucket_sort(): O(n) for the B array of buckets.
 """
 
 # Repository Library
-from src.clrs.sorting_and_order_statistics.comparison_sorting.merge_sort import (
+from src.clrs.sorting_and_order_statistics.sorting.comparison_sorting.merge_sort import (  # noqa: E501
     merge_sort,
 )
 

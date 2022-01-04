@@ -1,5 +1,7 @@
 # Repository Library
-from clrs.arrays.random_select import random_select
+from clrs.sorting_and_order_statistics.medians_and_order_statistics.random_select import (  # noqa: E501
+    random_select,
+)
 
 
 def test_random_select():

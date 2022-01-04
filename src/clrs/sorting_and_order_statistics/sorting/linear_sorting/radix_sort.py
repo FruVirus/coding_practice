@@ -14,7 +14,7 @@ radix_sort(): O(d * (n + k)).
 """
 
 # Repository Library
-from src.clrs.sorting_and_order_statistics.linear_sorting.counting_sort import (
+from src.clrs.sorting_and_order_statistics.sorting.linear_sorting.counting_sort import (
     counting_sort,
 )
 

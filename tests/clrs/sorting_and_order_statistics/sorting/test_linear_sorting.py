@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.sorting_and_order_statistics.linear_sorting import (
+from clrs.sorting_and_order_statistics.sorting.linear_sorting import (
     bucket_sort,
     counting_sort,
     pigeonhole_sort,
