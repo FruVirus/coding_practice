@@ -88,8 +88,7 @@ class SLLMergeSort(SLL):
         return self.merge(self.merge_sort(h), self.merge_sort(mid_next))
 
     def sort(self):
-        result, sorted_list = self.merge_sort(self.head), []
-        curr = result
+        curr, sorted_list = self.merge_sort(self.head), []
         while curr is not None:
             sorted_list.append(curr.k)
             curr = curr.next
