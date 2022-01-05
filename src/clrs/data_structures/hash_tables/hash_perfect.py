@@ -1,26 +1,13 @@
 """
-Overview
-========
-
-A hash table is an effective data structure for implementing dictionaries and their
-operations: INSERT, DELETE, and SEARCH. Although searching for an element in a hash
-table can take as long as searching for an element in a linked list (Theta(n) time), in
-practice, hashing performs extremely well. Under reasonable assumptions, the average
-time to search for an element in a hash table is O(1).
-
-When the number of keys actually stored is small relative to the total number of
-possible keys, hash tables become an effective alternative to directly addressing an
-array, since a hash table typically uses an array of size proportional to the number of
-keys actually stored. Instead of using the key as an array index directly, the array
-index is computed from the key using a hash function.
-
-Perfect Hashing
-===============
+11.5 Perfect hashing
+====================
 
 Perfect hashing provides an excellent worst-case performance when the set of keys is
 static: once the keys are stored in the table, the set of keys never changes. Some
 applications naturally have static sets of keys: consider the set of reserved words in
-a programming language, or the set of file names on a CD-ROM.
+a programming language, or the set of file names on a CD-ROM. We call a hashing
+technique perfect hashing if O(1) memory accesses are required to perform a search in
+the worst case.
 
 In perfect hashing, we create two levels of hashing, with universal hashing at each
 level. The first level is essentially the same as for hashing with chaining: we hash the
@@ -32,18 +19,23 @@ collisions at the secondary level. In order to guarantee that there are no colli
 at the secondary level, however, we will need to let the size of the secondary tables be
 the square of the number of keys hashing to that slot.
 
-Perfect hashing requires O(n) memory space.
-
 NB: When m = n^2, a hash function chosen randomly from the set of universal hash
 functions is more likely than not to have no collisions. However, one must still perform
 some trial and error before finding a collision-free hash function for a given set of
-(static) keys.
+(static) keys. The values in A_LIST and B_LIST are pre-specified from trial and error.
 
 Complexity
 ==========
 
-search: O(1) in the worst case
-memory: O(n)
+Time
+----
+
+search(): O(1) in the worst case.
+
+Space
+-----
+
+self.table: O(n).
 """
 
 # Standard Library
@@ -53,8 +45,8 @@ import random
 from src.clrs.selected_topics.number_theoretic_algorithms.next_prime import next_prime
 
 # Define globals.
-A_LIST = [27, None, 48, None, None, 16, None, 48, None]
-B_LIST = [83, None, 51, None, None, 59, None, 35, None]
+A_LIST = [0, None, 10, None, None, 0, None, 23, None]
+B_LIST = [0, None, 18, None, None, 0, None, 88, None]
 
 
 class HashPerfect:

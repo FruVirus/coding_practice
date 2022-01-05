@@ -24,6 +24,6 @@ def test_hash_perfect():
     assert x.search(10)[0] == 0
     assert x.search(10)[1] is None
     result = x.search(72)
-    assert result[0] == 2 and result[1] == 1
+    assert result[0] == 2 and result[1] == 4
     result = x.search(60)
-    assert result[0] == 2 and result[1] == 2
+    assert result[0] == 2 and result[1] == 3
