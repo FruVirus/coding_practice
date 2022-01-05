@@ -67,8 +67,7 @@ class BST:
         if isinstance(z, (int, float)):
             z = BSTNode(z)
         while x is not None:
-            y = x
-            x = x.left if z.key < x.key else x.right
+            x, y = x.left if z.key < x.key else x.right, x
         z.p = y
         if y is None:
             self.root = z
@@ -159,11 +158,10 @@ class BST:
         self.update_size(x.right)
 
     def walk(self, x):
-        if x is not None:
-            node = self.min(x)
-            while node is not None:
-                print(node.key)
-                node = self.successor(node)
+        node = self.min(x)
+        while node is not None:
+            print(node.key)
+            node = self.successor(node)
 
 
 class BSTNode:
