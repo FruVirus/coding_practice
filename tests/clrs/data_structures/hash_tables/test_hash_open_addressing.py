@@ -34,18 +34,18 @@ def test_hash_open():
     x.insert(10)
     assert x.table[0] == 10
     assert x.table[3] == 3
-    assert x.table[4] == 13
-    assert x.table[5] == 4
+    assert x.table[4] == 4
+    assert x.table[5] == 13
     assert x.table[6] == 6
+    assert x.table[7] == 5
     assert x.table[8] == 8
-    assert x.table[9] == 5
     assert x.search(10) == 0
-    assert x.search(13) == 4
+    assert x.search(13) == 5
     assert x.search(8) == 8
     with pytest.raises(OverflowError):
-        x.insert(9)
+        x.insert(4)
     x.delete(13)
-    assert x.search(4) == 5
+    assert x.search(4) == 4
     x.insert(1)
     x.insert(2)
     x.insert(7)

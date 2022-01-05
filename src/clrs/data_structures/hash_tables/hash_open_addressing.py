@@ -1,24 +1,9 @@
 """
-Overview
-========
-
-A hash table is an effective data structure for implementing dictionaries and their
-operations: INSERT, DELETE, and SEARCH. Although searching for an element in a hash
-table can take as long as searching for an element in a linked list (Theta(n) time), in
-practice, hashing performs extremely well. Under reasonable assumptions, the average
-time to search for an element in a hash table is O(1).
-
-When the number of keys actually stored is small relative to the total number of
-possible keys, hash tables become an effective alternative to directly addressing an
-array, since a hash table typically uses an array of size proportional to the number of
-keys actually stored. Instead of using the key as an array index directly, the array
-index is computed from the key using a hash function.
-
-Closed Hashing - Open Addressing
-================================
+11.4 Open addressing
+====================
 
 In open addressing, all elements occupy the hash table itself. That is, each table entry
-contains either an element of the dynamic set or None. When searching for an element, we
+contains either an element of the dynamic set or NIL. When searching for an element, we
 systematically examine table slots until either we find the desired element or we have
 ascertained that the element is not in the table. No lists and no elements are stored
 outside the table, unlike in chaining. Thus, in open addressing, the hash table can
@@ -30,26 +15,89 @@ following pointers, we compute the sequence of slots to be examined. The extra m
 freed by not storing pointers provides the hash table with a larger number of slots for
 the same amount of memory, potentially yielding fewer collisions and faster retrieval.
 
-To determine which slots to probe, we extend the hash function to include the probe
-number (starting from 0) as a second input. With open addressing, we require that for
-every key k, the probe sequence is a permutation of the number of slots, so that every
-hash table position is eventually considered as a slot for a new key as the table fills
-up.
+To perform insertion using open addressing, we successively examine, or probe, the hash
+table until we find an empty slot in which to put the key. Instead of being fixed in the
+order 0, 1, ..., m - 1 (which requires Theta(n) search time), the sequence of positions
+probed depends upon the key being inserted. To determine which slots to probe, we extend
+the hash function to include the probe number (starting from 0) as a second input. With
+open addressing, we require that for every key k, the probe sequence is a permutation of
+the number of slots, so that every hash table position is eventually considered as a
+slot for a new key as the table fills up.
+
+When we delete a key from slot i, we cannot simply mark that slot as empty by storing
+NIL in it. If we did, we might be unable to retrieve any key k during whose insertion we
+had probed slot i and found it occupied. This is because searching terminates when it
+finds a NIL slot, since k would have been inserted there and not later in its probe
+sequence. We can solve this problem by marking the slot, storing in it the special value
+DELETED instead of NIL. When we use the special value DELETED, however, search times no
+longer depend on the load factor alpha, and for this reason chaining is more commonly
+selected as a collision resolution technique when keys must be deleted.
+
+The analysis of open addressing assumes uniform hashing: the probe sequence of each key
+is equally likely to be any of the m! permutations of <0, 1, ..., m - 1>. Uniform
+hashing generalizes the notion of simple uniform hashing to a hash function that
+produces not just a single number, but a whole probe sequence.
+
+Three commonly used techniques for computing the probe sequences required for open
+addressing are: linear probing, quadratic probing, and double hashing. These techniques
+all guarantee that the permutation of probe sequences is a permutation of the slots for
+each key k. None of these techniques fulfills the assumption of uniform hashing,
+however, since none of them is capable of generating more than m^2 different probe
+sequences (instead of the m! that uniform hashing requires). Double hashing has the
+greatest number of probe sequences and, as one might expect, seems to give the best
+results.
+
+Linear probing
+--------------
+
+Because the initial probe determines the entire probe sequence, there are only m
+distinct probe sequences (instead of the m! probe sequences required by uniform
+hashing).
+
+Linear probing is easy to implement, but it suffers from a problem known as primary
+clustering. Long runs of occupied slots build up, increasing the average search time.
+Clusters arise because an empty slot preceded by i full slots gets filled next with
+probability (i + 1) / m. Long runs of occupied slots tend to get longer, and the average
+search time increases.
+
+Quadratic probing
+-----------------
+
+This method works much better than linear probing, but to make full use of the hash
+table, the values of c_1, c_2, and m are constrained. Also, if two keys have the same
+initial probe position, then their probe sequences are the same. This property leads to
+a milder form of clustering, called secondary clustering. As in linear probing, the
+initial probe determines the entire sequence, and so only m distinct probe sequences are
+used.
+
+Double hashing
+--------------
+
+Double hashing offers one of the best methods available for open addressing because the
+permutations produced have many of the characteristics of randomly chosen permutations.
+Unlike the case of linear or quadratic probing, the probe sequence here depends in two
+ways upon the key k, since the initial probe position, the offset, or both may vary.
+When m is prime or a power of 2, double hashing improves over linear or quadratic
+probing in that Theta(m^2) probe sequences are used, rather than Theta(m), since each
+possible (h_1(k), h_2(k)) pair yields a distinct probe sequence.
 
 NB: HashOpen mimics table doubling for practice even though it's redundant in Python.
 
 Complexity
 ==========
 
-insertion: Requires at most 1 / (1 - alpha) probes on average, assuming uniform hashing.
+Time
+----
 
-deletion: O(1) if we use a doubly linked list. Otherwise, O(n) if we use a singly linked
+insert(): Requires at most 1 / (1 - n / m) probes on average, assuming uniform hashing.
+
+delete(): O(1) if we use a doubly linked list. Otherwise, O(n) if we use a singly linked
 list since we have to search for the element previous to the element being deleted
 first.
 
-search: Expected number of probes in an unsuccessful search is at most 1 / (1 - alpha).
-Expected number of probes in a successful search is at most
-(1 / alpha) * ln(1 / (1 - alpha)). When we use the special value "DELETED", search times
+search(): Expected number of probes in an unsuccessful search is at most
+1 / (1 - n / m). Expected number of probes in a successful search is at most
+(1 / n / m) * ln(1 / (1 - n / m)). When we use the special value "DELETED", search times
 no longer depend on the load factor alpha, and for this reason chaining is more commonly
 selected as a collision resolution technique when keys must be deleted.
 """
@@ -117,7 +165,7 @@ class HashOpen(HashChain):
         return (self.ahf(k) + i) % self.size
 
     def hash_quadratic(self, i, k):
-        return (self.ahf(k) + i ** 2) % self.size
+        return (self.ahf(k) + i + i ** 2) % self.size
 
     def insert(self, k):
         self._grow()
