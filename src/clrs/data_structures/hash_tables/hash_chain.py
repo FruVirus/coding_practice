@@ -1,41 +1,65 @@
 """
-Overview
-========
+11.2 Hash tables
+================
 
-A hash table is an effective data structure for implementing dictionaries and their
-operations: INSERT, DELETE, and SEARCH. Although searching for an element in a hash
-table can take as long as searching for an element in a linked list (Theta(n) time), in
-practice, hashing performs extremely well. Under reasonable assumptions, the average
-time to search for an element in a hash table is O(1).
+Collision resolution by chaining
+--------------------------------
 
-When the number of keys actually stored is small relative to the total number of
-possible keys, hash tables become an effective alternative to directly addressing an
-array, since a hash table typically uses an array of size proportional to the number of
-keys actually stored. Instead of using the key as an array index directly, the array
-index is computed from the key using a hash function.
-
-Open Hashing - Chaining
-=======================
-
-In chaining, we place all the elements that has to the same slot into the same linked
+In chaining, we place all the elements that hash to the same slot into the same linked
 list. Slot j contains a pointer to the head of the list of all stored elements that hash
 to j; if there are no such elements, slot j contains NIL.
+
+The worst case running time for insertion is O(1). THe insertion procedure is fast in
+part because it assumes that the element x being inserted is not already present in the
+table; if necessary we can check this assumption (at additional cost) by searching for
+an element whose key is x.key before we insert. For searching, the worst case running
+time is proportional to the length of the list. We can delete an element in O(1) time if
+the lists are doubly linked. If the hash table supports deletion, then its linked lists
+should be doubly linked so that we can delete an item quickly. If the lists were only
+singly linked, then to delete element x, we would first have to find x in the list
+T[h(x.key)] so that we could update the next attribute of x's predecessor. With singly
+linked lists, both deletion and searching would have the same asymptotic running times.
+
+Analysis of hashing with chaining
+---------------------------------
+
+Given a hash table T with m slots that stores n elements, we define the load factor
+alpha for T as n / m, that is, the average number of elements stored in a chain. Alpha
+can be less than, equal to, or greater than 1.
+
+The worst case behavior of hashing with chaining is terrible: all n keys hash to the
+same slot, creating a list of length n. The worst case time for searching is thus
+Theta(n) plus the time to compute the hash function---no better than if we used one
+linked list for all the elements.
+
+The average case performance of hashing depends on how well the hash function h
+distributes the set of keys to be stored among the m slots, on the average. We assume
+that any given element is equally likely to hash into any of the m slots, independently
+of where any other element has hashed to. We call this the assumption of simple uniform
+hashing.
+
+If the number of hash-table slots is at least proportional to the number of elements in
+the table, we have n = O(m) and, consequently, alpha = n / m = O(m) / m = O(1). Thus,
+searching takes constant time on average.
 
 NB: HashChain mimics table doubling for practice even though it's redundant in Python.
 
 Complexity
 ==========
 
-insertion: O(1) if we assume that the element x being inserted is not already present in
+Time
+----
+
+insert(): O(1) if we assume that the element x being inserted is not already present in
 the table. Otherwise, searching for the element will take O(L) time or an average-case
-time of Theta(1 + n/m), where n is the total number of elements and m is the total
+time of Theta(1 + n / m), where n is the total number of elements and m is the total
 number of slots in the hash table.
 
-deletion: O(1) if we use a doubly linked list. Otherwise, O(n) if we use a singly linked
+delete(): O(1) if we use a doubly linked list. Otherwise, O(n) if we use a singly linked
 list since we have to search for the element previous to the element being deleted
 first.
 
-search: Theta(1 + n / m)
+search(): Theta(1 + n / m) under the assumption of simple uniform hashing.
 """
 
 # Standard Library

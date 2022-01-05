@@ -1,0 +1,120 @@
+11 Hash Tables
+==============
+
+Many applications require a dynamic set that supports only the dictionary operations
+insert, search, and delete. A hash table is an effective data structure for implementing
+dictionaries. Although searching for an element in a hash table can take as long as
+searching for an element in a linked list---Theta(n) time in the worst case---in
+practice, hashing performs extremely well. Under reasonable assumptions, the average
+time to search for an element in a hash table is O(1).
+
+A hash table generalizes the simpler notion of an ordinary array. Directly addressing
+into an ordinary array makes effectively use of our ability to examine an arbitrary
+position in an array in O(1) time. We can take advantage of direct addressing when we
+can afford to allocate an array that has one position for every possible key.
+
+When the number of keys actually stored is small relative to the total number of
+possible keys, hash tables become an effective alternative to directly addressing an
+array, since a hash table typically uses an array of size proportional to the number of
+keys actually stored. Instead of using the key as an array index directly, the array
+index is computed from the key. The bottom line is that hashing is an extremely
+effective and practical technique: the basic dictionary operations required only O(1)
+time on the average.
+
+11.2 Hash tables
+================
+
+The downside of direct addressing is obvious: if the universe of keys, U, is large,
+storing a table T of size |U| may be impractical, or even impossible, given the memory
+available on a typical computer. Furthermore, the set K of keys actually stored may be
+so small relative to U that most of the space allocated for T would be wasted.
+
+When the set K of keys stored in a dictionary is much smaller than the universe U of all
+possible keys, a hash table requires much less storage than a direct address table.
+Specifically, we can reduce the storage requirement to Theta(|K|) while we maintain the
+benefit that searching for an element in the hash table still requires only O(1) time.
+The catch is that this bound is for the average-case time, whereas for direct addressing
+it holds for the worst-case time.
+
+With direct addressing, an element with key k is stored in slot k. With hashing, this
+element is stored in slot h(k); that is, we use a hash function h to compute the slot
+from the key k. Here, h maps the universe U of keys into the slots of a hash table
+T[0...m - 1], where the size m of the hash table is typically much less than |U|. We say
+that an element with key k hashes to slot h(k); we also say that h(k) is the hash value
+of key k. The hash function reduces the range of array indices and hence the size of the
+array. Instead of a size of |U|, the array can have size m.
+
+There is one hitch: two keys may hash to the same slot. We call this situation a
+collision.
+
+A hash function h must be deterministic in that a given input k should always produce
+the same output h(k). Because |U| > m, however, there must be at least two keys that
+have the same has value; avoiding collisions altogether is therefore impossible.
+
+11.3 Hash functions
+===================
+
+What makes a good hash function?
+--------------------------------
+
+A good hash function satisfies (approximately) the assumption of simple uniform hashing:
+each key is equally likely to hash to any of the m slots, independently of where any
+other key has hashed to. Unfortunately, we typically have no way to check this
+condition, since we rarely know the probability distribution from which the keys are
+drawn. Moreover, the keys might not be drawn independently.
+
+A good approach derives the hash value in a way that expect to be independent of any
+patterns that might exist in the data. For example, the "division method" computes the
+hash value as the remainder when the key is divided by a specified prime number. This
+method frequently gives good results, assuming that we choose a prime number that is
+unrelated to any patterns in the distribution of keys. For example, if every key ends
+with a 0, then we want to avoid division by 10. As another example, we want to avoid
+even/odd divisions if the keys are skewed to be more even/odd since this would create an
+uneven distribution as well.
+
+11.3.1 The division method
+==========================
+
+In the division method for creating hash functions, we map a key k into one of m slots
+by taking the remainder of k divided by m. That is, the hash function is h(k) = k mod m.
+
+It is best that m is a prime number as that makes sure the keys are distributed with
+more uniformity. A disadvantage of the division method is that consecutive keys map to
+consecutive hash values in the hash table, which can lead to poor performance.
+
+11.3.2 The multiplication method
+================================
+
+The multiplication method for creating hash functions operates in two steps. First, we
+multiply the key k by a constant A in the range 0 < A < 1 and extract the fractional
+part of k * A. Then, we multiply this value by m and take the floor of the result. In
+short, the hash function is h(k) = floor(m * (k * A mod 1)).
+
+An advantage of the multiplication method is that the value of m is not critical. We
+typically choose it to be a power of 2. Knuth suggests a value of A = 0.62.
+
+11.3.3 Universal hashing
+========================
+
+If a malicious adversary chooses the keys to be hashed by some fixed hash function, then
+the adversary can choose n keys that all hash to the same slot, yielding an average
+retrieval time of Theta(n). Any fixed hash function is vulnerable to such terrible worst
+case behavior; the only effective way to improve the situation is to choose the hash
+function randomly in a way that is independent of the keys that are actually going to be
+stored. This approach, called universal hashing, can yield provably good performance on
+average, no matter which keys the adversary chooses.
+
+In universal hashing, at the beginning of execution we select the hash function at
+random from a carefully designed class of functions. As in the case of quicksort,
+randomization guarantees that no single input will always evoke worst case behavior.
+Because we randomly select the hash function, the algorithm can behave differently on
+each execution, even for the same input, guaranteeing good average case performance for
+any input.
+
+Let H be a finite collection of hash functions that map to a given universe U of keys
+into the range {0, 1, ..., m - 1}. Such a collection is said to be universal if for each
+pair of distinct keys k, l in U, the number of hash functions h in H for which
+h(k) = h(l) is at most |H| / m. In other words, with a hash function randomly chosen
+from H, the chance of a collision between distinct keys k and l is no more than the
+chance 1 / m of a collision if h(k) and h(l) were randomly and independently chosen
+from teh set {0, 1, ..., m - 1}.
