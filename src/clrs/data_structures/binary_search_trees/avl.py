@@ -22,9 +22,9 @@ unbalanced. If an ancestor is unbalanced, then rotations are performed around th
 ancestor.
 
 Rotations are always done on three nodes at a time regardless of the size of the overall
-tree. Hence, we consider x, x's children, and x's grand-children only. If x's
-grand-children are not unbalanced, then we only need to rotate x. Otherwise, we have to
-rotate x's grand-children first before rotating x.
+tree since we want our balance factor to be <= 1. Hence, we consider x, x's children,
+and x's grand-children only. If x's grand-children are not unbalanced, then we only need
+to rotate x. Otherwise, we have to rotate x's grand-children first before rotating x.
 
 Complexity
 ==========
