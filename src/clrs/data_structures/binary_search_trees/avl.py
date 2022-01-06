@@ -2,21 +2,40 @@
 Overview
 ========
 
-An AVL tree is a BST that balances itself every time an element is inserted or deleted.
-In addition to the invariants of a BST, each node of an AVL tree has the invariant
-property that the heights of the sub-tree rooted at its children differ by at most one:
-|height(node.left) - height(node.right)| <= 1.
+In a BST, the height of the tree dictates the running time of the various tree
+operations. The height of the tree can range from O(lg n) at a minimum to O(n) at a
+maximum depending on how the keys are inserted/deleted.
+
+For n keys, there are n! possible BSTs. To get a balanced BST, we can perform rotations
+until we get a tree with a minimum height.
+
+An AVL tree is a BST that balances itself every time an element is inserted or deleted
+via rotations. In addition to the invariants of a BST, each node of an AVL tree has the
+invariant property that the heights of the sub-tree rooted at its children differ by at
+most one: balance factor = |height(node.left) - height(node.right)| <= 1.
 
 Every time we insert or delete a node, we need to update the height all the way up the
 ancestry until the height of a node doesn't change.
 
+Rotation starts from the newly inserted node and finds the first ancestor that is
+unbalanced. If an ancestor is unbalanced, then rotations are performed around that
+ancestor.
+
+Rotations are always done on three nodes at a time regardless of the size of the overall
+tree. Hence, we consider x, x's children, and x's grand-children only. If x's
+grand-children are not unbalanced, then we only need to rotate x. Otherwise, we have to
+rotate x's grand-children first before rotating x.
+
 Complexity
 ==========
 
-1. walk() takes O(n) time.
+Time
+----
 
-2. insert(), delete(), search(), min(), max(), successor(), and predecessor() all take
-O(lg(n)) time.
+walk(): O(n).
+
+insert(), delete(), search(), min(), max(), successor(), predecessor(), and rotate() all
+take O(lg n).
 """
 
 # Repository Library
