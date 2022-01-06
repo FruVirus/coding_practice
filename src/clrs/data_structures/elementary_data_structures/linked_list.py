@@ -118,7 +118,7 @@ class DLL(SLL):
         curr, temp = self.head, None
         while curr is not None:
             temp = curr.prev
-            curr.next, curr.prev = curr.prev, curr.next
+            curr.prev, curr.next = curr.next, curr.prev
             curr = curr.prev
         if temp is not None:
             self.head = temp.prev
