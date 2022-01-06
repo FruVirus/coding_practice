@@ -1,13 +1,27 @@
 """
-Overview
-========
+12 Binary Search Trees
+======================
 
-A binary search tree (BST) is organized as a binary tree. We can recognize such a tree
-by a linked data structure in which each node is an object. In addition to a key and
-satellite data, each node contains attributes, left, right, and p that point to the
-nodes corresponding to its left child, its right child, and its parent, respectively. If
-a child or parent is missing, the appropriate attribute contains the value None. The
-root node is the only node in the tree whose parent is None.
+The search tree data structure supports many dynamic-set operations, including search,
+minimum, maximum, predecessor, successor, insert, and delete. Thus, we can use a search
+tree both as a dictionary and as a priority queue.
+
+Basic operations on a binary search tree take time proportional to the height of the
+tree. For a complete binary tree with n nodes, such operations run in Theta(lg n) worst
+case time. If the tree is a linear chain of n nodes, however, the same operations take
+Theta(n) worst case time. The expected height of a randomly built binary search tree is
+O(lg n), so that basic dynamic-set operations on such a tree take Theta(lg n) time on
+average.
+
+12.1 What is a binary search tree?
+==================================
+
+A binary search tree is organized, as the name suggests, in a binary tree. We can
+represent such a tree by a linked data structure in which each node is an object. In
+addition to a key and satellite data, each node contains attributes left, right, and p
+that point to the nodes corresponding to its left child, its right child, and its
+parent, respectively. If a child or the parent is missing, the appropriate attribute
+contains the value NIL. The root node is the only node in the tree whose parent is NIL.
 
 The keys in a binary search tree are always stored in such a way as to satisfy the
 binary-search-tree property:
@@ -15,17 +29,38 @@ binary-search-tree property:
     Let x be a node in a binary search tree. If y is a node in the left subtree of x,
     then y.key <= x.key. If y is a node in the right subtree of x, then y.key >= x.key.
 
+count(l, h) returns the number of keys in the range [l, h].
+
+lca(l, h) produces the root of the smallest subtree (i.e., the lowest common ancestor)
+that contains keys between [l, h]. If l and h do not exist in the tree, lca() returns
+the lowest-common ancestor of the two nodes that would be created by inserting l and h.
+
+list(l, h) produces a list of all the keys between [l, h].
+
+rank(k) returns the number of keys in the tree that are less than or equal to k.
+Informally, if the keys were listed in ascending order, x's rank would indicate its
+position in the sorted array.
+
+update_size() updates the size attribute of a node in the BST. The size attribute of a
+node indicates how many nodes are rooted at that subtree including the subtree root node
+itself. Thus, the root of the overall BST would contain the highest number for its size
+attribute since every single node is rooted at the root.
+
 Complexity
 ==========
 
-1. walk() takes O(n) time.
+Time
+----
 
-2. insert(), delete(), search(), min(), max(), successor(), and predecessor() all take
-O(h) time on a BST of height h. If the BST is balanced, then O(h) = O(lg(n)).
+insert(), delete(), search(), min(), max(), successor(), and predecessor(): O(h) time on
+a BST of height h. If the BST is balanced, then O(h) = O(lg n).
 
-3. list() takes O(lg(n)) + O(L) time where L is the number of keys returned.
+list(): O(h) + O(L) where L is the number of keys returned. O(L) is for the append
+operation.
 
-4. rank() and count() both take O(lg(n)) time.
+count(), rank(), and update_size(): O(h).
+
+walk(): O(n).
 """
 
 
