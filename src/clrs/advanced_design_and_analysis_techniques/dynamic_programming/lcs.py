@@ -71,10 +71,8 @@ lcs_td(): O(m x n) for c table.
 def lcs_bu(x, y, c, m, n):
     for i in range(1, m + 1):
         for j in range(1, n + 1):
-            if x[i - 1] == y[j - 1]:
-                c[i][j] = 1 + c[i - 1][j - 1]
-            else:
-                c[i][j] = max(c[i - 1][j], c[i][j - 1])
+            cond = x[i - 1] == y[j - 1]
+            c[i][j] = 1 + c[i - 1][j - 1] if cond else max(c[i - 1][j], c[i][j - 1])
 
 
 def lcs_td(x, y, c, i, j):
