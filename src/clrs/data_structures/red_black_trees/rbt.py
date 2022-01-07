@@ -98,6 +98,58 @@ node x might also cause violations of the red-black properties. After deleting n
 delete_fix() is called, which changes colors and performs rotations to restore the
 red-black properties.
 
+We maintain node y as the node either removed from the tree or moved within the tree.
+When z has fewer than two children, y points to z and z is removed. When z has two
+children, y points to z's successor and y will move into z's position in the tree.
+
+Because node y's color might change, the variable y_c stores y's color before any
+changes occur. We need to save y's original color in order to test it at the end of
+delete(); if it was black, then removing or moving y could cause violations of the
+red-black properties.
+
+We keep track of the node x that moves into node y's original position. x points to
+either y's only child or, if y has no children, the sentinel T.nil (recall that y has no
+left child).
+
+Since node x moves into node y's original position, the attribute x.p is always set to
+point to the original position in the tree of y's parent, even if x is, in fact, the
+sentinel T.nil. Unless z is y's original parent, the assigment to x.p takes place in the
+transplant() procedure.
+
+When y's original parent is z, however, we do not want x.p to point to y's original
+parent, z, since we are removing that node from the tree. Because node y will move up to
+take z's position in the tree, setting x.p to y causes x.p to point to the original
+position of y's parent, even if x = T.nil.
+
+Finally, if node y was black, we might have introduced one or more violations of the
+red-black properties, and so we call delete_fix() to restore the red-black properties.
+If y was red, the red-black properties still hold when y is removed or moved, for the
+following reasons:
+
+    1. No black-heights in the tree have changed.
+    2. No red nodes have been made adjacent. Because y takes z's place in the tree,
+    along with z's color, we cannot have two adjacent red nodes at y's new position in
+    the tree. In addition, if y was not z's right child, then y's original right child x
+    replaces y in the tree. If y is red, then x must be black, and so replacing y by x
+    cannot cause two red nodes to become adjacent.
+    3. Since y could not have been the root if it was red, the root remains black.
+
+If node y was black, three problems may arise, which the call of delete_fix() will
+remedy. First, if y had been the root and a red child of y becomes the new root, we have
+violated property 2. Second, if both x and x.p are red, then we have violated property
+4. Third, moving y within the tree causes any simple path that previously contained y
+to have one fewer black node. Thus, property 5 is now violated by any ancestor of y in
+the tree. We can correct the violation of property 5 by saying that node x, now
+occupying y's original position, has an "extra" black. That is, if we add 1 to the count
+of black nodes on any simple path that contains x, then under this interpretation,
+property 5 holds. When we remove or move the black node y, we "push" its blackness onto
+node x. The problem is that now node x is neither red nor black, thereby violating
+property 1. Instead, node x is either "doubly" black or "red-and-black," and it
+contributes either 2 or 1, respectively, to the count of black nodes on simple paths
+containing x. The color attribute of x will still be either RED (if x is red-and-black)
+or BLACK (if x is doubly black). In other words, the extra black on a node is reflected
+in x's pointing to the node rather than in the color attribute.
+
 Complexity
 ==========
 
@@ -136,7 +188,7 @@ class RBT:
 
     def delete(self, z):
         z = self._get_node(z)
-        y, y_c = z, z.c
+        y_c = z.c
         if z.left is self.nil:
             x = z.right
             self.transplant(z, z.right)
@@ -352,108 +404,3 @@ class RBTNode:
     def __init__(self, color, key, parent=None, size=1):
         self.c, self.key, self.p, self.size = color, key, parent, size
         self.left = self.right = None
-
-
-rbt = RBT(11)
-rbt.insert(2)
-rbt.insert(14)
-rbt.insert(1)
-rbt.insert(7)
-rbt.insert(15)
-rbt.insert(5)
-rbt.insert(8)
-assert rbt.root.key == 11
-assert rbt.root.c == 1
-assert rbt.root.left.key == 2
-assert rbt.root.left.c == 0
-assert rbt.root.right.key == 14
-assert rbt.root.right.c == 1
-assert rbt.root.left.left.key == 1
-assert rbt.root.left.left.c == 1
-assert rbt.root.right.right.key == 15
-assert rbt.root.right.right.c == 0
-assert rbt.root.left.right.key == 7
-assert rbt.root.left.right.c == 1
-assert rbt.root.left.right.left.key == 5
-assert rbt.root.left.right.left.c == 0
-assert rbt.root.left.right.right.key == 8
-assert rbt.root.left.right.right.c == 0
-rbt.insert(4)
-assert rbt.root.key == 7
-assert rbt.root.c == 1
-assert rbt.root.left.key == 2
-assert rbt.root.left.c == 0
-assert rbt.root.right.key == 11
-assert rbt.root.right.c == 0
-assert rbt.root.left.left.key == 1
-assert rbt.root.left.left.c == 1
-assert rbt.root.right.right.key == 14
-assert rbt.root.right.right.c == 1
-assert rbt.root.left.right.key == 5
-assert rbt.root.left.right.c == 1
-assert rbt.root.left.right.left.key == 4
-assert rbt.root.left.right.left.c == 0
-assert rbt.root.right.left.key == 8
-assert rbt.root.right.left.c == 1
-assert rbt.root.right.right.right.key == 15
-assert rbt.root.right.right.right.c == 0
-assert rbt.predecessor(7).key == 5
-assert rbt.successor(7).key == 8
-assert rbt.predecessor(14).key == 11
-assert rbt.successor(14).key == 15
-assert rbt.min(7).key == 1
-assert rbt.max(7).key == 15
-assert rbt.lca(1, 15).key == 7
-assert rbt.lca(1, 5).key == 2
-assert rbt.lca(14, 15).key == 14
-assert rbt.lca(8, 15).key == 11
-assert rbt.list(1, 15) == [1, 2, 4, 5, 7, 8, 11, 14, 15]
-assert rbt.list(8, 15) == [8, 11, 14, 15]
-assert rbt.search(7, 15).key == 15
-assert rbt.root.size == 9
-assert rbt.root.left.size == 4
-assert rbt.root.right.size == 4
-assert rbt.root.left.right.size == 2
-assert rbt.root.right.right.size == 2
-assert rbt.rank(1) == 1
-assert rbt.rank(7) == 5
-assert rbt.rank(15) == 9
-assert rbt.count(1, 15) == 9
-assert rbt.count(2, 15) == 8
-assert rbt.count(3, 15) == 7
-assert rbt.count(4, 15) == 7
-assert rbt.count(4, 16) == 7
-assert rbt.count(3, 12) == 5
-assert rbt.count(4, 11) == 5
-rbt.delete(11)
-assert rbt.root.key == 7
-assert rbt.root.c == 1
-assert rbt.root.left.key == 2
-assert rbt.root.left.c == 0
-assert rbt.root.left.left.key == 1
-assert rbt.root.left.left.c == 1
-assert rbt.root.left.right.key == 5
-assert rbt.root.left.right.c == 1
-assert rbt.root.left.right.left.key == 4
-assert rbt.root.left.right.left.c == 0
-assert rbt.root.right.key == 14
-assert rbt.root.right.c == 0
-assert rbt.root.right.left.key == 8
-assert rbt.root.right.left.c == 1
-assert rbt.root.right.right.key == 15
-assert rbt.root.right.right.c == 1
-rbt.delete(2)
-assert rbt.root.key == 7
-assert rbt.root.c == 1
-assert rbt.root.left.key == 4
-assert rbt.root.left.c == 0
-assert rbt.root.left.left.key == 1
-assert rbt.root.left.left.c == 1
-assert rbt.root.left.right.key == 5
-assert rbt.root.left.right.c == 1
-assert rbt.root.right.key == 14
-assert rbt.root.right.c == 0
-assert rbt.root.right.left.key == 8
-assert rbt.root.right.left.c == 1
-assert rbt.root.right.right.key == 15
-assert rbt.root.right.right.c == 1
