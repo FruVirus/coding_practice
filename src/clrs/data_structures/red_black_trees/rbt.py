@@ -201,10 +201,11 @@ walk(): O(n).
 """
 
 # Repository Library
-from src.clrs.data_structures.binary_search_trees.bst import BST, BSTNode
+from src.clrs.data_structures.binary_search_trees.avl import AVL
+from src.clrs.data_structures.binary_search_trees.bst import BSTNode
 
 
-class RBT(BST):
+class RBT(AVL):
     def __init__(self, z):
         sentinel = RBTNode(1, None, None, 0)
         super().__init__(RBTNode(1, z, sentinel), sentinel)
@@ -309,52 +310,6 @@ class RBT(BST):
                     z.p.c, z.p.p.c = 1, 0
                     self.rotate(z.p.p, True)
         self.root.c = 1
-
-    def rotate(self, x, left_rotate):
-        x = self._get_node(x)
-        if left_rotate:
-            self.rotate_left(x)
-        else:
-            self.rotate_right(x)
-
-    def rotate_left(self, x):
-        y = x.right
-        x.right = y.left
-        if y.left is not self.sentinel:
-            y.left.p = x
-        y.p = x.p
-        if x.p is self.sentinel:
-            self.root = y
-        elif x is x.p.left:
-            x.p.left = y
-        else:
-            x.p.right = y
-        y.left, x.p = x, y
-        y.size, x.size = x.size, 1 + x.left.size + x.right.size
-
-    def rotate_right(self, x):
-        y = x.left
-        x.left = y.right
-        if y.right is not self.sentinel:
-            y.right.p = x
-        y.p = x.p
-        if x.p is self.sentinel:
-            self.root = y
-        elif x is x.p.right:
-            x.p.right = y
-        else:
-            x.p.left = y
-        y.right, x.p = x, y
-        y.size, x.size = x.size, 1 + x.left.size + x.right.size
-
-    def transplant(self, u, v):
-        if u.p is self.sentinel:
-            self.root = v
-        elif u is u.p.left:
-            u.p.left = v
-        else:
-            u.p.right = v
-        v.p = u.p
 
 
 class RBTNode(BSTNode):

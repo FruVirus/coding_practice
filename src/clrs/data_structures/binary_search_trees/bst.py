@@ -185,7 +185,7 @@ class BST:
             u.p.left = v
         else:
             u.p.right = v
-        if v is not self.sentinel:
+        if v is not self.sentinel or self.sentinel is not None:
             v.p = u.p
 
     def update_size(self, x):
