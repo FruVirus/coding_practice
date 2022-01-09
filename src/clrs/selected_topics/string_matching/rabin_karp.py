@@ -44,8 +44,7 @@ def init(t, p, radix, q, is_2d=True):
     if not is_prime(q):
         q = next_prime(q)
     assert radix * q < 2 ** radix - 1
-    if not is_2d:
-        t, p = [t], [p]
+    t, p = ([t], [p]) if not is_2d else (t, p)
     trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
     t_list, p_list, n_tcols, n_pcols = row_hash(t, p, tcols, pcols, prows, radix, q)
     indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
