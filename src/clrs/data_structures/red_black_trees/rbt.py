@@ -81,6 +81,20 @@ the only properties that might be violated are properties 2 and 4. Both possible
 violations are due to z being colored red. Property 2 is violated if z is the root, and
 property 4 is violated if z's parent is red.
 
+Intuition
+---------
+
+When we insert, we color the inserted node RED. As a result, we can potentially violate
+properties 2 and 4. Thus, we need to fix it. If the inserted node is the root, the fix
+is to simply color the inserted node BLACK. Otherwise, during the fix, we care about the
+color of the inserted node's uncle (i.e., the sibling of the inserted node's parent)
+and whether the inserted node is a left or right child of its parent. The three cases
+are then:
+
+1. z's uncle y is red.
+2. z's uncle y is black and z is a right child (we transform this to case 3)
+3. z's uncle y is black and z is a left child
+
 13.4 Deletion
 =============
 
@@ -149,6 +163,23 @@ contributes either 2 or 1, respectively, to the count of black nodes on simple p
 containing x. The color attribute of x will still be either RED (if x is red-and-black)
 or BLACK (if x is doubly black). In other words, the extra black on a node is reflected
 in x's pointing to the node rather than in the color attribute.
+
+Intuition
+---------
+
+When we delete, we can violate property 5 if the color of the deleted node is BLACK. If
+the color of the deleted node is RED, then we just perform a normal (more or less) BST
+delete. WHen a fix is required, we care about the color of the sibling (w) of the node
+(x) that moves into the deleted node's (y) position. The four cases are then:
+
+1. x's sibling w is red.
+2. x's sibling w is black, and both of w's children are black.
+3. x's sibling w is black, w's left child is red, and w's right child is black (we
+transform this to case 4).
+4. x's sibling w is black, and w's right child is red.
+
+In all cases, we essentially perform rotations and/or re-colorings in order to maintain
+property 5 in some form or fashion.
 
 Complexity
 ==========

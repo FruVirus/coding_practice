@@ -26,6 +26,10 @@ tree since we want our balance factor to be <= 1. Hence, we consider x, x's chil
 and x's grand-children only. If x's grand-children are not unbalanced, then we only need
 to rotate x. Otherwise, we have to rotate x's grand-children first before rotating x.
 
+AVL trees are fast for searching but can be slow for insertion and deletion due to the
+number of rotations performed. If insertion/deletion is more common than searching, then
+RBTs are a better data structure.
+
 Complexity
 ==========
 

@@ -107,3 +107,26 @@ def test_rbt():
     assert rbt.root.right.left.c == 1
     assert rbt.root.right.right.key == 15
     assert rbt.root.right.right.c == 1
+    rbt = RBT(50)
+    rbt.insert(30)
+    rbt.insert(15)
+    rbt.insert(35)
+    rbt.insert(65)
+    rbt.insert(55)
+    rbt.insert(70)
+    rbt.insert(68)
+    rbt.insert(80)
+    rbt.insert(90)
+    rbt.delete(55)
+    rbt.delete(30)
+    rbt.delete(90)
+    rbt.delete(80)
+    rbt.delete(50)
+    rbt.delete(35)
+    rbt.delete(15)
+    assert rbt.root.key == 68
+    assert rbt.root.c == 1
+    assert rbt.root.left.key == 65
+    assert rbt.root.left.c == 1
+    assert rbt.root.right.key == 70
+    assert rbt.root.right.c == 1
