@@ -65,8 +65,9 @@ walk(): O(n).
 
 
 class BST:
-    def __init__(self, z):
-        self.root = BSTNode(z)
+    def __init__(self, z, sentinel=None):
+        self.root = BSTNode(z) if isinstance(z, (int, float)) else z
+        self.sentinel = sentinel
 
     def _get_node(self, x):
         return self.search(self.root, x) if isinstance(x, (int, float)) else x
@@ -74,15 +75,17 @@ class BST:
     def count(self, l, h):
         assert l < h
         count, has_l = self.rank(h) - self.rank(l), self.search(self.root, l)
-        if has_l is None or not (has_l or self.search(self.root, h)):
+        if has_l is self.sentinel:
+            return count
+        if has_l is self.sentinel and self.search(self.root, h) is self.sentinel:
             return count
         return count + 1
 
     def delete(self, z):
         z = self._get_node(z)
-        if z.left is None:
+        if z.left is self.sentinel:
             self.transplant(z, z.right)
-        elif z.right is None:
+        elif z.right is self.sentinel:
             self.transplant(z, z.left)
         else:
             y = self.min(z.right)
@@ -98,13 +101,13 @@ class BST:
         return z
 
     def insert(self, z):
-        x, y = self.root, None
+        x, y = self.root, self.sentinel
         if isinstance(z, (int, float)):
             z = BSTNode(z)
-        while x is not None:
+        while x is not self.sentinel:
             x, y = x.left if z.key < x.key else x.right, x
         z.p = y
-        if y is None:
+        if y is self.sentinel:
             self.root = z
         elif z.key < y.key:
             y.left = z
@@ -116,41 +119,41 @@ class BST:
 
     def lca(self, l, h):
         x = self.root
-        while x is not None and not l <= x.key <= h:
+        while x is not self.sentinel and not l <= x.key <= h:
             x = x.left if l < x.key else x.right
         return x
 
     def list(self, l, h):
         result, node = [l], self.successor(l)
-        while node is not None and node.key <= h:
+        while node is not self.sentinel and node.key <= h:
             result.append(node.key)
             node = self.successor(node)
         return result
 
     def max(self, x):
         x = self._get_node(x)
-        while x.right is not None:
+        while x.right is not self.sentinel:
             x = x.right
         return x
 
     def min(self, x):
         x = self._get_node(x)
-        while x.left is not None:
+        while x.left is not self.sentinel:
             x = x.left
         return x
 
     def predecessor(self, x):
         x = self._get_node(x)
-        if x.left is not None:
+        if x.left is not self.sentinel:
             return self.max(x.left)
         y = x.p
-        while y is not None and x is y.left:
+        while y is not self.sentinel and x is y.left:
             x, y = y, y.p
         return y
 
     def rank(self, k):
         r, x = 0, self.root
-        while x is not None:
+        while x is not self.sentinel:
             if k < x.key:
                 x = x.left
             else:
@@ -162,31 +165,31 @@ class BST:
 
     def search(self, x, k):
         x = self._get_node(x)
-        while x is not None and k != x.key:
+        while x is not self.sentinel and k != x.key:
             x = x.left if k < x.key else x.right
         return x
 
     def successor(self, x):
         x = self._get_node(x)
-        if x.right is not None:
+        if x.right is not self.sentinel:
             return self.min(x.right)
         y = x.p
-        while y is not None and x is y.right:
+        while y is not self.sentinel and x is y.right:
             x, y = y, y.p
         return y
 
     def transplant(self, u, v):
-        if u.p is None:
+        if u.p is self.sentinel:
             self.root = v
         elif u is u.p.left:
             u.p.left = v
         else:
             u.p.right = v
-        if v is not None:
+        if v is not self.sentinel:
             v.p = u.p
 
     def update_size(self, x):
-        if x is None:
+        if x is self.sentinel:
             return
         x.size = 1 + ((x.left and x.left.size) or 0) + ((x.right and x.right.size) or 0)
         self.update_size(x.left)
@@ -194,12 +197,12 @@ class BST:
 
     def walk(self, x):
         node = self.min(x)
-        while node is not None:
+        while node is not self.sentinel:
             print(node.key)
             node = self.successor(node)
 
 
 class BSTNode:
-    def __init__(self, key, parent=None):
-        self.key, self.p, self.size = key, parent, 1
+    def __init__(self, key, parent=None, size=1):
+        self.key, self.p, self.size = key, parent, size
         self.left = self.right = None

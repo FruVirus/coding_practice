@@ -48,10 +48,10 @@ from src.clrs.data_structures.binary_search_trees.bst import BST, BSTNode
 
 class AVL(BST):
     def __init__(self, z):
-        self.root = AVLNode(z)
+        super().__init__(AVLNode(z))
 
     def balance(self, x):
-        while x is not None:
+        while x is not self.sentinel:
             self.update_height(x)
             self.update_size(x)
             if self.height(x.left) >= self.height(x.right) + 2:
@@ -68,7 +68,7 @@ class AVL(BST):
         self.balance(super().delete(z).p)
 
     def height(self, x):
-        return 0 if x is None else self._get_node(x).h
+        return 0 if x is self.sentinel else self._get_node(x).h
 
     def insert(self, z):
         self.balance(super().insert(AVLNode(z)))
@@ -83,10 +83,10 @@ class AVL(BST):
     def rotate_left(self, x):
         y = x.right
         x.right = y.left
-        if y.left is not None:
+        if y.left is not self.sentinel:
             y.left.p = x
         y.p = x.p
-        if x.p is None:
+        if x.p is self.sentinel:
             self.root = y
         elif x is x.p.left:
             x.p.left = y
@@ -101,10 +101,10 @@ class AVL(BST):
     def rotate_right(self, x):
         y = x.left
         x.left = y.right
-        if y.right is not None:
+        if y.right is not self.sentinel:
             y.right.p = x
         y.p = x.p
-        if x.p is None:
+        if x.p is self.sentinel:
             self.root = y
         elif x is x.p.right:
             x.p.right = y

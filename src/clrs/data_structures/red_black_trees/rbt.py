@@ -200,30 +200,23 @@ rotate_left() and rotate_right(): O(1).
 walk(): O(n).
 """
 
+# Repository Library
+from src.clrs.data_structures.binary_search_trees.bst import BST, BSTNode
 
-class RBT:
+
+class RBT(BST):
     def __init__(self, z):
-        self.nil = RBTNode(1, None, None, 0)
-        self.root = RBTNode(1, z, self.nil)
-        self.root.left, self.root.right = self.nil, self.nil
-
-    def _get_node(self, x):
-        return self.search(self.root, x) if isinstance(x, (int, float)) else x
-
-    def count(self, l, h):
-        assert l < h
-        count, has_l = self.rank(h) - self.rank(l), self.search(self.root, l)
-        if has_l is self.nil or not (has_l or self.search(self.root, h) is self.nil):
-            return count
-        return count + 1
+        sentinel = RBTNode(1, None, None, 0)
+        super().__init__(RBTNode(1, z, sentinel), sentinel)
+        self.root.left = self.root.right = self.sentinel
 
     def delete(self, z):
         z = self._get_node(z)
         y_c = z.c
-        if z.left is self.nil:
+        if z.left is self.sentinel:
             x = z.right
             self.transplant(z, z.right)
-        elif z.right is self.nil:
+        elif z.right is self.sentinel:
             x = z.left
             self.transplant(z, z.left)
         else:
@@ -279,17 +272,17 @@ class RBT:
         x.c = 1
 
     def insert(self, z):
-        x, y, z = self.root, self.nil, RBTNode(0, z, None)
-        while x is not self.nil:
+        x, y, z = self.root, self.sentinel, RBTNode(0, z, None)
+        while x is not self.sentinel:
             x.size, x, y = x.size + 1, x.left if z.key < x.key else x.right, x
         z.p = y
-        if y is self.nil:
+        if y is self.sentinel:
             self.root = z
         elif z.key < y.key:
             y.left = z
         else:
             y.right = z
-        z.left, z.right, z.c = self.nil, self.nil, 0
+        z.left, z.right, z.c = self.sentinel, self.sentinel, 0
         self.insert_fix(z)
         return z
 
@@ -317,52 +310,6 @@ class RBT:
                     self.rotate(z.p.p, True)
         self.root.c = 1
 
-    def lca(self, l, h):
-        x = self.root
-        while x is not self.nil and not l <= x.key <= h:
-            x = x.left if l < x.key else x.right
-        return x
-
-    def list(self, l, h):
-        result, node = [l], self.successor(l)
-        while node is not self.nil and node.key <= h:
-            result.append(node.key)
-            node = self.successor(node)
-        return result
-
-    def max(self, x):
-        x = self._get_node(x)
-        while x.right is not self.nil:
-            x = x.right
-        return x
-
-    def min(self, x):
-        x = self._get_node(x)
-        while x.left is not self.nil:
-            x = x.left
-        return x
-
-    def predecessor(self, x):
-        x = self._get_node(x)
-        if x.left is not self.nil:
-            return self.max(x.left)
-        y = x.p
-        while y is not self.nil and x is y.left:
-            x, y = y, y.p
-        return y
-
-    def rank(self, k):
-        r, x = 0, self.root
-        while x is not self.nil:
-            if k < x.key:
-                x = x.left
-            else:
-                r += 1 + ((x.left and x.left.size) or 0)
-                if k == x.key:
-                    return r
-                x = x.right
-        return r
-
     def rotate(self, x, left_rotate):
         x = self._get_node(x)
         if left_rotate:
@@ -373,10 +320,10 @@ class RBT:
     def rotate_left(self, x):
         y = x.right
         x.right = y.left
-        if y.left is not self.nil:
+        if y.left is not self.sentinel:
             y.left.p = x
         y.p = x.p
-        if x.p is self.nil:
+        if x.p is self.sentinel:
             self.root = y
         elif x is x.p.left:
             x.p.left = y
@@ -388,10 +335,10 @@ class RBT:
     def rotate_right(self, x):
         y = x.left
         x.left = y.right
-        if y.right is not self.nil:
+        if y.right is not self.sentinel:
             y.right.p = x
         y.p = x.p
-        if x.p is self.nil:
+        if x.p is self.sentinel:
             self.root = y
         elif x is x.p.right:
             x.p.right = y
@@ -400,23 +347,8 @@ class RBT:
         y.right, x.p = x, y
         y.size, x.size = x.size, 1 + x.left.size + x.right.size
 
-    def search(self, x, k):
-        x = self._get_node(x)
-        while x is not self.nil and k != x.key:
-            x = x.left if k < x.key else x.right
-        return x
-
-    def successor(self, x):
-        x = self._get_node(x)
-        if x.right is not self.nil:
-            return self.min(x.right)
-        y = x.p
-        while y is not self.nil and x is y.right:
-            x, y = y, y.p
-        return y
-
     def transplant(self, u, v):
-        if u.p is self.nil:
+        if u.p is self.sentinel:
             self.root = v
         elif u is u.p.left:
             u.p.left = v
@@ -424,14 +356,8 @@ class RBT:
             u.p.right = v
         v.p = u.p
 
-    def walk(self, x):
-        node = self.min(x)
-        while node is not self.nil:
-            print(node.key)
-            node = self.successor(node)
 
-
-class RBTNode:
+class RBTNode(BSTNode):
     def __init__(self, color, key, parent=None, size=1):
-        self.c, self.key, self.p, self.size = color, key, parent, size
-        self.left = self.right = None
+        super().__init__(key, parent, size)
+        self.c = color
