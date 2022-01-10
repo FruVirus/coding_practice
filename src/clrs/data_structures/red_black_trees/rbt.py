@@ -285,7 +285,6 @@ class RBT(AVL):
             y.right = z
         z.left, z.right, z.c = self.sentinel, self.sentinel, 0
         self.insert_fix(z)
-        return z
 
     def insert_fix(self, z):
         while z.p.c == 0:
