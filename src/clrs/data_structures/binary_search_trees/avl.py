@@ -40,6 +40,8 @@ walk(): O(n).
 
 insert(), delete(), search(), min(), max(), successor(), predecessor(), and rotate() all
 take O(lg n).
+
+rotate_left() and rotate_right(): O(1).
 """
 
 # Repository Library

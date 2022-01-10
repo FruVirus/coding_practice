@@ -52,8 +52,9 @@ Complexity
 Time
 ----
 
-insert(), delete(), search(), min(), max(), successor(), and predecessor(): O(h) time on
-a BST of height h. If the BST is balanced, then O(h) = O(lg n).
+If the BST is balanced, then O(h) = O(lg n).
+
+insert(), delete(), search(), min(), max(), successor(), and predecessor(): O(h).
 
 list(): O(h) + O(L) where L is the number of keys returned. O(L) is for the append
 operation.
