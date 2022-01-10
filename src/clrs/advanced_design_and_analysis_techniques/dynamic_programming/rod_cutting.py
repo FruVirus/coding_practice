@@ -133,6 +133,20 @@ corresponding vertex in the subproblem graph, and the number of subproblems is e
 the number of vertices in the subproblem graph. In this common case, the running time
 of dynamic programming is linear in the number of vertices and edges.
 
+Intuition
+---------
+
+The r array holds the maximum revenue that can be obtained by cutting a rod of a certain
+length---r[0] holds the maximum revenue obtained from cutting a rod of length 0
+(i.e., 0), r[1] holds the maximum revenue obtained from cutting a rod of length 1, and
+so on.
+
+The s array holds the cut that must be made in order to obtain a given maximum revenue.
+For example, if r = [0, 1, 5, 8, 10] and s = [0, 1, 2, 3, 2], then the maximum revenue
+for a rod of length n = 4 is r[4] = 10 and the cut(s) that must be made start from s[4].
+After making a cut equal to s[4], the remainder rod has length 4 - s[4] = 4 - 2 = 2.
+s[2] then gives the next cut to make, and so on.
+
 Complexity
 ==========
 
