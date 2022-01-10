@@ -2,25 +2,29 @@
 Overview
 ========
 
-The objective of the K-sum problem is given n items with corresponding weights, w,
-select exactly K items whose weights add up to exactly the capacity, c.
+The objective of the k-sum problem is: given n items with corresponding weights, w, a
+maximum knapsack capacity, c, and a knapsack with k slots, can we select exactly k items
+whose weights add up to exactly the capacity, c? Note that there are no "profits" to
+consider in this problem. We simply want to know if we can find a subset of EXACTLY k
+items to fit into our knapsack whose total sum is EXACTLY equal to the maximum capacity.
 
-A solution to the K-sum problem looks the same as for the subset sum problem, so we
-still have n Boolean decisions to make at each step.
+A solution to the k-sum problem looks the same as for the subset sum problem, so we
+still have n boolean decisions to make at each step.
 
 However, the knapsack structure has changed. In the original problem, the knapsack
 capacity placed a limit on the total weight of the items, so we needed to keep track of
 the total weight of the items that we added---that was our state.
 
-In the K-sum problem, the knapsack also has slots. When deciding whether to add an item
+In the k-sum problem, the knapsack also has slots. When deciding whether to add an item
 to the knapsack, we need to know if there are any slots available, which is equivalent
 to knowing how many slots we have used up. So the problem state needs to track both the
 total weight of the bars in the knapsack, and how many slots they take up.
 
-The filling of the v table for K-sum is the same as that for the subset sum problem
-except that we have a third for-loop that iterates over the K slots. When we compute the
-solution to the K-sum problem, if we find an item that should belong to the solution, we
-then decrement k by one to account for the item taking up a slot in the knapsack.
+The filling of the v table for k-sum is the same as that for the subset sum problem
+except that we have a third for-loop that iterates over the k slots. When we compute the
+solution to the k-sum problem, if we find an item that should belong to the solution, we
+then also need to decrement k by one to account for the item taking up a slot in the
+knapsack.
 
 Complexity
 ==========
