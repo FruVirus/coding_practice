@@ -3,9 +3,9 @@
 ================
 
 The rod-cutting problem is the following. Given a rod length n inches and a table of
-prices p_i for i = 1, 2, ..., n, determine the maximum revenue r_n obtainable by cutting
-up the rod and selling the pieces. Note that if the price p_n for a rod of length n is
-large enough, an optimal solution may require no cutting at all.
+prices p_i for rod pieces of length i = 1, 2, ..., n, determine the maximum revenue r_n
+obtainable by cutting up the rod and selling the pieces. Note that if the price p_n for
+a rod of length n is large enough, an optimal solution may require no cutting at all.
 
 We can cut up a rod of length n in 2^(n - 1) ways, since we have an independent option
 of cutting, or not cutting, at distance i inches from the left end, for
@@ -145,8 +145,8 @@ exactly once.
 Time
 ----
 
-rc_bu: Theta(n^2)
-rc_td: Theta(n^2)
+rc_bu: Theta(n^2).
+rc_td: Theta(n^2).
 """
 
 
@@ -162,9 +162,7 @@ def rc_bu(p, n, r, s):
 
 
 def rc_td(p, n, r, s):
-    if r[n] >= 0:
-        q = r[n]
-    elif n == 0:
+    if n == 0:
         q = 0
     else:
         q = -float("inf")
