@@ -29,6 +29,42 @@ An OBST is not necessarily a tree whose overall height is smallest. Nor can we
 necessarily construct an OBST by always putting the key with the greatest probability at
 the root.
 
+Intuition
+---------
+
+We are given a set of keys, the probabilities of successful searches for each key (p),
+and the probabilities of unsuccessful searches for each key (q). The cost of a search is
+the height of a node times its probability.
+
+keys:       10,         20,         30,         40
+p:          0.1,        0.2,        0.1,        0.2
+q:      0.1,    0.05,       0.15,       0.05,       0.05
+
+q_0 is the probability of searching (-float("inf"), 9).
+q_4 is the probability of searching (41, float("inf")).
+
+If 20 is the root, 10 is the left child of 20, 30 is the right child of 20 and 40 is the
+right child of 30, then the cost for successful searches would be:
+
+c(20) = 1 * 0.2
+c(10) = 2 * 0.1
+c(30) = 2 * 0.1
+c(40) = 3 * 0.2
+
+We would to construct a BST such that the total search cost is minimized. The total cost
+depends on the height of the BST and which keys are at which level An OBST is not
+necessarily a tree whose overall height is smallest. Nor can we necessarily construct an
+OBST by always putting the key with the greatest probability at the root.
+
+The calculation of the w matrix involves prefixes that can be reused. For example:
+
+w[0][2] = q[0] + p[1] + q[1] + p[2] + q[2]
+w[0][3] = q[0] + p[1] + q[1] + p[2] + q[2] + p[3] + q[3]
+
+The matrix e contains the expected cost of a subtree with keys k_i,...,k_j. The matrix w
+contains the sum of probabilities for a subtree with keys k_i,...,k_j. The matrix r
+contains the index r for which k_r is the root of an OBST containing keys k_i,...,k_j.
+
 Complexity
 ==========
 
