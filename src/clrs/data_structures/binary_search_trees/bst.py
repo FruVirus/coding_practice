@@ -154,11 +154,11 @@ class BST:
         return y
 
     def rank(self, x):
-        r, y = 1 + ((x.left and x.left.size) or 0), x
-        while y is not self.root:
-            if y is y.p.right:
-                r += 1 + ((y.p.left and y.p.left.size) or 0)
-            y = y.p
+        r = 1 + ((x.left and x.left.size) or 0)
+        while x is not self.root:
+            if x is x.p.right:
+                r += 1 + ((x.p.left and x.p.left.size) or 0)
+            x = x.p
         return r
 
     def rank_key(self, k):
