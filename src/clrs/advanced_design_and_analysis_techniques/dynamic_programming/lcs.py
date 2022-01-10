@@ -47,6 +47,33 @@ finding an LCS of X_i and Y_(j - 1) and of X_(i - 1) and Y_j. In the rod-cutting
 matrix-chain problems, we had to consider all subproblems due to conditions in the
 problem formulation.
 
+Intuition
+---------
+
+Given two sequences X = <x_1, x_2, ..., x_m> and Y = <y_1, y_2, ..., y_n> and let
+Z = <z_1, z_2, ..., z_k> be any LCS of X and Y.
+
+If x_m == y_n, then z_k = x_m = y_n and Z_(k - 1) must be an LCS of X_(m - 1) and
+Y_(n - 1).
+
+If x_m != y_n, then z_k != x_m implies that Z is an LCS of X_(m - 1) and Y.
+
+If x_m != y_n, then z_k != y_n implies that Z is an LCS of X and Y_(n - 1).
+
+In other words, we examine either one or two subproblems when finding an LCS of X and Y.
+If x_m == y_n, we must find an LCS of X_(m - 1) and Y(n - 1). Appending x_m = y_n to
+this LCS yields an LCS of the original X and Y.
+
+If x_m != y_n, then we must solve two subproblems: finding an LCS of X_(m - 1) and Y and
+finding an LCS of X and Y_(n - 1). Whichever of these two LCSs is longer is an LCS of X
+and Y.
+
+Let us define c[i, j] to be the length of an LCS of the sequences X_i and Y_j. If either
+i = 0 or j = 0, one of the sequences has length 0, and so the LCS has length 0. If
+x_i == y_j, then the length of the LCS increases by 1 and we iterate/recurse to find the
+LCS of the sequence X_(i - 1) and Y_(j - 1). Otherwise, we find the length of maximum
+LCS between X_(i - 1) and Y_j and X_i and Y_(j - 1).
+
 Complexity
 ==========
 
@@ -56,15 +83,15 @@ up the c table, which has m x n entries. Thus, the total time is O(m x n).
 Time
 ----
 
-lcs_bu(): O(m x n).
-lcs_td(): O(m x n).
+lcs_bu(): O(m * n).
+lcs_td(): O(m * n).
 lcs(): O(m + n).
 
 Space
 -----
 
-lcs_bu(): O(m x n) for c table.
-lcs_td(): O(m x n) for c table.
+lcs_bu(): O(m * n) for c table.
+lcs_td(): O(m * n) for c table.
 """
 
 
