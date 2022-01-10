@@ -99,6 +99,8 @@ def test_rbt():
     assert rbt.root.right.left.c == 1
     assert rbt.root.right.right.key == 15
     assert rbt.root.right.right.c == 1
+    assert rbt.predecessor(7).key == 5
+    assert rbt.successor(7).key == 8
     rbt.delete(2)
     assert rbt.root.key == 7
     assert rbt.root.c == 1
