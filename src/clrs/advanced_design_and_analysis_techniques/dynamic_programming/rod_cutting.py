@@ -154,10 +154,10 @@ def rc_bu(p, n, r, s):
     r[0] = 0
     for i in range(1, n + 1):
         q = -float("inf")
-        for j in range(1, i):
-            t = p[j] + r[i - j]
+        for j in range(1, i + 1):
+            t = p[j - 1] + r[i - j]
             if q < t:
-                q, s[i] = t, j - 1
+                q, s[i] = t, j
         r[i] = q
 
 
@@ -177,7 +177,7 @@ def rc_td(p, n, r, s):
 
 
 def rc(p, n, td=False):
-    r, s, sol = [-float("inf")] * (n + 1), [0] * n, []
+    r, s, sol = [-float("inf")] * (n + 1), [0] * (n + 1), []
     rc_ = rc_td if td else rc_bu
     rc_(p, n, r, s)
     while n > 0:
