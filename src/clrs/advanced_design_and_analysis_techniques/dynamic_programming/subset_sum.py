@@ -3,15 +3,17 @@ Overview
 ========
 
 The objective of the subset sum problem is to find a subset of weights whose total sum
-is equal to the maximum capacity, if such a subset exists.
+is equal to the maximum capacity, if such a subset exists. Note that there are no
+"profits" to consider in this problem. We simply want to know if we can find a subset of
+items to fit into our knapsack whose total sum is EXACTLY equal to the maximum capacity.
 
 The subset sum problem asks us for a boolean answer but we can transform it to a
 maximization problem using boolean logic formulation where True = 1 and False = 0.
 
-The subset sum problem has identical decisions and state to the Knapsack problem. When
-computing v[i][j], we need to consider all the possible values of the weights. Consider
-w = [1, 2, 3, 7] and c = 6. In this case, the subset [1, 2, 3] has a total weight equal
-to 6. We form the v matrix as follows:
+The subset sum problem has identical decisions and state to the (0/1) knapsack problem.
+When computing v[i][j], we need to consider all the possible values of the weights.
+Consider w = [1, 2, 3, 7] and c = 6. In this case, the subset [1, 2, 3] has a total
+weight equal to 6. We form the v matrix as follows:
 
 v   0   1   2   3   4   5   6 --> capacity
 0   1   1   0   0   0   0   0
