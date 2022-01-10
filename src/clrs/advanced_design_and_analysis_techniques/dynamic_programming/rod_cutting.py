@@ -162,7 +162,9 @@ def rc_bu(p, n, r, s):
 
 
 def rc_td(p, n, r, s):
-    if n == 0:
+    if r[n] >= 0:
+        q = r[n]
+    elif n == 0:
         q = 0
     else:
         q = -float("inf")
@@ -170,6 +172,7 @@ def rc_td(p, n, r, s):
             t = p[i] + rc_td(p, n - i - 1, r, s)
             if q < t:
                 q, s[n] = t, i + 1
+    r[n] = q
     return q
 
 
