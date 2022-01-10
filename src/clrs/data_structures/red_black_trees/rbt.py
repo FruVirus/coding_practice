@@ -84,6 +84,13 @@ property 4 is violated if z's parent is red.
 Intuition
 ---------
 
+Insertion into a RBT consists of two phases. The first phase goes down the tree from the
+root, inserting the new node as a child of an existing node. The second phase goes up
+the tree, changing colors and performing rotations to maintain the red-black properties.
+
+In the second phase, the only structural changes to the underlying RBT are caused by
+rotations, of which there are at most two.
+
 When we insert, we color the inserted node RED. As a result, we can potentially violate
 properties 2 and 4. Thus, we need to fix it. If the inserted node is the root, the fix
 is to simply color the inserted node BLACK. Otherwise, during the fix, we care about the
@@ -167,6 +174,11 @@ in x's pointing to the node rather than in the color attribute.
 Intuition
 ---------
 
+Deletion from a RBT also consists of two phases: the first operates on the underlying
+search tree, and the second causes at most three rotations and otherwise performs no
+structural changes. The first phase removes one node z from the tree and could move up
+to two other nodes within the tree (nodes y and x).
+
 When we delete, we can violate property 5 if the color of the deleted node is BLACK. If
 the color of the deleted node is RED, then we just perform a normal (more or less) BST
 delete. WHen a fix is required, we care about the color of the sibling (w) of the node
@@ -187,17 +199,7 @@ Complexity
 Time
 ----
 
-insert(), insert_fix(), delete(), delete_fix(), search(), min(), max(), successor(), and
-predecessor(): O(lg n).
-
-list(): O(lg n) + O(L) where L is the number of keys returned. O(L) is for the append
-operation.
-
-count(), rank(), and update_size(): O(lg n).
-
-rotate_left() and rotate_right(): O(1).
-
-walk(): O(n).
+delete(), delete_fix(), insert(), and insert_fix(): O(lg n).
 """
 
 # Repository Library
@@ -235,6 +237,9 @@ class RBT(AVL):
             y.c = z.c
         if y_c == 1:
             self.delete_fix(x)
+        while x is not self.sentinel:
+            self.update_size(x)
+            x = x.p
 
     def delete_fix(self, x):
         while x is not self.root and x.c == 1:

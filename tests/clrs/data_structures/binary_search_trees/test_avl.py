@@ -13,16 +13,16 @@ def test_avl():
     avl.insert(13)
     avl.insert(19)
     avl.walk(12)
-    assert avl.rank(-1) == 0
-    assert avl.rank(2) == 1
-    assert avl.rank(5) == 2
-    assert avl.rank(9) == 3
-    assert avl.rank(12) == 4
-    assert avl.rank(13) == 5
-    assert avl.rank(15) == 6
-    assert avl.rank(17) == 7
-    assert avl.rank(18) == 8
-    assert avl.rank(19) == 9
+    assert avl.rank_key(-1) == 0
+    assert avl.rank_key(2) == 1
+    assert avl.rank_key(5) == 2
+    assert avl.rank_key(9) == 3
+    assert avl.rank_key(12) == 4
+    assert avl.rank_key(13) == 5
+    assert avl.rank_key(15) == 6
+    assert avl.rank_key(17) == 7
+    assert avl.rank_key(18) == 8
+    assert avl.rank_key(19) == 9
     assert avl.count(2, 19) == 9
     assert avl.count(2, 5) == 2
     assert avl.count(13, 19) == 5
@@ -66,15 +66,15 @@ def test_avl():
     assert prev_largest.key == 12
     k = 5
     avl.delete(k)
-    assert avl.rank(-1) == 0
-    assert avl.rank(2) == 1
-    assert avl.rank(9) == 2
-    assert avl.rank(12) == 3
-    assert avl.rank(13) == 4
-    assert avl.rank(15) == 5
-    assert avl.rank(17) == 6
-    assert avl.rank(18) == 7
-    assert avl.rank(19) == 8
+    assert avl.rank_key(-1) == 0
+    assert avl.rank_key(2) == 1
+    assert avl.rank_key(9) == 2
+    assert avl.rank_key(12) == 3
+    assert avl.rank_key(13) == 4
+    assert avl.rank_key(15) == 5
+    assert avl.rank_key(17) == 6
+    assert avl.rank_key(18) == 7
+    assert avl.rank_key(19) == 8
     assert avl.count(2, 19) == 8
     assert avl.count(13, 19) == 5
     assert avl.count(-1, 19) == 8

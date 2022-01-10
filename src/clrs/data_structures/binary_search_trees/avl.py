@@ -36,10 +36,7 @@ Complexity
 Time
 ----
 
-walk(): O(n).
-
-insert(), delete(), search(), min(), max(), successor(), predecessor(), and rotate() all
-take O(lg n).
+balance(), delete(), insert(), and rotate(): O(lg n).
 
 rotate_left() and rotate_right(): O(1).
 """

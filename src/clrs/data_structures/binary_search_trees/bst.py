@@ -37,9 +37,15 @@ the lowest-common ancestor of the two nodes that would be created by inserting l
 
 list(l, h) produces a list of all the keys between [l, h].
 
-rank(k) returns the number of keys in the tree that are less than or equal to k.
-Informally, if the keys were listed in ascending order, x's rank would indicate its
-position in the sorted array.
+rank(x) returns the rank of node x. rank() does NOT assume that the keys of the tree are
+distinct. We can think of node x's rank as the number of nodes preceding x in an inorder
+tree walk, plus 1 for x itself.
+
+rank_key(k) returns the number of keys in the tree that are less than or equal to k.
+Informally, if the keys were listed in ascending order, x's key rank would indicate its
+position in the sorted array. rank_key() assumes that the keys of the tree are distinct!
+
+select() finds the node with the i-th smallest key the tree.
 
 update_size() updates the size attribute of a node in the BST. The size attribute of a
 node indicates how many nodes are rooted at that subtree including the subtree root node
@@ -54,12 +60,11 @@ Time
 
 If the BST is balanced, then O(h) = O(lg n).
 
-insert(), delete(), search(), min(), max(), successor(), and predecessor(): O(h).
+count(), delete(), insert(), lca(), min(), max(), predecessor(), rank(), rank_key(),
+search(), select(), successor(), and update_size(): O(h).
 
 list(): O(h) + O(L) where L is the number of keys returned. O(L) is for the append
 operation.
-
-count(), rank(), and update_size(): O(h).
 
 walk(): O(n).
 """
@@ -75,12 +80,8 @@ class BST:
 
     def count(self, l, h):
         assert l < h
-        count, has_l = self.rank(h) - self.rank(l), self.search(self.root, l)
-        if has_l is self.sentinel:
-            return count
-        if has_l is self.sentinel and self.search(self.root, h) is self.sentinel:
-            return count
-        return count + 1
+        count = self.rank_key(h) - self.rank_key(l)
+        return count if self.search(self.root, l) is self.sentinel else count + 1
 
     def delete(self, z):
         z = self._get_node(z)
@@ -152,7 +153,15 @@ class BST:
             x, y = y, y.p
         return y
 
-    def rank(self, k):
+    def rank(self, x):
+        r, y = 1 + ((x.left and x.left.size) or 0), x
+        while y is not self.root:
+            if y is y.p.right:
+                r += 1 + ((y.p.left and y.p.left.size) or 0)
+            y = y.p
+        return r
+
+    def rank_key(self, k):
         r, x = 0, self.root
         while x is not self.sentinel:
             if k < x.key:
@@ -169,6 +178,13 @@ class BST:
         while x is not self.sentinel and k != x.key:
             x = x.left if k < x.key else x.right
         return x
+
+    def select(self, i, x=None):
+        x = x or self.root
+        r = 1 + ((x.left and x.left.size) or 0)
+        if i == r:
+            return x
+        return self.select(i, x.left) if i < r else self.select(i - r, x.right)
 
     def successor(self, x):
         x = self._get_node(x)

@@ -1,5 +1,5 @@
 # Repository Library
-from clrs.data_structures.binary_search_trees.bst import BST
+from clrs.data_structures.binary_search_trees.bst import BST, BSTNode
 
 
 def test_bst():
@@ -10,19 +10,25 @@ def test_bst():
     bst.insert(18)
     bst.insert(15)
     bst.insert(17)
-    bst.insert(13)
+    x = BSTNode(13)
+    bst.insert(x)
     bst.insert(19)
     bst.walk(12)
-    assert bst.rank(-1) == 0
-    assert bst.rank(2) == 1
-    assert bst.rank(5) == 2
-    assert bst.rank(9) == 3
-    assert bst.rank(12) == 4
-    assert bst.rank(13) == 5
-    assert bst.rank(15) == 6
-    assert bst.rank(17) == 7
-    assert bst.rank(18) == 8
-    assert bst.rank(19) == 9
+    assert bst.select(5).key == 13
+    assert bst.rank(x) == 5
+    assert bst.rank_key(-1) == 0
+    assert bst.rank_key(2) == 1
+    assert bst.rank_key(5) == 2
+    assert bst.rank_key(9) == 3
+    assert bst.rank_key(12) == 4
+    assert bst.rank_key(13) == 5
+    assert bst.rank_key(15) == 6
+    assert bst.rank_key(17) == 7
+    assert bst.rank_key(18) == 8
+    assert bst.rank_key(19) == 9
+    assert bst.count(1, 19) == 9
+    assert bst.count(1, 200) == 9
+    assert bst.count(0, 200) == 9
     assert bst.count(2, 19) == 9
     assert bst.count(2, 5) == 2
     assert bst.count(13, 19) == 5
@@ -48,15 +54,15 @@ def test_bst():
     assert prev_largest.key == 12
     k = 5
     bst.delete(k)
-    assert bst.rank(-1) == 0
-    assert bst.rank(2) == 1
-    assert bst.rank(9) == 2
-    assert bst.rank(12) == 3
-    assert bst.rank(13) == 4
-    assert bst.rank(15) == 5
-    assert bst.rank(17) == 6
-    assert bst.rank(18) == 7
-    assert bst.rank(19) == 8
+    assert bst.rank_key(-1) == 0
+    assert bst.rank_key(2) == 1
+    assert bst.rank_key(9) == 2
+    assert bst.rank_key(12) == 3
+    assert bst.rank_key(13) == 4
+    assert bst.rank_key(15) == 5
+    assert bst.rank_key(17) == 6
+    assert bst.rank_key(18) == 7
+    assert bst.rank_key(19) == 8
     assert bst.count(2, 19) == 8
     assert bst.count(13, 19) == 5
     assert bst.count(-1, 19) == 8

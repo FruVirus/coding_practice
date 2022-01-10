@@ -64,10 +64,13 @@ def test_rbt():
     assert rbt.root.right.size == 4
     assert rbt.root.left.right.size == 2
     assert rbt.root.right.right.size == 2
-    assert rbt.rank(1) == 1
-    assert rbt.rank(7) == 5
-    assert rbt.rank(15) == 9
+    assert rbt.rank_key(1) == 1
+    assert rbt.rank_key(7) == 5
+    assert rbt.rank_key(15) == 9
+    assert rbt.count(0, 15) == 9
     assert rbt.count(1, 15) == 9
+    assert rbt.count(0, 16) == 9
+    assert rbt.count(1, 16) == 9
     assert rbt.count(2, 15) == 8
     assert rbt.count(3, 15) == 7
     assert rbt.count(4, 15) == 7
@@ -76,6 +79,10 @@ def test_rbt():
     assert rbt.count(4, 11) == 5
     rbt.walk(7)
     rbt.delete(11)
+    assert rbt.root.size == 8
+    assert rbt.root.left.size == 4
+    assert rbt.root.right.size == 3
+    assert rbt.root.left.right.size == 2
     assert rbt.root.key == 7
     assert rbt.root.c == 1
     assert rbt.root.left.key == 2
