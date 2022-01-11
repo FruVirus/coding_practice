@@ -164,6 +164,10 @@ class Graph:
             if self.find_set(u) is not self.find_set(v):
                 self.union(u, v)
 
+    def deg(self, v, out=False):
+        key = self.vertices[v].key if isinstance(v, Node) else v
+        return sum(self.adj_matrix[key]) if out else sum(r[v] for r in self.adj_matrix)
+
     def find_set(self, x):
         if x is not x.p:
             x.p = self.find_set(x.p)
@@ -218,3 +222,17 @@ class Graph:
 
     def union(self, x, y):
         self.link(self.find_set(x), self.find_set(y))
+
+
+num_vertices = 6
+graph = Graph(num_vertices, True)
+graph.add_edge(0, 3)
+graph.add_edge(0, 1)
+graph.add_edge(1, 4)
+graph.add_edge(2, 4)
+graph.add_edge(2, 5)
+graph.add_edge(3, 1)
+graph.add_edge(4, 3)
+graph.add_edge(5, 5)
+print(graph.deg(0, True))
+print(graph.deg(0, False))

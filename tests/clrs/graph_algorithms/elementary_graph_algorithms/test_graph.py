@@ -13,6 +13,8 @@ def test_graph_transpose():
     graph.add_edge(3, 1)
     graph.add_edge(4, 3)
     graph.add_edge(5, 5)
+    assert graph.deg(0, True) == 2
+    assert graph.deg(0, False) == 0
     graph.transpose()
     adj_list_transpose = graph.adj_list_transpose
     all_edges = []
