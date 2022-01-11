@@ -76,10 +76,13 @@ def as_bu(s, f):
 
 
 def as_td(s, f, k, n, sol=None):
-    i, sol = k + 1, sol or []
-    while i <= n and s[i] < f[k]:
-        i += 1
-    if i <= n:
-        sol.append(i)
-        as_td(s, f, i, n, sol)
+    if sol is None:
+        sol = as_td(s, f, k, n, [1])
+    else:
+        i = k + 1
+        while i < n and s[i] < f[k]:
+            i += 1
+        if i < n:
+            sol.append(i + 1)
+            as_td(s, f, i, n, sol)
     return sol
