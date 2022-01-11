@@ -108,9 +108,9 @@ from the array, and the rest of the heap is then re-heapified to maintain its ma
 state. Vice versa for min-heaps.
 
 The procedure insert() takes as an input the key of the new element to be inserted into
-the max-heap. The procedure first expands the max-heap by adding to the tree a new leaf
-whose key is +/-float("inf"). THen it calls change() to set the key of this new node to
-its correct value and maintain the max-heap property.
+the max-heap. The procedure first sets the value of the heap array indexed by
+self.heap_size to +/-float("inf"). THen it calls change() to set the key of this new
+node to its correct value and maintain the max-heap property.
 
 Complexity
 ==========
