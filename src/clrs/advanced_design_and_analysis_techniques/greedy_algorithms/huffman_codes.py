@@ -132,4 +132,4 @@ def huffman_bu(c):
         while node.c != k:
             node, code = (node.left, 0) if k in node.left.c else (node.right, 1)
             sol[k].append(code)
-    return sol
+    return sol, sum(v for v in {k: len(v) * c[k] for k, v in sol.items()}.values())
