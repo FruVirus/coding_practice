@@ -75,6 +75,14 @@ can visit its adjacent vertices in any order.
 However, when we select a vertex for exploration, we must visit all of its adjacent
 vertices before further exploration.
 
+BFS also produces the shortest-path distances for an unweighted graph (or, equivalently,
+a graph with unit weight edges). We can obtain a shortest path from s to v by taking a
+shortest path from s to v.p and then traversing the edge (v.p, v).
+
+The results of BFS may depend upon the order in which the neighbors of a given vertex
+are visited: the breadth-first tree may vary, but the distances d computed by the
+algorithm will not.
+
 Complexity
 ==========
 
