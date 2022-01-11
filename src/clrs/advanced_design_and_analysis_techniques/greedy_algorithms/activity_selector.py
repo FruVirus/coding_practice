@@ -82,23 +82,24 @@ as_td(): Theta(n).
 """
 
 
-def as_bu(s, f):
-    n, k, sol = len(s), 1, [1]
+def as_bu(s, f, k, n, sol):
     for i in range(1, n):
         if s[i] >= f[k]:
-            sol.append(i + 1)
+            sol.append(i)
             k = i
-    return sol
 
 
-def as_td(s, f, k=None, n=None, sol=None):
-    if sol is None:
-        sol = as_td(s, f, 0, len(s), [1])
-    else:
-        i = k + 1
-        while i < n and s[i] < f[k]:
-            i += 1
-        if i < n:
-            sol.append(i + 1)
-            as_td(s, f, i, n, sol)
+def as_td(s, f, k, n, sol):
+    i = k + 1
+    while i < n and s[i] < f[k]:
+        i += 1
+    if i < n:
+        sol.append(i)
+        as_td(s, f, i, n, sol)
+
+
+def activity_selector(s, f, td=False):
+    n, k, sol = len(s), 0, [0]
+    as_ = as_td if td else as_bu
+    as_(s, f, k, n, sol)
     return sol
