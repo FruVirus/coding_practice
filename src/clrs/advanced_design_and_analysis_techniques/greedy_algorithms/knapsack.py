@@ -28,6 +28,15 @@ item with the solution to the subproblem that excludes the item before we can ma
 choice. The problem formulated in this way gives rise to many overlapping subproblems---
 a hallmark of dynamic programming.
 
+Intuition
+---------
+
+Since we can take fractional items, we compute the value per pound for each item. The
+greedy strategy is to begin by taking as much as possible of the item with the greatest
+value per pound. If the supply of that item is exhausted and the knapsack can still
+carry more, then we take as much as possible of the item with tne next greatest value
+per pound, and so forth, until we reach the maximum capacity of the knapsack.
+
 Complexity
 ==========
 
