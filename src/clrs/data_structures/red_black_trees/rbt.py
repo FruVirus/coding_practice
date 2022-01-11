@@ -278,7 +278,7 @@ class RBT(AVL):
         x.c = 1
 
     def insert(self, z):
-        x, y, z = self.root, self.sentinel, RBTNode(0, z, None)
+        x, y, z = self.root, self.sentinel, RBTNode(0, z, self.sentinel)
         while x is not self.sentinel:
             x.size, x, y = x.size + 1, x.left if z.key < x.key else x.right, x
         z.p = y
