@@ -75,9 +75,9 @@ def as_bu(s, f):
     return sol
 
 
-def as_td(s, f, k, n, sol=None):
+def as_td(s, f, k=None, n=None, sol=None):
     if sol is None:
-        sol = as_td(s, f, k, n, [1])
+        sol = as_td(s, f, 0, len(s), [1])
     else:
         i = k + 1
         while i < n and s[i] < f[k]:
