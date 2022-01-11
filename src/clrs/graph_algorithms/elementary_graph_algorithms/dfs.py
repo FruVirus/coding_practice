@@ -196,9 +196,9 @@ We can perform a topological sort in time Theta(V + E), since DFS takes Theta(V 
 time and it takes O(1) time to insert each of the |V| vertices onto the front of the
 linked list.
 
-dfs(): O(V + E)
-top_sort(): O(V + E)
-scc(): O(V + E)
+dfs(): O(V + E).
+top_sort(): O(V + E).
+scc(): O(V + E).
 """
 
 # Repository Library

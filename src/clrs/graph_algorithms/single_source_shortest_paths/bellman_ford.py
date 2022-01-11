@@ -43,9 +43,7 @@ time.
 Time
 ----
 
-bellman_ford(): O(|V| * |E|), O(|V|^3) for complete graphs
-init_single_source(): Theta(|V|)
-relax(): O(1)
+bellman_ford(): O(V * E), O(V^3) for complete graphs.
 """
 
 # Repository Library

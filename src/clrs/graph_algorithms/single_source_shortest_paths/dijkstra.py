@@ -62,7 +62,7 @@ O(E * lg(V)) if all vertices are reachable from the source.
 Time
 ----
 
-dijkstra(): O(E * lg(V))
+dijkstra(): O(E * lg V).
 """
 
 # Repository Library

@@ -47,7 +47,7 @@ O(E * lg(V)).
 Time
 ----
 
-kruskal(): O(E * lg(V))
+kruskal(): O(E * lg V).
 """
 
 # Repository Library

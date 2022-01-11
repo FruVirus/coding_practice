@@ -111,16 +111,18 @@ Complexity
 Time
 ----
 
-Adjacency list transpose: O(V + E)
-Adjacency matrix transpose: O(V^2)
+Adjacency list transpose: O(V + E).
+Adjacency matrix transpose: O(V^2).
+init_single_source(): Theta(V).
 print_path(): Linear in the number of vertices in the path printed since each recursive
 call is for a path one vertex shorter.
+relax(): O(1).
 
 Space
 -----
 
-Adjacency list: Theta(V + E)
-Adjacency matrix: Theta(V^2)
+Adjacency list: Theta(V + E).
+Adjacency matrix: Theta(V^2).
 """
 
 # pylint: disable=R1722

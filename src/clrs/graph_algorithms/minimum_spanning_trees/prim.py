@@ -40,7 +40,7 @@ algorithm.
 Time
 ----
 
-prim(): O(E * lg(V))
+prim(): O(E * lg V).
 """
 
 # Repository Library

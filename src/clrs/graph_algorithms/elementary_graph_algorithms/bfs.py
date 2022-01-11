@@ -78,7 +78,7 @@ adjacency-list representation of G.
 Time
 ----
 
-bfs(): O(V + E)
+bfs(): O(V + E).
 """
 
 # Repository Library

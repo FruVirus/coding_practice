@@ -49,10 +49,8 @@ in the size of an adjacency-list representation of the graph.
 Time
 ----
 
-dag(): Theta(|V| + |E|)
-init_single_source(): Theta(|V|)
-num_total_paths(): O(|V| + |E|)
-top_sort(): O(|V| + |E|)
+dag(): Theta(V + E).
+num_total_paths(): O(V + E).
 """
 
 # Repository Library
