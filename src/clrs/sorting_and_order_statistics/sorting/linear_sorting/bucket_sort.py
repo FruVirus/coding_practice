@@ -39,7 +39,7 @@ def bucket_sort(a):
     b = [[] for _ in range(n)]
     for i in range(n):
         b[int(n * a[i])].append(a[i])
-    for i in range(n):
-        if b[i]:
-            x.extend(merge_sort(b[i]))
+    for i in b:
+        if i:
+            x.extend(merge_sort(i))
     return x
