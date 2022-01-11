@@ -12,7 +12,7 @@ schedule for S is a permutation of S specifying the order in which to perform th
 tasks. The first task in the schedule begins at time 0 and finishes at time 1, the
 second task begins at time 1 and finishes at time 2, and so on.
 
-The problem of scheduling unit-time tasks with deadlines and penalities for a single
+The problem of scheduling unit-time tasks with deadlines and penalties for a single
 processor has the following inputs:
 
 1. a set S = {a_1, a_2, ..., a_n} of unit-time tasks;
@@ -46,6 +46,30 @@ the optimal schedule.
 
 The problem of minimizing the sum of the penalties of the late tasks is the same as the
 problem of maximizing the sum of the penalties of the early tasks.
+
+Intuition
+---------
+
+The penalty from not completing a job is sorted in decreasing order. If a job is not
+completed, we incur its penalty. Each job must be completed within its deadline. Jobs
+with earlier deadlines need to be completed before jobs with later deadlines. Jobs with
+later deadlines can be completed earlier in the sequence but not later.
+
+For example:
+
+Jobs:       J1  J2  J3  J4  J5  J6  J7
+Penalties:  70  60  50  40  30  20  10
+Deadlines:  4   2   4   3   1   4   6
+
+If we want to only do 3 jobs out of 7 while incurring the lowest penalty, then we choose
+J3 -> J2 -> J1 as the sequence of jobs to complete.
+
+Since the jobs are sorted by decreasing penalties, the greedy choice is to always
+include the first job since it has the highest penalty. Then the subproblem becomes
+finding the job with the next highest penalty that also fits within the deadlines. Once
+we add a job to a time slot following this greedy strategy, no other jobs can be placed
+into the same time slot. This approach is safe since the jobs are sorted by decreasing
+penalties.
 
 Complexity
 ==========
