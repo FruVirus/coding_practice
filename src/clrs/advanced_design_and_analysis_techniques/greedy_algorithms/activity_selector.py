@@ -48,6 +48,22 @@ We assume that the n input activities are already ordered by increasing finish t
 order to start, we add the fictitious activity a_0 with f_0 = 0, so that the subproblem
 S_0 is the entire set of activities S.
 
+Intuition
+---------
+
+Our intuition tells us to choose an activity with the earliest finish time, since that
+would leave the resource available for as many of the activities that follow it as
+possible (or break ties). If the activities are sorted in monotonically increasing order
+by finish time, the greedy choice always selects the first activity (since it finishes
+first in the sorted list).
+
+If we make the greedy choice of adding the first activity, we have only one remaining
+subproblem to solve: finding activities that start after the first activity finishes. We
+don't have to consider activities that finish before the first activity starts since no
+activity can have a finish time less than or equal to the first activity (since the list
+is sorted by finishing times). Thus, all activities that are compatible with the first
+activity must start after the first activity finishes.
+
 Complexity
 ==========
 
