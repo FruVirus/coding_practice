@@ -62,6 +62,19 @@ distance for all v in V. Moreover, for any vertex v != s that is reachable from 
 of the shortest paths from s to v is a shortest path from s to v.p followed by the edge
 (v.p, v).
 
+Intuition
+---------
+
+BFS conducts a level-order traversal of a graph. A queue data structure is used to keep
+track of visited vertices during the traversal process. We should select the next point
+for exploration from the queue only so that we don't explore a vertex more than once.
+
+In BFS, we can start the initial search from any vertex. When we explore a vertex, we
+can visit its adjacent vertices in any order.
+
+However, when we select a vertex for exploration, we must visit all of its adjacent
+vertices before further exploration.
+
 Complexity
 ==========
 
