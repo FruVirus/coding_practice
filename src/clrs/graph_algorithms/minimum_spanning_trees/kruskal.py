@@ -30,6 +30,31 @@ cycle, and the edge is discarded. Otherwise, the two vertices belong to differen
 In this case, the edge (u, v) is added to A and the vertices in the two trees are merged
 together in the final MST.
 
+Intuition
+---------
+
+Kruskal's algorithm works for a connected, undirected graph with weights.
+
+A spanning tree is a subgraph of a graph that is acyclic and connects all of the
+vertices using exactly |V| - 1 edges while minimizing the total weight of the edges.
+
+The brute force approach to finding a MST is to try all combination of |V| - 1 edges and
+check each total weight. However, we can also use a greedy algorithm to find the MST
+without having to iterate over all possible combinations.
+
+In Kruskal's algorithm, the set A is a forest whose starting vertices are all of the
+graph vertices; i.e., each vertex is a tree. We then apply a greedy approach by adding
+an edge to A if it is a least-weight edge AND the newly added edge will connect two
+distinct components (i.e., not form a cycle).
+
+Kruskal's algorithm works as follows:
+
+1. From a weighted graph, select the minimum cost edge first.
+2. Then, always select the minimum cost edge next unless that edge will create a cycle.
+
+For a disconnected graph, Kruskal's algorithm will NOT find the MST for the overall
+graph but it MIGHT find the MST for EACH component.
+
 Complexity
 ==========
 
