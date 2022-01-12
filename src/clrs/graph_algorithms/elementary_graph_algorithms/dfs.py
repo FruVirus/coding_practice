@@ -217,9 +217,6 @@ of vertices in the adjacency lists. However, the result of any DFS are the same.
 Complexity
 ==========
 
-Time
-----
-
 The for-loops in dfs() take time Theta(V) each. dfs_recurse() is called exactly once for
 each vertex v in V, since the vertex u on which dfs_recurse() is invoked must be white
 and the first thing dfs_recurse() does is paint vertex u gray. During an execution of
@@ -230,9 +227,10 @@ We can perform a topological sort in time Theta(V + E), since DFS takes Theta(V 
 time and it takes O(1) time to insert each of the |V| vertices onto the front of the
 linked list.
 
-dfs(): O(V + E).
-top_sort(): O(V + E).
-scc(): O(V + E).
+Time
+----
+
+dfs(), scc(), and top_sort(): O(V + E).
 """
 
 # Repository Library
