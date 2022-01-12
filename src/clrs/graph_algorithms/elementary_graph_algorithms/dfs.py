@@ -183,6 +183,15 @@ depth-first tree, therefore, will be exactly one strongly connected component.
 Intuition
 ---------
 
+DFS works for undirected or directed graphs with no weights (or unit weights).
+
+Undirected graphs only have tree or back edges. Directed graphs have tree, forward,
+back, and cross edges.
+
+Strongly connected components only make sense for directed graphs.
+
+Topological sort only makes sense for directed acyclic graphs.
+
 DFS conducts a pre-order traversal of a graph. A stack data structure is used to keep
 track of visited vertices during the traversal process. Vertices are "suspended" in the
 stack until they are fully explored. If there are no adjacent vertices for a given
@@ -213,9 +222,6 @@ trees are disjoint.
 The results of DFS may depend upon the order in which the neighbors of a given vertex
 are visited. For example, tree and forward edges can be switched depending on the order
 of vertices in the adjacency lists. However, the result of any DFS are the same.
-
-Undirected graphs only have tree or back edges. Directed graphs have tree, forward,
-back, and cross edges.
 
 Complexity
 ==========

@@ -65,6 +65,11 @@ of the shortest paths from s to v is a shortest path from s to v.p followed by t
 Intuition
 ---------
 
+BFS works for undirected or directed graphs with no weights (or unit weights).
+
+Undirected graphs only have tree or cross edges. Directed graphs only have tree, cross,
+and back edges.
+
 BFS conducts a level-order traversal of a graph. A queue data structure is used to keep
 track of visited vertices during the traversal process. We should select the next point
 for exploration from the queue only so that we don't explore a vertex more than once.
@@ -82,9 +87,6 @@ shortest path from s to v.p and then traversing the edge (v.p, v).
 The results of BFS may depend upon the order in which the neighbors of a given vertex
 are visited: the breadth-first tree may vary, but the distances d computed by the
 algorithm will not.
-
-Undirected graphs only have tree or cross edges. Directed graphs only have tree, cross,
-and back edges.
 
 Complexity
 ==========
