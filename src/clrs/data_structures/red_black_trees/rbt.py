@@ -265,7 +265,7 @@ class RBT(AVL):
                     w.c, x.p.c = 1, 0
                     self.rotate(x.p, False)
                     w = x.p.left
-                if w.right.c == w.left.c == 1:
+                if w.left.c == w.right.c == 1:
                     w.c, x = 0, x.p
                 else:
                     if w.left.c == 1:
