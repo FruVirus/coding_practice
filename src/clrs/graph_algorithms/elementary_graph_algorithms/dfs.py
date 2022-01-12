@@ -324,4 +324,6 @@ class DFS(Graph):
         return self.dfs(recurse, True)[0]
 
     def top_sort(self, recurse=False):
-        return self.dfs(recurse)[1]
+        top_sort = self.dfs(recurse)[1]
+        assert self.is_dag
+        return top_sort
