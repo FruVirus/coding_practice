@@ -285,9 +285,9 @@ class DFS(Graph):
         s = Stack(self.num_vertices)
         s.push(u)
         while not s.empty():
+            time += 1
             u = s.a[s.top]
             u_node, v = self.vertices[u], self.first_white(u, transpose)
-            time += 1
             if v is None:
                 u_node.c, u_node.f = 2, time
                 top_sort.insert(Node(u))
@@ -321,3 +321,21 @@ class DFS(Graph):
 
     def top_sort(self, recurse=False):
         return self.dfs(recurse)[1]
+
+
+num_vertices = 8
+graph = DFS(num_vertices, False)
+graph.add_edge(0, 4)
+graph.add_edge(0, 1)
+graph.add_edge(1, 4)
+graph.add_edge(1, 2)
+graph.add_edge(2, 3)
+graph.add_edge(3, 1)
+graph.add_edge(4, 3)
+graph.add_edge(5, 7)
+graph.add_edge(5, 6)
+graph.add_edge(6, 0)
+graph.add_edge(6, 4)
+graph.add_edge(7, 6)
+graph.add_edge(7, 5)
+graph.dfs(recurse=True)
