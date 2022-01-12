@@ -207,3 +207,73 @@ def test_dfs():
         (7, 5): "B",
         (7, 6): "C",
     }
+    num_vertices = 8
+    graph = DFS(num_vertices, False)
+    graph.add_edge(0, 2)
+    graph.add_edge(0, 1)
+    graph.add_edge(1, 4)
+    graph.add_edge(1, 3)
+    graph.add_edge(3, 4)
+    graph.add_edge(3, 6)
+    graph.add_edge(4, 6)
+    graph.add_edge(4, 7)
+    graph.add_edge(2, 5)
+    graph.add_edge(6, 7)
+    graph.dfs(recurse=False)
+    assert graph.edge_types == {
+        (0, 1): "T",
+        (1, 3): "T",
+        (3, 6): "T",
+        (6, 7): "T",
+        (7, 6): "B",
+        (7, 4): "T",
+        (4, 7): "B",
+        (4, 6): "B",
+        (4, 3): "B",
+        (4, 1): "B",
+        (6, 4): "T",
+        (6, 3): "B",
+        (3, 4): "T",
+        (3, 1): "B",
+        (1, 4): "T",
+        (1, 0): "B",
+        (0, 2): "T",
+        (2, 5): "T",
+        (5, 2): "B",
+        (2, 0): "B",
+    }
+    num_vertices = 8
+    graph = DFS(num_vertices, False)
+    graph.add_edge(0, 2)
+    graph.add_edge(0, 1)
+    graph.add_edge(1, 4)
+    graph.add_edge(1, 3)
+    graph.add_edge(3, 4)
+    graph.add_edge(3, 6)
+    graph.add_edge(4, 6)
+    graph.add_edge(4, 7)
+    graph.add_edge(2, 5)
+    graph.add_edge(6, 7)
+    graph.dfs(recurse=False)
+    assert graph.edge_types == {
+        (0, 1): "T",
+        (1, 3): "T",
+        (3, 6): "T",
+        (6, 7): "T",
+        (7, 6): "B",
+        (7, 4): "T",
+        (4, 7): "B",
+        (4, 6): "B",
+        (4, 3): "B",
+        (4, 1): "B",
+        (6, 4): "T",
+        (6, 3): "B",
+        (3, 4): "T",
+        (3, 1): "B",
+        (1, 4): "T",
+        (1, 0): "B",
+        (0, 2): "T",
+        (2, 5): "T",
+        (5, 2): "B",
+        (2, 0): "B",
+    }

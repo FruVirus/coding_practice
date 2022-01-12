@@ -272,7 +272,10 @@ class DFS(Graph):
                 self.edge_types[(u, v.k)] = "B"
                 self.is_dag = False
             elif (u, v.k) not in self.edge_types:
-                self.edge_types[(u, v.k)] = "F" if u_node.d < v_node.d else "C"
+                if u_node.d < v_node.d:
+                    self.edge_types[(u, v.k)] = "F" if self.directed else "T"
+                else:
+                    self.edge_types[(u, v.k)] = "C"
             v = v.next
         time += 1
         u_node.c, u_node.f = 2, time
@@ -309,7 +312,10 @@ class DFS(Graph):
                 self.edge_types[(s, v.k)] = "B"
                 self.is_dag = False
             elif (s, v.k) not in self.edge_types:
-                self.edge_types[(s, v.k)] = "F" if u_d < v_node.d else "C"
+                if u_d < v_node.d:
+                    self.edge_types[(s, v.k)] = "F" if self.directed else "T"
+                else:
+                    self.edge_types[(s, v.k)] = "C"
             v = v.next
         return None
 
@@ -321,21 +327,3 @@ class DFS(Graph):
 
     def top_sort(self, recurse=False):
         return self.dfs(recurse)[1]
-
-
-num_vertices = 8
-graph = DFS(num_vertices, False)
-graph.add_edge(0, 4)
-graph.add_edge(0, 1)
-graph.add_edge(1, 4)
-graph.add_edge(1, 2)
-graph.add_edge(2, 3)
-graph.add_edge(3, 1)
-graph.add_edge(4, 3)
-graph.add_edge(5, 7)
-graph.add_edge(5, 6)
-graph.add_edge(6, 0)
-graph.add_edge(6, 4)
-graph.add_edge(7, 6)
-graph.add_edge(7, 5)
-graph.dfs(recurse=True)
