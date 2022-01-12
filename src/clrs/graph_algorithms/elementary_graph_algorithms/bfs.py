@@ -83,6 +83,9 @@ The results of BFS may depend upon the order in which the neighbors of a given v
 are visited: the breadth-first tree may vary, but the distances d computed by the
 algorithm will not.
 
+Undirected graphs only have tree or cross edges. Directed graphs only have tree, cross,
+and back edges.
+
 Complexity
 ==========
 
@@ -121,4 +124,10 @@ class BFS(Graph):
                 if v_node.c == 0:
                     v_node.c, v_node.d, v_node.p = 1, u_node.d + 1, u_node
                     q.enqueue(v.k)
+                if v_node.d == u_node.d + 1:
+                    self.edge_types[(u, v.k)] = "T"
+                elif v_node.d == u_node.d:
+                    self.edge_types[(u, v.k)] = "C"
+                if self.directed and 0 <= v_node.d <= u_node.d:
+                    self.edge_types[(u, v.k)] = "B"
                 v = v.next

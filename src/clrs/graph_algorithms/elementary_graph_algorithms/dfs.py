@@ -214,6 +214,9 @@ The results of DFS may depend upon the order in which the neighbors of a given v
 are visited. For example, tree and forward edges can be switched depending on the order
 of vertices in the adjacency lists. However, the result of any DFS are the same.
 
+Undirected graphs only have tree or back edges. Directed graphs have tree, forward,
+back, and cross edges.
+
 Complexity
 ==========
 

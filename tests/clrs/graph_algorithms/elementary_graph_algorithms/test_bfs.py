@@ -101,3 +101,88 @@ def test_bfs():
         [0, 0, 1, 0, 0, 0, 0, 1],
         [0, 0, 0, 0, 0, 0, 1, 0],
     ]
+    num_vertices = 6
+    graph = BFS(num_vertices, True)
+    graph.add_edge(0, 3)
+    graph.add_edge(0, 1)
+    graph.add_edge(1, 4)
+    graph.add_edge(3, 1)
+    graph.add_edge(4, 3)
+    graph.add_edge(2, 4)
+    graph.add_edge(2, 5)
+    graph.add_edge(5, 5)
+    graph.bfs(0)
+    assert graph.edge_types == {
+        (0, 1): "T",
+        (0, 3): "T",
+        (1, 4): "T",
+        (3, 1): "B",
+        (4, 3): "B",
+    }
+    num_vertices = 6
+    graph = BFS(num_vertices, True)
+    graph.add_edge(0, 3)
+    graph.add_edge(0, 1)
+    graph.add_edge(1, 4)
+    graph.add_edge(3, 1)
+    graph.add_edge(4, 3)
+    graph.add_edge(2, 4)
+    graph.add_edge(2, 5)
+    graph.add_edge(5, 5)
+    graph.bfs(2)
+    assert graph.edge_types == {
+        (2, 5): "T",
+        (2, 4): "T",
+        (5, 5): "B",
+        (4, 3): "T",
+        (3, 1): "T",
+        (1, 4): "B",
+    }
+    num_vertices = 5
+    graph = BFS(num_vertices, False)
+    graph.add_edge(0, 4)
+    graph.add_edge(0, 1)
+    graph.add_edge(1, 2)
+    graph.add_edge(1, 3)
+    graph.add_edge(1, 4)
+    graph.add_edge(2, 3)
+    graph.add_edge(3, 4)
+    graph.bfs(0)
+    assert graph.edge_types == {
+        (0, 1): "T",
+        (0, 4): "T",
+        (1, 4): "C",
+        (1, 3): "T",
+        (1, 2): "T",
+        (4, 3): "T",
+        (4, 1): "C",
+        (3, 2): "C",
+        (2, 3): "C",
+    }
+    num_vertices = 8
+    graph = BFS(num_vertices, False)
+    graph.add_edge(0, 2)
+    graph.add_edge(0, 1)
+    graph.add_edge(1, 4)
+    graph.add_edge(1, 3)
+    graph.add_edge(3, 4)
+    graph.add_edge(3, 6)
+    graph.add_edge(4, 6)
+    graph.add_edge(4, 7)
+    graph.add_edge(2, 5)
+    graph.add_edge(6, 7)
+    graph.bfs(0)
+    assert graph.edge_types == {
+        (0, 1): "T",
+        (0, 2): "T",
+        (1, 3): "T",
+        (1, 4): "T",
+        (2, 5): "T",
+        (3, 6): "T",
+        (3, 4): "C",
+        (4, 7): "T",
+        (4, 6): "T",
+        (4, 3): "C",
+        (6, 7): "C",
+        (7, 6): "C",
+    }
