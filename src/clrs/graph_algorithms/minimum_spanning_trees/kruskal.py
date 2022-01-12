@@ -72,7 +72,7 @@ O(E * lg(V)).
 Time
 ----
 
-kruskal(): O(E * lg V).
+kruskal(): O(E * lg V) if |E| < |V|^2 else O(E * lg E).
 """
 
 # Repository Library
