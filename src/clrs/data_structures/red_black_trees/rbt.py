@@ -256,7 +256,7 @@ class RBT(AVL):
                         w.left.c, w.c = 1, 0
                         self.rotate(w, False)
                         w = x.p.right
-                    w.c, x.p.c, w.right.c = x.p.c, 1, 1
+                    w.c, w.right.c, x.p.c = x.p.c, 1, 1
                     self.rotate(x.p, True)
                     x = self.root
             else:
@@ -272,7 +272,7 @@ class RBT(AVL):
                         w.right.c, w.c = 1, 0
                         self.rotate(w, True)
                         w = x.p.left
-                    w.c, x.p.c, w.left.c = x.p.c, 1, 1
+                    w.c, w.left.c, x.p.c = x.p.c, 1, 1
                     self.rotate(x.p, False)
                     x = self.root
         x.c = 1
