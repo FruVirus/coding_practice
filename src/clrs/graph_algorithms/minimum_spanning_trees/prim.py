@@ -22,6 +22,31 @@ such edge.
 At each step of the algorithm, the vertices in the tree determine a cut of the graph,
 and a light edge crossing the cut is added to the tree.
 
+Intuition
+---------
+
+Prim's algorithm works for a connected, undirected graph with weights.
+
+A spanning tree is a subgraph of a graph that is acyclic and connects all of the
+vertices using exactly |V| - 1 edges while minimizing the total weight of the edges.
+
+The brute force approach to finding a MST is to try all combination of |V| - 1 edges and
+check each total weight. However, we can also use a greedy algorithm to find the MST
+without having to iterate over all possible combinations.
+
+In Prim's algorithm, the edges in set A always forms a single tree. The tree starts from
+an arbitrary root vertex r and grows until the tree spans all vertices in V.
+
+Prims's algorithm works as follows:
+
+1. From a weighted graph, select the minimum cost edge first.
+2. For the rest of the procedure, always select the minimum cost edge but make sure the
+newly selected edge does NOT connect to the already selected vertices --> this forms and
+maintains a single tree with no cycles.
+
+For a disconnected graph, Prim's algorithm will NOT find the MST for the overall graph.
+It will only find the MST for one component of the graph.
+
 Complexity
 ==========
 
@@ -51,8 +76,7 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 class Prim(Graph):
     def prim(self):
         for v in self.vertices.values():
-            v.key, v.p = float("inf"), None
-        self.vertices[0].key = 0
+            v.key, v.p = (float("inf"), None) if v.k != 0 else (0, None)
         q = HeapQueue([(v.key, v.k) for v in self.vertices.values()], False)
         while q.heap_size != 0:
             u = q.extract()
@@ -65,24 +89,3 @@ class Prim(Graph):
                     q.change(i, (v_node.key, v.k))
                 v = v.next
         return set((v.k, v.p.k) for v in self.vertices.values() if v.p is not None)
-
-
-num_vertices = 9
-graph = Prim(num_vertices)
-graph.add_edge(0, 1, 4)
-graph.add_edge(0, 7, 8)
-graph.add_edge(1, 2, 8)
-graph.add_edge(1, 7, 11)
-graph.add_edge(2, 3, 7)
-graph.add_edge(2, 5, 4)
-graph.add_edge(2, 8, 2)
-graph.add_edge(3, 4, 9)
-graph.add_edge(3, 5, 14)
-graph.add_edge(4, 5, 10)
-graph.add_edge(5, 6, 2)
-graph.add_edge(6, 7, 1)
-graph.add_edge(6, 8, 6)
-graph.add_edge(7, 8, 7)
-mst = graph.prim()
-assert mst == {(2, 1), (6, 5), (4, 3), (7, 6), (1, 0), (8, 2), (3, 2), (5, 2)}
-assert len(mst) == num_vertices - 1
