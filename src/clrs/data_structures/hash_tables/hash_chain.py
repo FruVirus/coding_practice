@@ -54,11 +54,9 @@ insert(): O(1) if we assume that the element x being inserted is not already pre
 the table. Otherwise, searching for the element will take O(L) time or an average-case
 time of Theta(1 + n / m), where n is the total number of elements and m is the total
 number of slots in the hash table.
-
 delete(): O(1) if we use a doubly linked list. Otherwise, O(n) if we use a singly linked
 list since we have to search for the element previous to the element being deleted
 first.
-
 search(): Theta(1 + n / m) under the assumption of simple uniform hashing.
 """
 

@@ -11,7 +11,10 @@ modified to take the element to partition around as an input parameter.
 Complexity
 ==========
 
-O(n) worst case
+Time
+----
+
+quick_select(): O(n) worst case.
 """
 
 # Repository Library

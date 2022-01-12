@@ -39,17 +39,10 @@ Time
 ----
 
 SLL:
-    delete(): O(n).
+    delete(), reverse(), search(), size(): O(n).
     insert(): O(1).
-    reverse(): O(n).
-    search(): O(n).
-    size(): O(n).
-
 DLL:
-    delete(): O(1).
-    insert(): O(1).
-    reverse(): O(n).
-    search(): O(n).
+    insert(), delete(): O(1).
 """
 
 

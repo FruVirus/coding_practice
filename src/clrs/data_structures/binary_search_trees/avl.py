@@ -37,7 +37,6 @@ Time
 ----
 
 balance(), delete(), insert(), and rotate(): O(lg n).
-
 rotate_left() and rotate_right(): O(1).
 """
 

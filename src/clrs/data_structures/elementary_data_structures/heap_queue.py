@@ -119,12 +119,8 @@ Time
 ----
 
 build(): O(n).
-change: O(lg n).
-delete: O(lg n).
-extract(): O(lg n).
+change(), delete(), extract(), heapify(), and insert(): O(lg n).
 get(): O(1).
-heapify(): O(lg n).
-insert(): O(lg n)
 """
 
 # Standard Library

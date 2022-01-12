@@ -90,11 +90,9 @@ Time
 ----
 
 insert(): Requires at most 1 / (1 - n / m) probes on average, assuming uniform hashing.
-
 delete(): O(1) if we use a doubly linked list. Otherwise, O(n) if we use a singly linked
 list since we have to search for the element previous to the element being deleted
 first.
-
 search(): Expected number of probes in an unsuccessful search is at most
 1 / (1 - n / m). Expected number of probes in a successful search is at most
 (1 / n / m) * ln(1 / (1 - n / m)). When we use the special value "DELETED", search times

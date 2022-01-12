@@ -62,10 +62,8 @@ If the BST is balanced, then O(h) = O(lg n).
 
 count(), delete(), insert(), lca(), min(), max(), predecessor(), rank(), rank_key(),
 search(), select(), successor(), and update_size(): O(h).
-
 list(): O(h) + O(L) where L is the number of keys returned. O(L) is for the append
 operation.
-
 walk(): O(n).
 """
 

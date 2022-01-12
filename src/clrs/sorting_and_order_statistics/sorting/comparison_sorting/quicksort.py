@@ -80,14 +80,14 @@ the extra stack space required with each recursive call.
 Complexity
 ==========
 
-Time
-----
-
 The worst case time occurs when the partitioning routine produces one sub-problem with
 n - 1 elements and one with 0 elements or when the input array is already sorted. The
 expected case occurs when we can equally balance the two sides of the partition at every
 level of the recursion (only possible when we can choose the median value with each
 recursion).
+
+Time
+----
 
 partition(): O(n) = O(h - l + 1).
 quicksort(): Theta(n^2) worst case, O(n * lg n) expected time.
