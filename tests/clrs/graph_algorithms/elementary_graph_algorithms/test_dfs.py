@@ -145,47 +145,65 @@ def test_dfs():
     graph.add_edge(6, 7)
     graph.add_edge(7, 7)
     assert graph.scc(recurse=True) == [0, 2, 5, 7]
-    num_vertices = 7
+    num_vertices = 8
     graph = DFS(num_vertices, True)
-    graph.add_edge(0, 6)
+    graph.add_edge(0, 4)
     graph.add_edge(0, 1)
-    graph.add_edge(3, 4)
-    graph.add_edge(3, 5)
+    graph.add_edge(1, 4)
     graph.add_edge(1, 2)
     graph.add_edge(2, 3)
-    graph.add_edge(2, 0)
-    graph.add_edge(2, 5)
-    graph.add_edge(6, 2)
-    assert graph.get_edge_types() == {
-        (0, 1): "Tree/Forward",
-        (6, 2): "Cross",
-        (1, 2): "Tree/Forward",
-        (3, 4): "Tree/Forward",
-        (2, 0): "Back",
-        (0, 6): "Tree/Forward",
-        (2, 3): "Tree/Forward",
-        (2, 5): "Tree/Forward",
-        (3, 5): "Cross",
+    graph.add_edge(3, 1)
+    graph.add_edge(4, 3)
+    graph.add_edge(5, 7)
+    graph.add_edge(5, 6)
+    graph.add_edge(6, 0)
+    graph.add_edge(6, 4)
+    graph.add_edge(7, 6)
+    graph.add_edge(7, 5)
+    graph.dfs(recurse=True)
+    assert graph.edge_types == {
+        (0, 1): "T",
+        (1, 2): "T",
+        (2, 3): "T",
+        (3, 1): "B",
+        (1, 4): "T",
+        (4, 3): "C",
+        (0, 4): "F",
+        (5, 6): "T",
+        (6, 4): "C",
+        (6, 0): "C",
+        (5, 7): "T",
+        (7, 5): "B",
+        (7, 6): "C",
     }
-    num_vertices = 7
-    graph = DFS(num_vertices, False)
-    graph.add_edge(0, 6)
+    num_vertices = 8
+    graph = DFS(num_vertices, True)
+    graph.add_edge(0, 4)
     graph.add_edge(0, 1)
-    graph.add_edge(3, 4)
-    graph.add_edge(3, 5)
+    graph.add_edge(1, 4)
     graph.add_edge(1, 2)
     graph.add_edge(2, 3)
-    graph.add_edge(2, 0)
-    graph.add_edge(2, 5)
-    graph.add_edge(6, 2)
-    assert graph.get_edge_types() == {
-        (0, 1): "Tree/Forward",
-        (6, 2): "Back",
-        (1, 2): "Back",
-        (3, 4): "Tree/Forward",
-        (2, 0): "Back",
-        (0, 6): "Tree/Forward",
-        (2, 3): "Tree/Forward",
-        (2, 5): "Tree/Forward",
-        (3, 5): "Back",
+    graph.add_edge(3, 1)
+    graph.add_edge(4, 3)
+    graph.add_edge(5, 7)
+    graph.add_edge(5, 6)
+    graph.add_edge(6, 0)
+    graph.add_edge(6, 4)
+    graph.add_edge(7, 6)
+    graph.add_edge(7, 5)
+    graph.dfs(recurse=False)
+    assert graph.edge_types == {
+        (0, 1): "T",
+        (1, 2): "T",
+        (2, 3): "T",
+        (3, 1): "B",
+        (1, 4): "T",
+        (4, 3): "C",
+        (0, 4): "F",
+        (5, 6): "T",
+        (6, 4): "C",
+        (6, 0): "C",
+        (5, 7): "T",
+        (7, 5): "B",
+        (7, 6): "C",
     }

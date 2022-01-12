@@ -180,6 +180,40 @@ from C' to any other component must be to C, which we have already visited.
 out of that component must be to components that the search already visited. Each
 depth-first tree, therefore, will be exactly one strongly connected component.
 
+Intuition
+---------
+
+DFS conducts a pre-order traversal of a graph. A stack data structure is used to keep
+track of visited vertices during the traversal process. Vertices are "suspended" in the
+stack until they are fully explored. If there are no adjacent vertices for a given
+vertex in the stack, then we go back up the stack until we find a vertex whose adjacency
+list contains vertices we have not visited yet.
+
+In DFS, we can start the initial search from any vertex. When we explore a vertex, we
+suspend the current vertex and explore the next one. We use the stack to keep track of
+the next vertex to visit during backtracking.
+
+Unlike BFS where we specify a starting source vertex to begin our search, DFS will
+select another vertex as a new source and repeat the search from that source so long as
+the newly selected vertex was not discovered in previous searches. DFS repeats this
+process until it has discovered every vertex.
+
+Although BFS could proceed from multiple sources and DFS could be limited to one source,
+BFS usually serves to find shortest-path distances (and the associated predecessor
+subgraph) from a given source whereas DFS is often a subroutine in other algorithms.
+
+Unlike BFS, whose predecessor subgraph forms a tree, the predecessor subgraph produced
+by DFS may be composed of several trees, because the search amy repeat from multiple
+sources. There, the predecessor subgraph of DFS forms a depth-first forest, comprising
+several depth-first trees.
+
+DFS guarantees that each vertex ends up in exactly one depth-first tree, so that these
+trees are disjoint.
+
+The results of DFS may depend upon the order in which the neighbors of a given vertex
+are visited. For example, tree and forward edges can be switched depending on the order
+of vertices in the adjacency lists. However, the result of any DFS are the same.
+
 Complexity
 ==========
 
@@ -214,7 +248,7 @@ class DFS(Graph):
         return self.vertices.values()
 
     def dfs(self, recurse=False, transpose=False):
-        scc, time, top_sort = [], 0, SLL()
+        self.edge_types, scc, time, top_sort = {}, [], 0, SLL()
         dfs_ = self.dfs_recurse if recurse else self.dfs_stack
         for v in self.vertices.values():
             v.c, v.p = 0, None
@@ -231,10 +265,14 @@ class DFS(Graph):
         while v is not None:
             v_node = self.vertices[v.k]
             if v_node.c == 0:
+                self.edge_types[(u, v.k)] = "T"
                 v_node.p = u_node
                 time = self.dfs_recurse(v_node, time, top_sort, transpose)
-            if v_node.c == 1:
+            elif v_node.c == 1:
+                self.edge_types[(u, v.k)] = "B"
                 self.is_dag = False
+            elif (u, v.k) not in self.edge_types:
+                self.edge_types[(u, v.k)] = "F" if u_node.d < v_node.d else "C"
             v = v.next
         time += 1
         u_node.c, u_node.f = 2, time
@@ -260,29 +298,20 @@ class DFS(Graph):
         return time
 
     def first_white(self, s, transpose=False):
+        u_d = self.vertices[s].d
         v = self.adj_list_transpose[s].head if transpose else self.adj_list[s].head
         while v is not None:
             v_node = self.vertices[v.k]
-            if v_node.c == 1:
-                self.is_dag = False
             if v_node.c == 0:
+                self.edge_types[(s, v.k)] = "T"
                 return v_node
+            if v_node.c == 1:
+                self.edge_types[(s, v.k)] = "B"
+                self.is_dag = False
+            elif (s, v.k) not in self.edge_types:
+                self.edge_types[(s, v.k)] = "F" if u_d < v_node.d else "C"
             v = v.next
         return None
-
-    def get_edge_types(self, recurse=False):
-        self.dfs(recurse)
-        edge_types = {}
-        for u, v in self.edges:
-            edge_type, u, v = None, self.vertices[u], self.vertices[v]
-            if u.d < v.d < v.f < u.f:
-                edge_type = "Tree/Forward"
-            elif v.d <= u.d < u.f <= v.f:
-                edge_type = "Back"
-            elif v.d < v.f < u.d < u.f:
-                edge_type = "Cross"
-            edge_types[(u.k, v.k)] = edge_type
-        return edge_types
 
     def scc(self, recurse=False):
         assert self.directed
