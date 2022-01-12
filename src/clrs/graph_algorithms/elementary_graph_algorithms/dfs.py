@@ -246,7 +246,7 @@ class DFS(Graph):
         return self.vertices.values()
 
     def dfs(self, recurse=False, transpose=False):
-        self.edge_types, scc, time, top_sort = {}, [], 0, SLL()
+        scc, time, top_sort = [], 0, SLL()
         dfs_ = self.dfs_recurse if recurse else self.dfs_stack
         for v in self.vertices.values():
             v.c, v.p = 0, None

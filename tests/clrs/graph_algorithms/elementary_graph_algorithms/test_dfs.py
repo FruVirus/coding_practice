@@ -1,3 +1,6 @@
+# Third Party Library
+import pytest
+
 # Repository Library
 from clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFS
 
@@ -29,8 +32,8 @@ def test_dfs():
     assert graph.vertices[4].f == 6
     assert graph.vertices[5].d == 10
     assert graph.vertices[5].f == 11
-    graph.top_sort(recurse=True)
-    assert not graph.is_dag
+    with pytest.raises(AssertionError):
+        graph.top_sort(recurse=True)
     num_vertices = 6
     graph = DFS(num_vertices, True)
     graph.add_edge(0, 3)
@@ -84,8 +87,8 @@ def test_dfs():
     assert graph.vertices[4].f == 6
     assert graph.vertices[5].d == 10
     assert graph.vertices[5].f == 11
-    graph.top_sort()
-    assert not graph.is_dag
+    with pytest.raises(AssertionError):
+        graph.top_sort()
     num_vertices = 6
     graph = DFS(num_vertices, True)
     graph.add_edge(0, 3)

@@ -136,6 +136,7 @@ class Graph:
         self.adj_list = [SLL() for _ in range(num_vertices)]
         self.adj_matrix = [[0] * num_vertices for _ in range(num_vertices)]
         self.directed = directed
+        self.edge_types = {}
         self.edges = set()
         self.is_dag = True
         self.num_vertices = num_vertices
