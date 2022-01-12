@@ -43,6 +43,11 @@ Prims's algorithm works as follows:
 2. For the rest of the procedure, always select the minimum cost edge but make sure the
 newly selected edge does NOT connect to the already selected vertices --> this forms and
 maintains a single tree with no cycles.
+3. Note that although a non-light edge might be added to the tree, it can be overwritten
+later on by an edge with a lower weight. The heap queue is sorted by the key attribute,
+which corresponds to the lowest edge weight found so far. When we do a change()
+operation on the heap queue, the heap queue is sorted such that the next item to be
+extracted is always the item with the lowest edge weight.
 
 For a disconnected graph, Prim's algorithm will NOT find the MST for the overall graph.
 It will only find the MST for one component of the graph.
