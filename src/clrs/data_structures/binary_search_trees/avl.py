@@ -93,7 +93,6 @@ class AVL(BST):
         y.left, x.p = x, y
         if isinstance(x, AVLNode):
             self.update_height(x)
-            self.update_height(y)
         self.update_size(x)
         self.update_size(y)
 
@@ -112,7 +111,6 @@ class AVL(BST):
         y.right, x.p = x, y
         if isinstance(x, AVLNode):
             self.update_height(x)
-            self.update_height(y)
         self.update_size(x)
         self.update_size(y)
 
