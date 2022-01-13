@@ -175,8 +175,8 @@ class Graph:
 
     def init_single_source(self, s):
         for v in self.vertices.values():
-            v.d, v.p = float("inf"), None
-        self.vertices[s].d = 0
+            v.c, v.d, v.p = 0, float("inf"), None
+        self.vertices[s].c, self.vertices[s].d = 1, 0
 
     @staticmethod
     def link(x, y):

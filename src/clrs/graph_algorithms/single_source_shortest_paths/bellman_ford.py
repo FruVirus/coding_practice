@@ -30,6 +30,19 @@ w: E -> R. Then, for each vertex v in V, there is a path from s to v iff the
 Bellman-Ford algorithm terminates with v.d < float("inf") when it is run on G. This
 corollary allows G to have negative-weight cycles that are reachable from s.
 
+Intuition
+---------
+
+Bellman-Ford algorithm operates on weighted, directed graphs with positive and negative
+weights. The algorithm repeatedly relaxes all edges for |V| - 1 times each.
+
+The algorithm starts from a given (arbitrary) node. If we start with a poor edge choice,
+then Bellman-Ford can take more iterations.
+
+Bellman-Ford can detect a negative weight cycle by doing an additional iteration at the
+end and seeing if anything relaxes again. If there are negative weights but no negative
+weight cycles, Bellman-Ford will still give the correct shortest path answer.
+
 Complexity
 ==========
 
@@ -52,6 +65,7 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 
 class BellmanFord(Graph):
     def bellman_ford(self, s):
+        assert self.directed
         self.init_single_source(s)
         for _ in range(self.num_vertices - 1):
             for u, v in self.edges:

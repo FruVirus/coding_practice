@@ -114,8 +114,7 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 
 class BFS(Graph):
     def bfs(self, s):
-        for v in self.vertices.values():
-            v.c, v.d, v.p = (0, float("inf"), None) if v.k != s else (1, 0, None)
+        self.init_single_source(s)
         q = Queue(self.num_vertices)
         q.enqueue(s)
         while not q.empty():
