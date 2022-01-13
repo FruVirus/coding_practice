@@ -35,6 +35,18 @@ like Prim's algorithm in that both algorithms use a min-priority queue to find t
 being grown in Prim's algorithm), add this vertex into the set, and adjust the weights
 of the remaining vertices outside the set accordingly.
 
+Intuition
+---------
+
+Dijkstra's algorithm works on weighted, directed graphs with non-negative weights.
+
+Dijkstra's algorithm can also work if the only negative weight edges are those
+originating from the source (still no negative cycles though).
+
+Dijkstra's algorithm can work on non-directed graphs since we can always convert a
+non-directed graph into a directed graph by adding parallel edges (i.e., edges going in
+both directions with the same weight).
+
 Complexity
 ==========
 

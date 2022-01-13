@@ -43,6 +43,10 @@ Bellman-Ford can detect a negative weight cycle by doing an additional iteration
 end and seeing if anything relaxes again. If there are negative weights but no negative
 weight cycles, Bellman-Ford will still give the correct shortest path answer.
 
+Bellman-Ford can work on non-directed graphs since we can always convert a non-directed
+graph into a directed graph by adding parallel edges (i.e., edges going in both
+directions with the same weight).
+
 Complexity
 ==========
 
