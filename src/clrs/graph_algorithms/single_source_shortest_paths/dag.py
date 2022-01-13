@@ -49,8 +49,7 @@ in the size of an adjacency-list representation of the graph.
 Time
 ----
 
-dag(): Theta(V + E).
-num_total_paths(): O(V + E).
+dag() and num_total_paths(): Theta(V + E).
 """
 
 # Repository Library
@@ -71,13 +70,13 @@ class DAG(DFS):
     def num_total_paths(self):
         for v in self.vertices.values():
             v.paths = 0
-        u, top_sort = self.top_sort().head, []
+        u = self.top_sort()
+        u.reverse()
+        u = u.head
         while u is not None:
-            top_sort.append(u.k)
-            u = u.next
-        for u in reversed(top_sort):
-            u_node, v = self.vertices[u], self.adj_list[u].head
+            u_node, v = self.vertices[u.k], self.adj_list[u.k].head
             while v is not None:
                 self.vertices[v.k].paths += 1 + u_node.paths
                 v = v.next
+            u = u.next
         return sum(v.paths for v in self.vertices.values())

@@ -15,7 +15,6 @@ def test_dag():
     graph.add_edge(3, 4, -1)
     graph.add_edge(3, 5, 1)
     graph.add_edge(4, 5, -2)
-    assert graph.is_dag
     graph.dag(1)
     for v in graph.vertices.values():
         if v.k == 0:
