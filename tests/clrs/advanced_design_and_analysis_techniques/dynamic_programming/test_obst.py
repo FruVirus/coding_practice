@@ -8,7 +8,7 @@ from clrs.advanced_design_and_analysis_techniques.dynamic_programming.obst impor
 def test_obst_bu():
     p = [None, 0.15, 0.10, 0.05, 0.10, 0.20]
     q = [0.05, 0.10, 0.05, 0.05, 0.05, 0.10]
-    e, r, w = obst_bu(p, q, len(p))
+    e, r, w = obst_bu(p, q)
     assert e == [
         [0.05, 0.45000000000000007, 0.9, 1.25, 1.75, 2.75],
         [0, 0.1, 0.4, 0.7, 1.2, 2.0],
@@ -42,7 +42,7 @@ def test_obst_bu():
     ]
     p = [None, 3, 3, 1, 1]
     q = [2, 3, 1, 1, 1]
-    e, r, w = obst_bu(p, q, len(p))
+    e, r, w = obst_bu(p, q)
     assert e == [
         [2, 13, 25, 32, 40],
         [0, 3, 11, 17, 25],

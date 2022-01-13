@@ -80,7 +80,8 @@ obst_bu(): O(n^2) for w table, O(n^2) for e table, and O(n^2) for root table.
 """
 
 
-def obst_bu(p, q, n):
+def obst_bu(p, q):
+    n = len(p)
     e = [[0] * n for _ in range(n)]
     r = [[0] * n for _ in range(n)]
     w = [[0] * n for _ in range(n)]
