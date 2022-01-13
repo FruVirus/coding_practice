@@ -56,3 +56,35 @@ def test_bellman_ford():
     graph.bellman_ford(0)
     assert graph.vertices[5].d == float("inf")
     assert graph.vertices[5].p is None
+
+
+def test_difference_constraints():
+    num_vertices = 6
+    graph = BellmanFord(num_vertices, True)
+    graph.add_edge(0, 1, 0)
+    graph.add_edge(0, 2, 0)
+    graph.add_edge(0, 3, 0)
+    graph.add_edge(0, 4, 0)
+    graph.add_edge(0, 5, 0)
+    graph.add_edge(1, 3, 5)
+    graph.add_edge(1, 4, 4)
+    graph.add_edge(2, 1, 0)
+    graph.add_edge(3, 5, -3)
+    graph.add_edge(3, 4, -1)
+    graph.add_edge(4, 5, -3)
+    graph.add_edge(5, 1, -1)
+    graph.add_edge(5, 2, 1)
+    graph.bellman_ford(0)
+    for v in graph.vertices.values():
+        if v.k == 0:
+            assert v.d == 0
+        if v.k == 1:
+            assert v.d == -5
+        if v.k == 2:
+            assert v.d == -3
+        if v.k == 3:
+            assert v.d == 0
+        if v.k == 4:
+            assert v.d == -1
+        if v.k == 5:
+            assert v.d == -4

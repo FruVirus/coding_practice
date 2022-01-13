@@ -143,3 +143,51 @@ even if they are intermixed with relaxations of the edges of p.
 Predecessor-subgraph property
     Once v.d = delta(s, v) for all v in V, the predecessor subgraph is a shortest-paths
 tree rooted at s.
+
+24.4 Difference constraints and shortest paths
+==============================================
+
+System of difference constraints
+--------------------------------
+
+In a system of difference constraints, the system of equations to solve is Ax <= b. Each
+row of the matrix A contains exactly one 1 and exactly one -1, and all other entries of
+A are 0. The columns of A correspond to the vertices in the graph and the rows of A
+correspond to the number of difference constraints. The problem reduces to finding a
+vector x that satisfies Ax <= b or to determine that no feasible solution exists.
+
+Suppose we have a directed graph with 5 vertices and edge weights connecting those
+vertices.
+
+w(2, 1) = 0
+w(5, 1) = -1
+w(5, 2) = 1
+w(1, 3) = 5
+w(1, 4) = 4
+w(3, 4) = -1
+w)3. 5) = -3
+w(4, 5) = -3
+
+These weights correspond to the following system of difference constraints:
+
+x1 - x2 <= 0
+x1 - x5 <= -1
+x2 - x5 <= 1
+x3 - x1 <= 5
+x4 - x1 <= 4
+x4 - x3 <= -1
+x5 - x3 <= -3
+x5 - x4 <= -3
+
+By running Bellman-Ford, we can determine if there's a feasible solution or not. If
+there is no feasible solution, then BellmanFord returns False. If there is a feasible
+solution, then adding a constant d to the feasible solution is also a solution.
+
+To initialize the Bellman-Ford algorithm for solving a system of difference constraints,
+we also add a starting vertex 0 to the graph with edges from 0 to all other vertices in
+the same graph with a weight of 0. Then, we run the Bellman-Ford algorithm starting with
+vertex 0.
+
+Thus, the intuition here is that the edge weights provide the upper bound for the
+inequalities. Running Bellman-Ford to produce the shortest paths will then set the "d"
+attribute of each vertex to its solution in the vector x.
