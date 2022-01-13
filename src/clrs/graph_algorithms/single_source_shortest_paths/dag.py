@@ -37,6 +37,14 @@ init_single_source() and ">" by "<" in relax().
 After the process, calling print_path(s, v) will print the critical path between the
 source s and a given vertex v in the graph.
 
+Intuition
+---------
+
+We can compute the total number of paths by counting the number of paths whose start
+point is at each vertex v. We traverse the vertices in reverse topological order since
+all vertices adjacent to v occur later in the topological sort and the final vertex has
+no neighbors.
+
 Complexity
 ==========
 
@@ -57,7 +65,9 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFS
 
 
 class DAG(DFS):
-    def dag(self, s):
+    def dag(self, s, longest=False):
+        if longest:
+            self.weights = {k: -v for k, v in self.weights.items()}
         u = self.top_sort().head
         self.init_single_source(s)
         while u is not None:
