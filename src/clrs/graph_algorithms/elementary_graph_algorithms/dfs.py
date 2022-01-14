@@ -275,7 +275,7 @@ class DFS(Graph):
                 self.edge_types[(u, v.k)] = "T"
                 v_node.p = u_node
                 time = self.dfs_recurse(v_node, time, top_sort, transpose)
-            elif v_node.c == 1:
+            if v_node.c == 1:
                 self.edge_types[(u, v.k)] = "B"
                 self.is_dag = False
             elif (u, v.k) not in self.edge_types:
