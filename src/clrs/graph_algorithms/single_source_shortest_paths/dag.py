@@ -45,6 +45,8 @@ point is at each vertex v. We traverse the vertices in reverse topological order
 all vertices adjacent to v occur later in the topological sort and the final vertex has
 no neighbors.
 
+The attribute "paths" for each vertex gives the total number of paths to that vertex.
+
 Complexity
 ==========
 
