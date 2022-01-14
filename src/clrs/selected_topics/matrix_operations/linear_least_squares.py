@@ -1,6 +1,6 @@
 """
-Overview
-========
+28.3 Symmetric positive-definite matrices and least-squares approximation
+=========================================================================
 
 A matrix is positive definite if it’s symmetric and all its eigenvalues are positive. A
 positive-definite matrix is a symmetric matrix with all positive eigenvalues. Since it's
@@ -15,35 +15,38 @@ signs of the pivots are the signs of the eigenvalues.
 Another way we can test for if a matrix is positive definite is if all of its upper left
 k x k determinants are positive.
 
-    d_k = det(A_k) / det(A_k-1)
+    d_k = det(A_k) / det(A_(k-1))
 
 Symmetric positive-definite matrices are non-singular and we can perform LU
 decomposition on them without having to worry about dividing by 0.
+
+Least-squares approximation
+---------------------------
 
 One important application of symmetric positive-definite matrices arises in fitting
 curves to given sets of data points.
 
 Suppose that we are given a set of m data points:
 
-(x1, y1), (x2, y2), ..., (xm, ym)
+(x_1, y_1), (x_2, y_2), ..., (x_m, y_m)
 
 where we know that the yi are subject to measurement errors. We would like to determine
 a function F(x) such that the approximation errors
 
-etai = F(xi) - yi
+eta_i = F(x_i) - y_i
 
 are small for i = 1, 2, ..., m. The form of the function F depends on the sub-problem at
 hand. Here, we assume that it has the form a linearly weighted sum, where the number
-of functions and the specific basis  functions are chosen based on knowledge of the
+of functions and the specific basis functions are chosen based on knowledge of the
 problem at hand. A common choice is:
 
-F(x) = c1 + c2 * x + c3 * x^2 + ... + cn * x^(n - 1)
+F(x) = c_1 + c_2 * x + c_3 * x^2 + ... + c_n * x^(n - 1)
 
 which means that F(x) is a polynomial of degree n - 1 in x. Thus, given m data points
-(x1, y1), (x2, y2), ..., (xm, ym), we wish to calculate n coefficients c1, c2, ..., cn
-that minimize the approximation errors eta1, eta2, ..., etam.
+(x_1, y_1), (x_2, y_2), ..., (x_m, y_m), we wish to calculate n coefficients
+c_1, c_2, ..., c_n that minimize the approximation errors eta_1, eta_2, ..., eta_m.
 
-By choosing n = m, we can calculate each yi exactly. Such a high-degree F "fits the
+By choosing n = m, we can calculate each y_i exactly. Such a high-degree F "fits the
 noise" as well as the data, however, and generally gives poor results when used to
 predict y for previously unseen values of x. It is usually better to choose n
 significantly smaller than m and hope that by choosing the coefficients cj well, we can
@@ -92,6 +95,23 @@ b = A.T * y
 If A has full rank, the matrix A.T * A is guaranteed to be non-singular, because it is
 symmetric and positive definite.
 
+Intuition
+---------
+
+Comparing the normal equation to Ax = b, we have A.T * A = A, c = x, and A.T * y = b.
+Thus, we can use lup_solver() to perform linear least squares approximation to find the
+vector c.
+
+We can only do this since we chose to minimize the norm of the error vector eta when
+minimizing the approximation errors---this gives us a least squares solution. Minimizing
+the norm of eta by differentiating the norm of eta w.r.t. c and then setting the result
+to 0 gives us the normal equation.
+
+We can change the "deg" parameter to be whatever. We can even change how a[i][j] is
+assigned for each element (by hard coding it). However, we will always be performing a
+least squares approximation since we are using lup_solver() to approximate the
+coefficient vector c.
+
 Complexity
 ==========
 
@@ -105,7 +125,7 @@ llss(): Theta(n^3).
 
 # Repository Library
 from src.clrs.selected_topics.matrix_operations.invert import transpose
-from src.clrs.selected_topics.matrix_operations.lup_solver import lu_decomp, lup_solver
+from src.clrs.selected_topics.matrix_operations.lup_solver import lup_solver
 from src.clrs.selected_topics.matrix_operations.multiply import mm
 
 
@@ -124,6 +144,5 @@ def llss(data, deg=2):
             a[i][j] = x ** j
     ata = mm(transpose(a), a)
     assert is_pos_def(ata)
-    lu_decomp(ata)
     y = mm(transpose(a), transpose([[y for _, y in data]]))
-    return lup_solver(ata, [i[0] for i in y], decomp=False, lup=False)
+    return lup_solver(ata, [i[0] for i in y], decomp=True, lup=False)
