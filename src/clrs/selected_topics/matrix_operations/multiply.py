@@ -66,7 +66,10 @@ v = (a01 - a11) * (b10 + b11)
 Complexity
 ==========
 
-Theta(n^3) time complexity
+Time
+----
+
+mm() and smmr(): Theta(n^3).
 """
 
 
