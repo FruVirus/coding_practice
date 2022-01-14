@@ -1,10 +1,51 @@
 """
-Overview
-========
+28.2 Inverting matrices
+=======================
 
 Although in practice we do not generally use matrix inverses to solve systems of linear
 equations, preferring instead to use more numerically stable techniques such as LUP
 decomposition, sometimes we need to compute a matrix inverse.
+
+Computing a matrix inverse from an LUP decomposition
+----------------------------------------------------
+
+Suppose that we have an LUP decomposition of a matrix A in the form of three matrices L,
+U, and P such that PA = LU. Using lup_solver(), we can solve an equation of the form
+Ax = b in time Theta(n^2). Since the LUP decomposition depends on A and not b, we can
+run lup_solver() on a second set of equations of the form Ax = b' in additional time
+Theta(n^2). In general, once we have the LUP decomposition of A, we can solve, in time
+Theta(k * n^2), k versions of the equation Ax = b that differ only in b.
+
+We can think of the equation
+
+AX = I_n,
+
+which defines the matrix X, the inverse of A, as a set of n distinct equations of the
+form Ax = b. We would call lup_solver() to solve each of the n columns of X after having
+obtained the LUP decomposition of A. For example, the procedure would be:
+
+A = [[4, -2, 1], [5, 0, 3], [-1, 2, 6]]
+X = [[0] * len(A) for _ in range(len(A))]
+p = lup_decomp(A)
+b = [1, 0, 0]
+x = lup_solver(A, b, p=p, decomp=False)
+for r in range(len(X)):
+    X[r][0] = x[c]
+b = [0, 1, 0]
+x = lup_solver(A, b, p=p, decomp=False)
+for r in range(len(X)):
+    X[r][1] = x[c]
+b = [0, 0, 1]
+x = lup_solver(A, b, p=p, decomp=False)
+for r in range(len(X)):
+    X[r][2] = x[c]
+
+LUP decomposition takes Theta(n^3) time. Calling lup_solver() takes Theta(n^2) but we
+have to call it n times. Thus, the total time for inverting a matrix using LUP
+decomposition is Theta(n^3).
+
+Intuition
+---------
 
 The general formula for computing the inverse of a matrix A is:
 
@@ -73,7 +114,10 @@ list(map(list, zip(*a))) then converts a back to a 2D matrix.
 Complexity
 ==========
 
-Theta(n^3) time complexity
+Time
+----
+
+invert_matrix(): Theta(n^3).
 """
 
 
