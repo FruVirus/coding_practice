@@ -97,8 +97,8 @@ Hence, the vector x is our solution to Ax = b:
        = P^(-1)Pb
        = b
 
-LU Decomposition
-----------------
+Computing an LU decomposition
+-----------------------------
 
 If A is a non-singular matrix, then we can factor A = LU using Gaussian elimination. We
 start by subtracting multiples of the first equation from the other equations in order
@@ -142,8 +142,8 @@ A = (1      0)      (a_11    w.T)
     (v/a_11 L') (0, U')
   = LU
 
-LUP Decomposition
------------------
+Computing an LUP decomposition
+------------------------------
 
 Generally, in solving a system of linear equations Ax = b, we must pivot on off-diagonal
 elements of A to avoid dividing by 0. We also want to avoid dividing by a small value,
@@ -183,6 +183,11 @@ Time
 lu_decomp(), lup_decomp(): Theta(n^3).
 lup_solver(): Theta(n^2) for forward substitution, Theta(n^2) for backward substitution,
 Theta(n^2) for solving the system of equations.
+
+Space
+-----
+
+lup_solver(): O(n) for x and y arrays each.
 """
 
 
