@@ -91,6 +91,14 @@ b = A.T * y
 
 If A has full rank, the matrix A.T * A is guaranteed to be non-singular, because it is
 symmetric and positive definite.
+
+Complexity
+==========
+
+Time
+----
+
+llss(): Theta(n^3).
 """
 
 # pylint: disable=C0200
@@ -115,7 +123,7 @@ def llss(data, deg=2):
         for j in range(deg + 1):
             a[i][j] = x ** j
     ata = mm(transpose(a), a)
-    lu_decomp(ata)
     assert is_pos_def(ata)
+    lu_decomp(ata)
     y = mm(transpose(a), transpose([[y for _, y in data]]))
     return lup_solver(ata, [i[0] for i in y], decomp=False, lup=False)
