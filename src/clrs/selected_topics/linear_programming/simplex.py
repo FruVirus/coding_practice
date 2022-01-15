@@ -16,8 +16,8 @@ actually a global optimum.
 
 We first write the given linear program in slack form, which is a set of linear
 equalities. These linear equalities express some of the variables, called "basic
-variables", in terms of other variables, called "non-basic variables". We move from one
-vertex to another by making a basic variable become non-basic and making a non-basic
+variables", in terms of other variables, called "nonbasic variables". We move from one
+vertex to another by making a basic variable become nonbasic and making a nonbasic
 variable become basic. We call this operation a "pivot" and, viewed algebraically, it is
 nothing more than rewriting the linear program in an equivalent slack form.
 
@@ -31,6 +31,91 @@ To efficiently solve a linear program with the simplex algorithm, we prefer to e
 it in a form in which some of the constraints are equality constraints. More precisely,
 we shall convert it into a form in which the non-negativity constraints are the only
 inequality constraints, and the remaining constraints are equalities.
+
+29.3 The simplex algorithm
+==========================
+
+The simplex algorithm is the classical method for solving linear programs. In contrast
+to most of the other algorithms in this book, its running time is not polynomial in the
+worst case.
+
+The simplex algorithm can be viewed as Gaussian elimination for inequalities.
+
+Associated with each iteration will be a "basic solution" that we can easily obtain from
+the slack form of the linear program: set each nonbasic variable to 0 and compute the
+values of the basic variables from the equality constraints. An iteration converts one
+slack form into an equivalent slack form. The objective value of the associated basic
+feasible solution will be no less than that at the previous iteration, and usually
+greater. To achieve this increase in the objective value, we choose a nonbasic variable
+such that if we were to increase that variable's value from 0, then the objective value
+would increase, too. The amount by which we can increase the variable is limited by the
+other constraints. In particular, we raise it until some basic variable becomes 0. We
+then rewrite the slack form, exchanging the roles of that basic variable and the chosen
+nonbasic variable. Although we have used a particular setting of the variables to guide
+the algorithm, the algorithm does not explicitly maintain this solution. It simply
+rewrites the linear program until an optimal solution becomes "obvious".
+
+In order to use the simplex algorithm, we must convert the linear program into slack
+form. In addition to being an algebraic manipulation, slack is a useful algorithmic
+concept. Recalling from Section 29.1 that each variable has a corresponding
+non-negativity constraint, we say that an equality constraint is tight for a particular
+setting of its nonbasic variables if they cause the constraint's basic variable to
+become 0. Similarly, a setting of the nonbasic variables that would make a basic
+variable become negative violates that constraint. Thus, the slack variables explicitly
+maintain how far each constraint is from being tight, and so they help to determine how
+much we can increase values of nonbasic variables without violating any constraints.
+
+We focus on the basic solution: set all the (nonbasic) variables on the right-hand side
+to 0 and then compute the values of the (basic) variables on the left-hand side. An
+iteration of the simplex algorithm rewrites the set of equations and the objective
+function so as to put a different set of variables on the right-hand side. Thus, a
+different basic solution is associated with the rewritten problem. We emphasize that the
+rewrite does not in any way change the underlying linear-programming problem; the
+problem at one iteration has the identical set of feasible solutions as the problem at
+the previous iteration. The problem does, however, have a different basic solution than
+that of the previous iteration.
+
+If a basic solution is also feasible, we call it a basic feasible solution. As we run
+the simplex algorithm, the basic solution is almost always a basic feasible solution.
+However, for the first few iterations of the simplex algorithm, the basic solution might
+not be feasible.
+
+Our goal, in each iteration, is to reformulate the linear program so that the basic
+solution has a greater objective value. We select a nonbasic variable x_e whose
+coefficient in the objective function is positive, and we increase the value of x_e as
+much as possible without violating any of the constraints. The variable x_e becomes
+basic, and some other variable x_l becomes nonbasic. The values of other basic variables
+and of the objective function may also change.
+
+We pick the equation with the tightest constraint for a given nonbasic variable and
+solve for that nonbasic variable in terms of the basic variable and the other nonbasic
+variables in that equation. Then, we rewrite the other constraint equations and the
+objective function in terms of the chosen nonbasic variable. When picking the nonbasic
+variable, we must pick one that does not decrease the objective function.
+
+We call this operation a pivot. A pivot chooses a nonbasic variable x_e, called the
+entering variable, and a basic variable x_l, called the leaving variable, and exchanges
+their roles.
+
+The linear program before and after the pivot is equivalent. We perform two operations
+in the simplex algorithm: rewrite equations so that variables move between the left-hand
+side and the right-hand side, and substitute one equation into another. The first
+operation trivially creates an equivalent problem, and the second, by elementary linear
+algebra, also creates an equivalent problem.
+
+We continue pivoting until all coefficients in the objective function are negative. This
+situation occurs only when we have rewritten the linear program so that the basic
+solution is an optimal solution. The values of the slack variables in the final solution
+measure how much slack remains in the original inequalities. Even though the
+coefficients in the original slack form are integral, the coefficients in the other
+linear programs are not necessarily integral, and the intermediate solutions are not
+necessarily integral. Furthermore, the final solution to a linear progrma need not be
+integral.
+
+Pivoting
+--------
+
+XXX
 
 Fundamental Theorem of Linear Programming
 -----------------------------------------
@@ -64,7 +149,7 @@ The input to initialize_simple() is a linear program L in standard form.
 pivot()
 -------
 
-A pivot operation chooses a non-basic variable x_e, called the entering variable, and a
+A pivot operation chooses a nonbasic variable x_e, called the entering variable, and a
 basic variable x_l, called the leaving variable, and exchanges their roles in the linear
 program.
 
@@ -79,7 +164,7 @@ simplex()
 
 simplex() takes as input a linear program in standard form and return an n-vector,
 x_bar, that is an optimal solution to the linear program. Each iteration of the
-while-loop in simplex() exchanges the role of a basic and non-basic variable by calling
+while-loop in simplex() exchanges the role of a basic and nonbasic variable by calling
 pivot(). The slack form is equivalent to the one from the previous iteration which, by
 the loop invariant, is equivalent to the initial slack form.
 
@@ -125,6 +210,14 @@ optimality.
 
 The negatives of the coefficients of the primal objective function are the values of the
 dual variables.
+
+Complexity
+==========
+
+Time
+----
+
+simplex(): Exponential in the worst case, polynomial in practice.
 """
 
 
