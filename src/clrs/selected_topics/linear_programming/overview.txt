@@ -1,5 +1,5 @@
-Introduction
-============
+Overview
+========
 
 Many problems take the form of maximizing or minimizing an objective, given limited
 resources and competing constraints. If we can specify the objective as a linear
