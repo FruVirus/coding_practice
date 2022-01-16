@@ -232,7 +232,7 @@ of L' is negative, then L does not have a feasible solution.
 
 The input to initialize_simplex() is a linear program L in standard form.
 
-Fundamental Theorem of Linear Programming
+Fundamental theorem of linear programming
 -----------------------------------------
 
 Any linear program, L, given in standard form, either:
