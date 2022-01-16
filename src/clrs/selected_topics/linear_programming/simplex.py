@@ -232,6 +232,15 @@ of L' is negative, then L does not have a feasible solution.
 
 The input to initialize_simplex() is a linear program L in standard form.
 
+The procedure initialize_aux() forms the auxiliary linear program by adding -x_0 to the
+left-hand side of each constraint and setting the objective function to -x_0
+(i.e., c[0] = -1).
+
+The procedure return_aux() removes x_0 from the constrains and restores the original
+objective function of L from L', but replaces each basic variable in this objective
+function by the right-hand side of its associated constraint using the final slack form
+of L'.
+
 Fundamental theorem of linear programming
 -----------------------------------------
 
