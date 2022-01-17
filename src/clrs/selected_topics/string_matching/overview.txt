@@ -1,0 +1,32 @@
+32 String Matching
+==================
+
+We formalize the string-matching problem as follows. We assume that the text is an array
+T[1...n] of length n and that the pattern is an array P[1...m] of length m <= n. We
+further assume that the elements of P and T are characters drawn from a finite alphabet
+sigma. For example, we may have sigma = {0, 1} or sigma = {a, b, ..., z}. The character
+arrays P and T are often called strings of characters.
+
+We say that a pattern P occurs with shift s in text T (or, equivalently, that pattern P
+occurs beginning at position s + 1 in text T) if 0 <= s <= n - m and
+T[s + 1...s + m] = P[1...m] (that is, if T[s + j] = P[j] for 1 <= j <= m). If P occurs
+with shift s in T, then we call s a valid shift; otherwise, we call s an invalid shift.
+The string-matching problem is the problem of finding all valid shifts with which a
+given pattern P occurs in a given text T.
+
+Except for the naive brute-force algorithm, each string-matching algorithm performs some
+preprocessing based on the pattern and then finds all valid shifts; we call this latter
+phase "matching." The total running time of each algorithm is the sum of the
+preprocessing and matching times.
+
+Notation and terminology
+------------------------
+
+We allow two equal-length strings to be compared for equality as a primitive operation.
+If the strings are compared from left to right and the comparison stops when a mismatch
+is discovered, we assume that the time taken by such a test is a linear function of the
+number of matching characters discovered. To be precise, the text "x == y" is assumed to
+take time Theta(t + 1), where t is the length of the longest string z such that z is a
+prefix of x and z is a prefix of y. We write Theta(t + 1) rather than Theta(t) to handle
+the case in which t = 0; the first characters compared do not match, but it takes a
+positive amount of time to perform this comparison.

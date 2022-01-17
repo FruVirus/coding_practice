@@ -2,24 +2,24 @@
 Overview
 ========
 
-Rabin-Karp is a string-matching algorithm that performs well in practice and also
-generalizes to other algorithms for related problems, such as two-dimensional pattern
-matching.
-
-rabin_karp() assumes all characters are interpreted as radix-d digits.
-
-If the expected number of valid shifts is small (i.e., we expect few valid matches) and
-we choose the prime q  to be larger than the length of the pattern, then we can expect
-the Rabin-Karp algorithm to use only O(n + m) = O(n) matching time since m <= n.
-
 For 2D, the idea is to find the hash of each column in t and p and compare the hash
 values. For any column, if hash values are equal, then check for the corresponding row
 values.
 
+Intuition
+---------
+
+We extend Rabin Karp to 2D by calculating the hashes for each column just as in the 1D
+case, and then treating the hashes in each as the characters and hashing again.
+
 Complexity
 ==========
 
-Theta(m) preprocessing time. Theta((n - m + 1) * m) matching time.
+Time
+----
+
+rabin_karp(): Theta(m * m) preprocessing, Theta((n - m + 1) * m^2)/Theta(m^2 * n)
+worst/average case matching.
 """
 
 # Repository Library
