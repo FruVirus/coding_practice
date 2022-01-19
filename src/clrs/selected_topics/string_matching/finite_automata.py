@@ -229,7 +229,8 @@ In compute_transition(), setting lps = tf[lps][ord(p[i])] updates the lps for th
 row to be filled in. The lps the previous row is the state that the automaton falls back
 to when a mismatch occurs or we have a complete match. In other words,
 delta(q, a) = delta(pi[q], a) if q = m or P{q + 1] != a, where pi[q] corresponds to the
-parent of q.
+longest prefix suffix of q. See the KMP algorithm for a more detailed explanation of how
+lps is calculated here.
 
 Complexity
 ==========

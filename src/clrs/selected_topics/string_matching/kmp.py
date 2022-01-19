@@ -1,6 +1,6 @@
 """
-Overview
-========
+32.4 The Knuth-Morris-Pratt algorithm
+=====================================
 
 The Knuth-Morris-Pratt algorithm avoids computing the transition function altogether,
 and its matching time is O(n) using just an auxiliary function pi, which we precompute
@@ -34,12 +34,72 @@ In essence, kmp() iterates through the states in the pi table in decreasing orde
 stopping at some state x and then possibly moving to state x + 1 if strings continue to
 match.
 
+Intuition
+---------
+
+Consider the following example:
+
+string:     a   b   c   d   a   b   c   a   b   c   d   f
+i:          1   2   3   4   5   6   7   8   9   10  11  12
+
+pattern:    a   b   c   d   f
+j:          1   2   3   4   5
+
+We start with i = j = 1.
+
+At i = j = 1, we have a match --> j moves to 2 and i moves to 2.
+At i = j = 2, we have a match --> j moves to 3 and i moves to 3.
+At i = j = 3, we have a match --> j moves to 4 and i moves to 4.
+At i = j = 4, we have a match --> j moves to 5 and i moves to 5.
+At i = j = 5, we have a mismatch --> j moves back to 1 and i moves back to 2.
+
+And repeat the process of finding a match.
+
+This naive approach is inefficient because we move i all the way back to index 2 and
+start again. This effectively throws away information regarding the characters we have
+seen so far. We want to avoid this backtracking of the index i through the string.
+
+Worst case:
+
+string:     a   a   a   a   a   a   a   b
+i:          1   2   3   4   5   6   7   8
+
+pattern:    a   a   a   b
+j:          1   2   3   4
+
+This pattern matching will cause i to increment by one position each time the pattern
+matching is repeated! This results in O((n - m + 1) * m) complexity. However, once we
+get to i = 4 and find the mismatch, we already know that i = [2, 4] is a match for the
+pattern so far. Thus, we should only have to check if i = 5 is b. In other words, we
+should have a way to keep information about the past so that the index i only moves
+forward during the pattern matching.
+
+The KMP algorithm works as follows:
+
+A given pattern has prefixes and suffixes. For example, consider:
+
+pattern:    a   b   c   d   a   b   c
+i:          1   2   3   4   5   6   7
+
+prefix:     a, ab, abc, abcd, ...
+suffix:     c, bc, abc, dabc, ...
+
+Note that abc is both a prefix and suffix of the pattern.
+
+The main idea of KMP is: inside the pattern, are there any prefixes that are also
+suffixes of the pattern. In other words, does the beginning part of a pattern appear
+anywhere else in the pattern?
+
+KMP algorithm generates a pi table or longest prefix suffix table.
+
 Complexity
 ==========
 
-Preprocessing time: O(m)
+Time
+----
 
-Matching time: O(n)
+compute_pi_table(): O(m) preprocessing.
+kmp(): O(n) matching.
 """
 
 
