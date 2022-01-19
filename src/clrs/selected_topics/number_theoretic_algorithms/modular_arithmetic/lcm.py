@@ -18,7 +18,7 @@ from src.clrs.selected_topics.number_theoretic_algorithms.modular_arithmetic.gcd
 
 
 def lcm(a, b):
-    return abs(a * b) // gcd(a, b)[0]
+    return abs(a * b) // gcd(a, b)[0] if a != 0 and b != 0 else 0
 
 
 def lcm_multi(*args):
