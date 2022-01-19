@@ -70,13 +70,13 @@ def gcd(a, b):
 
 def gcd_binary(a, b):
     if a % 2 == b % 2 == 0:
-        d, x, y = gcd(a / 2, b / 2)
+        d, x, y = gcd(a >> 1, b >> 1)
         return 2 * d, x, y
     if a % 2 == 0 or b % 2 == 0:
         if b % 2 != 0:
             a, b = b, a
-        return gcd(a, b / 2)
-    return gcd((a - b) / 2, b)
+        return gcd(a, b >> 1)
+    return gcd((a - b) >> 1, b)
 
 
 def gcd_multi(*args):
