@@ -240,6 +240,11 @@ Time
 
 compute_transition(): O(m * sigma) preprocessing.
 fa(): O(n) matching.
+
+Space
+-----
+
+compute_transition(): O(m * sigma) for tf table.
 """
 
 
