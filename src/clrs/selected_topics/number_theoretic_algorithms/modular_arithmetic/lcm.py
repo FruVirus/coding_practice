@@ -13,6 +13,9 @@ results (i.e., the overflow in the a * b computation).
 Complexity
 ==========
 
+Time
+----
+
 lcm(): O(lg b) recursive calls.
 """
 
