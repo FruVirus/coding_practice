@@ -90,7 +90,19 @@ The main idea of KMP is: inside the pattern, are there any prefixes that are als
 suffixes of the pattern. In other words, does the beginning part of a pattern appear
 anywhere else in the pattern?
 
-KMP algorithm generates a pi table or longest prefix suffix table.
+KMP algorithm generates a pi table (longest prefix suffix table) as follows:
+
+i:  1   2   3   4   5   6   7   8   9   10
+P:  a   b   c   d   a   b   e   a   b   f
+    0   0   0   0   1   2   0   1   2   0  --> matching indices of pi table
+
+i:  1   2   3   4   5   6   7   8   9   10  11
+P:  a   b   c   d   e   a   b   f   a   b   c
+    0   0   0   0   0   1   2   0   1   2   3 --> matching indices of pi table
+
+i:  1   2   3   4   5   6   7   8   9   10
+P:  a   a   b   c   a   d   a   a   b   e
+    0   1   0   0   1   0   1   2   3   0 --> matching indices of pi table
 
 Complexity
 ==========
@@ -107,7 +119,7 @@ def compute_pi_table(p, m):
     pi_table, k = [0] * m, 0
     for i in range(1, m):
         while k > 0 and p[k] != p[i]:
-            k = pi_table[k]
+            k = pi_table[k - 1]
         if p[k] == p[i]:
             k += 1
         pi_table[i] = k

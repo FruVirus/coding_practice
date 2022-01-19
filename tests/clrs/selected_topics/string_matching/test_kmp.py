@@ -15,3 +15,6 @@ def test_kmp():
     t = "2359023141526739921"
     p = "23"
     assert kmp(t, p) == [0, 5]
+    t = "ababcabcaabcadaabeabababd"
+    p = "aabcadaabe"
+    assert kmp(t, p) == [8]
