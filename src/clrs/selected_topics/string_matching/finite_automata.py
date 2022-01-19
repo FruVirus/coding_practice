@@ -142,6 +142,57 @@ phi(T_11) = delta(2, a) = 3 --> 3 matching characters so far
 
 etc.
 
+In compute_transition(), we are constructing the transition function table for the
+entire pattern for all characters in the alphabet, sigma. The rows of tf correspond to
+the possible states of the transition function (m + 1) and the columns of tf correspond
+to the characters in the alphabet.
+
+Given the pattern P = ababaca, the transition function matrix looks like:
+            input
+state   a       b       c       P   lps
+0       "1"     0       0       a   0
+1       1       "2"     0       b   0
+2       "3"     0       0       a   1
+3       1       "4"     0       b   2
+4       "5"     0       0       a   3
+5       1       4       "6"     c   0
+6       "7"     0       0       a   1
+7       1       2       0
+
+The first column of the transition function corresponds to sigma(P_m "a"), where
+m = [0, 7]. sigma(P_0 "a") = 1 by definition. sigma(P_1 "a") = 1 because the length of
+the longest prefix of P that is also a suffix of (P_1 "a") = "aa" is 1.
+sigma(P_2 "a") = 3 because the length of the longest prefix of P that is also a suffix
+of (P_2 "a") = "aba" is 3, and so on. Finally, sigma(P_7 "a") = 1 because the length of
+the longest prefix of P that is also a suffix of (P_7 "a") = "ababacaa" is 1 since P
+starts with "ab...".
+
+The second column of the transition function corresponds to sigma(P_m "b"), where
+m = [0, 7]. sigma(P_0 "b") = 0 since the length of the longest prefix of P that is also
+a suffix of (P_0 "b") = "b" is 0 (since P does not start with "b"). sigma(P_1 "b") = 2
+since the length of the longest prefix of P that is also a suffix of (P_1 "b") = "ab" is
+2, and so on. Finally, the sigma(P_7 "b") = 2 because the length of the longest prefix
+of P that is also a suffix of (P_7 "b") = "ababacab" is 2 since P starts with "ab...".
+
+In compute_transition(), setting tf[i][ord(p[i])] = i + 1 moves the transition function
+along the "spine" of the automaton (i.e., it corresponds to successful matches between
+pattern and input characters)---this is denoted by the numbers in quotes in the
+transition function matrix above.
+
+In compute_transition(), setting lps = tf[lps][ord(p[i])] updates the lps for the next
+row to be filled in. The lps for row 2, which corresponds to the second "a" in P, falls
+back to row 1 since row 1 corresponds to having matched the first "a" in P and is the
+longest prefix suffix if we encounter a mismatch at the second state. The lps for row 4,
+which corresponds to the third "a" in P, falls back to row 3 since row 3 corresponds to
+having matched the longest prefix suffix of "ab" if we encounter a mismatch at the
+fourth state. In other words, when a mismatch occurs, then the longest prefix suffix
+falls back to the last state which contained a pattern match of some length. The lps for
+row 5, which corresponds to the "c" in P, falls back to row 0 since "c" never occurs in
+P before its first occurrence; thus, the automaton falls back to the initial state of
+having a match of length 0. Then, finally, the lps for row 6, which corresponds to the
+last "a" in P, falls back to row 1 since row 1 corresponds to having matched the first
+"a" in P after a mismatch at "c".
+
 Complexity
 ==========
 
