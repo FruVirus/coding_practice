@@ -180,18 +180,10 @@ pattern and input characters)---this is denoted by the numbers in quotes in the
 transition function matrix above.
 
 In compute_transition(), setting lps = tf[lps][ord(p[i])] updates the lps for the next
-row to be filled in. The lps for row 2, which corresponds to the second "a" in P, falls
-back to row 1 since row 1 corresponds to having matched the first "a" in P and is the
-longest prefix suffix if we encounter a mismatch at the second state. The lps for row 4,
-which corresponds to the third "a" in P, falls back to row 3 since row 3 corresponds to
-having matched the longest prefix suffix of "ab" if we encounter a mismatch at the
-fourth state. In other words, when a mismatch occurs, then the longest prefix suffix
-falls back to the last state which contained a pattern match of some length. The lps for
-row 5, which corresponds to the "c" in P, falls back to row 0 since "c" never occurs in
-P before its first occurrence; thus, the automaton falls back to the initial state of
-having a match of length 0. Then, finally, the lps for row 6, which corresponds to the
-last "a" in P, falls back to row 1 since row 1 corresponds to having matched the first
-"a" in P after a mismatch at "c".
+row to be filled in. The lps the previous row is the state that the automaton falls back
+to when a mismatch occurs. For example, if a mismatch occurs after matching "ab", then
+the automaton falls back to the state given by row 0. If a mismatch occurs after
+matching "ababa", then the automaton falls back to the state given by row 3.
 
 Complexity
 ==========
