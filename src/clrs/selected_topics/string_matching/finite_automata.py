@@ -84,8 +84,16 @@ function quickly identifies the longest such smaller prefix of P.
 Intuition
 ---------
 
-At each step, the automaton is merely keeping track of the longest prefix of the pattern
-that is a suffix of what has been read so far.
+At each step, the finite automaton is merely keeping track of the longest prefix of the
+pattern that is a suffix of what has been read so far.
+
+If a pattern has length m, then the finite automaton has m + 1 states (the 0 state is
+the default initial state). As we read each character in the text, the finite automaton
+will transition between states. If we match all m characters in the pattern at a given
+position in the text, then the finite automaton will transition to its final (accepting)
+state m. State m is the ONLY accepting state for a string-matching finite automaton. If
+we have a mismatch between the pattern and the text, then the finite automaton will
+transition to a previous state.
 
 The automaton is in state sigma(T_i) after scanning character T[i]. Since sigma(T_i) = m
 iff P is a suffix of T_i, the machine is in the accepting state m iff it has just
@@ -98,8 +106,73 @@ occurrence of the (entire) pattern P in T_i.
 Example:
 
 P = ababaca, m = 7
-T = abababacaba, n = 11
+T = abccbababacabbb, n = 15
 Sigma = {a, b, c} = 3
+
+First, we ignore the text and make a finite automaton for the pattern. The alphabet
+consists of the characters a, b, and c only. The length of P + 1 is the number of states
+of the finite automaton---7 + 1 = 8. Given the pattern P, the transition function
+matrix, delta, is:
+
+state   a       b       c       P   lps
+0       "1"     0       0       a   0
+1       1       "2"     0       b   0
+2       "3"     0       0       a   1
+3       1       "4"     0       b   2
+4       "5"     0       0       a   3
+5       1       4       "6"     c   0
+6       "7"     0       0       a   1
+7       1       2       0
+
+The first "a" in T matches the first "a" in P --> the finite automaton transitions to
+state 1.
+
+The first "b" in T matches the first "b" in P --> the finite automaton transitions to
+state 2.
+
+The first "c" in T does NOT match the second "a" in P --> the finite automaton
+transitions to state 0 since delta[3]["c"] = 0.
+
+The second "c" in T does NOT match the first "a" in P --> the finite automaton
+transitions tp state 0 since delta[0]["c"] = 0.
+
+The second "b" in T does NOT match the first "a" in P --> the finite automaton
+transitions to state 0 since delta[0]["b"] = 0.
+
+The second "a" in T matches the first "a" in P --> the finite automaton transitions to
+state 1.
+
+The next "b" in T matches the next "b" in P --> the finite automaton transitions to
+state 2.
+
+The next "a" in T matches the next "a" in P --> the finite automaton transitions to
+state 3.
+
+The next "b" in T matches the next "b" in P --> the finite automaton transitions to
+state 4.
+
+The next "a" in T matches the next "a" in P --> the finite automaton transitions to
+state 5.
+
+The next "c" in T matches the next "c" in P --> the finite automaton transitions to
+state 6.
+
+The next "a" in T matches the next "a" in P --> the finite automaton transitions to
+state 7. Since 7 == len(P), we have an exact pattern match.
+
+The next "b" in T does NOT match the first "a" in P --> the finite automaton transitions
+to state 2 since delta[7]["b"] = 2. In this state, we have still matched with "ab" so
+far.
+
+The next "b" in T does NOT match with the second "a" in P --> the finite automaton
+transitions to state 0 since delta[2]["b"] = 0. Thus, we are back at the initial state
+where no prefixes match. This is because if we have "abb" in T, then no prefix of P
+matches this substring and thus, we must start the pattern matching from scratch again.
+
+The last "b" in T does NOT match the first "a" in P --> the finite automaton transitions
+to state 0 since delta[0]["b"] = 0.
+
+The columns of the transition function matrix is filled in as follows:
 
 delta(q, a) = sigma(P_q a)
 
@@ -121,7 +194,7 @@ of P that is also a suffix of "ababa" is 5.
 etc.
 
 phi is the final state function. Since phi(T_i) = sigma(T_i), when we have phi(T_i) =
-sigma(T_i) = m, then we have an entire pattern match. Phi is calculated recursively as
+sigma(T_i) = m, then we have an entire pattern match. phi is calculated recursively as
 follows:
 
 phi(eps) = q_0
@@ -142,48 +215,21 @@ phi(T_11) = delta(2, a) = 3 --> 3 matching characters so far
 
 etc.
 
-In compute_transition(), we are constructing the transition function table for the
+In compute_transition(), we are constructing the transition function matrix for the
 entire pattern for all characters in the alphabet, sigma. The rows of tf correspond to
 the possible states of the transition function (m + 1) and the columns of tf correspond
-to the characters in the alphabet.
-
-Given the pattern P = ababaca, the transition function matrix looks like:
-            input
-state   a       b       c       P   lps
-0       "1"     0       0       a   0
-1       1       "2"     0       b   0
-2       "3"     0       0       a   1
-3       1       "4"     0       b   2
-4       "5"     0       0       a   3
-5       1       4       "6"     c   0
-6       "7"     0       0       a   1
-7       1       2       0
-
-The first column of the transition function corresponds to sigma(P_m "a"), where
-m = [0, 7]. sigma(P_0 "a") = 1 by definition. sigma(P_1 "a") = 1 because the length of
-the longest prefix of P that is also a suffix of (P_1 "a") = "aa" is 1.
-sigma(P_2 "a") = 3 because the length of the longest prefix of P that is also a suffix
-of (P_2 "a") = "aba" is 3, and so on. Finally, sigma(P_7 "a") = 1 because the length of
-the longest prefix of P that is also a suffix of (P_7 "a") = "ababacaa" is 1 since P
-starts with "ab...".
-
-The second column of the transition function corresponds to sigma(P_m "b"), where
-m = [0, 7]. sigma(P_0 "b") = 0 since the length of the longest prefix of P that is also
-a suffix of (P_0 "b") = "b" is 0 (since P does not start with "b"). sigma(P_1 "b") = 2
-since the length of the longest prefix of P that is also a suffix of (P_1 "b") = "ab" is
-2, and so on. Finally, the sigma(P_7 "b") = 2 because the length of the longest prefix
-of P that is also a suffix of (P_7 "b") = "ababacab" is 2 since P starts with "ab...".
+to the characters in the alphabet (sigma).
 
 In compute_transition(), setting tf[i][ord(p[i])] = i + 1 moves the transition function
 along the "spine" of the automaton (i.e., it corresponds to successful matches between
-pattern and input characters)---this is denoted by the numbers in quotes in the
+pattern and input characters)---this is denoted by the numbers in quotes in the example
 transition function matrix above.
 
 In compute_transition(), setting lps = tf[lps][ord(p[i])] updates the lps for the next
 row to be filled in. The lps the previous row is the state that the automaton falls back
-to when a mismatch occurs. For example, if a mismatch occurs after matching "ab", then
-the automaton falls back to the state given by row 0. If a mismatch occurs after
-matching "ababa", then the automaton falls back to the state given by row 3.
+to when a mismatch occurs or we have a complete match. In other words,
+delta(q, a) = delta(pi[q], a) if q = m or P{q + 1] != a, where pi[q] corresponds to the
+parent of q.
 
 Complexity
 ==========
