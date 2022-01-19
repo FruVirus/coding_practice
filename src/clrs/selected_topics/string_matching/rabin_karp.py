@@ -103,8 +103,7 @@ def col_rolling_hash(t_list, t_, col, n_pcols, radix, q):
 
 
 def init(t, p, radix, q, is_2d=True):
-    if not is_prime(q):
-        q = next_prime(q)
+    q = q if is_prime(q) else next_prime(q)
     assert radix * q < 2 ** radix - 1
     t, p = (t, p) if is_2d else ([t], [p])
     trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
