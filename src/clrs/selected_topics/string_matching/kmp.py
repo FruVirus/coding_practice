@@ -9,33 +9,24 @@ compute the transition function efficiently (in an amortized sense) on the fly a
 needed. The value pi[q] contains the information we need to compute the transition of
 (q, a) but does not depend on a.
 
-The prefix function, pi, for a pattern encapsulates knowledge about how the pattern
-matches against shifts of itself. The information that q characters have matched
-successfully determines the corresponding text characters. Knowing these q text
-characters allows us to determine immediately that certain shifts are invalid.
+The prefix function for a pattern
+---------------------------------
 
-KMP avoids backtracking through the text during the matching process.
+The prefix function pi for a pattern encapsulates knowledge about how the pattern
+matches against shifts of itself. We can take advantage of this information to avoid
+testing useless shifts in the naive pattern-matching algorithm and to avoid precomputing
+the full transition function for a string-matching automaton.
 
-kmp_prefix() matches the pattern p against itself. At each position in the pattern, we
-check to see if the prefix so far has been seen already in the pattern. If so, then we
-increment the counter at that position in the pi table.
+The information that q characters have matched successfully determines the corresponding
+text characters. Knowing these q text characters allows us to determine immediately that
+certain shifts are invalid.
 
-kmp() matches the text t against the pattern as follows:
-
-1. If t[i] matches with p[j], then both i and j are incremented to their next positions.
-2. If j == m, then we have a match and we can revert back the previous position in the
-pi table.
-3. If j != m and j != 0, then this means we can revert back to the previous position in
-the pi table to check the matching.
-4. If j != m and j == 0, then we have reverted back to the beginning of the pi table,
-found no matches, and thus, we increment i and start the search for the pattern anew.
-
-In essence, kmp() iterates through the states in the pi table in decreasing order,
-stopping at some state x and then possibly moving to state x + 1 if strings continue to
-match.
+pi[q] is the length of the longest prefix of P that is a proper suffix of P_q.
 
 Intuition
 ---------
+
+KMP avoids backtracking through the text during the matching process.
 
 Consider the following example:
 
@@ -179,18 +170,14 @@ def compute_pi_table(p, m):
 
 
 def kmp(t, p):
-    n, m, indices, i, j = len(t), len(p), [], 0, 0
+    n, m, q, indices = len(t), len(p), 0, []
     pi_table = compute_pi_table(p, m)
-    while i < n:
-        if p[j] == t[i]:
-            i += 1
-            j += 1
-        if j == m:
-            indices.append(i - j)
-            j = pi_table[j - 1]
-        elif i < n and p[j] != t[i]:
-            if j != 0:
-                j = pi_table[j - 1]
-            else:
-                i += 1
+    for i in range(n):
+        while q > 0 and p[q] != t[i]:
+            q = pi_table[q - 1]
+        if p[q] == t[i]:
+            q += 1
+        if q == m:
+            indices.append(i - m + 1)
+            q = pi_table[q - 1]
     return indices
