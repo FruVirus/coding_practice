@@ -5,6 +5,11 @@ Overview
 lcm_multi() finds the least common multiple for a range of numbers using Euclid's
 algorithm.
 
+Because gcd(a, b) is a divisor of both a and b, it is more efficient to compute the LCM
+by dividing before multiplying since this reduces the size of one input for both the
+division and multiplication, and reduces the required storage needed for intermediate
+results (i.e., the overflow in the a * b computation).
+
 Complexity
 ==========
 
@@ -18,7 +23,7 @@ from src.clrs.selected_topics.number_theoretic_algorithms.modular_arithmetic.gcd
 
 
 def lcm(a, b):
-    return abs(a * b) // gcd(a, b)[0] if a != 0 and b != 0 else 0
+    return 0 if a == b == 0 else (abs(a) / gcd(a, b)[0]) * b
 
 
 def lcm_multi(*args):
