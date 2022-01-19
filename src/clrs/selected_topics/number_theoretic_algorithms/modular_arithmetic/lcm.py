@@ -8,7 +8,7 @@ algorithm.
 Complexity
 ==========
 
-O(lg(b)) recursive calls.
+lcm(): O(lg b) recursive calls.
 """
 
 # Repository Library

@@ -1,29 +1,43 @@
 """
-Overview
-========
+31.2 Greatest common divisor
+============================
 
 Euclid's algorithm efficiently computes the greatest common divisor of two integers. The
-Fibonacci numbers yield a worst-case input for Euclid's algorithm. We can restrict
-ourselves to the set of non-negative integers since gcd(a, b) = gcd(|a|, |b|).
+Fibonacci numbers yield a worst-case input for Euclid's algorithm.
+
+We can restrict ourselves to the set of non-negative integers since gcd(a, b) =
+gcd(|a|, |b|).
 
 Euclid's algorithm relies on the following theorem:
 
-    For any non-negative integer a and any positive integer b,
+For any non-negative integer a (a >= 0) and any positive integer b (b > 0),
 
-        gcd(a, b) = gcd(b, a mod b)
+    gcd(a, b) = gcd(b, a mod b)
+
+Euclid's algorithm
+------------------
 
 The algorithm cannot recurse indefinitely, since the second argument strictly decreases
 in each recursive call and is always non-negative.
 
+The running time of Euclid's algorithm
+--------------------------------------
+
 We can assume that a > b >= 0. If b > a >=0, then gcd() spends one recursive call
 swapping its arguments and then proceeds. if b = a > 0, then gcd() terminates after one
-recursive call since a % b = 0. The overall running time of gcd() is proportional to the
-number of recursive calls it makes.
+recursive call since a % b = 0.
 
-For the extended version, we also compute the integer coefficients x and y such that:
+The overall running time of gcd() is proportional to the number of recursive calls it
+makes.
+
+The extended form of Euclid's algorithm
+---------------------------------------
+
+We extend the algorithm to compute the integer coefficients x and y such that:
 d = gcd(a, b) = ax + by, where x and y acn be zero or negative. These coefficients are
-useful for compute modular multiplicative inverses. For example, gcd(5, 11) = (1, -2, 1)
-states that -2 (mod 11) (i.e., 9 (mod 11)) is a multiplicative inverse of 5 (mod 11).
+useful for compute modular multiplicative inverses.
+
+For example, gcd(5, 11) = (1, -2, 1) means that 1 = 5 * -2 + 11 * 1.
 
 The number of recursive calls made in the extended version is equal to the number of
 recursive calls in the original version. Thus, the running times of both are the same,
@@ -39,8 +53,11 @@ coefficients for each argument in order.
 Complexity
 ==========
 
-O(lg(b)) recursive calls
-O(lg(a)) for gcd_binary()
+Time
+----
+
+gcd(): O(lg b) recursive calls.
+gcd_binary(): O(lg a) recursive calls.
 """
 
 

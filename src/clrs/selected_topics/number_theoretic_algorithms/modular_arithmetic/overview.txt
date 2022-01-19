@@ -1,0 +1,28 @@
+31 Number-Theoretic Algorithms
+==============================
+
+Size of inputs and cost of arithmetic computations
+--------------------------------------------------
+
+Because we shall be working with large integers, we need to adjust how we think about
+the size of an input and about the cost of elementary arithmetic operations.
+
+In this chapter, a "large input" typically means an input containing "large integers"
+rather than an input containing "many integers" (as for sorting). Thus, we shall measure
+the size of an input in terms of the number of bits required to represent that input,
+not just the number of integers in the input. An algorithm with integer inputs
+a_1, a_2, ..., a_k is a polynomial-time algorithm if it runs in time polynomial in
+lg a_1, lg a_2, ..., lg a_k, that is, polynomial in the lengths of its binary-encoded
+inputs.
+
+In most of this book, we have found it convenient to think of the elementary arithmetic
+operations (multiplications, divisions, or computing remainders) as primitive operations
+that take one unit of time. By counting the number of such arithmetic operations that an
+algorithm performs, we have a basis for making a reasonable estimate of the algorithm's
+actual running time on a computer. Elementary operations can be time-consuming, however,
+when their inputs are large. It thus becomes convenient to measure how many bit
+operations a number-theoretic algorithm requires. In this model, multiplying two
+beta-bit integers by the ordinary method uses Theta(beta^2) bit operations. Similarly,
+we can divide a beta-bit integer by a shorter integer or take the remainder of a
+beta-bit integer when divided by a shorter integer in time Theta(beta^2) by simple
+algorithms.
