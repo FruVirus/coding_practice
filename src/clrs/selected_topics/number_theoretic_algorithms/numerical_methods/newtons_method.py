@@ -14,7 +14,7 @@ is a better approximation of the root than x0.
 
 In general, the equation of the tangent line to the curve y = f(x) at x = x_n is:
 
-    y = f'(x_n)*(x - x_n) + f(x_n)
+    y = f'(x_n) * (x - x_n) + f(x_n)
 
 The x-intercept of this line (the value of x which makes y = 0) is taken as the
 approximation, x_(n + 1), to the root. Setting y = 0 and solving for x = x_(n + 1)
@@ -24,7 +24,8 @@ gives:
 
 We start the process with some arbitrary initial value, x0. The method will usually
 converge, provided this initial guess is close enough to the unknown root and that
-f'(x0) != 0.
+f'(x0) != 0. The for-loop exits when the value of fxn is close enough to 0. f and dfdx
+can be easily specified using lambda notation.
 
 Cubic Root
 ----------
@@ -32,7 +33,7 @@ Cubic Root
 The cubic root of a number, N, can be calculated to a tolerance level, tol (or a
 specified number of digits of precisions, d) using Newton's method:
 
-    x = a^(1 / 3) for a > 0 --> i.e., solve x^3 = a
+    x = a^(1 / 3) for a > 0 --> i.e., solve x^3 = a --> x^3 - a = 0
 
 The algorithm starts with some guess x1 > 0 and computes the sequences of improved
 guesses:
@@ -45,9 +46,11 @@ convergence. In other words, the error roughly squares (and halves) on each iter
 Complexity
 ==========
 
-Multiplication: Theta(n^alpha), alpha >= 1 depending on the method used time complexity
-Division: Theta(n^alpha) time complexity
-Cubic Root: Theta(n^alpha) time complexity
+Time
+----
+
+newton(): For multiplication and division operations, Theta(n^alpha), alpha >= 1
+depending on the method used for multiplication.
 """
 
 
