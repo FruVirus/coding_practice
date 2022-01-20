@@ -57,8 +57,7 @@ from src.clrs.selected_topics.number_theoretic_algorithms.modular_arithmetic.gcd
 def mod_linear_solver(a, b, n):
     assert a > 0 and n > 0
     d, x = gcd(a, n)[:2]
-    sol = None
     if b % d == 0:
         x0 = x * (b / d) % n
-        sol = [(x0 + i * (n / d)) % n for i in range(d)]
-    return sol
+        return [(x0 + i * (n / d)) % n for i in range(d)]
+    return None
