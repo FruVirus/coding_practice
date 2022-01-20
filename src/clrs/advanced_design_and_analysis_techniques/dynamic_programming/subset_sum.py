@@ -54,14 +54,12 @@ Complexity
 Time
 ----
 
-ss_bu(): O(n * c), where n is the number of items and c is the capacity.
-ss_td(): O(n * c), where n is the number of items and c is the capacity.
+ss_bu() and ss_td(): O(n * c), where n is the number of items and c is the capacity.
 
 Space
 -----
 
-ss_bu(): O(c * n) for v table.
-ss_td(): O(c * n) for v table.
+ss_bu() and ss_td(): O(c * n) for v table.
 """
 
 

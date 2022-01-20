@@ -43,8 +43,7 @@ Complexity
 Time
 ----
 
-ks_bu(): O(n * lg n).
-ks_td(): O(n * lg n).
+ks_bu() and ks_td(): O(n * lg n).
 """
 
 

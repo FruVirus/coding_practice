@@ -32,16 +32,13 @@ Complexity
 Time
 ----
 
-ksum_bu(): O(n * c * k), where n is the number of items, c is the capacity, and k is the
-number of slots.
-ksum_td(): O(n * c * k), where n is the number of items, c is the capacity, and k is the
-number of slots.
+ksum_bu() and ksum_td(): O(n * c * k), where n is the number of items, c is the
+capacity, and k is the number of slots.
 
 Space
 -----
 
-ksum_bu(): O(c * n * k) for v table.
-ksum_td(): O(c * n * k) for v table.
+ksum_bu() and ksum_td(): O(c * n * k) for v table.
 """
 
 

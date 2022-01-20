@@ -159,8 +159,7 @@ exactly once.
 Time
 ----
 
-rc_bu: Theta(n^2).
-rc_td: Theta(n^2).
+rc_bu() and rc_td(): Theta(n^2).
 """
 
 

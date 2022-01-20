@@ -83,15 +83,13 @@ up the c table, which has m x n entries. Thus, the total time is O(m x n).
 Time
 ----
 
-lcs_bu(): O(m * n).
-lcs_td(): O(m * n).
+lcs_bu() and lc_td(): O(m * n).
 lcs(): O(m + n).
 
 Space
 -----
 
-lcs_bu(): O(m * n) for c table.
-lcs_td(): O(m * n) for c table.
+lcs_bu() and lcs_td(): O(m * n) for c table.
 """
 
 

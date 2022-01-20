@@ -70,14 +70,12 @@ Complexity
 Time
 ----
 
-ks_bu(): O(n * c), where n is the number of items and c is the capacity.
-ks_td(): O(n * c), where n is the number of items and c is the capacity.
+ks_bu() and ks_td(): O(n * c), where n is the number of items and c is the capacity.
 
 Space
 -----
 
-ks_bu(): O(c * n) for v table.
-ks_td(): O(c * n) for v table.
+ks_bu() and ks_td(): O(c * n) for v table.
 """
 
 

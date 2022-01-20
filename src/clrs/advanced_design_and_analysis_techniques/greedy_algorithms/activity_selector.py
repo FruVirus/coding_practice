@@ -77,8 +77,7 @@ Theta(n) time, going through each activity exactly once.
 Time
 ----
 
-as_bu(): Theta(n).
-as_td(): Theta(n).
+as_bu() and as_td(): Theta(n).
 """
 
 

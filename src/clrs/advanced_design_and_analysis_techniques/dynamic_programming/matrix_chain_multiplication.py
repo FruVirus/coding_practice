@@ -92,14 +92,12 @@ Complexity
 Time
 ----
 
-mc_bu(): O(n^3).
-mc_td(): O(n^3).
+mc_bu() and mc_td(): O(n^3).
 
 Space
 -----
 
-mc_bu(): O(n^2) for m table and O(n^2) for s table.
-mc_td(): O(n^2) for m table and O(n^2) for s table.
+mc_bu() and mc_td(): O(n^2) for m table and O(n^2) for s table.
 """
 
 

@@ -25,10 +25,42 @@ interpreted as (())()(), where the E's are left parens and the N's are right par
 Complexity
 ==========
 
-Exponential time complexity depending on the Catalan number requested (unless using
-dynamic programming technique to store previously calculated values).
-"""
-
+The recursive algorithm for finding the Catalan numbers is given by:
 
 def catalan(n):
     return 1 if n <= 1 else sum(catalan(i) * catalan(n - i - 1) for i in range(n))
+
+This algorithm has exponential time complexity depending on the Catalan number
+requested and is inefficient. Thus, we use dynamic programming to help us store
+previously calculated values.
+
+Time
+----
+
+catalan_bu() and catalan_td(): O(n^2).
+"""
+
+
+def catalan_bu(n, s):
+    s[0] = s[1] = 1
+    for i in range(2, n + 1):
+        for j in range(i):
+            s[i] += s[j] * s[i - j - 1]
+
+
+def catalan_td(n, s):
+    if s[n] > 0:
+        c = s[n]
+    elif n == 0:
+        c = 1
+    else:
+        c = sum(catalan_td(i, s) * catalan_td(n - i - 1, s) for i in range(n))
+    s[n] = c
+    return c
+
+
+def catalan(n, td=False):
+    s = [0] * (n + 1)
+    catalan_ = catalan_td if td else catalan_bu
+    catalan_(n, s)
+    return s, s[n]
