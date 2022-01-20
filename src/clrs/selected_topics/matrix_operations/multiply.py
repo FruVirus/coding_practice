@@ -70,6 +70,8 @@ Time
 ----
 
 mm() and smmr(): Theta(n^3).
+add(): Theta(n^2).
+split(): O(lg n).
 """
 
 

@@ -14,6 +14,9 @@ uniformly and independently distributed over [0, 1), we do not expect many numbe
 fall into each bucket. To produce the output, we simply sort the numbers in each bucket
 and then go through the buckets in order, list the elements in each.
 
+NB: Counting sort cannot be used here since we use the keys as indices in counting sort.
+In bucket sort, the keys are floating point numbers.
+
 Complexity
 ==========
 

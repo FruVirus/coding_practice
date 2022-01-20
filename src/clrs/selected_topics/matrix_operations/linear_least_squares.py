@@ -118,6 +118,7 @@ Complexity
 Time
 ----
 
+is_pos_def(): Theta(n^2).
 llss(): Theta(n^3).
 """
 

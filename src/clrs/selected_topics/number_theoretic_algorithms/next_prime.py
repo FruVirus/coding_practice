@@ -12,8 +12,10 @@ case, we can change the for-loop to:
 Complexity
 ==========
 
-O(n) for is_prime()
-O(n) for next_prime()
+Time
+----
+
+is_prime() and next_prime(): O(n).
 """
 
 
