@@ -65,7 +65,9 @@ import random
 
 # Repository Library
 from src.clrs.data_structures.elementary_data_structures.linked_list import DLL, Node
-from src.clrs.selected_topics.number_theoretic_algorithms.next_prime import next_prime
+from src.clrs.selected_topics.number_theoretic_algorithms.numerical_methods.next_prime import (  # noqa: E501
+    next_prime,
+)
 
 
 class HashChain:

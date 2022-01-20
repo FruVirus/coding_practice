@@ -42,7 +42,9 @@ self.table: O(n).
 import random
 
 # Repository Library
-from src.clrs.selected_topics.number_theoretic_algorithms.next_prime import next_prime
+from src.clrs.selected_topics.number_theoretic_algorithms.numerical_methods.next_prime import (  # noqa: E501
+    next_prime,
+)
 
 # Define globals.
 A_LIST = [0, None, 10, None, None, 0, None, 23, None]

@@ -102,7 +102,9 @@ selected as a collision resolution technique when keys must be deleted.
 
 # Repository Library
 from src.clrs.data_structures.hash_tables.hash_chain import HashChain
-from src.clrs.selected_topics.number_theoretic_algorithms.next_prime import is_prime
+from src.clrs.selected_topics.number_theoretic_algorithms.numerical_methods.next_prime import (  # noqa: E501
+    is_prime,
+)
 
 
 class HashOpen(HashChain):

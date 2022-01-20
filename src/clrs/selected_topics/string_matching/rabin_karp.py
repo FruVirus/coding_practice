@@ -81,7 +81,7 @@ case matching.
 """
 
 # Repository Library
-from src.clrs.selected_topics.number_theoretic_algorithms.next_prime import (
+from src.clrs.selected_topics.number_theoretic_algorithms.numerical_methods.next_prime import (  # noqa: E501
     is_prime,
     next_prime,
 )
