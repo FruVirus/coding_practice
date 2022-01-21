@@ -196,7 +196,7 @@ class Graph:
         if v is s:
             print(s.k)
         elif v.p is None:
-            print("No path")
+            print("No path!")
             exit(0)
         else:
             self.print_path(s.k, v.p.k)

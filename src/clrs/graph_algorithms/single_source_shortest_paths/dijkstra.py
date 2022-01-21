@@ -84,6 +84,7 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 
 class Dijkstra(Graph):
     def dijkstra(self, s):
+        assert self.directed
         self.init_single_source(s)
         q = HeapQueue([(v.d, v.k) for v in self.vertices.values()], False)
         while q.heap_size != 0:

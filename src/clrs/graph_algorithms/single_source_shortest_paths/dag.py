@@ -68,6 +68,7 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFS
 
 class DAG(DFS):
     def dag(self, s, longest=False):
+        assert self.directed
         if longest:
             self.weights = {k: -v for k, v in self.weights.items()}
         u = self.top_sort().head
