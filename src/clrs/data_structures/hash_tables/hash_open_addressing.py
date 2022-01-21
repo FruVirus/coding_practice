@@ -157,8 +157,7 @@ class HashOpen(HashChain):
                 h2 += 1
         else:
             assert is_prime(self.size)
-            h1 = k % self.size
-            h2 = 1 + (k % (self.size - 1))
+            h1, h2 = k % self.size, 1 + (k % (self.size - 1))
         return (h1 + i * h2) % self.size
 
     def hash_linear(self, i, k):
