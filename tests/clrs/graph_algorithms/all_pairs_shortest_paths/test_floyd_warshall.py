@@ -1,3 +1,6 @@
+# Third Party Library
+import pytest
+
 # Repository Library
 from clrs.graph_algorithms.all_pairs_shortest_paths.floyd_warshall import FloydWarshall
 
@@ -41,3 +44,5 @@ def test_floyd_warshall():
         [5, 7, float("inf"), 9, 0, float("inf")],
         [3, 5, 10, 7, 2, 0],
     ]
+    with pytest.raises(SystemExit):
+        graph.print_path(0, 2)
