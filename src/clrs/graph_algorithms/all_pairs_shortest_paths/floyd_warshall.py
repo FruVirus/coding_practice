@@ -71,6 +71,16 @@ intermediate vertex.
 Intuition
 ---------
 
+For any two vertices i and j in G, the shortest path from i to j is either the direct
+path from i to j (i.e., no intermediate vertex at all) or some path i -> k -> j where
+k is an intermediate vertex also in G. Thus, if w(i, j) <= w(i, k) + w(k, j), then the
+direct path from i to j is the shorter one; otherwise, the path that includes k is the
+shorter one. We then iterate over all possible k values (i.e., all vertices) to compute
+the shortest paths for all pairs. For each k, we use the d matrix computed from the
+previous iteration since we do not have to repeat those calculations again. In other
+words, once we compute the shorter path between i and j with an intermediate vertex k,
+that calculation can be used for other vertices k.
+
 Row i of the d matrix is the solution to the single-source shortest-paths from vertex i.
 
 Element (i, j) of the pi matrix gives the predecessor of j on some shortest path from i.
