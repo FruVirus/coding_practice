@@ -111,7 +111,7 @@ algorithm takes O(V^3) time, the overall procedure still takes O(V^3) time.
 Time
 ----
 
-floyd_warshall(): O(V^3).
+floyd_warshall(): Theta(V^3).
 print_path(): Linear in the number of vertices in the path printed since each recursive
 call is for a path one vertex shorter.
 

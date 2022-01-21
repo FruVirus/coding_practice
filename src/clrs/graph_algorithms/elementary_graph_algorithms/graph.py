@@ -105,6 +105,13 @@ find_set() is a two-pass method: as it recurses, it makes one pass up the find p
 find the root, and as the recursion unwinds, it makes a second pass back down the find
 path to update each node to point directly to the root.
 
+25.2 The Floyd-Warshall algorithm
+=================================
+
+Transitive closure of a directed graph
+--------------------------------------
+
+
 Complexity
 ==========
 
@@ -117,6 +124,7 @@ init_single_source(): Theta(V).
 print_path(): Linear in the number of vertices in the path printed since each recursive
 call is for a path one vertex shorter.
 relax(): O(1).
+transitive_closer(): Theta(V^3).
 
 Space
 -----
@@ -209,6 +217,19 @@ class Graph:
 
     def same_component(self, u, v):
         return self.find_set(self.vertices[u]) is self.find_set(self.vertices[v])
+
+    def transitive_closure(self):
+        assert self.directed
+        t = [[0] * self.num_vertices for _ in range(self.num_vertices)]
+        for i in range(self.num_vertices):
+            for j in range(self.num_vertices):
+                if i == j or (i, j) in self.edges:
+                    t[i][j] = 1
+        for k in range(self.num_vertices):
+            for i in range(self.num_vertices):
+                for j in range(self.num_vertices):
+                    t[i][j] = t[i][j] or (t[i][k] and t[k][j])
+        return t
 
     def transpose(self):
         assert self.directed

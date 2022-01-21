@@ -46,3 +46,4 @@ def test_floyd_warshall():
     ]
     with pytest.raises(SystemExit):
         graph.print_path(0, 2)
+    graph.print_path(0, 1)
