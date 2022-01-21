@@ -117,4 +117,4 @@ pair of distinct keys k, l in U, the number of hash functions h in H for which
 h(k) = h(l) is at most |H| / m. In other words, with a hash function randomly chosen
 from H, the chance of a collision between distinct keys k and l is no more than the
 chance 1 / m of a collision if h(k) and h(l) were randomly and independently chosen
-from teh set {0, 1, ..., m - 1}.
+from the set {0, 1, ..., m - 1}.
