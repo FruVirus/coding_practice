@@ -111,6 +111,36 @@ path to update each node to point directly to the root.
 Transitive closure of a directed graph
 --------------------------------------
 
+Given a directed graph G = (V, E) with vertex set V = {1, 2, ..., n}, we might wish to
+determine whether G contains a path from i to j for all vertex pairs i, j in V. We
+define the transitive closure of G as the graph G_star = (V, E_star), where
+
+E_star = {(i, j): there is a path from vertex i to vertex j in G}.
+
+One way to compute the transitive closure of a graph in Theta(n^3) time is to assign a
+weight of 1 to each edge of E and run the Floyd-Warshall algorithm. If there is a path
+from vertex i to vertex j, we get d_ij < n. Otherwise, we get d_ij = float("inf").
+
+There is another, similar way to compute transitive closure of G in Theta(n^3) time that
+can save time and space in practice. This method uses logical operations OR and AND.
+For i, j, k = 1, 2, ..., n, we define t_ij^(k) to be 1 if there exists a path in graph G
+from vertex i to vertex j with all intermediate vertices in the set {1, 2, ..., k}, and
+0 otherwise. We construct the transitive closure G_star = (V, E_star) by putting edge
+(i, j) in E_star iff t_ij^(n) = 1.
+
+On some computers, logical operations on single-bit values execute faster than
+arithmetic operations on inger words of data. Moreover, because the direct
+transitive-closure algorithm uses only boolean values rather than integer values, its
+space requirement is less than the Floyd-Warshall's algorithm by a factor corresponding
+to the size of a word of computer storage.
+
+Intuition
+---------
+
+The transitive closure algorithm is very similar to Floyd-Warshall's algorithm. If we
+consider any two vertices i and j in G, if there is a path from i to j directly (i.e.,
+no intermediate vertices) or there is a path from i to j with an intermediate vertex k,
+then there is a path from i to j. Otherwise, there's no path from i to j at all.
 
 Complexity
 ==========
@@ -131,6 +161,7 @@ Space
 
 Adjacency list: Theta(V + E).
 Adjacency matrix: Theta(V^2).
+Transitive closure matrix: Theta(V^2).
 """
 
 # pylint: disable=R1722
