@@ -138,18 +138,14 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.graph import Graph
 class FloydWarshall(Graph):
     def floyd_warshall(self):
         assert self.directed
+        self.pred = [[None] * self.num_vertices for _ in range(self.num_vertices)]
         d = [[float("inf")] * self.num_vertices for _ in range(self.num_vertices)]
         for i in range(self.num_vertices):
             for j in range(self.num_vertices):
                 if i == j:
                     d[i][j] = 0
         for (u, v), w in self.weights.items():
-            d[u][v] = w
-        self.pred = [[None] * self.num_vertices for _ in range(self.num_vertices)]
-        for i in range(self.num_vertices):
-            for j in range(self.num_vertices):
-                if i != j and d[i][j] < float("inf"):
-                    self.pred[i][j] = i
+            self.pred[u][v], d[u][v] = u, w
         for k in range(self.num_vertices):
             for i in range(self.num_vertices):
                 for j in range(self.num_vertices):
