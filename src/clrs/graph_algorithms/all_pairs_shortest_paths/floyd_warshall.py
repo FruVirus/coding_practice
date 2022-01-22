@@ -139,10 +139,10 @@ class FloydWarshall(Graph):
     def floyd_warshall(self):
         assert self.directed
         d = [[float("inf")] * self.num_vertices for _ in range(self.num_vertices)]
-        for r in range(self.num_vertices):
-            for c in range(self.num_vertices):
-                if r == c:
-                    d[r][c] = 0
+        for i in range(self.num_vertices):
+            for j in range(self.num_vertices):
+                if i == j:
+                    d[i][j] = 0
         for (u, v), w in self.weights.items():
             d[u][v] = w
         self.pred = [[None] * self.num_vertices for _ in range(self.num_vertices)]
