@@ -41,26 +41,26 @@ catalan_bu() and catalan_td(): O(n^2).
 """
 
 
-def catalan_bu(n, s):
-    s[0] = s[1] = 1
+def catalan_bu(n, sol):
+    sol[0] = sol[1] = 1
     for i in range(2, n + 1):
         for j in range(i):
-            s[i] += s[j] * s[i - j - 1]
+            sol[i] += sol[j] * sol[i - j - 1]
 
 
-def catalan_td(n, s):
-    if s[n] > 0:
-        c = s[n]
+def catalan_td(n, sol):
+    if sol[n] > 0:
+        c = sol[n]
     elif n == 0:
         c = 1
     else:
-        c = sum(catalan_td(i, s) * catalan_td(n - i - 1, s) for i in range(n))
-    s[n] = c
+        c = sum(catalan_td(i, sol) * catalan_td(n - i - 1, sol) for i in range(n))
+    sol[n] = c
     return c
 
 
 def catalan(n, td=False):
-    s = [0] * (n + 1)
+    sol = [0] * (n + 1)
     catalan_ = catalan_td if td else catalan_bu
-    catalan_(n, s)
-    return s, s[n]
+    catalan_(n, sol)
+    return sol, sol[n]
