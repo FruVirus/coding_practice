@@ -278,7 +278,7 @@ class DFS(Graph):
             if v_node.c == 1:
                 self.edge_types[(u, v.k)] = "B"
                 self.is_dag = False
-            elif (u, v.k) not in self.edge_types:
+            if (u, v.k) not in self.edge_types:
                 if u_node.d < v_node.d:
                     self.edge_types[(u, v.k)] = "F" if self.directed else "T"
                 else:
@@ -318,7 +318,7 @@ class DFS(Graph):
             if v_node.c == 1:
                 self.edge_types[(s, v.k)] = "B"
                 self.is_dag = False
-            elif (s, v.k) not in self.edge_types:
+            if (s, v.k) not in self.edge_types:
                 if u_d < v_node.d:
                     self.edge_types[(s, v.k)] = "F" if self.directed else "T"
                 else:

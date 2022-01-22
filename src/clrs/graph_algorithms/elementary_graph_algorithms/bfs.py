@@ -127,7 +127,7 @@ class BFS(Graph):
                     q.enqueue(v.k)
                 if v_node.d == u_node.d + 1:
                     self.edge_types[(u, v.k)] = "T"
-                elif v_node.d == u_node.d:
+                if v_node.d == u_node.d:
                     self.edge_types[(u, v.k)] = "C"
                 if self.directed and 0 <= v_node.d <= u_node.d:
                     self.edge_types[(u, v.k)] = "B"
