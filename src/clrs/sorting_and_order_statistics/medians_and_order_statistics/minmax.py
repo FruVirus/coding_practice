@@ -45,8 +45,6 @@ def minmax(a):
         start_index = 2
     for i in range(start_index, n, 2):
         amin, amax = mms(a[i], a[i + 1])
-        if amin < cmin:
-            cmin = amin
-        if amax > cmax:
-            cmax = amax
+        cmin = amin if amin < cmin else cmin
+        cmax = amax if amax > cmax else cmax
     return cmin, cmax
