@@ -2,18 +2,39 @@
 Overview
 ========
 
-The idea is simple: we first find the pointer to the last node. Once we have a pointer
-to the last node, we can recursively sort the linked list using pointers to the first
-and last nodes of a linked list, similar to quicksort on arrays where we pass the
-indices of the first and last array elements. The partition function for a linked list
-is also similar to the partition function for arrays. Instead of returning the index of
-the pivot element, we return a pointer to the pivot element. In the following
-implementation, sort() is just a wrapper function --> the main recursive function is
-quicksort() which is similar to quicksort() for arrays.
+The idea is simple: we first find the pointer to the last node in the doubly linked list
+(i.e., the node whose next attribute is None initially). Once we have a pointer to the
+last node, we can recursively sort the linked list using pointers to the first and last
+nodes of a linked list, similar to quicksort on arrays where we pass the indices of the
+first and last array elements. The partition function for a linked list is also similar
+to the partition function for arrays. Instead of returning the index of the pivot
+element, we return a pointer to the pivot element. In the following implementation,
+sort() is just a wrapper function --> the main recursive function is quicksort() which
+is similar to quicksort() for arrays.
 
 Quicksort can be implemented for linked Lists only when we can pick a fixed point as the
 pivot (e.g., the last element). Random QuickSort cannot be efficiently implemented for
 linked lists.
+
+NB: We don't actually need to explicitly change the prev and next attributes of any node
+in the doubly linked list, just the k attribute corresponding to the node keys.
+
+For example, if we have:
+
+1 -> 4 -> 16 -> 9
+
+then, 16.prev = 4, 16.next = 9, 9.prev = 16, and 9.next = None. If we just change the k
+attribute of node 16 to 9 and change the k attribute of node 9 to 16, then we have:
+
+1 -> 4 -> 9 -> 16
+
+and 9.prev = 4, 9.next = 16, and 16.prev = 9 and 16.next = None.
+
+NB: In partition(), i = low if i is None else i.next is equivalent to i += 1 in the
+array version. If i = low.prev is None, then this means that low was the first element
+in the doubly linked list (i.e., the node whose prev attribute is None initially) and
+thus, the next value of i should be low. Otherwise, the next value of i should be
+i.next which corresponds to i += 1 in the array version.
 
 Complexity
 ==========
@@ -36,7 +57,7 @@ from src.clrs.data_structures.elementary_data_structures.linked_list import DLL
 
 
 class DLLQuickSort(DLL):
-    def _get_last(self):
+    def get_last(self):
         node = self.head
         while node.next is not None:
             node = node.next
@@ -62,7 +83,7 @@ class DLLQuickSort(DLL):
             low = pivot.next
 
     def sort(self):
-        self.quicksort(self.head, self._get_last())
+        self.quicksort(self.head, self.get_last())
         node, sorted_list = self.head, []
         while node is not None:
             sorted_list.append(node.k)
