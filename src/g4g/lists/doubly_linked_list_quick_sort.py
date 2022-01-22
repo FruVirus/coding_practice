@@ -21,6 +21,7 @@ Complexity
 Time
 ----
 
+partition(): O(n) = O(h - l + 1).
 quicksort():
     O(n^2) worst case --> when the partitioning routine produces one sub-problem with
         n - 1 elements and one with 0 elements or when the input array is already
@@ -28,7 +29,6 @@ quicksort():
     O(n * lg n) expected case --> when we can equally balance the two sides of the
         partition at every level of the recursion (only possible when we can choose the
         median value with each recursion)
-partition(): O(n) = O(h - l + 1).
 """
 
 # Repository Library
