@@ -46,7 +46,7 @@ from src.clrs.data_structures.elementary_data_structures.heap_queue import HeapQ
 class HeapSort(HeapQueue):
     def sort(self):
         assert self.heap_size > 0
-        for i in range(len(self.a) - 1, 0, -1):
+        for i in range(self.heap_size - 1, 0, -1):
             self._exchange(0, i)
             self.heap_size -= 1
             self.heapify(0)
