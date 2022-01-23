@@ -16,8 +16,9 @@ Quicksort can be implemented for linked Lists only when we can pick a fixed poin
 pivot (e.g., the last element). Random QuickSort cannot be efficiently implemented for
 linked lists.
 
-NB: We don't actually need to explicitly change the prev and next attributes of any node
-in the doubly linked list, just the k attribute corresponding to the node keys.
+NB: In partition(), we don't actually need to explicitly change the prev and next
+attributes of any node in the doubly linked list, just the k attribute corresponding to
+the node keys.
 
 For example, if we have:
 
@@ -35,6 +36,19 @@ array version. If i = low.prev is None, then this means that low was the first e
 in the doubly linked list (i.e., the node whose prev attribute is None initially) and
 thus, the next value of i should be low. Otherwise, the next value of i should be
 i.next which corresponds to i += 1 in the array version.
+
+NB: In partition(), the last two lines after the while-loop can potentially exchange the
+pointers to low and high in quicksort().
+
+NB: In the array version of quicksort(), the while-loop continues if low < high. When
+working with doubly linked lists, we have to deal with pointers. In order for the
+statement low < high to make sense when dealing with pointers we have to ensure that:
+1) high cannot be None (i.e., it still has to be a valid Node object), 2) low is not
+high (i.e., low != high), and 3) low is not high.next (i.e., low is not > high). The
+first condition can occur if pivot.prev is None when recursively calling quicksort().
+The second condition can occur if low and high switch pointers inside of partition() and
+then low = pivot.next is high inside of quicksort(). The third condition can occur if
+if pivot is high after returning from partition().
 
 Complexity
 ==========
