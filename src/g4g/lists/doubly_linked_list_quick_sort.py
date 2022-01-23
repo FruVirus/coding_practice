@@ -56,6 +56,7 @@ Complexity
 Time
 ----
 
+get_last(): O(n).
 partition(): O(n) = O(h - l + 1).
 quicksort():
     O(n^2) worst case --> when the partitioning routine produces one sub-problem with
