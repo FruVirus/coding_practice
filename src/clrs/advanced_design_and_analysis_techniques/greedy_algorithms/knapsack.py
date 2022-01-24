@@ -40,6 +40,9 @@ per pound, and so forth, until we reach the maximum capacity of the knapsack.
 Complexity
 ==========
 
+The time complexity is primarily set by the complexity of the algorithm used to sort the
+items by value per pound.
+
 Time
 ----
 
