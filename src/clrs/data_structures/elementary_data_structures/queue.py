@@ -3,7 +3,7 @@
 ======================
 
 Stacks and queues are dynamic sets in which the element removed from the set by the
-delete() operation is pre-specified. In a queue, the element deleted is always the one
+delete operation is pre-specified. In a queue, the element deleted is always the one
 that has been in the set for the longest time: the queue implements a first-in,
 first-out, or FIFO, policy.
 
@@ -22,7 +22,7 @@ we "wrap around" in the sense that location 1 immediately follows location n in 
 circular order. When Q.head == Q.tail, the queue is empty. Initially,
 Q.head = Q.tail = 1. If we attempt to dequeue an element from an empty queue, the queue
 underflows. When Q.head = Q.tail + 1 or both Q.head = 1 and Q.tail = Q.length, the queue
-is full, and if we attempt to enqueue an element, then the queue underflows.
+is full, and if we attempt to enqueue an element, then the queue overflows.
 
 NB: Queue mimics table doubling for practice even though it's redundant in Python.
 
