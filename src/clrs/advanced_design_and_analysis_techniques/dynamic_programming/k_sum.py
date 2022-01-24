@@ -20,6 +20,9 @@ to the knapsack, we need to know if there are any slots available, which is equi
 to knowing how many slots we have used up. So the problem state needs to track both the
 total weight of the bars in the knapsack, and how many slots they take up.
 
+Intuition
+---------
+
 The filling of the v table for k-sum is the same as that for the subset sum problem
 except that we have a third for-loop that iterates over the k slots. When we compute the
 solution to the k-sum problem, if we find an item that should belong to the solution, we
