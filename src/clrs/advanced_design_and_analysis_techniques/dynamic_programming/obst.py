@@ -3,13 +3,13 @@
 ================================
 
 Suppose we are designing a program to translate text from English to French. For each
-occurrence of a each English word in the text, we need to look up its French equivalent.
+occurrence of each English word in the text, we need to look up its French equivalent.
 We could perform these lookup operations by building a binary search tree with n English
 words as keys and their French equivalents as satellite data. Because we will search the
 tree for each individual word in the text, we want the total time spent searching to be
 as low as possible. We could ensure an O(lg n) search time per occurrence by using a
-balanced BST. Words appears with different frequencies, however, and a frequently used
-word suc as "the" may appear far from teh root while a rarely used word may appear near
+balanced BST. Words appear with different frequencies, however, and a frequently used
+word such as "the" may appear far from the root while a rarely used word may appear near
 the root. Such an organization would slow down the translation, since the number of
 nodes visited when searching for a key in a BST equals one plus the depth of the node
 containing the key. We want words that occur frequently in the text to be placed nearer
@@ -40,21 +40,18 @@ keys:       10,         20,         30,         40
 p:          0.1,        0.2,        0.1,        0.2
 q:      0.1,    0.05,       0.15,       0.05,       0.05
 
+p_0 is the probability of searching for 10.
 q_0 is the probability of searching (-float("inf"), 9).
 q_4 is the probability of searching (41, float("inf")).
 
 If 20 is the root, 10 is the left child of 20, 30 is the right child of 20 and 40 is the
 right child of 30, then the cost for successful searches would be:
 
+c(k) = height * p[k]
 c(20) = 1 * 0.2
 c(10) = 2 * 0.1
 c(30) = 2 * 0.1
 c(40) = 3 * 0.2
-
-We would to construct a BST such that the total search cost is minimized. The total cost
-depends on the height of the BST and which keys are at which level An OBST is not
-necessarily a tree whose overall height is smallest. Nor can we necessarily construct an
-OBST by always putting the key with the greatest probability at the root.
 
 The calculation of the w matrix involves prefixes that can be reused. For example:
 
