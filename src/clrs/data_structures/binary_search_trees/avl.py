@@ -104,10 +104,10 @@ class AVL(BST):
         y.p = x.p
         if x.p is self.sentinel:
             self.root = y
-        elif x is x.p.right:
-            x.p.right = y
-        else:
+        elif x is x.p.left:
             x.p.left = y
+        else:
+            x.p.right = y
         y.right, x.p = x, y
         if isinstance(x, AVLNode):
             self.update_height(x)
