@@ -20,13 +20,13 @@ still carry more, then we take as much as possible of the item with the next gre
 value per pound, and so forth, until we reach the weight limit W. Thus, by sorting the
 items by value per pound, the greedy algorithm runs in O(n * lg n) time.
 
-Taking item 1 doesn't work in the 0/1 problem because if we are unable to fill the
-knapsack to exact capacity, then the remaining space lowers the effective value per
-pound of the knapsack load. In the 0/1 problem, when we consider whether to include an
-item in the knapsack, we must compare the solution to the subproblem that includes the
-item with the solution to the subproblem that excludes the item before we can make the
-choice. The problem formulated in this way gives rise to many overlapping subproblems---
-a hallmark of dynamic programming.
+Taking an item with the greatest value per pound doesn't always work in the 0/1 problem
+because if we are unable to fill the knapsack to exact capacity, then the remaining
+space lowers the effective value per pound of the knapsack load. In the 0/1 problem,
+when we consider whether to include an item in the knapsack, we must compare the
+solution to the subproblem that includes the item with the solution to the subproblem
+that excludes the item before we can make the choice. The problem formulated in this way
+gives rise to many overlapping subproblems---a hallmark of dynamic programming.
 
 Intuition
 ---------
