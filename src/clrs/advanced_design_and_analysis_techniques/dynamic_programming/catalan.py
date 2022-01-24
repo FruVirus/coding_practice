@@ -8,7 +8,7 @@ counting problems like the following:
 1. Count the number of expressions containing n pairs of parentheses which are correctly
 matched. For n = 3, possible expressions are ((())), ()(()), ()()(), (())(), (()()).
 
-2. Count the number of possible Binary Search Trees with n keys.
+2. Count the number of possible binary search trees with n keys.
 
 3. Count the number of full binary trees (a rooted binary tree is full if every vertex
 has either two children or no children) with n + 1 leaves.
