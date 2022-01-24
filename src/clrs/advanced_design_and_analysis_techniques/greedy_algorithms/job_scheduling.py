@@ -2,7 +2,7 @@
 16.5 A task-scheduling problem as a matroid
 ===========================================
 
-An interesting problem taht we can solve using matroids is the problem of optimally
+An interesting problem that we can solve using matroids is the problem of optimally
 scheduling unit-time tasks on a single processor, where each task has a deadline, along
 with a penalty paid if the task misses its deadline.
 
