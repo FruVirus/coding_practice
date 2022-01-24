@@ -29,24 +29,26 @@ total capacity of 0.
 v[0][1] = 1 since we can match a capacity of 1 by including just the first item.
 
 For the rest of the entries, we check whether we can match the capacity without taking
-the item i or else we take the item i and see if we can find a subset to get the
-remaining capacity.
+item i or else we take item i and see if we can find a subset to get the remaining
+capacity.
 
 For example, the value of v[1][2] tells us if we can match a capacity of 2 with some
 combination of the first two items (items 0 and 1). If we can match the capacity without
 taking item 1, then this is v[0][2] since we keep the same capacity and look at the
 entry for the previous item 0. If we cannot match the capacity without taking item 1,
-then this is v[0][0] since we take item 1 and subtract its weight to get a remaining
-weight of 0. In this case, we can match the capacity of 2 by taking the second item and
-not the first.
+then we check if we can take item 1 in order to match the capacity. In order to check
+this, we look at v[0][0] since this element means we take item 1, subtract its weight of
+2, and get a remaining weight of 0. In this case, since v[0][0] = 1, it means that we
+can match the capacity of 2 by taking the second item and not the first.
 
 As another example, the value of v[1][4] tells us if we can match a capacity of 4 with
 some combination of the first two items (items 0 and 1). If we can match the capacity
 without taking item 1, then this is v[0][4] since we keep the same capacity and look at
 the entry for the previous item 0. If we cannot match the capacity without taking item
-1, then this is v[0][2] since we take item 1 and subtract its weight to get a remaining
-weight of 2. In this case, we cannot match the capacity of 4 using any combination of
-the first two items; thus, v[1][4] is 0.
+1, then we check if we can take take item 1 in order to match the capacity. In order to
+check this, we look at v[0][2] since this element means we take item 1, subtract its
+weight of 2, and get a remaining weight of 2. In this case, since v[0][2] = 0, it means
+that we cannot match the capacity of 4 by using any combination of the first two items.
 
 Complexity
 ==========
