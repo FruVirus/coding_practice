@@ -74,9 +74,9 @@ solution is inefficient because it solves the same subproblems repeatedly, we ar
 for each subproblem to be solved only once, saving its solution. If we need to refer to
 this subproblem's solution again later, we can just look it up, rather than recompute
 it. Dynamic programming thus uses additional memory to save computation time; it serves
-an example of a time-memory trade-off. A dynamic-programming approach runs in polynomial
-time when the number of distinct subproblems involved is polynomial in the input size
-and we can solve each such subproblem in polynomial time.
+as an example of a time-memory trade-off. A dynamic-programming approach runs in
+polynomial time when the number of distinct subproblems involved is polynomial in the
+input size and we can solve each such subproblem in polynomial time.
 
 There are usually two equivalent ways to implement a dynamic-programming approach. We
 shall illustrate both of them with our rod-cutting example.
