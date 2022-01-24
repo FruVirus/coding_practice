@@ -83,7 +83,7 @@ Complexity
 Time
 ----
 
-get_middle(): O(lg n).
+get_middle(): O(n).
 merge(): Theta(n).
 merge_sort(): Theta(n * lg n).
 
