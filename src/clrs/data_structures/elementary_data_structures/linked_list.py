@@ -122,16 +122,14 @@ the indices of the first and last array elements.
 
 The partition function for a doubly linked list is also similar to the partition
 function for arrays. Instead of returning the index of the pivot element, we return a
-pointer to the pivot element. In the following implementation, sort() is just a wrapper
-function --> the main recursive function is quicksort() which is similar to quicksort()
-for arrays.
+pointer to the pivot element.
 
 Quicksort can be implemented for doubly linked Lists only when we can pick a fixed point
-as the pivot (e.g., the last element). Random QuickSort cannot be efficiently
-implemented for linked lists. In particular, sorting algorithms that rely on a previous
-element (e.g., quicksort, insertion sort, etc.) cannot be implemented efficiently for
-singly linked lists since singly linked lists do not have a pointer to the previous node
-in the list.
+as the pivot (e.g., the last element). Random quicksort cannot be efficiently
+implemented for doubly linked lists. In particular, sorting algorithms that rely on a
+previous element (e.g., quicksort, insertion sort, etc.) cannot be implemented
+efficiently for singly linked lists since singly linked lists do not have a pointer to
+the previous node in the list.
 
 NB: In partition(), we don't actually need to explicitly change the prev and next
 attributes of any node in the doubly linked list, just the k attribute corresponding to
