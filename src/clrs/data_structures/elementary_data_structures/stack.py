@@ -3,7 +3,7 @@
 ======================
 
 Stacks and queues are dynamic sets in which the element removed from the set by the
-delete() operation is pre-specified. In a stack, the element deleted from the set is the
+delete operation is pre-specified. In a stack, the element deleted from the set is the
 one most recently inserted: the stack implements a last-in, first-out, or LIFO, policy.
 
 Stacks
