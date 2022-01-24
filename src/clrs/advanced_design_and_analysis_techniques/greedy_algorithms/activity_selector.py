@@ -7,11 +7,11 @@ that require exclusive use of a common resource, with a goal of selecting a maxi
 set of mutually compatible activities. Suppose we have a set S = {a_1, a_2, ..., a_n} of
 n proposed activities that wish to use a resource, which can serve only one activity at
 a time. Each activity a_i has a start time s_i and a finish time f_i, where
-0 <= s_i < f_i < float("inf"). If select, activity a_i takes place during the half-open
-time interval [s_i, f_i). Activities a_i and a_j are compatible if the intervals
-[s_i, f_i) and [s_j, f_j) do not overlap. In the activity-selection problem, we wish to
-select a maximum-size subset of mutually compatible activities. We assume that the
-activities are sorted in increasing order of finish time.
+0 <= s_i < f_i < float("inf"). If selected, activity a_i takes place during the
+half-open time interval [s_i, f_i). Activities a_i and a_j are compatible if the
+intervals [s_i, f_i) and [s_j, f_j) do not overlap. In the activity-selection problem,
+we wish to select a maximum-size subset of mutually compatible activities. We assume
+that the activities are sorted in increasing order of finish time.
 
 Making the greedy choice
 ------------------------
@@ -28,8 +28,7 @@ activity in S with the earliest finish time, since that would leave the resource
 available for as many of the activities that follow as possible. If more than one
 activity in S has the earliest finish time, then we can choose any such activity. In
 other words, since the activities are sorted in increasing order by finish time, the
-greedy choice is activity a_1 (we could also select the activity with the latest start
-time).
+greedy choice is activity a_1.
 
 If we make the greedy choice, we have only one remaining subproblem to solve: finding
 activities that start after a_1 finishes since all activities that are compatible with
@@ -60,9 +59,9 @@ first in the sorted list).
 If we make the greedy choice of adding the first activity, we have only one remaining
 subproblem to solve: finding activities that start after the first activity finishes. We
 don't have to consider activities that finish before the first activity starts since no
-activity can have a finish time less than or equal to the first activity (since the list
-is sorted by finishing times). Thus, all activities that are compatible with the first
-activity must start after the first activity finishes.
+activity can have a finish time earlier than or equal to the first activity (since the
+list is sorted by finishing times). Thus, all activities that are compatible with the
+first activity must start after the first activity finishes.
 
 Complexity
 ==========
