@@ -12,11 +12,12 @@ item, we keep the same profit but do not lose knapsack capacity. If taking an it
 up over the capacity limit, then the profit is the current profit without the item.
 
 Note that we cannot take fractional amounts of an item. We either take the whole item or
-none of it.
+none of it; hence, this is known as the 0/1 knapsack problem.
 
 Consider p = [1, 2, 5, 6], w = [2, 3, 4, 5], and c = 8. In this case, the answer is
 x = [0, 1, 0, 1] which corresponds to taking the second and fourth items only. We form
-the v matrix as follows:
+the v matrix, which tabulates the profits for every single possible combination of
+items, as follows:
 
 v   0   1   2   3   4   5   6   7   8 --> capacity
 0   0   0   0   0   0   0   0   0   0
@@ -35,8 +36,8 @@ v[1][2] = 1 since we can take item 1 with weight 2 if we have a capacity of 2.
 Similarly, if we only take item 1, then v[1][[3:] = 1 since the total value in the
 knapsack remains the same.
 
-For the rest of the entries, we check whether we maximize our value without taking the
-item i or else we take the item i and add its value to the total value of the knapsack.
+For the rest of the entries, we check whether we maximize our value without taking item
+i or else we take item i and add its value to the total value of the knapsack.
 
 For example, the value of v[2][2] = max(v[1][2], v[1][2 - w[2]] = v[1][-1] + p[2]) =
 max(v[1][2], -float("inf") + p[2]) = 1 since v[1][-1] does not exist. This means that we
