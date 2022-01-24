@@ -276,12 +276,12 @@ class SLL:
         return count
 
     def sort(self):
-        sorted_list = []
         if isinstance(self, DLL):
             self.quicksort(self.head, self.get_last())
             node = self.head
         else:
             node = self.merge_sort(self.head)
+        sorted_list = []
         while node is not None:
             sorted_list.append(node.k)
             node = node.next
