@@ -12,11 +12,11 @@ consecutively. The longer the third string, the more similar the two strings are
 
 We formalize this last notion of similarity as the longest-common-subsequence (LCS)
 problem. A subsequence of a given sequence is just the given sequence with zero or more
-elements left out. Formally, given a sequence X = <x1, x2, ..., x_m>, another sequence
-Z = <z1, z2, ..., z_k> is a subsequence of X if there exists a strictly increasing
-sequence <i1, i2, ..., i_k> of indices of X such that for all j = 1, 2, ..., k, we have
-x_i_j = z_j. For example, Z = <B, C, D, B> is a subsequence of X = <A, B, C, B, D, A, B>
-with corresponding index sequence <2, 3, 5, 7>.
+elements left out. Formally, given a sequence X = <x_1, x_2, ..., x_m>, another sequence
+Z = <z_1, z_2, ..., z_k> is a subsequence of X if there exists a strictly increasing
+sequence <i_1, i_2, ..., i_k> of indices of X such that for all j = 1, 2, ..., k, we
+have x_i_j = z_j. For example, Z = <B, C, D, B> is a subsequence of
+X = <A, B, C, B, D, A, B> with corresponding index sequence <2, 3, 5, 7>.
 
 Given two sequences X and Y, we say that a sequence Z is a common subsequence of X and Y
 if Z is a subsequence of both X and Y.
@@ -28,8 +28,8 @@ An LCS of two sequences contains within it an LCS of prefixes of the two sequenc
 Thus, the LCS problem has an optimal-substructure property.
 
 We should examine either one or two subproblems when finding an LCS of
-X = <x1, x2, ..., x_m> and Y = <y1, y2, ..., y_n>. If xm = yn, we must find an LCS of
-X_(m - 1) and Y_(n - 1). Appending xm = yn to this LCS yields an LCS of X and Y. If
+X = <x_1, x_2, ..., x_m> and Y = <y_1, y_2, ..., y_n>. If x_m = y_n, we must find an LCS
+of X_(m - 1) and Y_(n - 1). Appending x_m = y_n to this LCS yields an LCS of X and Y. If
 x_m != y_n, then we must solve two subproblems: finding an LCS of X_(m - 1) and Y and
 finding an LCS of X and Y_(n - 1). Whichever of these two LCSs is longer is an LCS of X
 and Y. Because these causes exhaust all possibilities, we know that one of the optimal
@@ -77,8 +77,8 @@ LCS between X_(i - 1) and Y_j and X_i and Y_(j - 1).
 Complexity
 ==========
 
-The LCS problem has only Theta(m x n) distinct subproblems. It takes O(1) time to fill
-up the c table, which has m x n entries. Thus, the total time is O(m x n).
+The LCS problem has only Theta(m * n) distinct subproblems. It takes O(1) time to fill
+up the c table, which has m x n entries. Thus, the total time is O(m * n).
 
 Time
 ----
