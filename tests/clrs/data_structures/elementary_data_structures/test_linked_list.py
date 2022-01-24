@@ -30,6 +30,12 @@ def test_dll():
     dll.delete(16)
     dll.delete(9)
     assert dll.head.k == 4
+    dll = DLL()
+    dll.insert(Node(9))
+    dll.insert(Node(16))
+    dll.insert(Node(4))
+    dll.insert(Node(1))
+    assert dll.sort() == [1, 4, 9, 16]
 
 
 def test_sll():
@@ -59,3 +65,9 @@ def test_sll():
     sll.delete(16)
     sll.delete(9)
     assert sll.head.k == 4
+    sll = SLL()
+    sll.insert(Node(9))
+    sll.insert(Node(16))
+    sll.insert(Node(4))
+    sll.insert(Node(1))
+    assert sll.sort() == [1, 4, 9, 16]
