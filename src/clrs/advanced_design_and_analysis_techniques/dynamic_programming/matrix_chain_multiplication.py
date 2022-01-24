@@ -35,7 +35,7 @@ Consider the following sequence:
 A x B x C
 
 If we wish to compute the cost for multiplying (A x B) x C, then we have to compute the
-cost of m[A, B] + m[C, C] + the cost of multiplying (A x B) by C.
+cost of m[A, B] + m[C, C] + the cost of multiplying the result of (A x B) by C.
 
 Intuition
 ---------
@@ -45,19 +45,19 @@ split the product between A_k and A_(k + 1) for some integer k in the range i <=
 That is, for some value of k, we first compute the matrices A_i...k and A_(k + 1)...j
 and then multiply them together to produce the final product A_i...j. The cost of
 parenthesizing this way is the cost of computing the matrix A_i...k plus the cost of
-computing A_(k + 1)...j, plus the cost of multiplying them together. We must ensure that
-when we search for the correct place to split the product (i.e., the integer k), we have
-considered all possible places, so that we are sure of having examined the optimal one.
-Thus, the procedure iterates k through the range [i, j) to consider all possibilities.
-In addition, we only want to iterate/recurse through subproblems where the matrix chain
-has length greater than 1 (otherwise, the problem is trivial). In the bottom-up
-approach, the outer-most for-loop iterates l through chains of length 2 and greater and
-the top-down approach does not recurse if i == j.
+computing A_(k + 1)...j, plus the cost of multiplying the results together. We must
+ensure that when we search for the correct place to split the product (i.e., the integer
+k), we have considered all possible places, so that we are sure of having examined the
+optimal one. Thus, the procedure iterates k through the range [i, j) to consider all
+possibilities. In addition, we only want to iterate/recurse through subproblems where
+the matrix chain has length greater than 1 (otherwise, the problem is trivial). In the
+bottom-up approach, the outer-most for-loop iterates l through chains of length 2 and
+greater and the top-down approach does not recurse if i == j.
 
-The m matrix values determines how many multiplies are required for all combinations of
-multiplications. The diagonal elements are 0 since m[1][1] means that we are
-"multiplying" matrix 1 with itself, which is a free operation. m[i][j], where i and j
-are consecutive numbers (e.g., i = 2 and j = 3 or i = 3 and j = 4) is the number of
+The values in the m matrix determine how many multiplies are required for all
+combinations of multiplications. The diagonal elements are 0 since m[1][1] means that we
+are "multiplying" matrix 1 with itself, which is a free operation. m[i][j], where i and
+j are consecutive numbers (e.g., i = 2 and j = 3 or i = 3 and j = 4) is the number of
 multiplies for multiplying matrix i with matrix j. m[i][j], where i and j are NOT
 consecutive numbers (e.g., i = 1 and j = 3) is the MINIMUM number of multiplies among
 all possible combinations of multiplies between i and j.
@@ -76,7 +76,7 @@ m[1][3] = min(A1 * (A2 * A3), (A1 * A2) * A3)
         = min(88, 180)
         = 88
 The last addition in min() corresponds to the number of multiplies between A1 and the
-result of (A2 * A3) (between the result of (A1 * A2) and A3).
+result of (A2 * A3) (or between the result of (A1 * A2) and A3).
 
 Thus, the m matrix holds the number of multiplies for every single possible
 parenthesization.
