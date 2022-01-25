@@ -29,7 +29,7 @@ A RBT is a binary tree that satisfies the following red-black properties:
 number of black nodes.
 
 As a matter of convenience in dealing with boundary conditions in red-black tree code,
-we use a single sentinel to represent NIL. For a RBT T, the sentinel T.nil is an object
+we use a single sentinel to represent NIL. For an RBT, the sentinel T.nil is an object
 with the same attributes as an ordinary node in the tree. Its color attribute is BLACK,
 and its other attributes---p, left, right, and key---can take on arbitrary values.
 
@@ -58,7 +58,7 @@ properties. To restore these properties, we must change the colors of some of th
 in the tree and also change the pointer structure.
 
 We change the pointer structure through rotation, which is a local operation in a search
-tree that p[reserves the BST property. When we do a left rotation on a node x, we assume
+tree that preserves the BST property. When we do a left rotation on a node x, we assume
 that its right child y is not T.nil; x may be any node in the tree whose right child is
 not T.nil (and vice versa for right rotation).
 
@@ -119,10 +119,6 @@ node x might also cause violations of the red-black properties. After deleting n
 delete_fix() is called, which changes colors and performs rotations to restore the
 red-black properties.
 
-We maintain node y as the node either removed from the tree or moved within the tree.
-When z has fewer than two children, y points to z and z is removed. When z has two
-children, y points to z's successor and y will move into z's position in the tree.
-
 Because node y's color might change, the variable y_c stores y's color before any
 changes occur. We need to save y's original color in order to test it at the end of
 delete(); if it was black, then removing or moving y could cause violations of the
@@ -134,8 +130,8 @@ left child).
 
 Since node x moves into node y's original position, the attribute x.p is always set to
 point to the original position in the tree of y's parent, even if x is, in fact, the
-sentinel T.nil. Unless z is y's original parent, the assigment to x.p takes place in the
-transplant() procedure.
+sentinel T.nil. Unless z is y's original parent, the assignment to x.p takes place in
+the transplant() procedure.
 
 When y's original parent is z, however, we do not want x.p to point to y's original
 parent, z, since we are removing that node from the tree. Because node y will move up to
