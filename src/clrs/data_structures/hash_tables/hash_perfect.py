@@ -19,9 +19,12 @@ collisions at the secondary level. In order to guarantee that there are no colli
 at the secondary level, however, we will need to let the size of the secondary tables be
 the square of the number of keys hashing to that slot.
 
-NB: When m = n^2, a hash function chosen randomly from the set of universal hash
-functions is more likely than not to have no collisions. However, one must still perform
-some trial and error before finding a collision-free hash function for a given set of
+Intuition
+---------
+
+When m = n^2, a hash function chosen randomly from the set of universal hash functions
+is more likely than not to have no collisions. However, one must still perform some
+trial and error before finding a collision-free hash function for a given set of
 (static) keys. The values in A_LIST and B_LIST are pre-specified from trial and error.
 
 Complexity
@@ -30,7 +33,7 @@ Complexity
 Time
 ----
 
-search(): O(1) in the worst case.
+hash() and search(): O(1) in the worst case.
 
 Space
 -----
