@@ -15,7 +15,7 @@ Complexity
 Time
 ----
 
-is_prime() and next_prime(): O(n).
+is_prime(): O(n).
 """
 
 
