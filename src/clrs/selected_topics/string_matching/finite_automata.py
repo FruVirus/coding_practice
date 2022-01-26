@@ -7,7 +7,7 @@ processing information---that scans the text string T for all occurrences of the
 P. These string-matching automata are very efficient: they examine each text character
 exactly once, taking constant time per text character. The matching time used---after
 preprocessing the pattern to build the automaton---is therefore Theta(n). The time to
-build the automaton, however, can be large is sigma is large.
+build the automaton, however, can be large if sigma is large.
 
 Finite automata
 ---------------
@@ -18,7 +18,7 @@ A finite automaton M, is a 5-tuple (Q, q_0, A, sigma, delta), where
 - q_0 in Q is the start state
 - A is a subset of Q is a distinguished set of accepting states
 - sigma is a finite input alphabet
-- delta is a function from Q X sigma into Q, called the transition function of M
+- delta is a function from Q x sigma into Q, called the transition function of M
 
 The finite automaton begins in state q_0 and reads the characters of its input string
 one at a time. If the automaton is in state q and reads input character a, it moves
@@ -54,11 +54,11 @@ and character a:
     delta(q, a) = sigma(P_q a).
 
 We define delta(q, a) = sigma(P_q a) because we want to keep track of the longest prefix
-of the pattern P that has matched the text string T so far. We consider the mst recently
-read characters of T. In order for a substring of T---let's say the substring ending at
-T[i]---to match some prefix P_j of P, this prefix P_j must be a suffix of T_i. Suppose
-q = phi(T_i), so that after reading T_i, the automaton is in state q. We design the
-transition function delta so that this state number, q, tells us the length of the
+of the pattern P that has matched the text string T so far. We consider the most
+recently read characters of T. In order for a substring of T---let's say the substring
+ending at T[i]---to match some prefix P_j of P, this prefix P_j must be a suffix of T_i.
+Suppose q = phi(T_i), so that after reading T_i, the automaton is in state q. We design
+the transition function delta so that this state number, q, tells us the length of the
 longest prefix of P that matches a suffix of T_i. That is, in state q, P_q is a suffix
 of T_i and q = sigma(T_i). Whenever q = m, all m characters of P match a suffix of T_i,
 and so we have found a match. Thus, since phi(T_i) and sigma(T_i) both equal q, the
@@ -85,7 +85,7 @@ Intuition
 ---------
 
 At each step, the finite automaton is merely keeping track of the longest prefix of the
-pattern that is a suffix of what has been read so far.
+pattern that is a suffix of what has been read so far in the text.
 
 If a pattern has length m, then the finite automaton has m + 1 states (the 0 state is
 the default initial state). As we read each character in the text, the finite automaton
@@ -226,7 +226,7 @@ pattern and input characters)---this is denoted by the numbers in quotes in the 
 transition function matrix above.
 
 In compute_transition(), setting lps = tf[lps][ord(p[i])] updates the lps for the next
-row to be filled in. The lps the previous row is the state that the automaton falls back
+row to be filled in. The lps for the next row is the state that the automaton falls back
 to when a mismatch occurs or we have a complete match. In other words,
 delta(q, a) = delta(pi[q], a) if q = m or P{q + 1] != a, where pi[q] corresponds to the
 longest prefix suffix of q. See the KMP algorithm for a more detailed explanation of how
