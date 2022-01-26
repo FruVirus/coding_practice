@@ -11,13 +11,13 @@ array.
 
 The first for-loop inspects each input element. If the value of an input element is i,
 we increment C[i]. Thus, after the first for-loop C[i] holds the number of input
-elements equal to i for each integer i = 0, 1, ..., k. The second for-loop determine for
-each i = 0, 1, ..., k, how many input elements are less than or equal to i by keeping a
-running sum of the array C. The third for-loop places each element A[j] into its correct
-sorted position in the output array B. If all n elements are distinct, then when we
-first enter the third for-loop, for each A[j], the value C[A[j]] is the correct final
-position of A[j] in the output array, since there are C[A[j]] elements less than or
-equal to A[j]. Because the elements might not be distinct, we decrement C[A[j]] each
+elements equal to i for each integer i = 0, 1, ..., k. The second for-loop determines
+for each i = 0, 1, ..., k, how many input elements are less than or equal to i by
+keeping a running sum of the array C. The third for-loop places each element A[j] into
+its correct sorted position in the output array B. If all n elements are distinct, then
+when we first enter the third for-loop, for each A[j], the value C[A[j]] is the correct
+final position of A[j] in the output array, since there are C[A[j]] elements less than
+or equal to A[j]. Because the elements might not be distinct, we decrement C[A[j]] each
 time we place a value A[j] into the B array. Decrementing C[A[j]] causes the next input
 element with a value equal to A[j], if one exists, to go to the position immediately
 before A[j] in the output array.
