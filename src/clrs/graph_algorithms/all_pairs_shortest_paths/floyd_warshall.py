@@ -38,7 +38,7 @@ d_ij^(k) recursively by
 d_ij^(k) =  w_ij                                            if k = 0,
             min(d_ij^(k - 1), d_ik^(k - 1) + d_kj^(k - 1))  if k >= 1.
 
-Because for any path, all intermediate vertices are in teh set {1, 2, ..., n}, the
+Because for any path, all intermediate vertices are in the set {1, 2, ..., n}, the
 matrix d^(n) = (d_ij^(n)) gives the final answer: d_ij^(n) = delta(i, j) for all
 i, j in V.
 
@@ -128,7 +128,7 @@ call is for a path one vertex shorter.
 Space
 -----
 
-floyd_warshall(): O(V^2) for d matrix.
+floyd_warshall(): O(V^2) for d matrix and O(V^2) for self.pred matrix.
 """
 
 # Repository Library
