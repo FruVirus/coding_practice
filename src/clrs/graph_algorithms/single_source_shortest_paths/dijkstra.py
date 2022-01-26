@@ -22,7 +22,7 @@ after initialization and that each vertex is extracted from Q and added to S exa
 once, so that the outer while-loop iterates exactly |V| times.
 
 Because Dijkstra's algorithm always chooses the "lightest" or "closest" vertex in V - S
-to add to set S, we say that is uses a greedy strategy. Greedy strategies do not always
+to add to set S, we say that it uses a greedy strategy. Greedy strategies do not always
 yield optimal results in general, but Dijkstra's algorithm does indeed compute shortest
 paths.
 
@@ -66,10 +66,10 @@ O(V^2 + E) = O(V^2).
 
 If the graph is sufficiently sparse, we can improve the algorithm by implementing the
 min-priority queue with a binary min-heap. Each extract() operation then takes time
-O(lg(V)). As before, there are |V| such operations. The time to build the binary
-min-heap is O(V). Each change() operation takes time O(lg(V)), and there are still at
-most |E| such operations. The total running time is O((V + E) * lg(V)), which is
-O(E * lg(V)) if all vertices are reachable from the source.
+O(lg V). As before, there are |V| such operations. The time to build the binary
+min-heap is O(V). Each change() operation takes time O(lg V), and there are still at
+most |E| such operations. The total running time is O((V + E) * lg V), which is
+O(E * lg V) if all vertices are reachable from the source.
 
 Time
 ----
