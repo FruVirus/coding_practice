@@ -26,6 +26,15 @@ Merge sort is an asymptotically optimal comparison sort.
 
 Merge sort is a stable sorting algorithm.
 
+Intuition
+---------
+
+Suppose merge(l, r) gets calls when l = [1, 4, 9, 16] and r = [2, 5, 7]. merge() starts
+with l[i] = 1 and r[j] = 2. The first while-loop terminates with a = [1, 2, 4, 5, 7].
+This is because the condition j == len(r) is reached first. The second while-loop then
+extends the rest of the elements in l (i.e., 9 and 16) to the end of a so that we have
+a = [1, 2, 4, 5, 7, 9, 16] as the final merged, sorted list.
+
 Complexity
 ==========
 
