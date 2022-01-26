@@ -22,10 +22,12 @@ solution vector.
 
 If the rank of A is less than n, then the system is under-determined and the system will
 typically have infinitely many solutions, although it may have no solutions at all if
-the equations are inconsistent.
+the equations are inconsistent. This corresponds to the situation of having more
+unknowns than equations.
 
 If the rank of A is greater than n, then the system is overdetermined and there may not
-exist any solutions.
+exist any solutions. This corresponds to the situation of having more equations than
+unknowns.
 
 If we have exactly n equations in n unknowns, then we could compute A^(-1) and then
 solve for x using A^(-1) * b. This approach suffers in practice from numerical
@@ -77,7 +79,7 @@ Computing an LUP decomposition for the matrix A has the advantage that we can mo
 easily solve linear systems when they are triangular, as is the case for both matrices L
 and U. Once we have found an LUP decomposition for A, we can solve the system of
 equations, Ax = b, by solving only the triangular linear systems, as follows.
-Multiplying both sides of Ax = b by, which yields the equivalent equation PAx = Pb,
+Multiplying both sides of Ax = b by P, which yields the equivalent equation PAx = Pb,
 which amounts to permuting the system of equations. Using our decomposition (28.4), we
 obtain:
 
@@ -154,8 +156,8 @@ We are given an n x n non-singular matrix A, and we wish to find a permutation m
 P, a unit lower-triangular matrix L, and an upper-triangular matrix U such that PA = LU.
 
 Before we partition the matrix A, as we did for LU decomposition, we move a non-zero
-element, say a_k1, from somewhere in the first column to the (1, 1) position of the
-matrix. For numerical stability, we choose a_k1 as the element in the first column with
+element, say a_k_1, from somewhere in the first column to the (1, 1) position of the
+matrix. For numerical stability, we choose a_k_1 as the element in the first column with
 the greatest absolute value. In order to preserve the set of equations, we exchange row
 1 with row k, which is equivalent to multiplying A by a permutation matrix Q on the
 left.
@@ -187,7 +189,7 @@ Theta(n^2) for solving the system of equations.
 Space
 -----
 
-lup_solver(): O(n) for x and y arrays each.
+lup_solver(): O(n) for x array and O(n) for y array.
 """
 
 

@@ -126,8 +126,16 @@ llss(): Theta(n^3).
 
 # Repository Library
 from src.clrs.selected_topics.matrix_operations.invert import transpose
-from src.clrs.selected_topics.matrix_operations.lup_solver import lup_solver
+from src.clrs.selected_topics.matrix_operations.lup_solver import lu_decomp, lup_solver
 from src.clrs.selected_topics.matrix_operations.multiply import mm
+
+
+def is_pos_def(a):
+    for r in range(len(a)):
+        for c in range(len(a[0])):
+            if r == c and a[r][c] <= 0:
+                return False
+    return True
 
 
 def llss(data, deg=2):
@@ -136,5 +144,7 @@ def llss(data, deg=2):
         for j in range(deg + 1):
             a[i][j] = x ** j
     ata = mm(transpose(a), a)
+    lu_decomp(ata)
+    assert is_pos_def(ata)
     y = mm(transpose(a), transpose([[y for _, y in data]]))
-    return lup_solver(ata, [i[0] for i in y], decomp=True, lup=False)
+    return lup_solver(ata, [i[0] for i in y], decomp=False, lup=False)

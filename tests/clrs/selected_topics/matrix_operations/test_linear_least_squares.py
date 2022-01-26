@@ -2,7 +2,11 @@
 import math
 
 # Repository Library
-from clrs.selected_topics.matrix_operations.linear_least_squares import llss
+from clrs.selected_topics.matrix_operations.linear_least_squares import is_pos_def, llss
+
+
+def test_is_pos_def():
+    assert is_pos_def([[1, 2], [3, 0]]) is False
 
 
 def test_llss():
