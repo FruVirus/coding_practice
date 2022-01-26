@@ -67,14 +67,17 @@ def gcd(a, b):
 
 
 def gcd_binary(a, b):
+    if a < b:
+        a, b = b, a
+    if b == 0:
+        return a
     if a & 1 == b & 1 == 0:
-        d, x, y = gcd(a >> 1, b >> 1)
-        return d << 1, x, y
+        return gcd_binary(a >> 1, b >> 1) << 1
     if a & 1 == 0 or b & 1 == 0:
         if b & 1 != 0:
             a, b = b, a
-        return gcd(a, b >> 1)
-    return gcd((a - b) >> 1, b)
+        return gcd_binary(a, b >> 1)
+    return gcd_binary((a - b) >> 1, b)
 
 
 def gcd_multi(*args):
