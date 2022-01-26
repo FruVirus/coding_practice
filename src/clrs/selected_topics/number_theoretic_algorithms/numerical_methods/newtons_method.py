@@ -38,7 +38,7 @@ specified number of digits of precisions, d) using Newton's method:
 The algorithm starts with some guess x1 > 0 and computes the sequences of improved
 guesses:
 
-    x_(n + 1) = (2 / 3) * x_n + (1 / 3) * (a / x_n^2)
+    x_(n + 1) = x_n - (x^3 - a) / (3 * x^2) = (2 / 3) * x_n + (1 / 3) * (a / x_n^2)
 
 The number of accurate digits approximately double on each iteration --> quadratic
 convergence. In other words, the error roughly squares (and halves) on each iteration.
