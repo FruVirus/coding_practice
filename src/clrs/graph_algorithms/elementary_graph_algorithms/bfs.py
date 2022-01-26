@@ -39,8 +39,7 @@ The BFS procedure assumes that the input graph G = (V, E) is represented using a
 lists. It attaches several additional attributes to each vertex in the graph. We store
 the color of each vertex u in V in the attribute u.c and the predecessor of u in the
 attribute u.p. If u has no predecessor, then u.p = None. The attribute u.d holds the
-distance from the source s to vertex u computed by BFS. The algorithm also uses a FIFO
-queue to manage the set of gray vertices.
+distance from the source s to vertex u computed by BFS.
 
 The while-loop iterates as long as there remain any gray vertices, which are discovered
 vertices that have not yet had their adjacency lists fully examined.
@@ -78,7 +77,8 @@ In BFS, we can start the initial search from any vertex. When we explore a verte
 can visit its adjacent vertices in any order.
 
 However, when we select a vertex for exploration, we must visit all of its adjacent
-vertices before further exploration.
+vertices before further exploration. Thus, we enqueue the selected vertex back into the
+queue.
 
 BFS also produces the shortest-path distances for an unweighted graph (or, equivalently,
 a graph with unit weight edges). We can obtain a shortest path from s to v by taking a
