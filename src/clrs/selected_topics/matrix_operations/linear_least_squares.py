@@ -30,8 +30,8 @@ Suppose that we are given a set of m data points:
 
 (x_1, y_1), (x_2, y_2), ..., (x_m, y_m)
 
-where we know that the yi are subject to measurement errors. We would like to determine
-a function F(x) such that the approximation errors
+where we know that the y_i's are subject to measurement errors. We would like to
+determine a function F(x) such that the approximation errors
 
 eta_i = F(x_i) - y_i
 
@@ -49,7 +49,7 @@ c_1, c_2, ..., c_n that minimize the approximation errors eta_1, eta_2, ..., eta
 By choosing n = m, we can calculate each y_i exactly. Such a high-degree F "fits the
 noise" as well as the data, however, and generally gives poor results when used to
 predict y for previously unseen values of x. It is usually better to choose n
-significantly smaller than m and hope that by choosing the coefficients cj well, we can
+significantly smaller than m and hope that by choosing the coefficients c_j well, we can
 obtain a function F that finds the significant patterns in the data points without
 paying undue attention to the noise.
 
@@ -62,17 +62,17 @@ A = f1(x1)  f2(x1) ...  fn(x1)
     ...
     f1(xm)  f2(xm) ...  fn(xm)
 
-Ac =    f1(x1)  f2(x1) ...  fn(x1)    c1
+Ac =    f1(x1)  f2(x1) ...  fn(x1)  * c1
         f1(x2)  f2(x2) ...  fn(x2)  * c2
         ...                           ...
-        f1(xm)  f2(xm) ...  fn(xm)    cn
+        f1(xm)  f2(xm) ...  fn(xm)  * cn
 
 eta = Ac - y is the m-vector of approximation errors.
 
 To minimize approximation errors, we choose to minimize the norm of the error vector
 eta, which gives us a least-squares solution. We can then minimize the norm of the error
-vector eta by differentiating then norm squared with respect to each ck and then setting
-the result to 0.
+vector eta by differentiating then norm squared with respect to each c_k and then
+setting the result to 0.
 
 The n equations then are equivalent to a single matrix equation:
 
@@ -130,20 +130,11 @@ from src.clrs.selected_topics.matrix_operations.lup_solver import lup_solver
 from src.clrs.selected_topics.matrix_operations.multiply import mm
 
 
-def is_pos_def(a):
-    for r in range(len(a)):
-        for c in range(len(a[0])):
-            if r == c and a[r][c] <= 0:
-                return False
-    return True
-
-
 def llss(data, deg=2):
     a = [[0] * (deg + 1) for _ in range(len(data))]
     for i, (x, y) in enumerate(data):
         for j in range(deg + 1):
             a[i][j] = x ** j
     ata = mm(transpose(a), a)
-    assert is_pos_def(ata)
     y = mm(transpose(a), transpose([[y for _, y in data]]))
     return lup_solver(ata, [i[0] for i in y], decomp=True, lup=False)
