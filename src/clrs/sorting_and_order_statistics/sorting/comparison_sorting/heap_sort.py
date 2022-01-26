@@ -22,8 +22,8 @@ max-heap property, however, is call heapify(), which leaves a max-heap in A[1...
 The heapsort algorithm then repeats this process for the max-heap of size n - 1 down to
 a heap of size 2.
 
-sort() sorts the unordered input array by first building an initial heap, then moving
-the 0-th item in the heap array to the i-th element of the for-loop. Each time the
+sort() assumes that the unordered input array is already a max-heap array and sorts it
+by moving 0-th item in the heap array to the i-th element of the for-loop. Each time the
 movement is conducted, the heap array is rebuilt with a smaller heap size.
 
 Heapsort is an asymptotically optimal comparison sort.
