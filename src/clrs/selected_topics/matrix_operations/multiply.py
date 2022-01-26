@@ -42,7 +42,7 @@ sub-matrices in Theta(n^2) time.
 From a practical point of view, Strassen's algorithm is often not the method of choice
 for matrix multiplication, for four reasons:
 
-1. The constant factor hidden in the Theta(n^(lg(7))) running time is larger than the
+1. The constant factor hidden in the Theta(n^(lg 7)) running time is larger than the
 constant factor in the Theta(n^3) time for the naive matrix multiplication algorithm.
 
 2. When the matrices are sparse, methods tailored for sparse matrices are faster.
