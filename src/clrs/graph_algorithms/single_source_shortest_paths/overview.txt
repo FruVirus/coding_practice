@@ -186,7 +186,8 @@ solution, then adding a constant d to the feasible solution is also a solution.
 To initialize the Bellman-Ford algorithm for solving a system of difference constraints,
 we also add a starting vertex 0 to the graph with edges from 0 to all other vertices in
 the same graph with a weight of 0. Then, we run the Bellman-Ford algorithm starting with
-vertex 0.
+vertex 0. Afterwards, the v.d attributes of all vertices (except vertex 0) contains the
+solution (i.e. 1.d contains the solution to x1, etc.).
 
 Thus, the intuition here is that the edge weights provide the upper bound for the
 inequalities. Running Bellman-Ford to produce the shortest paths will then set the "d"
