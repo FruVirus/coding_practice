@@ -12,7 +12,7 @@ Bucket sort divides the interval [0, 1) into n equal-sized sub-intervals, or buc
 and then distributes the n input numbers into the buckets. Since the inputs are
 uniformly and independently distributed over [0, 1), we do not expect many numbers to
 fall into each bucket. To produce the output, we simply sort the numbers in each bucket
-and then go through the buckets in order, list the elements in each.
+and then go through the buckets in order, listing the elements in each.
 
 NB: Counting sort cannot be used here since we use the keys as indices in counting sort.
 In bucket sort, the keys are floating point numbers.
