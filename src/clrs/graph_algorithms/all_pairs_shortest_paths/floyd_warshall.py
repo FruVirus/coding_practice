@@ -150,8 +150,8 @@ class FloydWarshall(Graph):
             for i in range(self.num_vertices):
                 for j in range(self.num_vertices):
                     if d[i][j] > d[i][k] + d[k][j]:
-                        d[i][j] = d[i][k] + d[k][j]
                         self.pred[i][j] = self.pred[k][j]
+                        d[i][j] = d[i][k] + d[k][j]
         return d
 
     def print_path(self, s, v):
