@@ -12,8 +12,8 @@ vertices. If the DAG contains a path from vertex u to vertex v, then u precedes 
 topological sort. We make just one pass over the vertices in the topologically sorted
 order. As we process each vertex, we relax each edge that leaves the vertex.
 
-After calling bellman_ford(), calling print_path(s, v) will print the shortest path
-between the source s and a given vertex v in the graph.
+After calling dag(), calling print_path(s, v) will print the shortest path between the
+source s and a given vertex v in the graph.
 
 The total number of paths in a DAG can be computed by counting the number of paths whose
 start point is at each vertex v. Assume that initially, we have v.paths = 0 for all v in
