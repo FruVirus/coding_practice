@@ -5,7 +5,7 @@
 Suppose w have an integer n that we wish to factor, that is, to decompose into a product
 of primes. The Miller Rabin primality test may tell us that n is composite, but it does
 not tell us the prime factors of n. Factoring a large integer n seems to be much more
-difficult than simpy determining whether n is prime of composite.
+difficult than simpy determining whether n is prime or composite.
 
 Pollard's rho heuristic
 -----------------------

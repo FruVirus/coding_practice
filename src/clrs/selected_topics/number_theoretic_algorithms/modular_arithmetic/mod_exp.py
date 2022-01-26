@@ -47,7 +47,7 @@ For example:
 
 6^2 = 1 mod 35
 
-35 does not divide (6 - 1) or (6 + 1); there, 35 is composite
+35 does not divide (6 - 1) or (6 + 1); therefore, 35 is composite
 
 Raising to powers with repeated squaring
 ----------------------------------------
@@ -83,7 +83,7 @@ b = 17, both of which are perfectly reasonable values. In this example, a is 77 
 in length and b is 2 digits in length, but the value a^b is 1,304 decimal digits in
 length. Such calculations are possible on modern computers, but the sheer magnitude of
 such numbers causes the speed of calculations to slow considerably. As a and b increase
-even further to provide better security, the value be becomes unwieldy.
+even further to provide better security, the value becomes unwieldy.
 
 Keeping the numbers smaller requires additional modular reduction operations, but the
 reduced size makes each operation faster, saving time (as well as memory) overall.

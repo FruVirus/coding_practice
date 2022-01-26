@@ -16,6 +16,7 @@ Time
 ----
 
 is_prime(): O(n).
+next_prime(): Proportional to the number calls made to is_prime().
 """
 
 

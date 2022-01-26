@@ -14,10 +14,10 @@ more than one such solution.
 2. The equation either has d distinct solutions modulo n, where d = gcd(a, n), or it has
 no solutions.
 3. If d | b, then the equation has as one of its solutions the value x0, where
-x0 = x'(b / d) mod n and x' is the x coefficient returned by gcd(a, n).
+x0 = x' * (b / d) mod n and x' is the x coefficient returned by gcd(a, n).
 4. If the equation is solvable (i.e., d | b, where d = gcd(a, n) and x0 is any
 solution), then the equation has exactly d distinct solutions, modulo n, given by
-xi = x- + i(n / d) for i = 0, 1, ..., d - 1.
+xi = x' + i * (n / d) for i = 0, 1, ..., d - 1.
 
 If gcd(a, n) = 1, then this means that a and n are relatively prime.
 
