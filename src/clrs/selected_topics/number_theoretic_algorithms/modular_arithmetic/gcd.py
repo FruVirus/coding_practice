@@ -67,11 +67,11 @@ def gcd(a, b):
 
 
 def gcd_binary(a, b):
-    if a % 2 == b % 2 == 0:
+    if a & 1 == b & 1 == 0:
         d, x, y = gcd(a >> 1, b >> 1)
-        return 2 * d, x, y
-    if a % 2 == 0 or b % 2 == 0:
-        if b % 2 != 0:
+        return d << 1, x, y
+    if a & 1 == 0 or b & 1 == 0:
+        if b & 1 != 0:
             a, b = b, a
         return gcd(a, b >> 1)
     return gcd((a - b) >> 1, b)
