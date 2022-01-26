@@ -11,9 +11,9 @@ The Chinese remainder theorem has two major applications. Let the integer n be f
 as n = n_1 * n_2 * ... * n_k, where the factors n_i are pairwise relatively prime.
 First, the Chinese remainder theorem is a descriptive "structure theorem" that describes
 the structure of Z_n as identical to that of the Cartesian product
-Z_n1, x Z_n2 x ... x Z_nk with component-wise addition and multiplication modulo n_i in
-the i-th component. Second, this description helps us to design efficient algorithms,
-since working in each of the systems Z_ni can be more efficient (in terms of bit
+Z_n_1, x Z_n_2 x ... x Z_n_k with component-wise addition and multiplication modulo n_i
+in the i-th component. Second, this description helps us to design efficient algorithms,
+since working in each of the systems Z_n_i can be more efficient (in terms of bit
 operations) than working modulo n.
 
 Theorem 31.27 (Chinese remainder theorem)
@@ -23,13 +23,13 @@ correspondence
 
 a <--> (a_1, a_2, ..., a_k), (31.27)
 
-where a is in Z_n, a_i is in Z_ni, and
+where a is in Z_n, a_i is in Z_n_i, and
 
 a_i = a mod n_i
 
 for i = 1, 2, ..., k. Then, mapping (31.27) is a one-to-one correspondence (bijection)
-between Z_n and the Cartesian product Z_n1 x Z_n2 x ... x Z_nk. Operations performed on
-the elements of Z_n can be equivalently performed on the corresponding k-tuples by
+between Z_n and the Cartesian product Z_n_1 x Z_n_2 x ... x Z_n_k. Operations performed
+on the elements of Z_n can be equivalently performed on the corresponding k-tuples by
 performing the operations independently in each coordinate position in the appropriate
 system.
 
@@ -45,7 +45,7 @@ a_1 = 17 mod 5 = 2
 a_2 = 17 mod 7 = 3
 
 As a practical application, if we have many computations to perform a in Z_n (e.g., RSA
-signing and decryption), we can convert a into (a_1, a_2, ..., a_k), where a_i in Z_ni
+signing and decryption), we can convert a into (a_1, a_2, ..., a_k), where a_i in Z_n_i
 and do all the computations on the individual components a_i instead before converting
 back. This is often cheaper because for many algorithms, doubling the size of the input
 more than doubles the running time.
