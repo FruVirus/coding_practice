@@ -109,7 +109,7 @@ solution is an optimal solution. The values of the slack variables in the final 
 measure how much slack remains in the original inequalities. Even though the
 coefficients in the original slack form are integral, the coefficients in the other
 linear programs are not necessarily integral, and the intermediate solutions are not
-necessarily integral. Furthermore, the final solution to a linear progrma need not be
+necessarily integral. Furthermore, the final solution to a linear program need not be
 integral.
 
 Pivoting
@@ -156,7 +156,7 @@ variable x_e, whose coefficient in the objective function is positive, as the en
 variable.
 3. Next, we check each constraint and pick the one that most severely limits the amount
 by which we can increase x_e without violating any of the non-negativity constraints;
-the basic variable associated with this constraint ix x_l. If none of the constraints
+the basic variable associated with this constraint is x_l. If none of the constraints
 limits the amount by which the entering variable can increase, the algorithm returns
 "Unbounded!". Otherwise, we exchange the roles of the entering and leaving variables
 by calling the procedure pivot().
