@@ -57,14 +57,14 @@ Complexity
 
 The running time of Prim's algorithm depends on how we implement the min-priority queue.
 If we implement the queue as a binary min-heap, we can build the heap in O(V) time. The
-main while-loop executes |V| times, and since each extract() operation takes O(lg(V))
-time, the total time for all calls to extract() is (V * lg(V)). The inner while-loop
+main while-loop executes |V| times, and since each extract() operation takes O(lg V)
+time, the total time for all calls to extract() is (V * lg V). The inner while-loop
 executes O(E) times altogether, since the sum of the lengths of all adjacency lists is
-2 |E|. Within the inner while-loop, we can implement the test for membership in the
+2 * |E|. Within the inner while-loop, we can implement the test for membership in the
 queue in constant time by keeping a bit for each vertex that tells whether or not it is
 in the queue, and updating the bit when the vertex is removed from the queue. The
-change() operation takes O(lg(V)) time. Thus, the total time for Prim's algorithm is
-O(V * lg(V) + E * lg(V)) = O(E * lg(V)), which is asymptotically the same as Kruskal's
+change() operation takes O(lg V) time. Thus, the total time for Prim's algorithm is
+O(V * lg V + E * lg V) = O(E * lg(V)), which is asymptotically the same as Kruskal's
 algorithm.
 
 Time
