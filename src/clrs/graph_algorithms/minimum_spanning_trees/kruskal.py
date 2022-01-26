@@ -55,7 +55,10 @@ Kruskal's algorithm works as follows:
 For a disconnected graph, Kruskal's algorithm will NOT find the MST for the overall
 graph but it MIGHT find the MST for EACH component.
 
-
+Two vertices A and B start off as a separate tree. Since they are not the same
+component, they are joined together to form the same component. Afterwards, if one of
+the two vertices is encountered again, it will not be added to the minimum spanning tree
+if it belongs to an existing component already.
 
 Complexity
 ==========
