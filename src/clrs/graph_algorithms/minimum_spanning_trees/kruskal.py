@@ -55,19 +55,21 @@ Kruskal's algorithm works as follows:
 For a disconnected graph, Kruskal's algorithm will NOT find the MST for the overall
 graph but it MIGHT find the MST for EACH component.
 
+
+
 Complexity
 ==========
 
 Kruskal's algorithm selects a minimum weight edge out of the set of edges |E| and it has
 to do this selection |V| - 1 times. Thus, its running time is O(|V| * |E|). However,
 Kruskal's algorithm can be improved by keeping edges in a min-heap data structure.
-Deletion from a min-heap if O(lg(n)) and min-heaps always return the minimum value in
+Deletion from a min-heap is O(lg n) and min-heaps always return the minimum value in
 constant time.
 
-Thus, by using min-heaps, Kruskal's algorithm can be O(E * lg(V)).
+Thus, by using min-heaps, Kruskal's algorithm can be O(E * lg V).
 
 By using a disjoint-set data structure, the running time of Kruskal's algorithm is still
-O(E * lg(V)).
+O(E * lg V).
 
 Time
 ----
@@ -84,8 +86,7 @@ class Kruskal(Graph):
         mst = set()
         self.make_set()
         for u, v in dict(sorted(self.weights.items(), key=lambda x: x[1])):
-            u, v = self.vertices[u], self.vertices[v]
-            if self.find_set(u) is not self.find_set(v):
-                mst.add((u.k, v.k))
-                self.union(u, v)
+            if not self.same_component(u, v):
+                mst.add((u, v))
+                self.union(self.vertices[u], self.vertices[v])
         return mst
