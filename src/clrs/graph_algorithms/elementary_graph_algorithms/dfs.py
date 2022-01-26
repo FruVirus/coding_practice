@@ -10,7 +10,7 @@ the original source vertex. If any undiscovered vertices remain, then DFS select
 them as a new source, and it repeats the search from that source. The algorithm repeats
 this entire process until it has discovered every vertex.
 
-As in BFS, whenever DFS discovers a vertex v during a scan of hte adjacency list of an
+As in BFS, whenever DFS discovers a vertex v during a scan of the adjacency list of an
 already discovered vertex u, it records this event by setting v's predecessor attribute
 v.p = u. Unlike BFS, whose predecessor subgraph forms a tree, the predecessor subgraph
 produced by DFS may be composed of several trees, because the search may repeat from
@@ -53,7 +53,7 @@ gray.
 Another important property of DFS is that discovery and finishing times have parenthesis
 structure. The history discovery and finishing times makes a well-formed expression in
 the sense that the parentheses are properly nested. In any DFS, for any two vertices u
-and v, either: 1) [u.d, u.f] and [v.d, v.f] are entirely disjoing and neither u nor v is
+and v, either: 1) [u.d, u.f] and [v.d, v.f] are entirely disjoint and neither u nor v is
 a descendant of the other in the depth-first forest, 2) [u.d, u.f] is contained entirely
 within [v.d, v.f] and u is a descendant of v in a depth-first tree, or 3) [v.d, v.f] is
 contained entirely within [u.d, u.f] and v is a descendant of u in a depth-first tree.
@@ -61,7 +61,7 @@ contained entirely within [u.d, u.f] and v is a descendant of u in a depth-first
 Vertex v is a proper descendant of vertex u in a depth-first forest for a graph G iff
 u.d < v.d < v.f < u.f.
 
-In a depth-first forest of a graph G = (V, E0, vertex v is a descendant of vertex u iff
+In a depth-first forest of a graph G = (V, E), vertex v is a descendant of vertex u iff
 at the time u.d that the search discovers u, there is a path from u to v consisting
 entirely of white vertices.
 
@@ -125,8 +125,8 @@ strongly connected components, such algorithms run separately on each one and th
 combine the solutions according to the structure of connections among components.
 
 A strongly connected component of a directed graph G = (V, E) is a maximal set of
-vertices C such that for every pair of vertices u and v in C, u and v are reachable from
-each other.
+vertices C such that for every pair of vertices u and v in C, we have both u -> v and
+v -> u; that is, vertices u and v are reachable from each other.
 
 The algorithm for finding the strongly connected components of a graph G = (V, E) uses
 the transpose of G. G and G.T have exactly the same strongly connected components: u and
@@ -163,7 +163,7 @@ The key steps to understanding why the SCC algorithm works:
 1. When we perform the second DFS on G.T, we start with the strongly connected component
 C whose finishing time f(C) is maximum.
 
-2. The search starts from some vertex x in C, and it visits all vertices in C
+2. The search starts from some vertex x in C, and it visits all vertices in C.
 
 3. G.T contains no edges from C to any other strongly connected component, and so the
 search from x will not visit vertices in any other component. Thus, the tree rooted at x
