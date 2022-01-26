@@ -18,7 +18,7 @@ Complexity
 Time
 ----
 
-rabin_karp(): Theta(m * m) preprocessing, Theta((n - m + 1) * m^2)/Theta(m^2 * n)
+rabin_karp2d(): Theta(m * m) preprocessing, Theta((n - m + 1) * m^2)/Theta(m^2 * n)
 worst/average case matching.
 """
 

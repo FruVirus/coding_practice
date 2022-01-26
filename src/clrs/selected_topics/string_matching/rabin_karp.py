@@ -17,10 +17,11 @@ T[s + 1...s + m], for s = 0, 1, ..., n - m. Certainly, t_s = p iff T[s + 1...s +
 P[1...m]; thus, s is a valid shift iff t_s = p. If we could compute p in time Theta(m)
 and all the t_s values in a total of Theta(n - m + 1) time, then we could determine all
 valid shifts s in time Theta(m) + Theta(n - m + 1) = Theta(n) by comparing p with each
-of the t_s values. In other words, we instead of comparing each individual character in
-the patter with each individual character in T[s + 1...s + m], we compute a decimal
+of the t_s values. In other words, instead of comparing each individual character in the
+pattern with each individual character in T[s + 1...s + m], we compute a decimal
 (i.e., hashed) representation of P with a decimal (i.e., hashed) representation of
-T[s + 1...s + m]. This comparison is faster since we're just comparing numbers.
+T[s + 1...s + m]. This comparison is faster since we're just comparing numbers instead
+of comparing strings where each character has to be compared against individually.
 
 p and t_s may be too large to work with conveniently. If P contains m characters, then
 we cannot reasonably assume that each arithmetic operation on p (which is m digits long)
@@ -31,10 +32,10 @@ computations with single-precision arithmetic. In general, with a d-ary alphabet
 {0, 1, ..., d - 1}, we choose q so that d * q fits within a computer word and adjust the
 hash equations to work modulo q.
 
-The solution of working modulo q is not perfect, however: t_s = p (mod q) does not imply
-that t_s = p. On the other hand, if t_s != p (mod q), then we definitely have that
-t_s != p, so that shift s is invalid. We can thus use the test t_s = p (mod q) as a fast
-heuristic test to rule out invalid shifts s. Any shift s for which t_s = p (mod q) must
+The solution of working modulo q is not perfect, however: t_s = p mod q does not imply
+that t_s = p. On the other hand, if t_s != p mod q, then we definitely have that
+t_s != p, so that shift s is invalid. We can thus use the test t_s = p mod q as a fast
+heuristic test to rule out invalid shifts s. Any shift s for which t_s = p mod q must
 be tested further to see whether s is really valid or we just have a spurious hit. This
 additional test explicitly checks the condition P[1...m] = T[s + 1...s + m]. If q is
 large enough, then we hope that spurious hits occur infrequently enough that the cost of
@@ -51,8 +52,9 @@ Intuition
 ---------
 
 Rabin Karp avoids checking pattern the against the string for every shift by checking
-the hash value of the text first. If the hash value of the text matches, then check the
-pattern against the text.
+the hash values of the pattern and text first. If the hash value of the pattern matches
+the hash pattern of the text, then we check the pattern characters against the text
+characters.
 
 pattern: dba
 
@@ -60,9 +62,9 @@ pattern: dba
 
 p[1] * 10^(m - 1) + p[2] * 10^(m - 2) + p[3] * 10^(m - 3) --> improved hash
 
-The base 10 comes from the example alphabet a - j <--> 1 - 10. If we use full alphabet,
-then we should use base 26. If we have lower case, upper case, digits, etc., then we
-should use the full ASCII base of 127.
+The base 10 comes from the example alphabet a - j <--> 1 - 10. If we use full (English)
+alphabet, then we should use base 26. If we have lower case, upper case, digits, etc.,
+then we should use the full ASCII base of 127.
 
 cca = 3 * 10^2 + 3 * 10^1 + 1 * 10^0 = 331 != 421
 
