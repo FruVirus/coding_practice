@@ -196,4 +196,4 @@ def rc(p, n, td=False):
     while n > 0:
         sol.append(s[n])
         n -= s[n]
-    return sol
+    return sol, sum(p[i - 1] for i in sol)
