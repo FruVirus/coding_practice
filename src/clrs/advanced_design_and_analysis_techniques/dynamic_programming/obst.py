@@ -58,9 +58,18 @@ The calculation of the w matrix involves prefixes that can be reused. For exampl
 w[0][2] = q[0] + p[1] + q[1] + p[2] + q[2]
 w[0][3] = q[0] + p[1] + q[1] + p[2] + q[2] + p[3] + q[3]
 
-The matrix e contains the expected cost of a subtree with keys k_i,...,k_j. The matrix w
-contains the sum of probabilities for a subtree with keys k_i,...,k_j. The matrix r
-contains the index r for which k_r is the root of an OBST containing keys k_i,...,k_j.
+The matrix e contains the expected cost of a subtree with keys k_i,...,k_j. If e[i][j]
+= e[1][2] = 0.90, then this means that the OBST with keys k_1 and k_2 has an expected
+cost of 0.90.
+
+The matrix w contains the sum of probabilities for a subtree with keys k_i,...,k_j.
+Element w[i][j] denotes the sum of all the probabilities in the subtree with keys
+k_i, ..., k_j. Thus, if p_1 = 0.15, p_2 = 0.10, q_0 = 0.05, q_1 = 0.10, and q_2 = 0.05,
+then w[0, 2] = 0.45 is the sum of all the p's and q's from 0 to 2.
+
+The matrix r contains the index r for which k_r is the root of an OBST containing keys
+k_i,...,k_j. If element r[i][j] = r[1][2] = 1, then this means that the OBST with keys
+k_1 and k_2 has k_1 as its root.
 
 Complexity
 ==========
