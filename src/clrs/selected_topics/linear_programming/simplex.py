@@ -254,6 +254,34 @@ If L is infeasible, the simplex algorithm returns "Infeasible!". If L is unbound
 simplex algorithm returns "Unbounded!". Otherwise, the simplex algorithm returns an
 optimal solution with a finite objective value.
 
+Intuition
+---------
+
+1. We start with a system of inequalities in standard form. Objective function is to
+maximize, all inequalities are <= inequalities and the non-negativity constraints and
+all >= constraints.
+2. We transform the standard form to the slack form. All inequalities become equalities
+with appropriate basic variable designations on the LHS.
+3. Our goal in each iteration of the simplex algorithm is to reformulate the linear
+program so that the basic solution has a greater objective value.
+4. At each iteration, we select a nonbasic variable x_e whose coefficient in the
+objective function is positive, and we increase the value of x_e as much as possible
+without violating any of the equality constraints.
+5. The variable x_e becomes basic, and some other variable x_l becomes nonbasic.
+6. The values of other basic variables and of the objective function may also change.
+7. If the simplex algorithm returns "Unbounded!", it means that increasing the objective
+value via any of the nonbasic variables results in all of the basic variables
+increasing without bound.
+8. In order to determine if a linear program has any feasible solutions to begin with,
+the initialize_simplex() procedure formulates an auxiliary linear program with a new
+variable x_0. The objective of the auxiliary linear program is to maximize -x_0. The
+original linear program has a feasible solution iff the optimal objective value of
+the auxiliary linear program is 0. If the simplex algorithm returns "Infeasible!", it
+means that the original linear program does not have a feasible solution at all.
+9. Otherwise, the initialize_simplex() procedure will return a slack form for which the
+basic solution is feasible and the simplex() procedure can use that slack form to start
+and the simplex() procedure will return an optimal solution.
+
 Complexity
 ==========
 
