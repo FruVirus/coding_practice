@@ -98,10 +98,10 @@ class HashChain:
         table, key_list = [None] * self.size, []
         for ll in self.table:
             if ll is not None:
-                head = ll.head
-                while head is not None:
-                    key_list.append(head.k)
-                    head = head.next
+                node = ll.head
+                while node is not None:
+                    key_list.append(node.k)
+                    node = node.next
         for k in key_list:
             self._insert(k, table)
         return table
