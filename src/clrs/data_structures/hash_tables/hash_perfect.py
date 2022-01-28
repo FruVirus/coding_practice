@@ -33,6 +33,7 @@ Complexity
 Time
 ----
 
+_create_table(): O(n + m).
 hash() and search(): O(1) in the worst case.
 
 Space
