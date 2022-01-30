@@ -23,8 +23,10 @@ The heapsort algorithm then repeats this process for the max-heap of size n - 1 
 a heap of size 2.
 
 sort() assumes that the unordered input array is already a max-heap array and sorts it
-by moving 0-th item in the heap array to the i-th element of the for-loop. Each time the
-movement is conducted, the heap array is rebuilt with a smaller heap size.
+by moving 0-th item in the heap array to the i-th element of the for-loop. Since the
+for-loop is being iterated in reverse, the maximum element is put into the last index
+of the heap array, and so on. Each time the movement is conducted, the heap array is
+rebuilt (with a smaller heap size) for the 0-th index..
 
 Heapsort is an asymptotically optimal comparison sort.
 
