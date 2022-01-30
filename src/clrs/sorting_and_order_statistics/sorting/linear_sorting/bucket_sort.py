@@ -23,8 +23,7 @@ Complexity
 Time
 ----
 
-bucket_sort(): O(n)/O(n^2) average/worst case using insertion sort. O(n * lg n) worst
-case if an optimal comparison sort is used.
+bucket_sort(): O(n)/O(n^2) average/worst case using insertion sort.
 
 Space
 -----
@@ -33,8 +32,8 @@ bucket_sort(): O(n) for the B array of buckets.
 """
 
 # Repository Library
-from src.clrs.sorting_and_order_statistics.sorting.comparison_sorting.merge_sort import (  # noqa: E501
-    merge_sort,
+from src.clrs.sorting_and_order_statistics.sorting.comparison_sorting.insertion_sort import (  # noqa: E501
+    insertion_sort,
 )
 
 
@@ -45,5 +44,6 @@ def bucket_sort(a):
         b[int(n * a[i])].append(a[i])
     for i in b:
         if i:
-            x.extend(merge_sort(i))
+            insertion_sort(i)
+            x.extend(i)
     return x
