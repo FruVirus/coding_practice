@@ -23,7 +23,8 @@ Complexity
 Time
 ----
 
-bucket_sort(): O(n) average case. O(n * lg n) if an optimal comparison sort is used.
+bucket_sort(): O(n)/O(n^2) average/worst case using insertion sort. O(n * lg n) worst
+case if an optimal comparison sort is used.
 
 Space
 -----
