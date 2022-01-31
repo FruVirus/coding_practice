@@ -5,9 +5,9 @@
 Greedy versus dynamic programming
 ---------------------------------
 
-In the (fractional) Knapsack problem, the setup is the same as the 0/1 Knapsack problem,
-except that we can take fractions of items, rather than having to make a binary (0/1)
-choice for each item.
+In the fractional knapsack problem, the setup is the same as the 0/1 knapsack problem,
+except that we can take fractions of items, rather than having to make a binary (i.e.,
+0/1) choice for each item.
 
 If we remove a weight w of one item j from the optimal load, the remaining load must be
 the most valuable load weighing at most W - w that we can take from n - 1 original items
