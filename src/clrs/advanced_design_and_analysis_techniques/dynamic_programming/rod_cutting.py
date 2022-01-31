@@ -27,13 +27,13 @@ shorter rods:
 r_n = max(p_n, r_1 + r_(n - 1), r_2 + r_(n - 2), ..., r_(n - 1) + r_1).  (15.1)
 
 The first argument, p_n, corresponds to making no cuts at all and selling the rod of
-length n as is. The other n - 1 arguments to max correspond to the maximum revenue
-obtained by making an initial cut of the rod into two pieces of size i and n - i, for
-each i = 1, 2, ..., n - 1, and then optimally cutting up those pieces further, obtaining
-revenues r_i and r_(n - i) from those two pieces. Since we don't know ahead of time
-which value of i optimizes revenue, we have to consider all possible values for i and
-pick the one that maximizes revenue. We also have the option of picking no i at all if
-we can obtain more revenue by selling the rod uncut.
+length n as is. The other n - 1 arguments to equation (15.1) correspond to the maximum
+revenue obtained by making an initial cut of the rod into two pieces of size i and
+n - i, for each i = 1, 2, ..., n - 1, and then optimally cutting up those pieces
+further, obtaining revenues r_i and r_(n - i) from those two pieces. Since we don't know
+ahead of time which value of i optimizes revenue, we have to consider all possible
+values for i and pick the one that maximizes revenue. We also have the option of picking
+no i at all if we can obtain more revenue by selling the rod uncut.
 
 Note that to solve the original problem of size n, we solve smaller problems of the same
 type, but of smaller sizes. Once we make the first cut, we may consider the two pieces
@@ -126,7 +126,7 @@ solved. Similarly, we can view the top-down method for dynamic programming as a
 "depth-first search" of the subproblem graph.
 
 The size of the subproblem graph G = (V, E) can help us determine the running time of
-the dynamic programming algorithm. Since we solve ach subproblem just once, the running
+the dynamic programming algorithm. Since we solve each subproblem just once, the running
 time is the sum of the times needed to solve each subproblem. Typically, the time to
 compute the solution to a subproblem is proportional to the out-degree of the
 corresponding vertex in the subproblem graph, and the number of subproblems is equal to
@@ -150,7 +150,7 @@ s[2] then gives the next cut to make, and so on.
 Complexity
 ==========
 
-The bottom-up and top-down versions have the same asymptotic running time. THe running
+The bottom-up and top-down versions have the same asymptotic running time. The running
 time of the bottom-up version is Theta(n^2), due to its doubly nested loop structure.
 The running time of the top-down version is also Theta(n^2) because a recursive call to
 solve a previously solved subproblem returns immediately. and we solve each subproblem
