@@ -49,10 +49,11 @@ computing A_(k + 1)...j, plus the cost of multiplying the results together. We m
 ensure that when we search for the correct place to split the product (i.e., the integer
 k), we have considered all possible places, so that we are sure of having examined the
 optimal one. Thus, the procedure iterates k through the range [i, j) to consider all
-possibilities. In addition, we only want to iterate/recurse through subproblems where
-the matrix chain has length greater than 1 (otherwise, the problem is trivial). In the
-bottom-up approach, the outer-most for-loop iterates l through chains of length 2 and
-greater and the top-down approach does not recurse if i == j.
+possibilities and we pick the k that gives the minimum cost. In addition, we only want
+to iterate/recurse through subproblems where the matrix chain has length greater than 1
+(otherwise, the problem is trivial). In the bottom-up approach, the outer-most for-loop
+iterates l through chains of length 2 and greater and the top-down approach does not
+recurse if i == j.
 
 The values in the m matrix determine how many multiplies are required for all
 combinations of multiplications. The diagonal elements are 0 since m[1][1] means that we
@@ -78,7 +79,7 @@ m[1][3] = min(A1 * (A2 * A3), (A1 * A2) * A3)
 The last addition in min() corresponds to the number of multiplies between A1 and the
 result of (A2 * A3) (or between the result of (A1 * A2) and A3).
 
-Thus, the m matrix holds the number of multiplies for every single possible
+Thus, the m matrix holds the minimum number of multiplies for every single possible
 parenthesization.
 
 The m matrix gives the costs of optimal solutions to subproblems, but they do not
