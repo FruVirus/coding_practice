@@ -65,7 +65,7 @@ cost of 0.90.
 The matrix w contains the sum of probabilities for a subtree with keys k_i,...,k_j.
 Element w[i][j] denotes the sum of all the probabilities in the subtree with keys
 k_i, ..., k_j. Thus, if p_1 = 0.15, p_2 = 0.10, q_0 = 0.05, q_1 = 0.10, and q_2 = 0.05,
-then w[0, 2] = 0.45 is the sum of all the p's and q's from 0 to 2.
+then w[0][2] = 0.45 is the sum of all the p's and q's from 0 to 2.
 
 The matrix r contains the index r for which k_r is the root of an OBST containing keys
 k_i,...,k_j. If element r[i][j] = r[1][2] = 1, then this means that the OBST with keys
