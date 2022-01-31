@@ -104,8 +104,9 @@ def obst_bu(p, q):
     return e, r, w
 
 
-def obst(r, i, j, last=0, sol=None):
-    sol = sol or []
+def obst(r, i=None, j=None, last=0, sol=None):
+    if sol is None:
+        i, j, sol = 0, len(r) - 1, []
     if i != j:
         node, parent = str(r[i][j]), str(last)
         if last == 0:

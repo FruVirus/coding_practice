@@ -33,7 +33,7 @@ def test_obst_bu():
         [0, 0, 0, 0, 0.05, 0.35],
         [0, 0, 0, 0, 0, 0.1],
     ]
-    assert obst(r, 0, 5, 0) == [
+    assert obst(r) == [
         "2 is the root",
         "1 is the left child of 2",
         "5 is the right child of 2",
@@ -64,7 +64,7 @@ def test_obst_bu():
         [0, 0, 0, 1, 3],
         [0, 0, 0, 0, 1],
     ]
-    assert obst(r, 0, 4) == [
+    assert obst(r) == [
         "2 is the root",
         "1 is the left child of 2",
         "3 is the right child of 2",
