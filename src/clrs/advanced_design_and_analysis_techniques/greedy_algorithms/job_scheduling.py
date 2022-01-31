@@ -50,7 +50,7 @@ problem of maximizing the sum of the penalties of the early tasks.
 Intuition
 ---------
 
-The penalty from not completing a job is sorted in decreasing order. If a job is not
+The penalties for not completing jobs are sorted in decreasing order. If a job is not
 completed, we incur its penalty. Each job must be completed within its deadline. Jobs
 with earlier deadlines need to be completed before jobs with later deadlines. Jobs with
 later deadlines can be completed earlier in the sequence but not later.
