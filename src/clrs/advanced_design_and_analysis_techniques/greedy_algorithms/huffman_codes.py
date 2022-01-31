@@ -45,8 +45,9 @@ An optimal code for a file is always represented by a full binary tree, in which
 non-leaf node has two children. The fixed-length code is not optimal since its tree is
 not a full binary tree. Since we can now restrict our attention to full binary trees,
 we can say that if C is the alphabet from which the characters are drawn and all
-character frequencies are positive, then the tree for an optimal prefix code has exactly
-|C| leaves, one for each letter of the alphabet, and exactly |C| - 1 internal nodes.
+character frequencies are positive (i.e., > 0), then the tree for an optimal prefix code
+has exactly |C| leaves, one for each letter of the alphabet, and exactly |C| - 1
+internal nodes.
 
 Constructing a Huffman code
 ---------------------------
