@@ -2,14 +2,15 @@
 Overview
 ========
 
-The objective of the (0/1) knapsack problem is to maximize the total profit in the
+The objective of the 0/1 knapsack problem is to maximize the total profit in the
 knapsack with a given weight limit. Given a list of items with corresponding profits and
 weights, which items should we include in the knapsack so that we maximize our profit
 without going over the given weight limit?
 
 Once we take an item, we gain profit but lose knapsack capacity. If we don't take an
-item, we keep the same profit but do not lose knapsack capacity. If taking an item puts
-up over the capacity limit, then the profit is the current profit without the item.
+item, we keep the same profit but do not lose knapsack capacity. In other words, if
+taking an item puts us over the capacity limit, then the profit is the current profit
+without the item.
 
 Note that we cannot take fractional amounts of an item. We either take the whole item or
 none of it; hence, this is known as the 0/1 knapsack problem.
@@ -34,7 +35,8 @@ regardless of the capacity.
 
 v[1][2] = 1 since we can take item 1 with weight 2 if we have a capacity of 2.
 Similarly, if we only take item 1, then v[1][[3:] = 1 since the total value in the
-knapsack remains the same.
+knapsack remains the same. Similarly, if we only have a capacity of 2, then v[:][2] = 1
+since the only item we can take with a capacity of 2 is item 1 and item 1's profit is 1.
 
 For the rest of the entries, we check whether we maximize our value without taking item
 i or else we take item i and add its value to the total value of the knapsack.
