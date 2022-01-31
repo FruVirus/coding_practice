@@ -18,7 +18,6 @@ optimal solution.
 
 Greedy algorithms do not always yield optimal solutions, but for many problems they do.
 
-
 16.2 Elements of the greedy strategy
 ====================================
 
