@@ -141,6 +141,13 @@ length---r[0] holds the maximum revenue obtained from cutting a rod of length 0
 (i.e., 0), r[1] holds the maximum revenue obtained from cutting a rod of length 1, and
 so on.
 
+For example:
+
+r_4 = max(p_1 + r_3, p_2 + r_2, p_3 + r_1, p_4 + r_0)
+r_3 = max(p_1 + r_2, p_2 + r_1, p_3 + r_0)
+r_2 = max(p_1 + r_1, p_2 + r_0)
+r_1 = max(p_1 + r_0)
+
 The s array holds the cut that must be made in order to obtain a given maximum revenue.
 For example, if r = [0, 1, 5, 8, 10] and s = [0, 1, 2, 3, 2], then the maximum revenue
 for a rod of length n = 4 is r[4] = 10 and the cut(s) that must be made start from s[4].
