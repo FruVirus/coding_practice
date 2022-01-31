@@ -38,7 +38,7 @@ Furthermore, we claim that we can always transform an arbitrary schedule into ca
 form, in which the early tasks precede the late tasks and we schedule the early tasks in
 order of monotonically increasing deadlines.
 
-The search for an optimal schedule thus reduces to finding a st A of tasks that we
+The search for an optimal schedule thus reduces to finding a set A of tasks that we
 assign to be early in the optimal schedule. Having determined A, we can create the
 actual schedule by listing the elements of A in order of monotonically increasing
 deadlines, then listing the late tasks in any order, producing a canonical ordering of
