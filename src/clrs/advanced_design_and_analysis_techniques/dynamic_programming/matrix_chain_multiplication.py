@@ -129,7 +129,7 @@ def mc_td(p, m, s, i, j):
 
 def mc(p, i=None, j=None, s=None, td=False):
     if s is None:
-        n, val = len(p) - 1, float("inf") if td else 0
+        n, val, i, j = len(p) - 1, float("inf") if td else 0, 0, len(p) - 2
         m, s = [[val] * n for _ in range(n)], [[0] * n for _ in range(n)]
         if td:
             mc_td(p, m, s, i, j)
