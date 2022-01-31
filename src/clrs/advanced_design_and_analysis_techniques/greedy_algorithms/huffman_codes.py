@@ -59,8 +59,9 @@ a set of |C| leaves and performs a sequence of |C| - 1 "merging" operations to c
 the final tree. The algorithm uses a min-priority queue keyed on the freq attribute to
 identify the two least-frequent objects to merge together. When we merge two objects,
 the result is a new object whose frequency is the sum of the frequencies of the two
-objects that were merged. The root of tree gives the total number of bits required to
-encode C.
+objects that were merged. This pattern of merging is an optimal merge pattern (i.e.,
+always merge the two objects with the lowest frequencies first). The root of the tree
+gives the total number of bits required to encode C.
 
 The codeword for a letter is the sequence of edge labels on the simple path from the
 root to the letter.
