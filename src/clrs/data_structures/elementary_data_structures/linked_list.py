@@ -124,7 +124,7 @@ The partition function for a doubly linked list is also similar to the partition
 function for arrays. Instead of returning the index of the pivot element, we return a
 pointer to the pivot element.
 
-Quicksort can be implemented for doubly linked Lists only when we can pick a fixed point
+Quicksort can be implemented for doubly linked lists only when we can pick a fixed point
 as the pivot (e.g., the last element). Random quicksort cannot be efficiently
 implemented for doubly linked lists. In particular, sorting algorithms that rely on a
 previous element (e.g., quicksort, insertion sort, etc.) cannot be implemented
@@ -172,15 +172,14 @@ Time
 ----
 
 SLL:
-    delete(), reverse(), search(), size(): O(n).
-    get_last(): O(n).
-    get_middle(): O(n).
+    delete(), get_last(), get_middle(), reverse(), search(), and size(): O(n).
     insert(): O(1).
     merge(): Theta(n).
     merge_sort(): Theta(n * lg n).
 DLL:
     insert(), delete(): O(1).
     partition(): O(n) = O(h - l + 1).
+    reverse(): O(n).
     quicksort(): O(n^2) worst case, O(n * lg n) expected case.
 
 Space
