@@ -42,10 +42,10 @@ i is already a max-heap and the procedure terminates. Otherwise, one of the two 
 has the largest element, and A[i] is swapped with A[index], which causes node i and its
 children to satisfy the max-heap property. The node at index, however, now has the
 original value A[i], and thus, the subtree rooted at index might violate the max-heap
-property. Consequently, we call heapify() recursively on that subtree. In other words,
-only half the length of the input array needs to be iterated over since a heap is a
-complete binary tree, which means that approximately half the nodes are leaves that do
-not need to be moved at all during the build process.
+property. Consequently, we call heapify() recursively on that subtree. In addition, only
+half the length of the input array needs to be iterated over since a heap is a complete
+binary tree, which means that approximately half the nodes are leaves that do not need
+to be moved at all during the build process.
 
 6.3 Building a heap
 -------------------
@@ -67,9 +67,10 @@ associated value called a key. A max-priority queue supports the following opera
 
 1. insert(S, x): inserts the element x into the set S.
 2. get(S): returns the element of S with the largest key.
-3. extract(S): removes and and returns the element of S with the largest key.
+3. extract(S): removes and returns the element of S with the largest key.
 4. change(S, x, k): increases the value of element x's key to the new value k, which is
 assumed to be at least as large as x's current key value.
+5. delete(S, i): deletes the element at index i in the set S.
 
 Among their other applications, we can use max-priority queues to schedule jobs on a
 shared computer. The max-priority queue keeps track of the jobs to be performed and
@@ -96,10 +97,11 @@ keys and continuing if the element's key is larger, and terminating if the eleme
 is smaller, since the max-heap property now holds.
 
 The procedure delete() deletes a key referenced by the index i. If the key at index i is
-greater than or equal to the key at the end of the array, then we exchange keys and
-re-heapify at index i to ensure that the subtree rooted at the parent of i remains a
-max-heap. Otherwise, we simply change the key value at index i to be the key value at
-the end of the array since we know that this operation will maintain the heap property.
+greater than or equal to the key at the end of the array, then we exchange keys at index
+i and index self.heap_size and re-heapify at index i to ensure that the subtree rooted
+at the parent of i remains a max-heap. Otherwise, we simply change the key value at
+index i to be the key value at index self.heap_size since we know that this operation
+will maintain the heap property.
 
 The procedure extract() extracts the maximum/minimum element from the heap. For
 max-heaps, the priority is that the largest number will always be maintained at the root
@@ -109,7 +111,7 @@ state. Vice versa for min-heaps.
 
 The procedure insert() takes as an input the key of the new element to be inserted into
 the max-heap. The procedure first sets the value of the heap array indexed by
-self.heap_size to +/-float("inf"). THen it calls change() to set the key of this new
+self.heap_size to +/-float("inf"). Then it calls change() to set the key of this new
 node to its correct value and maintain the max-heap property.
 
 Complexity
