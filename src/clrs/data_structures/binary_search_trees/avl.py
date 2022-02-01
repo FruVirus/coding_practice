@@ -11,7 +11,7 @@ until we get a tree with a minimum height.
 
 An AVL tree is a BST that balances itself every time an element is inserted or deleted
 via rotations. In addition to the invariants of a BST, each node of an AVL tree has the
-invariant property that the heights of the sub-tree rooted at its children differ by at
+invariant property that the heights of the sub-trees rooted at its children differ by at
 most one: balance factor = |height(node.left) - height(node.right)| <= 1.
 
 Every time we insert or delete a node, we need to update the height all the way up the
@@ -27,8 +27,8 @@ and x's grand-children only. If x's grand-children are not unbalanced, then we o
 to rotate x. Otherwise, we have to rotate x's grand-children first before rotating x.
 
 AVL trees are fast for searching but can be slow for insertion and deletion due to the
-number of rotations performed. If insertion/deletion is more common than searching, then
-RBTs are a better data structure.
+number of rotations performed during the insertion/deletion process. If
+insertion/deletion is more common than searching, then RBTs are a better data structure.
 
 Complexity
 ==========
