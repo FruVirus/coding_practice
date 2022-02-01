@@ -40,6 +40,52 @@ the array and progressing toward the right while keeping track of the maximum su
 seen so far. If csum becomes negative, then the index of clow is updated. If csum is
 greater than max_sum, then max_sum is updated to be csum.
 
+Intuition
+---------
+
+find_max_iterative() works since, if we know a maximum subarray of A[1...j], then a
+maximum subarray of A[1...j + 1] is either a maximum subarray of A[1...j] or a subarray
+of A[i...j + 1] for some 1 <= i <= j + 1.
+
+For example, consider a = [2, -5, 6, 10].
+
+The change in a is: a_ = [-7, 11, 4].
+
+i = 0: clow, csum = 0, -7 --> low, high, max_sum = 0, 0, -7
+i = 1: clow, csum = 1, 11 --> low, high, max_sum = 1, 1, 11
+i = 2: clow, csum = 1, 15 --> low, high, max_sum = 1, 2, 15
+
+Thus, the solution is that the sum of a[0] to a[3] gives the largest sum in the original
+array, a.
+
+Now consider a = [2, -5, 6, -10].
+
+The change in a is: a_ = [-7, 11, -16].
+
+i = 0: clow, csum = 0, -7 --> low, high, max_sum = 0, 0, -7
+i = 1: clow, csum = 1, 11 --> low, high, max_sum = 1, 1, 11
+i = 2: clow, csum = 1, -5 --> low, high, max_sum = 1, 1, 11
+
+Thus, the solution is that the sum of a[0] to a[2] gives the largest sum in the original
+array, a.
+
+Now consider a = [2, -5, 6, -10, 4, 20].
+
+The change in a is: a_ = [-7, 11, -16, 14, 16].
+
+i = 0: clow, csum = 0, -7 --> low, high, max_sum = 0, 0, -7
+i = 1: clow, csum = 1, 11 --> low, high, max_sum = 1, 1, 11
+i = 2: clow, csum = 1, -5 --> low, high, max_sum = 1, 1, 11
+i = 3: clow, csum = 3, 14 --> low, high, max_sum = 3, 3, 14
+i = 4: clow, csum = 3, 30 --> low, high, max_sum = 3, 4, 30
+
+Thus, the solution is that the sum of a[2] to a[5] gives the largest sum in the original
+array, a.
+
+In other words, the value for clow resets to i each time csum becomes negative, which
+means that the current low index is always the index that gave the previous negative
+change in the cumulative sum.
+
 Complexity
 ==========
 
