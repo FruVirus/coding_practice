@@ -60,10 +60,10 @@ it initially. The head of merged will be None but the pointer that is returned f
 merge() (i.e., merged.next) will contain the starting node to the actual merged linked
 list.
     2. Take a pointer, temp, and assign merged to it. temp is used to step through the
-next pointers for merged as we merge the sub-linked lists l and r. If we didn't have
-another variable to do this, then merged would contain the final node in the merged
-linked list but we would have no way of accessing the first node in the merged linked
-list.
+next pointers for merged as we construct the merger of the sub-linked lists l and r. If
+we didn't have another variable to do this, then merged would contain the final node in
+the merged linked list but we would have no way of accessing the first node in the
+merged linked list.
     3. If the key of l is less than or equal to (the equal to makes this sort stable)
 the key of r, then store l in next of temp and move l to the next of l.
     4. Otherwise, store r in next of temp and move r to the next of r.
