@@ -177,7 +177,7 @@ to two other nodes within the tree (nodes y and x).
 
 When we delete, we can violate property 5 if the color of the deleted node is BLACK. If
 the color of the deleted node is RED, then we just perform a normal (more or less) BST
-delete. WHen a fix is required, we care about the color of the sibling (w) of the node
+delete. When a fix is required, we care about the color of the sibling (w) of the node
 (x) that moves into the deleted node's (y) position. The four cases are then:
 
 1. x's sibling w is red.
