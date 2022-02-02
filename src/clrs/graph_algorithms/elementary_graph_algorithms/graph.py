@@ -10,7 +10,7 @@ structure of a graph.
 
 We can choose between two standard ways to represent a graph G = (V, E): as a collection
 of adjacency lists or as an adjacency matrix. Either way applies to both directed and
-undirected graphs. Because the adjacency -list representation provides a compact way to
+undirected graphs. Because the adjacency-list representation provides a compact way to
 represent sparse graphs---those for which |E| is much less than |V|^2---it is usually
 the method of choice. We may prefer an adjacency matrix representation, however, when
 the graph is dense---|E| is close to |V|^2---or when we need to be able to tell quickly
@@ -22,9 +22,9 @@ the vertices v such that there is an edge (u, v) in E. That is, Adj[u] contains 
 the vertices adjacent to u in G.
 
 If G is a directed graph, the sum of the lengths of all the adjacency lists is |E|. If G
-is an undirected graph, the sum of the lengths of all the adjacency lists is 2|E|. For
-both directed and undirected graphs, the adjacency-list representation has the desirable
-property that the amount of memory it requires it Theta(V + E).
+is an undirected graph, the sum of the lengths of all the adjacency lists is 2 * |E|.
+For both directed and undirected graphs, the adjacency-list representation has the
+desirable property that the amount of memory it requires it Theta(V + E).
 
 A potential disadvantage of the adjacency-list representation is that it provides no
 quicker way to determine whether a given edge (u, v) is present in the graph than to
@@ -46,12 +46,6 @@ Although the adjacency-list representation is asymptotically at least as space-e
 as the adjacency-matrix representation, adjacency matrices are simpler, and so we may
 prefer them when graphs are reasonably small. Moreover, adjacency matrices carry a
 further advantage for unweighted graphs: they require only one bit per entry.
-
-The adjacency list representation provides a compact way to represent sparse
-graphs---those for which |E| is much less than |V^2|---it is usually the method of
-choice. We may prefer an adjacency matrix representation, however, when the graph is
-dense---|E| is close to |V^2|---or when we need to be able to tell quickly if there is
-an edge connecting two given vertices.
 
 Graphs can also be weighted. The graph edges can each have an associated weight,
 typically given by a weight function. We simply store the weight w(u, v) of the edge
@@ -78,7 +72,7 @@ by using disjoint-set data structures.
 
 connected_components() initially places each vertex v in its own set. Then, for each
 edge (u, v), it unites the sets containing u and v. By processing all the edges, two
-vertices are in teh same connected component iff the corresponding objects are in the
+vertices are in the same connected component iff the corresponding objects are in the
 same set.
 
 In a disjoint-set representation, each set is represented by rooted trees, with each
@@ -129,7 +123,7 @@ from vertex i to vertex j with all intermediate vertices in the set {1, 2, ..., 
 (i, j) in E_star iff t_ij^(n) = 1.
 
 On some computers, logical operations on single-bit values execute faster than
-arithmetic operations on inger words of data. Moreover, because the direct
+arithmetic operations on integer words of data. Moreover, because the direct
 transitive-closure algorithm uses only boolean values rather than integer values, its
 space requirement is less than the Floyd-Warshall's algorithm by a factor corresponding
 to the size of a word of computer storage.
