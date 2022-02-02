@@ -25,7 +25,7 @@ Intuition
 When m = n^2, a hash function chosen randomly from the set of universal hash functions
 is more likely than not to have no collisions. However, one must still perform some
 trial and error before finding a collision-free hash function for a given set of
-(static) keys. The values in A_LIST and B_LIST are pre-specified from trial and error.
+(static) keys. The values in A and B are pre-specified from trial and error.
 
 Complexity
 ==========
