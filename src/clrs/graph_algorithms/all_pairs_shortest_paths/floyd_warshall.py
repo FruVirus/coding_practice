@@ -104,8 +104,8 @@ negative-weight cycle iff a main diagonal entry is < 0 for some vertex i. Since 
 is a path weight from i to itself, if it is negative, then this means that there is a
 path from i to itself (i.e., a cycle) with negative weight. Note that the values in the
 d matrix never increase during the Floyd-Warshall algorithm. Initially, the values are
-either 0 along the main diagonal. Each iteration sets a value in the d matrix whose
-minimum value is always non-negative.
+0 along the main diagonal and float("inf") everywhere else. Each iteration sets a value
+in the d matrix whose minimum value is always non-negative.
 
 Complexity
 ==========
