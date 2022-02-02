@@ -98,7 +98,7 @@ another gray vertex has reached an ancestor. If u.d < v.d, the edge(u, v) is a f
 edge; otherwise, it is a cross edge.
 
 An undirected graph may entail some ambiguity in how we classify edges, since (u, v) and
-(v, u) are really the same edge. IN such a case, we classify the edge as the first type
+(v, u) are really the same edge. In such a case, we classify the edge as the first type
 in the classification list that applies. Equivalently, we classify the edge according to
 whichever of (u, v) or (v, u) the search encounters first. Forward and cross edges never
 occur in a DFS of an undirected graph.
@@ -120,7 +120,7 @@ A directed graph G is acyclic iff a DFS of G yields no back edges.
 
 A classic application of DFS is to decompose a directed graph into its strongly
 connected components using two depth-first searches. Many algorithms that work with
-directed graphs being with such a decomposition. After decomposing the graph into
+directed graphs begin with such a decomposition. After decomposing the graph into
 strongly connected components, such algorithms run separately on each one and then
 combine the solutions according to the structure of connections among components.
 
@@ -212,8 +212,8 @@ BFS usually serves to find shortest-path distances (and the associated predecess
 subgraph) from a given source whereas DFS is often a subroutine in other algorithms.
 
 Unlike BFS, whose predecessor subgraph forms a tree, the predecessor subgraph produced
-by DFS may be composed of several trees, because the search amy repeat from multiple
-sources. There, the predecessor subgraph of DFS forms a depth-first forest, comprising
+by DFS may be composed of several trees, because the search may repeat from multiple
+sources. Thus, the predecessor subgraph of DFS forms a depth-first forest, comprising
 several depth-first trees.
 
 DFS guarantees that each vertex ends up in exactly one depth-first tree, so that these
