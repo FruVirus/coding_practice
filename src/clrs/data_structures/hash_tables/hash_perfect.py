@@ -51,8 +51,8 @@ from src.clrs.selected_topics.number_theoretic_algorithms.numerical_methods.next
 )
 
 # Define globals.
-A_LIST = [0, None, 10, None, None, 0, None, 23, None]
-B_LIST = [0, None, 18, None, None, 0, None, 88, None]
+A = [0, None, 10, None, None, 0, None, 23, None]
+B = [0, None, 18, None, None, 0, None, 88, None]
 
 
 class HashPerfect:
@@ -87,7 +87,7 @@ class HashPerfect:
 
     def hash(self, k):
         hash_value = self._get_hash_value(k=k)
-        a, b, index = A_LIST[hash_value], B_LIST[hash_value], None
+        a, b, index = A[hash_value], B[hash_value], None
         if isinstance(self.table[hash_value], list):
             index = self._get_hash_value(a, b, len(self.table[hash_value]), k=k)
         return hash_value, index
