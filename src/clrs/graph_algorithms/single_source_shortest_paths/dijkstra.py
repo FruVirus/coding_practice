@@ -55,8 +55,8 @@ operations: insert(), extract(), and change(). The algorithm calls both insert()
 extract() once per vertex. Because each vertex u in V is added to set S exactly once,
 each edge in the adjacency list is examined in the inner while-loop exactly once during
 the course of the algorithm. Since the total number of edges in all the adjacency lists
-is |E|, the inner while-loop iterates a total of |E| times, and thus the algorithm
-calls change() at most |E| times overall.
+is |E| (since we are dealing with directed graphs), the inner while-loop iterates a
+total of |E| times, and thus the algorithm calls change() at most |E| times overall.
 
 If we maintain the min-priority queue by taking advantage of the vertices being numbered
 1 to |V|, we can simply store v.d in the v-th entry of an array. Each insert() and
