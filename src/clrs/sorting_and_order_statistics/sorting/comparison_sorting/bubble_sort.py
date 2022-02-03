@@ -9,6 +9,8 @@ bubble_sort() works backwards through the array N times, where N is the number o
 in the array. For each backwards pass, we compare two adjacent items in the array and
 swap their places if necessary.
 
+Bubble sort is stable.
+
 Complexity
 ==========
 
