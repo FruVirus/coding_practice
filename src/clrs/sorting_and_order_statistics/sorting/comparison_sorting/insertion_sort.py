@@ -16,7 +16,7 @@ The input array A contains the sorted output sequence when the insertion sort pr
 is finished.
 
 We iterate over each item in the array in the for-loop, beginning with the second item
-in the array., In the while-loop, we compare each previous item in the array with the
+in the array. In the while-loop, we compare each previous item in the array with the
 current item. If the previous item is smaller than the current item, then we perform a
 swap of the two items and decrement the index position of the previous item. By swapping
 and decrementing the index position of the previous item, we continuously move the i-th
