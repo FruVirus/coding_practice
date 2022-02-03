@@ -15,8 +15,6 @@ array A, with at most a constant number of them stored outside the array at any 
 The input array A contains the sorted output sequence when the insertion sort procedure
 is finished.
 
-Insertion sort is a stable sorting algorithm.
-
 We iterate over each item in the array in the for-loop, beginning with the second item
 in the array., In the while-loop, we compare each previous item in the array with the
 current item. If the previous item is smaller than the current item, then we perform a
@@ -28,6 +26,8 @@ NB: Even if we use binary search to find each insertion point, the complexity is
 O(n^2). While binary insertion sorting improves the time it takes to find the right
 position for the next element being inserted, it may still take O(n) time to perform the
 swaps necessary to shift it into place.
+
+Insertion sort is stable.
 
 Complexity
 ==========
