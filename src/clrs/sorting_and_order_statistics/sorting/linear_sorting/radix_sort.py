@@ -2,7 +2,7 @@
 8.3 Radix sort
 ==============
 
-Radix sort sorts numbers based on least significant digits first. Only d passes through
+Radix sort sorts numbers from the least to most significant digit. Only d passes through
 the array is required for an array of n numbers where each number has d digits.
 
 Radix sort is stable if the counting_sort() procedure is used.
