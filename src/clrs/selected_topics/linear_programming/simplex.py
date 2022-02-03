@@ -24,13 +24,45 @@ nothing more than rewriting the linear program in an equivalent slack form.
 29.1 Standard and slack forms
 =============================
 
+Standard form
+-------------
+
+In standard form, all the constraints are inequalities (i.e., <=) and the objective
+function is to maximize.
+
+An arbitrary linear program need not have non-negativity constraints on its variables,
+but standard form requires them (i.e., x_j >= 0 for j = 1, 2, ..., n).
+
+Converting linear programs into standard form
+---------------------------------------------
+
+A linear program might not be in standard form for any of four possible reasons:
+
+1. The objective function might be a minimization rather than a maximization.
+
+2. There might be variables without non-negativity constraints.
+
+3. There might be equality constraints, which have an equal sign rather than a
+less-than-or-equal-to sign.
+
+4. There might be inequality constraints, but instead of having a less-than-or-equal-to
+sign, they have a greater-than-or-equal-to sign.
+
 Converting linear programs into slack form
 ------------------------------------------
+
+In slack form, all the constraints are equalities (except for the non-negativity
+constraints on the variables).
 
 To efficiently solve a linear program with the simplex algorithm, we prefer to express
 it in a form in which some of the constraints are equality constraints. More precisely,
 we shall convert it into a form in which the non-negativity constraints are the only
 inequality constraints, and the remaining constraints are equalities.
+
+In slack form, each equation has the same set of variables on the RHS, and each of these
+variables are also the only ones that appear in the objective function. We call the
+variables on the LHS of the equalities basic variables and those on the RHS nonbasic
+variables.
 
 29.3 The simplex algorithm
 ==========================
@@ -49,11 +81,12 @@ feasible solution will be no less than that at the previous iteration, and usual
 greater. To achieve this increase in the objective value, we choose a nonbasic variable
 such that if we were to increase that variable's value from 0, then the objective value
 would increase, too. The amount by which we can increase the variable is limited by the
-other constraints. In particular, we raise it until some basic variable becomes 0. We
-then rewrite the slack form, exchanging the roles of that basic variable and the chosen
-nonbasic variable. Although we have used a particular setting of the variables to guide
-the algorithm, the algorithm does not explicitly maintain this solution. It simply
-rewrites the linear program until an optimal solution becomes "obvious".
+other equality constraints. In particular, we raise it until some basic variable becomes
+0. We then rewrite the slack form, exchanging the roles of that basic variable and the
+chosen nonbasic variable. Although we have used a particular setting of the variables to
+guide the algorithm, the algorithm does not explicitly maintain this solution. It simply
+rewrites the linear program until an optimal solution becomes "obvious" (i.e., the
+objective function can no longer be increased).
 
 In order to use the simplex algorithm, we must convert the linear program into slack
 form. In addition to being an algebraic manipulation, slack is a useful algorithmic
@@ -63,7 +96,8 @@ setting of its nonbasic variables if they cause the constraint's basic variable 
 become 0. Similarly, a setting of the nonbasic variables that would make a basic
 variable become negative violates that constraint. Thus, the slack variables explicitly
 maintain how far each constraint is from being tight, and so they help to determine how
-much we can increase values of nonbasic variables without violating any constraints.
+much we can increase values of nonbasic variables without violating any of the
+equality constraints.
 
 We focus on the basic solution: set all the (nonbasic) variables on the right-hand side
 to 0 and then compute the values of the (basic) variables on the left-hand side. An
@@ -95,7 +129,7 @@ variable, we must pick one that does not decrease the objective function.
 
 We call this operation a pivot. A pivot chooses a nonbasic variable x_e, called the
 entering variable, and a basic variable x_l, called the leaving variable, and exchanges
-their roles.
+their roles in all the equality constraints and the objective function.
 
 The linear program before and after the pivot is equivalent. We perform two operations
 in the simplex algorithm: rewrite equations so that variables move between the left-hand
@@ -127,7 +161,7 @@ form).
 The procedure pivot() works in three steps:
 
 1. It computes the coefficients of the equation for the new basic variable x_e.
-2. It updates the coefficients of the remaining constraints.
+2. It updates the coefficients of the remaining equality constraints.
 3. It updates the coefficients of the objective function.
 
 pivot() is only ever called when A[l][e] is not 0.
@@ -260,24 +294,32 @@ Intuition
 1. We start with a system of inequalities in standard form. Objective function is to
 maximize, all inequalities are <= inequalities and the non-negativity constraints and
 all >= constraints.
+
 2. We transform the standard form to the slack form. All inequalities become equalities
 with appropriate basic variable designations on the LHS.
+
 3. Our goal in each iteration of the simplex algorithm is to reformulate the linear
 program so that the basic solution has a greater objective value.
+
 4. At each iteration, we select a nonbasic variable x_e whose coefficient in the
 objective function is positive, and we increase the value of x_e as much as possible
 without violating any of the equality constraints.
+
 5. The variable x_e becomes basic, and some other variable x_l becomes nonbasic.
+
 6. The values of other basic variables and of the objective function may also change.
+
 7. If the simplex algorithm returns "Unbounded!", it means that increasing the objective
 value via any of the nonbasic variables results in all of the basic variables
 increasing without bound.
+
 8. In order to determine if a linear program has any feasible solutions to begin with,
 the initialize_simplex() procedure formulates an auxiliary linear program with a new
 variable x_0. The objective of the auxiliary linear program is to maximize -x_0. The
 original linear program has a feasible solution iff the optimal objective value of
 the auxiliary linear program is 0. If the simplex algorithm returns "Infeasible!", it
 means that the original linear program does not have a feasible solution at all.
+
 9. Otherwise, the initialize_simplex() procedure will return a slack form for which the
 basic solution is feasible and the simplex() procedure can use that slack form to start
 and the simplex() procedure will return an optimal solution.
