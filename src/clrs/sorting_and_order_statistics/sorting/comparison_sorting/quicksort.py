@@ -77,6 +77,8 @@ partition().
 NB: Although quicksort has in-place partition, it is NOT an in-place algorithm due to
 the extra stack space required with each recursive call.
 
+Quicksort is not stable.
+
 Complexity
 ==========
 
