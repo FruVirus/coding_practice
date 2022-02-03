@@ -149,7 +149,5 @@ def invert_lup(a):
     for i in range(n):
         b = [0] * n
         b[i] = 1
-        x = lup_solver(a, b, p, decomp=False)
-        for j in range(n):
-            inv[j][i] = x[j]
-    return inv
+        inv[i] = lup_solver(a, b, p, decomp=False)
+    return transpose(inv)
