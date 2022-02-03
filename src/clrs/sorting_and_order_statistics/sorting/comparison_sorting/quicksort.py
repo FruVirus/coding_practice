@@ -38,10 +38,10 @@ regions satisfy certain properties:
 
 For any array index k,
 
-1. If p <= k <= i, then A[k] <= x
-2. If i + 1 <= k <= j - 1, then A[k] > x
-3. If k = r, then A[k] = x
-4. The sub-array A[j...r - 1] can take on any values
+1. If p <= k <= i, then A[k] <= x --> The values in A[p...i] are all <= x.
+2. If i + 1 <= k <= j - 1, then A[k] > x --> The values in A[i + 1...j - 1] are all > x.
+3. If k = r, then A[k] = x --> The value A[k] = x.
+4. The sub-array A[j...r - 1] can take on any values.
 
 The final swap of partition() finishes up by swapping the pivot element with the
 leftmost element greater than x, thereby moving the pivot into its correct place in the
