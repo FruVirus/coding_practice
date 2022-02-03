@@ -119,7 +119,7 @@ Time
 ----
 
 is_pos_def(): Theta(n^2).
-llss(): Theta(n^3).
+least_squares(): Theta(n^3).
 """
 
 # pylint: disable=C0200
@@ -138,7 +138,7 @@ def is_pos_def(a):
     return True
 
 
-def llss(data, deg=2):
+def least_squares(data, deg=2):
     a = [[0] * (deg + 1) for _ in range(len(data))]
     for i, (x, y) in enumerate(data):
         for j in range(deg + 1):
