@@ -12,7 +12,7 @@ array to compute each item's final destination and moves the item there.
 The pigeonhole algorithm works as follows:
 
     1. Given an array of values to be sorted, set up an auxiliary array of initially
-empty "pigeonholes", one pigeonhole for each key in the range of the keys in the
+empty "pigeonholes", one pigeonhole for each key in the range of the keys (N) in the
 original array.
     2. Going over the original array, put each value into the pigeonhole corresponding
 to its key, such that each pigeonhole eventually contains a list of all values with that
