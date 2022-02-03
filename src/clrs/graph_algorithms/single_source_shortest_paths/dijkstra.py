@@ -11,7 +11,7 @@ Dijkstra's algorithm maintains a set S of vertices whose final shortest-path wei
 from the source s have already been determined. The algorithm repeatedly selects the
 vertex u in V - S with the minimum shortest-path estimate, adds u to S, and relaxes all
 edges leaving u. In the following implementation, we use a min-priority queue Q of
-vertices, keyed by their d values.
+vertices, keyed by their d attribute values.
 
 Each time the outer while-loop executes, a vertex u is extracted from Q = V - S and is
 added to set S. Vertex u, therefore, has the smallest shortest-path estimate of any
