@@ -11,16 +11,19 @@ array.
 
 The first for-loop inspects each input element. If the value of an input element is i,
 we increment C[i]. Thus, after the first for-loop C[i] holds the number of input
-elements equal to i for each integer i = 0, 1, ..., k. The second for-loop determines
-for each i = 0, 1, ..., k, how many input elements are less than or equal to i by
-keeping a running sum of the array C. The third for-loop places each element A[j] into
-its correct sorted position in the output array B. If all n elements are distinct, then
-when we first enter the third for-loop, for each A[j], the value C[A[j]] is the correct
-final position of A[j] in the output array, since there are C[A[j]] elements less than
-or equal to A[j]. Because the elements might not be distinct, we decrement C[A[j]] each
-time we place a value A[j] into the B array. Decrementing C[A[j]] causes the next input
-element with a value equal to A[j], if one exists, to go to the position immediately
-before A[j] in the output array.
+elements equal to i for each integer i = 0, 1, ..., k.
+
+The second for-loop determines for each i = 0, 1, ..., k, how many input elements are
+less than or equal to i by keeping a running sum of the array C.
+
+The third for-loop places each element A[j] into its correct sorted position in the
+output array B. If all n elements are distinct, then when we first enter the third
+for-loop, for each A[j], the value C[A[j]] is the correct final position of A[j] in the
+output array, since there are C[A[j]] elements less than or equal to A[j]. Because the
+elements might not be distinct, we decrement C[A[j]] each time we place a value A[j]
+into the B array. Decrementing C[A[j]] causes the next input element with a value equal
+to A[j], if one exists, to go to the position immediately before A[j] in the output
+array.
 
 An important property of counting sort is that it is stable: numbers with the same value
 appear in the output array in the same order as they do in the input array. That is, it
@@ -35,14 +38,14 @@ Counting sort's stability is the reason why it's also used as a subroutine in ra
 sort.
 
 NB: For radix sort, counting sort makes use of the base and exp arguments and
-incrementally sorts by least significant digit. If counting_sort() is used to sort a
-given array with provided base and exp arguments, it will NOT always sort correctly
-since counting_sort() is stable. For example, sorting the array
+incrementally sorts from least to most significant digit. If counting sort is used to
+sort a given array with provided base and exp arguments, it will NOT always sort
+correctly since counting sort is stable. For example, sorting the array
 [329, 457, 657, 839, 436, 720, 355] with base = 10 and exp = 100 will result in
 [329, 355, 457, 436, 657, 720, 839] since 457 came before 436 in the original array and
-their most significant digit is the same (i.e, 4) and counting_sort is a stable sorting
-algorithm. In other words, counting_sort() only sorts properly if it is ITERATIVELY
-called with increasing significant digit.
+their most significant digit is the same (i.e, 4) and counting sort is a stable sorting
+algorithm. In other words, counting sort only sorts properly if it is ITERATIVELY called
+with increasing significant digit.
 
 Counting sort is stable.
 
