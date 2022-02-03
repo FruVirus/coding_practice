@@ -5,7 +5,7 @@
 Radix sort sorts numbers from the least to most significant digit. Only d passes through
 the array is required for an array of n numbers where each number has d digits.
 
-Radix sort is stable if the counting_sort() procedure is used.
+Radix sort is stable if the counting sort is used as the underlying sorting procedure.
 
 Complexity
 ==========
