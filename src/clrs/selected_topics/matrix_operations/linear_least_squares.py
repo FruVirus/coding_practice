@@ -36,7 +36,7 @@ determine a function F(x) such that the approximation errors
 eta_i = F(x_i) - y_i
 
 are small for i = 1, 2, ..., m. The form of the function F depends on the sub-problem at
-hand. Here, we assume that it has the form a linearly weighted sum, where the number
+hand. Here, we assume that it has the form of a linearly weighted sum, where the number
 of functions and the specific basis functions are chosen based on knowledge of the
 problem at hand. A common choice is:
 
@@ -71,8 +71,8 @@ eta = Ac - y is the m-vector of approximation errors.
 
 To minimize approximation errors, we choose to minimize the norm of the error vector
 eta, which gives us a least-squares solution. We can then minimize the norm of the error
-vector eta by differentiating then norm squared with respect to each c_k and then
-setting the result to 0.
+vector eta by differentiating the norm squared with respect to each c_k and then setting
+the result to 0.
 
 The n equations then are equivalent to a single matrix equation:
 
