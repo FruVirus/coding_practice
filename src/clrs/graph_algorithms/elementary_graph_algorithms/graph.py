@@ -171,7 +171,7 @@ class Graph:
         self.directed = directed
         self.edge_types = {}
         self.edges = set()
-        self.is_dag = True
+        self.is_dag = directed
         self.num_vertices = num_vertices
         self.vertices = {}
         self.weights = {}
