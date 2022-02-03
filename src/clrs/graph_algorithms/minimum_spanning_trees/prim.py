@@ -44,10 +44,10 @@ Prims's algorithm works as follows:
 newly selected edge does NOT connect to the already selected vertices --> this forms and
 maintains a single tree with no cycles.
 3. Note that although a non-light edge might be added to the tree, it can be overwritten
-later on by an edge with a lower weight. The heap queue is sorted by the key attribute,
-which corresponds to the lowest edge weight found so far. When we do a change()
-operation on the heap queue, the heap queue is sorted such that the next item to be
-extracted is always the item with the lowest edge weight.
+later on by an edge with a lower weight. The heap queue is maintained by the key
+attribute, which corresponds to the lowest edge weight found so far. When we do a
+change() operation on the heap queue, the heap queue is reheapified such that the next
+item to be extracted is always the item with the lowest edge weight.
 
 For a disconnected graph, Prim's algorithm will NOT find the MST for the overall graph.
 It will only find the MST for one component of the graph.
@@ -60,12 +60,12 @@ If we implement the queue as a binary min-heap, we can build the heap in O(V) ti
 main while-loop executes |V| times, and since each extract() operation takes O(lg V)
 time, the total time for all calls to extract() is (V * lg V). The inner while-loop
 executes O(E) times altogether, since the sum of the lengths of all adjacency lists is
-2 * |E|. Within the inner while-loop, we can implement the test for membership in the
-queue in constant time by keeping a bit for each vertex that tells whether or not it is
-in the queue, and updating the bit when the vertex is removed from the queue. The
-change() operation takes O(lg V) time. Thus, the total time for Prim's algorithm is
-O(V * lg V + E * lg V) = O(E * lg(V)), which is asymptotically the same as Kruskal's
-algorithm.
+2 * |E| since we are operating with undirected graphs. Within the inner while-loop, we
+can implement the test for membership in the queue in constant time by keeping a bit for
+each vertex that tells whether or not it is in the queue, and updating the bit when the
+vertex is removed from the queue. The change() operation takes O(lg V) time. Thus, the
+total time for Prim's algorithm is O(V * lg V + E * lg V) = O(E * lg V), which is
+asymptotically the same as Kruskal's algorithm.
 
 Time
 ----
