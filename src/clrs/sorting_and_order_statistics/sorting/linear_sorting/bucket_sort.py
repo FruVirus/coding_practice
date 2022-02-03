@@ -17,6 +17,8 @@ and then go through the buckets in order, listing the elements in each.
 NB: Counting sort cannot be used here since we use the keys as indices in counting sort.
 In bucket sort, the keys are floating point numbers.
 
+Bucket sort is stable if the underlying sort is stable.
+
 Complexity
 ==========
 
