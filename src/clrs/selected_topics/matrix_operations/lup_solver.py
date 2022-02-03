@@ -51,8 +51,8 @@ elimination, the resulting matrix is in row echelon form.
 A matrix is full row rank when each of the rows of the matrix are linearly independent
 and full column rank when each of the columns of the matrix are linearly independent.
 For a square matrix these two concepts are equivalent and we say the matrix is full rank
-if all rows and columns are linearly independent. A square matrix is full rank if and
-only if its determinant is nonzero.
+if all rows and columns are linearly independent. A square matrix is full rank iff its
+determinant is nonzero.
 
 For a non-square matrix with m rows and n columns, it will always be the case that
 either the rows or columns (whichever is larger in number) are linearly dependent. Hence
