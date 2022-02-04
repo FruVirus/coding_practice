@@ -4,8 +4,8 @@
 
 The "Chinese remainder theorem" provides a correspondence between a system of equations
 modulo a set of pairwise relatively prime moduli (e.g., 3, 5, and 7) and an equation
-modulo their product (e.g., 105). All solutions are of the form 23 + 105 * k, for
-arbitrary integers k.
+modulo their product (e.g., 105). For example, for 3, 5, and 7, all solutions are of the
+form 23 + 105 * k, for arbitrary integers k.
 
 The Chinese remainder theorem has two major applications. Let the integer n be factored
 as n = n_1 * n_2 * ... * n_k, where the factors n_i are pairwise relatively prime.
