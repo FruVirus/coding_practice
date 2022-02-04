@@ -124,9 +124,6 @@ x = a_i mod n_i
 
 for i = 1, 2, ..., k, has a unique solution modulo n for the unknown x.
 
-For example, if x = 4 mod 5 and x = 5 mod 11, then these two equations have a unique
-solution of x = 49 modulo 55, where 55 = 5 * 11.
-
 Corollary 31.29
 
 If n_1, n_2, ..., n_k are pairwise relatively prime and n = n_1 * n_2 * ... * n_k, then
