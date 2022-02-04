@@ -8,7 +8,7 @@ fits into the word length of our machine. The naive implementation conducts 4
 multiplications of n / 2 numbers and has complexity Theta(n^2).
 
 Karatsuba's algorithm conducts three multiplications of n / 2 numbers and has complexity
-Theta(n^(lg 3).
+Theta(n^(lg 3)).
 
 Intuition
 ---------
