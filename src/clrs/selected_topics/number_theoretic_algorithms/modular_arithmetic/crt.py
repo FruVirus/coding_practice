@@ -44,6 +44,8 @@ components using 2 mod operations as follows:
 a_1 = 17 mod 5 = 2
 a_2 = 17 mod 7 = 3
 
+so that a = 17 <--> (2, 3).
+
 As a practical application, if we have many computations to perform a in Z_n (e.g., RSA
 signing and decryption), we can convert a into (a_1, a_2, ..., a_k), where a_i in Z_n_i
 and do all the computations on the individual components a_i instead before converting
@@ -100,7 +102,7 @@ a = (4 * c_1 + 2 * c_2) mod 35
 c_1 = m_1 * (inv(m_1) mod 5) --> m_1 = 35 / 5 = 7
 c_2 = m_2 * (inv(m_2) mod 7) --> m_2 = 35 / 7 = 5
 
-To solve for inv(a) = mod n, we recall that if gcd(a, n) = 1 (i.e., a and n are
+To solve for inv(a) = mod n, we recall that if gcd(a, n)[0] = 1 (i.e., a and n are
 relatively prime), then the unique solution to the equation ax = 1 mod n is the value
 returned by gcd()[1]. In other words, solving the equation ax = 1 mod n gives us the
 inverse of a mod n and that is what we want here. Thus, we can compute inv(a) mod n
@@ -123,7 +125,7 @@ x = a_i mod n_i
 for i = 1, 2, ..., k, has a unique solution modulo n for the unknown x.
 
 For example, if x = 4 mod 5 and x = 5 mod 11, then these two equations have a unique
-solution of x = 49 modulo 55 (5 * 11).
+solution of x = 49 modulo 55, where 55 = 5 * 11.
 
 Corollary 31.29
 
