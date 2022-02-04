@@ -4,8 +4,8 @@ Overview
 
 Newton's method is a root-finding algorithm which produces successively better
 approximations to the roots (or zeros) of a real-value function. The most basic version
-starts with a single-variable function f defined for a real variable x, the function's
-derivative f', and an initial guess x0 for a root of f. If the function satisfies
+starts with a single-variable function f defined for a real variable x, the derivative
+function f', and an initial guess x0 for a root of f. If the function satisfies
 sufficient assumptions and the initial guess is close, then:
 
     x1 = x0 - f(x0) / f'(x0)
