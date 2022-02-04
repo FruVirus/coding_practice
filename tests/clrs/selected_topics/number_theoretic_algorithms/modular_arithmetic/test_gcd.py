@@ -7,6 +7,7 @@ from clrs.selected_topics.number_theoretic_algorithms.modular_arithmetic.gcd imp
 
 
 def test_gcd():
+    assert gcd(-30, -21) == (-3, -2, 3)
     assert gcd(30, 21) == (3, -2, 3)
     assert gcd(21, 30) == (3, 3, -2)
     assert gcd(99, 78) == (3, -11, 14)
