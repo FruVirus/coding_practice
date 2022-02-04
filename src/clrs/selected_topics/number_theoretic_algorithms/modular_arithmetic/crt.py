@@ -11,7 +11,7 @@ The Chinese remainder theorem has two major applications. Let the integer n be f
 as n = n_1 * n_2 * ... * n_k, where the factors n_i are pairwise relatively prime.
 First, the Chinese remainder theorem is a descriptive "structure theorem" that describes
 the structure of Z_n as identical to that of the Cartesian product
-Z_n_1, x Z_n_2 x ... x Z_n_k with component-wise addition and multiplication modulo n_i
+Z_n_1 x Z_n_2 x ... x Z_n_k with component-wise addition and multiplication modulo n_i
 in the i-th component. Second, this description helps us to design efficient algorithms,
 since working in each of the systems Z_n_i can be more efficient (in terms of bit
 operations) than working modulo n.
