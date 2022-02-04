@@ -27,8 +27,8 @@ For example, if we are in base 10 and x = 1234, then n = 4 and
 denom = 10 ** (4 // 2) = 100. 1234 = 1234 // 100 + 1234 % 100 = 12 + 34 = 1234.
 
 In this case, z = x * y = (x // denom + x % denom) * (y // denom + y % denom) =
-(x1 + x0) * (y1 + y0) = x1 * y1 + x0 * y1 + x1 * y0 + x0 * y0. Thus, in the naive
-approach, there are four multiply operations to carry out.
+(x1 + x0) * (y1 + y0) = (x1 * y1) + (x0 * y1) + (x1 * y0) + (x0 * y0). Thus, in the
+naive approach, there are four multiply operations to carry out.
 
 In Karatsuba's approach, there are only three multiplies as follows:
 
