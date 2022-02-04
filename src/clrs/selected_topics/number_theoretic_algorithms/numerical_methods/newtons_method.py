@@ -24,7 +24,7 @@ gives:
 
 We start the process with some arbitrary initial value, x0. The method will usually
 converge, provided this initial guess is close enough to the unknown root and that
-f'(x0) != 0. The for-loop exits when the value of fxn is close enough to 0. f and dfdx
+f'(x) != 0. The for-loop exits when the value of fxn is close enough to 0. f and dfdx
 can be easily specified using lambda notation.
 
 Cubic Root
