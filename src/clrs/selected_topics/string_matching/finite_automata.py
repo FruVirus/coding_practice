@@ -133,7 +133,7 @@ The first "b" in T matches the first "b" in P --> the finite automaton transitio
 state 2.
 
 The first "c" in T does NOT match the second "a" in P --> the finite automaton
-transitions to state 0 since delta[3]["c"] = 0.
+transitions to state 0 since delta[2]["c"] = 0.
 
 The second "c" in T does NOT match the first "a" in P --> the finite automaton
 transitions tp state 0 since delta[0]["c"] = 0.
@@ -163,8 +163,8 @@ The next "a" in T matches the next "a" in P --> the finite automaton transitions
 state 7. Since 7 == len(P), we have an exact pattern match.
 
 The next "b" in T does NOT match the first "a" in P --> the finite automaton transitions
-to state 2 since delta[7]["b"] = 2. In this state, we have still matched with "ab" so
-far.
+to state 2 since delta[7]["b"] = 2. That is, in state 2, we have still matched with "ab"
+so far.
 
 The next "b" in T does NOT match with the second "a" in P --> the finite automaton
 transitions to state 0 since delta[2]["b"] = 0. Thus, we are back at the initial state
