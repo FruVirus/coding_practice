@@ -14,7 +14,7 @@ Trial division by all integers up to R is guaranteed to factor completely any nu
 to R^2. For the same amount of work, the Pollard's rho heuristic factors any number up
 to R^4 (unless we are unlucky).
 
-Since the procedure is only a heuristic, neither its running time or its success is
+Since the procedure is only a heuristic, neither its running time nor its success is
 guaranteed, although the procedure is highly effective in practice. Another advantage of
 the pollard-rho procedure is that it uses only a constant number of memory locations.
 
