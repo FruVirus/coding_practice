@@ -95,7 +95,7 @@ will transition between states. If we match all m characters in the pattern at a
 position in the text, then the finite automaton will transition to its final (accepting)
 state m. State m is the ONLY accepting state for a string-matching finite automaton. If
 we have a mismatch between the pattern and the text, then the finite automaton will
-transition to a previous state.
+transition to a previous state (which could be the initial state, q_0).
 
 The automaton is in state sigma(T_i) after scanning character T[i]. Since sigma(T_i) = m
 iff P is a suffix of T_i, the machine is in the accepting state m iff it has just
