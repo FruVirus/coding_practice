@@ -12,16 +12,17 @@ a length-k decimal number. The character string "31415" thus corresponds to the 
 number 31,415.
 
 Given a pattern P[1...m], let p denote its corresponding decimal value. In a similar
-manner, give a text T[1...n], let t_s denote the decimal value of the length-m substring
-T[s + 1...s + m], for s = 0, 1, ..., n - m. Certainly, t_s = p iff T[s + 1...s + m] =
-P[1...m]; thus, s is a valid shift iff t_s = p. If we could compute p in time Theta(m)
-and all the t_s values in a total of Theta(n - m + 1) time, then we could determine all
-valid shifts s in time Theta(m) + Theta(n - m + 1) = Theta(n) by comparing p with each
-of the t_s values. In other words, instead of comparing each individual character in the
-pattern with each individual character in T[s + 1...s + m], we compute a decimal
-(i.e., hashed) representation of P with a decimal (i.e., hashed) representation of
-T[s + 1...s + m]. This comparison is faster since we're just comparing numbers instead
-of comparing strings where each character has to be compared against individually.
+manner, given a text T[1...n], let t_s denote the decimal value of the length-m
+substring T[s + 1...s + m], for s = 0, 1, ..., n - m. Certainly, t_s = p iff
+T[s + 1...s + m] = P[1...m]; thus, s is a valid shift iff t_s = p. If we could compute p
+in time Theta(m) and all the t_s values in a total of Theta(n - m + 1) time, then we
+could determine all valid shifts s in time Theta(m) + Theta(n - m + 1) = Theta(n) by
+comparing p with each of the t_s values. In other words, instead of comparing each
+individual character in the pattern with each individual character in T[s + 1...s + m],
+we compute a decimal (i.e., hashed) representation of P with a decimal (i.e., hashed)
+representation of T[s + 1...s + m]. This comparison is faster since we're just comparing
+numbers instead of comparing strings where each character has to be compared against
+individually.
 
 p and t_s may be too large to work with conveniently. If P contains m characters, then
 we cannot reasonably assume that each arithmetic operation on p (which is m digits long)
@@ -37,9 +38,9 @@ that t_s = p. On the other hand, if t_s != p mod q, then we definitely have that
 t_s != p, so that shift s is invalid. We can thus use the test t_s = p mod q as a fast
 heuristic test to rule out invalid shifts s. Any shift s for which t_s = p mod q must
 be tested further to see whether s is really valid or we just have a spurious hit. This
-additional test explicitly checks the condition P[1...m] = T[s + 1...s + m]. If q is
-large enough, then we hope that spurious hits occur infrequently enough that the cost of
-the extra checking is low.
+additional test explicitly checks the condition P[1...m] = T[s + 1...s + m] (i.e., it
+checks each character individually). If q is large enough, then we hope that spurious
+hits occur infrequently enough that the cost of the extra checking is low.
 
 If q is small, then we will get lots of hits that need to be explicitly checked---this
 can waste time if the majority of hits are spurious hits (i.e., we don't expect a lot of
@@ -78,8 +79,8 @@ Complexity
 Time
 ----
 
-rabin_karp(): Theta(m) preprocessing, Theta((n - m + 1) * m)/Theta(m * n) worst/average
-case matching.
+rabin_karp(): Theta(m) preprocessing, Theta((n - m + 1) * m)/Theta(n) worst/average case
+matching.
 """
 
 # Repository Library
