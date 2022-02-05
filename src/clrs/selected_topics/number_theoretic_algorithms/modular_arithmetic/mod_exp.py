@@ -28,7 +28,7 @@ p | (x - 1) or p | (x + 1), but not both.
 
 A number x is a nontrivial square root of 1, modulo n, if it satisfies the equation
 x^2 = 1 mod n but x is equivalent to neither of the two "trivial" square roots: 1 or -1,
-modulo n. For example, 6 is a nontrivial square root of 1, modulo 356 since 6^2 = 36 =
+modulo n. For example, 6 is a nontrivial square root of 1 modulo 35 since 6^2 = 36 =
 1 mod 35.
 
 Corollary 31.35
@@ -58,10 +58,10 @@ efficient way of compute a^b mod n, where a and b are non-negative integers and 
 positive integer. The method of repeated squares solves this problem efficiently using
 the binary representation of b.
 
-Let <b_k, b_k - 1, ..., b_1, b_0> be the binary representation of b. That is, the binary
-representation is k + 1 bits long, b_k is the MSB and b_0 is the LSB. The procedure of
-repeated squares essentially computes a^c mod n as c is increased by doublings and
-incrementations from 0 to b.
+Let <b_k, b_(k - 1), ..., b_1, b_0> be the binary representation of b. That is, the
+binary representation is k + 1 bits long, b_k is the MSB and b_0 is the LSB. The
+procedure of repeated squares essentially computes a^c mod n as c is increased by
+doublings and incrementations from 0 to b.
 
 Intuition
 ---------
