@@ -51,7 +51,7 @@ Complexity
 Time
 ----
 
-mod_linear_solver(): O(lg n + gcd(a, n)) = O(lg n + O(lg b) recursive calls).
+mod_linear_solver(): O(d + lg n).
 """
 
 # Repository Library
