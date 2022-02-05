@@ -18,7 +18,7 @@ Complexity
 Time
 ----
 
-rabin_karp2d(): Theta(m * m) preprocessing, Theta((n - m + 1) * m^2)/Theta(n * m)
+rabin_karp2d(): Theta(m^2) preprocessing, Theta(((n - m + 1) * m)^2)/Theta((n + m)^2)
 worst/average case matching.
 """
 
@@ -31,23 +31,21 @@ from src.clrs.selected_topics.string_matching.rabin_karp import (
 )
 
 
-def row_rolling_hash(t_list, t, next_row, prows, radix, q):
-    for i, t_ in enumerate(t_list):
+def row_rolling_hash(tlist, t, next_row, prows, radix, q):
+    for i, t_ in enumerate(tlist):
         t_ = (t_ * radix + ord(t[next_row][i])) % q
         t_ -= (radix ** prows * ord(t[next_row - prows][i])) % q
-        t_list[i] = t_ % q
+        tlist[i] = t_ % q
 
 
 def rabin_karp2d(t, p, radix=256, q=101):
-    t, p, t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices = init(
-        t, p, radix, q
-    )
+    t, p, tlist, ntcols, npcols, trows, prows, pcols, p_, indices = init(t, p, radix, q)
     for i in range(prows - 1, trows):
-        col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
+        col, t_ = 0, col_hash(tlist, npcols, radix, q)
         check_equal(t, p, t_, p_, i + 1 - prows, col, pcols, prows, indices)
-        for j in range(n_pcols, n_tcols):
-            col, t_ = col + 1, col_rolling_hash(t_list, t_, j, n_pcols, radix, q)
+        for j in range(npcols, ntcols):
+            col, t_ = col + 1, col_rolling_hash(tlist, t_, j, npcols, radix, q)
             check_equal(t, p, t_, p_, i + 1 - prows, col, pcols, prows, indices)
         if i + 1 < trows:
-            row_rolling_hash(t_list, t, i + 1, prows, radix, q)
+            row_rolling_hash(tlist, t, i + 1, prows, radix, q)
     return indices
