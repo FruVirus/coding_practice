@@ -9,6 +9,7 @@ The Miller-Rabin primality test overcomes the problems of the simple test PSEUDO
 with two modifications:
 
 - It tries several randomly chosen base values a instead of just one base value.
+
 - While computing each modular exponentiation, it looks for a nontrivial square root of
 1, modulo n, during the final set of squarings. If it finds one, it stops and returns
 COMPOSITE.
@@ -25,8 +26,9 @@ a^(n - 1) != 1 mod n
 
 that formed the basis (using a = 2) for PSEUDOPRIME. Let n - 1 = 2^t * u where t >= 1
 and u is odd; i.e., the binary representation of the odd integer u followed by exactly
-t zeros. Therefore, a^(n - 1) = (a^u)^2^t mod n, so that we can compute a^(n - 1) mod n
-by first computing a^u mod n and then squaring the result t times successively.
+t zeros. Therefore, a^(n - 1) = (a^u) * 2^t mod n, so that we can compute
+a^(n - 1) mod n by first computing a^u mod n and then squaring the result t times
+successively.
 
 witness() computes a^(n - 1) mod n by first computing a^u mod n (using mod_exp()) and
 then squaring the result t times in a row in the for-loop. In other words, the sequence
