@@ -85,7 +85,9 @@ Intuition
 ---------
 
 At each step, the finite automaton is merely keeping track of the longest prefix of the
-pattern that is a suffix of what has been read so far in the text.
+pattern that is a suffix of what has been read so far in the text. If the longest prefix
+of the pattern is the entire pattern itself and is a suffix of what has been read so far
+in the text, then we have a match.
 
 If a pattern has length m, then the finite automaton has m + 1 states (the 0 state is
 the default initial state). As we read each character in the text, the finite automaton
