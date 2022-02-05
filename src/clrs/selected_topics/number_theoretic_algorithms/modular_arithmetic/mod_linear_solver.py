@@ -11,10 +11,13 @@ values of x, modulo n, that satisfy the equation. The equation may have zero, on
 more than one such solution.
 
 1. The equation is solvable for the unknown x iff d | b, where d = gcd(a, n).
+
 2. The equation either has d distinct solutions modulo n, where d = gcd(a, n), or it has
 no solutions.
+
 3. If d | b, then the equation has as one of its solutions the value x0, where
 x0 = x' * (b / d) mod n and x' is the x coefficient returned by gcd(a, n).
+
 4. If the equation is solvable (i.e., d | b, where d = gcd(a, n) and x0 is any
 solution), then the equation has exactly d distinct solutions, modulo n, given by
 xi = x' + i * (n / d) for i = 0, 1, ..., d - 1.
@@ -31,6 +34,9 @@ Corollary 31.26
 For any n > 1, if gcd(a, n) = 1, then the equation ax = 1 mod n has a unique solution,
 modulo n. Otherwise, it has no solution. Furthermore, the x we are looking for is a
 multiplicative inverse of a, modulo n.
+
+Intuition
+---------
 
 For example, gcd(5, 11) = (1, -2, 1) means that 1 = 5 * -2 + 11 * 1. In this example,
 -2 mod 11 = 9 mod 11 is also the multiplicative inverse of 5 mod 11 since
