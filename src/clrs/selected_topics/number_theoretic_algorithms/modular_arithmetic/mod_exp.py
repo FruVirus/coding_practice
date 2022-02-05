@@ -95,8 +95,11 @@ This algorithm makes use of the identity:
 The procedure is:
 
 1. Set c = 1, b′ = 0.
+
 2. Increase b′ by 1.
+
 3. Set c = (a * c) mod n.
+
 4. If b′ < b, go to step 2. Otherwise, c contains the correct solution to c ≡ a^b mod n.
 
 At each step of the for-loop (and before entering the for-loop), the condition
