@@ -95,43 +95,43 @@ def check_equal(t, p, t_, p_, row, col, pcols, prows, indices):
         indices.append([row, col])
 
 
-def col_hash(list_, n_pcols, radix, q):
-    return sum((radix ** (n_pcols - i - 1) * list_[i]) % q for i in range(n_pcols)) % q
+def col_hash(list_, npcols, radix, q):
+    return sum((radix ** (npcols - i - 1) * list_[i]) % q for i in range(npcols)) % q
 
 
-def col_rolling_hash(t_list, t_, col, n_pcols, radix, q):
+def col_rolling_hash(t_list, t_, col, npcols, radix, q):
     t_ = (t_ * radix + t_list[col]) % q
-    t_ -= (radix ** n_pcols * t_list[col - n_pcols]) % q
+    t_ -= (radix ** npcols * t_list[col - npcols]) % q
     return t_ % q
 
 
-def init(t, p, radix, q, is_2d=True):
+def init(t, p, radix, q, is2d=True):
     q = q if is_prime(q) else next_prime(q)
     assert radix * q < 2 ** radix - 1
-    t, p = (t, p) if is_2d else ([t], [p])
+    t, p = (t, p) if is2d else ([t], [p])
     trows, prows, tcols, pcols = len(t), len(p), len(t[0]), len(p[0])
-    t_list, p_list, n_tcols, n_pcols = row_hash(t, p, tcols, pcols, prows, radix, q)
-    indices, p_ = [], col_hash(p_list, n_pcols, radix, q)
-    return t, p, t_list, n_tcols, n_pcols, trows, prows, pcols, p_, indices
+    tlist, plist, ntcols, npcols = row_hash(t, p, tcols, pcols, prows, radix, q)
+    indices, p_ = [], col_hash(plist, npcols, radix, q)
+    return t, p, tlist, ntcols, npcols, trows, prows, pcols, p_, indices
 
 
 def row_hash(t, p, tcols, pcols, prows, radix, q):
-    t_list, p_list = [], []
-    for list_, a, cols in zip((t_list, p_list), (t, p), (tcols, pcols)):
+    tlist, plist = [], []
+    for list_, a, cols in zip((tlist, plist), (t, p), (tcols, pcols)):
         for i in range(cols):
             h = 0
             for j in reversed(range(prows)):
                 h += (radix ** (prows - j - 1) * ord(a[j][i])) % q
             list_.append(h % q)
-    return t_list, p_list, len(t_list), len(p_list)
+    return tlist, plist, len(tlist), len(plist)
 
 
 def rabin_karp(t, p, radix=256, q=101):
-    t, p, t_list, n_tcols, n_pcols, _, prows, pcols, p_, indices = init(
+    t, p, tlist, ntcols, npcols, _, prows, pcols, p_, indices = init(
         t, p, radix, q, False
     )
-    col, t_ = 0, col_hash(t_list, n_pcols, radix, q)
-    for i in range(n_pcols, n_tcols):
+    col, t_ = 0, col_hash(tlist, npcols, radix, q)
+    for i in range(npcols, ntcols):
         check_equal(t, p, t_, p_, 0, col, pcols, prows, indices)
-        col, t_ = col + 1, col_rolling_hash(t_list, t_, i, n_pcols, radix, q)
+        col, t_ = col + 1, col_rolling_hash(tlist, t_, i, npcols, radix, q)
     return indices
