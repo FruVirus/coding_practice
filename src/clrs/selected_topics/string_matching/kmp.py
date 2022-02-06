@@ -83,21 +83,21 @@ anywhere else in the pattern?
 
 KMP algorithm generates a pi table (longest prefix suffix table) as follows:
 
-i:  1   2   3   4   5   6   7   8   9   10
-P:  a   b   c   d   a   b   e   a   b   f
-    0   0   0   0   1   2   0   1   2   0  --> matching indices of pi table
+i:          1   2   3   4   5   6   7   8   9   10
+P:          a   b   c   d   a   b   e   a   b   f
+pi table:   0   0   0   0   1   2   0   1   2   0  --> matching indices of i
 
-i:  1   2   3   4   5   6   7   8   9   10  11
-P:  a   b   c   d   e   a   b   f   a   b   c
-    0   0   0   0   0   1   2   0   1   2   3 --> matching indices of pi table
+i:          1   2   3   4   5   6   7   8   9   10  11
+P:          a   b   c   d   e   a   b   f   a   b   c
+pi table:   0   0   0   0   0   1   2   0   1   2   3 --> matching indices of i
 
-i:  1   2   3   4   5   6   7   8   9   10
-P:  a   a   b   c   a   d   a   a   b   e
-    0   1   0   0   1   0   1   2   3   0 --> matching indices of pi table
+i:          1   2   3   4   5   6   7   8   9   10
+P:          a   a   b   c   a   d   a   a   b   e
+pi table:   0   1   0   0   1   0   1   2   3   0 --> matching indices of i
 
-i:  1   2   3   4   5   6   7   8   9
-P:  a   a   a   a   b   a   a   c   d
-    0   1   2   3   0   1   2   0   0 --> matching indices of pi table
+i:          1   2   3   4   5   6   7   8   9
+P:          a   a   a   a   b   a   a   c   d
+pi table:   0   1   2   3   0   1   2   0   0 --> matching indices of i
 
 Example:
 
@@ -121,7 +121,7 @@ We iterate through all characters in the text, t, to find occurrences of the com
 pattern P.
 
 If p[j] == t[i], then we have a character match at index i in t and index j in p. Thus,
-we increment both indices by one. This occurs until i = j = 5.
+we increment both indices by one. This occurs until i = j = 4.
 
 At i = j = 5, we have a mismatch between p[j] = d and t[i] = c. In addition, j != m so
 we don't have a complete pattern match yet. Thus, we can either transition index j back
