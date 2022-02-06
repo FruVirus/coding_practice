@@ -72,8 +72,8 @@ A given pattern has prefixes and suffixes. For example, consider:
 pattern:    a   b   c   d   a   b   c
 i:          1   2   3   4   5   6   7
 
-prefix:     a, ab, abc, abcd, ...
-suffix:     c, bc, abc, dabc, ...
+prefix:     a, ab, abc, abcd, ..., c
+suffix:     c, bc, abc, dabc, ..., a
 
 Note that abc is both a prefix and suffix of the pattern.
 
