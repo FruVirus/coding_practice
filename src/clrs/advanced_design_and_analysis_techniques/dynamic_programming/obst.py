@@ -41,7 +41,9 @@ p:          0.1,        0.2,        0.1,        0.2
 q:      0.1,    0.05,       0.15,       0.05,       0.05
 
 p_0 is the probability of searching for 10.
+p_1 is the probability of searching for 20.
 q_0 is the probability of searching (-float("inf"), 9).
+q_1 is the probability of searching (10, 20).
 q_4 is the probability of searching (41, float("inf")).
 
 If 20 is the root, 10 is the left child of 20, 30 is the right child of 20 and 40 is the
