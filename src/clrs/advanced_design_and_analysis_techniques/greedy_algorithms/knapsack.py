@@ -37,6 +37,10 @@ value per pound. If the supply of that item is exhausted and the knapsack can st
 carry more, then we take as much as possible of the item with tne next greatest value
 per pound, and so forth, until we reach the maximum capacity of the knapsack.
 
+sol is a list of tuples where the first element in the tuple denotes the index of the
+item to take and the second element in the tuple denotes the fractional amount of the
+item to take.
+
 Complexity
 ==========
 
