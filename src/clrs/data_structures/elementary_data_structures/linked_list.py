@@ -50,9 +50,9 @@ lists does however.
 
 Let the head be the first node of the linked list to be sorted and the head reference be
 the pointer to head. Note that we need a reference to the head in merge_sort() as the
-implementation changes next pointers to sort the linked list (instead of the
-manipulating the node keys), so the head node has to be changed if the key of the
-original head is not the smallest value in the linked list.
+implementation changes next pointers to sort the linked list (instead of manipulating
+the node keys), so the head node has to be changed if the key of the original head is
+not the smallest value in the linked list.
 
 merge(l, r):
     1. Take a pointer, merged, to store the merged linked list and store a dummy node in
@@ -110,7 +110,9 @@ the nodes in l (i.e., 9 and 16) to the end of temp so that we have
 merged.next at the end. Note that the assignment to temp.next and temp inside the second
 and third while-loops are necessary since this is what essentially produces the merged
 linked list that is returned (recall that temp is a pointer to merged and we return
-merged.next since the first node of merged is a dummy node).
+merged.next since the first node of merged is a dummy node). In other words, we return
+merged.next but the temp variable actually keeps the information on the sorted values in
+merged.
 
 For doubly linked lists and quicksort:
 
