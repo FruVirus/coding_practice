@@ -44,6 +44,23 @@ searching takes constant time on average.
 
 NB: HashChain mimics table doubling for practice even though it's redundant in Python.
 
+Intuition
+---------
+
+The value of a for the multiplication hash procedure is suggested by Knuth. The value of
+m for the multiplication hash procedure is typically chosen to be a power of 2.
+
+For the universal hash procedure, we begin by choosing a prime number p large enough so
+that every possible key k is in the range 0 to p - 1, inclusive. Because we assume that
+the size of the universe of keys is greater than the number of slots in the hash table,
+we have p > m. The class of hash functions that result has the nice property that the
+size of the output range is arbitrary---not necessarily prime. Since we have p - 1
+choices for a and p choices for b, the collection of hash functions contains p * (p - 1)
+hash functions. Analysis shows that such a class is indeed universal (i.e., the chance
+of a collision between distinct keys k and l is no more than the chance 1 / m of a
+collision if h(k) and h(l) were randomly and independently chosen from the set
+{0, 1, ..., m - 1}).
+
 Complexity
 ==========
 
