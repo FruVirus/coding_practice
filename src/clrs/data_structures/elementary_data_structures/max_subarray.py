@@ -33,7 +33,7 @@ just need to find maximum subarrays of the form A[i...mid] and A[mid + 1...j] an
 combine them.
 
 The procedure find_cross() essentially builds the maximum subarray starting from mid
-outwards towards low and outwards towards high.
+outwards towards low and from mid outwards towards high.
 
 The procedure find_max_iterative() runs in Theta(n) time by starting at the left end of
 the array and progressing toward the right while keeping track of the maximum subarray
