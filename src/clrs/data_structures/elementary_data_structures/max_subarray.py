@@ -7,7 +7,7 @@ negative) and we wish to find a sequence of indices in the original array that
 correspond to a subarray whose values give the largest sum. The maximum subarray problem
 is interesting only when the array contains some negative numbers. If all of the array
 entries were non-negative, then the maximum subarray problem would present no challenge,
-since the entire array would give the greatest sum.
+since summing the entire array would give the greatest sum.
 
 Given an array of numbers, we want to find a sequence of indices over which the net
 change of values is maximum. Instead of looking at the array values themselves, let us
