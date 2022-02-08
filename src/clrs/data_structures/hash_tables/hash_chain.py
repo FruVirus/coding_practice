@@ -9,7 +9,7 @@ In chaining, we place all the elements that hash to the same slot into the same 
 list. Slot j contains a pointer to the head of the list of all stored elements that hash
 to j; if there are no such elements, slot j contains NIL.
 
-The worst case running time for insertion is O(1). THe insertion procedure is fast in
+The worst case running time for insertion is O(1). The insertion procedure is fast in
 part because it assumes that the element x being inserted is not already present in the
 table; if necessary we can check this assumption (at additional cost) by searching for
 an element whose key is x.key before we insert. For searching, the worst case running
