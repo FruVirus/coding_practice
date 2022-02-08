@@ -85,9 +85,9 @@ array, a.
 In other words, the value for clow resets to i each time csum becomes negative, which
 means that the current low index is always the index that gave the previous negative
 change in the cumulative sum. Once csum goes negative, we don't have to worry about the
-values in a that came before (old) clow since the cumulative sum of those values became
-negative. Thus, we can reset clow to i and start the cumulative sum over again with
-a_[i].
+values in a that came before the previous value of clow since the cumulative sum of
+those values became negative. Thus, we can reset clow to i and start the cumulative sum
+over again with a_[i].
 
 Complexity
 ==========
