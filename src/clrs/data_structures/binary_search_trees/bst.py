@@ -40,11 +40,12 @@ list(l, h) produces a list of all the keys between [l, h].
 rank(x) returns the rank of node x. rank() does NOT assume that the keys of the tree are
 distinct. We can think of node x's rank as the number of nodes preceding x in an inorder
 tree walk, plus 1 for x itself. In an array, rank(x) gives the index of x in the sorted
-array.
+array. NB: The procedure rank() traverses up the tree to the root.
 
 rank_key(k) returns the number of keys in the tree that are less than or equal to k.
 Informally, if the keys were listed in ascending order, x's key rank would indicate its
 position in the sorted array. rank_key() assumes that the keys of the tree are distinct!
+NB: The procedure rank_key() traverses down the tree to a leaf.
 
 select() finds the node with the i-th smallest key the tree.
 
