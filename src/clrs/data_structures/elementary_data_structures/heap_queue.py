@@ -99,9 +99,14 @@ is smaller, since the max-heap property now holds.
 The procedure delete() deletes a key referenced by the index i. If the key at index i is
 greater than or equal to the key at the end of the array, then we exchange keys at index
 i and index self.heap_size and re-heapify at index i to ensure that the subtree rooted
-at the parent of i remains a max-heap. Otherwise, we simply change the key value at
-index i to be the key value at index self.heap_size since we know that this operation
-will maintain the heap property.
+at the parent of i remains a max-heap. In other words, since the key at index i is
+greater than or equal to the key at index self.heap_size and we switch the two keys, we
+have to ensure that the new key at index i is greater than or equal to its children.
+Otherwise, we simply change the key value at index i to be the key value at index
+self.heap_size since we know that this operation will maintain the heap property. In
+other words, since the key at index is smaller than the key at index self.heap_size, we
+change the keys and traverse up the heap from index i to the root to find a proper place
+for the newly changed key.
 
 The procedure extract() extracts the maximum/minimum element from the heap. For
 max-heaps, the priority is that the largest number will always be maintained at the root
