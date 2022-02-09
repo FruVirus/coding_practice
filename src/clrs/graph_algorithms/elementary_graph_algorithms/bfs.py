@@ -78,7 +78,9 @@ can visit its adjacent vertices in any order.
 
 However, when we select a vertex for exploration, we must visit all of its adjacent
 vertices before further exploration. Thus, we enqueue the selected vertex back into the
-queue.
+queue. However, re-enqueueing vertices does not mean that we will update their discovery
+times multiple times since the color of the vertex is changed the first time it is
+discovered.
 
 BFS also produces the shortest-path distances for an unweighted graph (or, equivalently,
 a graph with unit weight edges). We can obtain a shortest path from s to v by taking a
