@@ -12,7 +12,7 @@ two distinct components without forming a cycle.
 Kruskal's algorithm finds a safe edge to add to the growing forest by finding, of all
 the edges that connect any two trees in the forest, an edge (u, v) of least weight. The
 algorithm qualifies as a greedy algorithm because at each step it adds to the forest an
-edge of least possible weight. The edge that is adds must NOT form a cycle in the MST.
+edge of least possible weight. The edge that is added must NOT form a cycle in the MST.
 
 For disconnected graphs, Kruskal's algorithm will not find the MST for the overall
 graph. However, it might find the MST for each disconnected component.
