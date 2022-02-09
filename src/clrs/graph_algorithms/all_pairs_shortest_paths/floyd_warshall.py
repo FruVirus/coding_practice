@@ -81,7 +81,8 @@ previous iteration since we do not have to repeat those calculations again. In o
 words, once we compute the shorter path between i and j with an intermediate vertex k,
 that calculation can be used for other vertices k.
 
-Row i of the d matrix is the solution to the single-source shortest-paths from vertex i.
+Row i of the d matrix is the solution to the single-source shortest-paths from vertex i
+to all other vertices in the graph.
 
 Element (i, j) of the pi matrix gives the predecessor of j on some shortest path from i.
 The subgraph induced by the i-th row of the pi matrix should be a shortest-paths tree
