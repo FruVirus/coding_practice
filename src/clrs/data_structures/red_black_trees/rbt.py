@@ -108,14 +108,14 @@ are then:
 Like the other basic operations on an n-node red-black tree, deletion of a node takes
 time O(lg n).
 
-The RBT procedure delete() is like the BST deleted() procedure, but with additional
-lines of pseudocode. Some of the additional lines keep track of a node y that might
-cause violations of the red-black properties. When we want to delete node z and z has
-fewer than two children, then z is removed from the tree, and we want y to be z. When z
-has two children, then y should be z's successor, and y moves into z's position in the
-tree. We also remember y's color before it is removed from or moved within the tree, and
-we keep track of the node x that moves into y's original position in the tree, because
-node x might also cause violations of the red-black properties. After deleting node z,
+The RBT procedure delete() is like the BST delete() procedure, but with additional lines
+of pseudocode. Some of the additional lines keep track of a node y that might cause
+violations of the red-black properties. When we want to delete node z and z has fewer
+than two children, then z is removed from the tree, and we want y to be z. When z has
+two children, then y should be z's successor, and y moves into z's position in the tree.
+We also remember y's color before it is removed from or moved within the tree, and we
+keep track of the node x that moves into y's original position in the tree, because node
+x might also cause violations of the red-black properties. After deleting node z,
 delete_fix() is called, which changes colors and performs rotations to restore the
 red-black properties.
 
