@@ -8,7 +8,7 @@ algorithm.
 Because gcd(a, b) is a divisor of both a and b, it is more efficient to compute the LCM
 by dividing before multiplying since this reduces the size of one input for both the
 division and multiplication, and reduces the required storage needed for intermediate
-results (i.e., the overflow in the a * b computation).
+results (i.e., divide a by gcd(a, b) and then multiply by b).
 
 Complexity
 ==========
