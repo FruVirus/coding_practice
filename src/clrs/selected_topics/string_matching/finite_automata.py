@@ -102,8 +102,8 @@ iff P is a suffix of T_i, the machine is in the accepting state m iff it has jus
 scanned the (entire) pattern P in T_i.
 
 When the machine enters state q in the for-loop, then q is the largest value such that
-P_q is a suffix of T_i. Thus, we have q == m iff the machine has just scanned an
-occurrence of the (entire) pattern P in T_i.
+P_q is a suffix of T_i. Thus, if q == m, then the machine has just scanned an occurrence
+of the (entire) pattern P in T_i.
 
 Example:
 
