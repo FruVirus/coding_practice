@@ -125,10 +125,10 @@ we increment both indices by one. This occurs until i = j = 4.
 
 At i = j = 5, we have a mismatch between p[j] = d and t[i] = c. In addition, j != m so
 we don't have a complete pattern match yet. Thus, we can either transition index j back
-to the previous state in the pi table or advance index i by one position. If we can
-still transition index j back in the pi table (i.e., j != 0), then we do so; this means
-that we may have a potential partial match so far and so we don't want to advance index
-i until we are sure that there are no more partial matches at index j.
+to the previous state in the pi table or advance index i by one position in the text. If
+we can still transition index j back in the pi table (i.e., j != 0), then we do so; this
+means that we may have a potential partial match so far and so we don't want to advance
+index i until we are sure that there are no more partial matches at index j.
 
 In other words, since we did not match ababc with ababd, we go back to ab and check if
 aba matches with abc. Since aba does not match with abc either, we transition index j
