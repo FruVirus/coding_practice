@@ -22,6 +22,9 @@ gives:
 
     x_(n + 1) = x_n - f(x_n) / f'(x_n)
 
+Intuition
+---------
+
 We start the process with some arbitrary initial value, x0. The method will usually
 converge, provided this initial guess is close enough to the unknown root and that
 f'(x) != 0. The for-loop exits when the value of fxn is close enough to 0. f and dfdx
