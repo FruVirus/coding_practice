@@ -421,7 +421,7 @@ def return_aux(N, c, Naux, Baux, Aaux, baux, vaux):
     for i in include(N, Baux):
         cval = -c[N.index(i)]
         for j, x in enumerate(Ahat[Baux.index(i)]):
-            caux[j] += x * cval
+            caux[j] += cval * x
     return Naux, Baux, Ahat, baux, caux, vaux
 
 
