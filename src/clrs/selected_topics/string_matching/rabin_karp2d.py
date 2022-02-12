@@ -10,7 +10,8 @@ Intuition
 ---------
 
 We extend Rabin Karp to 2D by calculating the hashes for each column just as in the 1D
-case, and then treating the hashes in each as the characters and hashing again.
+case, and then treating the hashes in each as the characters and hashing again across
+the rows.
 
 Complexity
 ==========
@@ -18,7 +19,7 @@ Complexity
 Time
 ----
 
-rabin_karp2d(): Theta(m^2) preprocessing, Theta(((n - m + 1) * m)^2)/Theta((n + m)^2)
+rabin_karp2d(): Theta(m^2) preprocessing, Theta(((n - m + 1) * m)^2)/Theta(n^2)
 worst/average case matching.
 """
 
