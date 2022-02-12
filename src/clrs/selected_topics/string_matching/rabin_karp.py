@@ -52,7 +52,7 @@ since m <= n.
 Intuition
 ---------
 
-Rabin Karp avoids checking pattern the against the string for every shift by checking
+Rabin Karp avoids checking the pattern against the string for every shift by checking
 the hash values of the pattern and text first. If the hash value of the pattern matches
 the hash pattern of the text, then we check the pattern characters against the text
 characters.
