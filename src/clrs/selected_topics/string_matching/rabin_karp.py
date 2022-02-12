@@ -16,7 +16,7 @@ manner, given a text T[1...n], let t_s denote the decimal value of the length-m
 substring T[s + 1...s + m], for s = 0, 1, ..., n - m. Certainly, t_s = p iff
 T[s + 1...s + m] = P[1...m]; thus, s is a valid shift iff t_s = p. If we could compute p
 in time Theta(m) and all the t_s values in a total of Theta(n - m + 1) time, then we
-could determine all valid shifts s in time Theta(m) + Theta(n - m + 1) = Theta(n) by
+could determine all valid shifts s in time Theta(m) + Theta(n - m + 1) = Theta(n + m) by
 comparing p with each of the t_s values. In other words, instead of comparing each
 individual character in the pattern with each individual character in T[s + 1...s + m],
 we compute a decimal (i.e., hashed) representation of P with a decimal (i.e., hashed)
