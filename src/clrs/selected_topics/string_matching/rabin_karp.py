@@ -99,9 +99,9 @@ def col_hash(list_, npcols, radix, q):
     return sum((radix ** (npcols - i - 1) * list_[i]) % q for i in range(npcols)) % q
 
 
-def col_rolling_hash(t_list, t_, col, npcols, radix, q):
-    t_ = (t_ * radix + t_list[col]) % q
-    t_ -= (radix ** npcols * t_list[col - npcols]) % q
+def col_rolling_hash(tlist, t_, col, npcols, radix, q):
+    t_ = (t_ * radix + tlist[col]) % q
+    t_ -= (radix ** npcols * tlist[col - npcols]) % q
     return t_ % q
 
 
