@@ -91,7 +91,7 @@ recursion).
 Time
 ----
 
-partition(): O(n) = O(h - l + 1).
+partition(): O(n) = O(high - low + 1).
 quicksort(): Theta(n^2) worst case, O(n * lg n) expected time.
 """
 
