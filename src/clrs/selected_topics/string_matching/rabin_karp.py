@@ -19,7 +19,7 @@ in time Theta(m) and all the t_s values in a total of Theta(n - m + 1) time, the
 could determine all valid shifts s in time Theta(m) + Theta(n - m + 1) = Theta(n + m) by
 comparing p with each of the t_s values. In other words, instead of comparing each
 individual character in the pattern with each individual character in T[s + 1...s + m],
-we compute a decimal (i.e., hashed) representation of P with a decimal (i.e., hashed)
+we compare a decimal (i.e., hashed) representation of P with a decimal (i.e., hashed)
 representation of T[s + 1...s + m]. This comparison is faster since we're just comparing
 numbers instead of comparing strings where each character has to be compared against
 individually.
