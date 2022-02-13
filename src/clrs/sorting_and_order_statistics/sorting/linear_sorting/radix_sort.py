@@ -4,7 +4,7 @@
 
 Radix sort sorts numbers from the least to most significant digit. Only d passes through
 the array is required for an array of n numbers where each number has d digits and the
-numbers are in the range [0, k].
+numbers are in the range 0 to k.
 
 Radix sort is stable if the counting sort is used as the underlying sorting procedure.
 
