@@ -38,8 +38,8 @@ Counting sort's stability is the reason why it's also used as a subroutine in ra
 sort.
 
 NB: For radix sort, counting sort makes use of the base and exp arguments and
-incrementally sorts from least to most significant digit. If counting sort is used to
-sort a given array with provided base and exp arguments, it will NOT always sort
+incrementally sorts from least to most significant digit. If counting sort is used as is
+to sort a given array with provided base and exp arguments, it will NOT always sort
 correctly since counting sort is stable. For example, sorting the array
 [329, 457, 657, 839, 436, 720, 355] with base = 10 and exp = 100 will result in
 [329, 355, 457, 436, 657, 720, 839] since 457 came before 436 in the original array and
