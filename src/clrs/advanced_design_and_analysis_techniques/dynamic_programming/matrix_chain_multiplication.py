@@ -76,6 +76,7 @@ m[1][3] = min(A1 * (A2 * A3), (A1 * A2) * A3)
         = min(m[1][1] + m[2][3] + 5 x 4 x 2, m[1][2] + m[3][3] + 5 x 6 x 2)
         = min(88, 180)
         = 88
+
 The last addition in min() corresponds to the number of multiplies between A1 and the
 result of (A2 * A3) (or between the result of (A1 * A2) and A3).
 
