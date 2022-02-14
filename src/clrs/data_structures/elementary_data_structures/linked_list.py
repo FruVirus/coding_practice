@@ -102,17 +102,16 @@ by their keys. If the linked lists corresponding to l and r have multiple nodes,
 merge(l, r) cycles through the sub-linked lists using the next pointer.
 
 3. Suppose merge(l, r) gets calls when l = 1 -> 4 -> 9 -> 16 and r = 2 -> 5 -> 7.
-merge() starts its pointer calculations with l.k = 1 and r.k = 2. The first while-loop
+merge() starts its pointer calculations with l.k = 1 and r.k = 2. The while-loop
 terminates with 1 -> 2 -> 4 -> 5 -> 7 if we start at merged.next. This is because the
-condition r is None is reached first. The second while-loop then "extends" the rest of
-the nodes in l (i.e., 9 and 16) to the end of temp so that we have
+condition r is None is reached first. The last assignment to temp.next "extends" the
+rest of the nodes in l (i.e., 9 and 16) to the end of temp so that we have
 1 -> 2 -> 4 -> 5 -> 7 -> 9 -> 16 as the sorted merged linked list when we return
-merged.next at the end. Note that the assignment to temp.next and temp inside the second
-and third while-loops are necessary since this is what essentially produces the merged
-linked list that is returned (recall that temp is a pointer to merged and we return
-merged.next since the first node of merged is a dummy node). In other words, we return
-merged.next but the temp variable actually keeps the information on the sorted values in
-merged.
+merged.next at the end. Note that the assignment to temp.next is necessary since this is
+what essentially produces the merged linked list that is returned (recall that temp is a
+pointer to merged and we return merged.next since the first node of merged is a dummy
+node). In other words, we return merged.next but the temp variable actually keeps the
+information on the sorted values in merged.
 
 For doubly linked lists and quicksort:
 
@@ -237,12 +236,7 @@ class SLL:
             else:
                 temp.next, r = r, r.next
             temp = temp.next
-        while l is not None:
-            temp.next = l
-            l, temp = l.next, temp.next
-        while r is not None:
-            temp.next = r
-            r, temp = r.next, temp.next
+        temp.next = l or r
         return merged.next
 
     def merge_sort(self, h):
