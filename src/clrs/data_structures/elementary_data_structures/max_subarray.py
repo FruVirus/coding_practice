@@ -32,6 +32,9 @@ A[i...mid] and A[mid + 1...j], where low <= i <= mid and mid < j <= high. Theref
 just need to find maximum subarrays of the form A[i...mid] and A[mid + 1...j] and then
 combine them.
 
+Intuition
+---------
+
 The procedure find_cross() essentially builds the maximum subarray starting from mid
 outwards towards low and from mid outwards towards high.
 
@@ -39,9 +42,6 @@ The procedure find_max_iterative() runs in Theta(n) time by starting at the left
 the array and progressing toward the right while keeping track of the maximum subarray
 seen so far. If csum becomes negative, then the index of clow is updated. If csum is
 greater than max_sum, then max_sum is updated to be csum.
-
-Intuition
----------
 
 find_max_iterative() works since, if we know a maximum subarray of A[1...j], then a
 maximum subarray of A[1...j + 1] is either a maximum subarray of A[1...j] or a subarray
