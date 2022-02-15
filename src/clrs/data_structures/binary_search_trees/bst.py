@@ -47,12 +47,13 @@ Informally, if the keys were listed in ascending order, x's key rank would indic
 position in the sorted array. rank_key() assumes that the keys of the tree are distinct!
 NB: The procedure rank_key() traverses down the tree to a leaf.
 
-select() finds the node with the i-th smallest key the tree.
+select(i, x=None) finds the node with the i-th smallest key the tree starting from the
+node given by x. Initially, x should be the root node.
 
-update_size() updates the size attribute of a node in the BST. The size attribute of a
-node indicates how many nodes are rooted at that subtree including the subtree root node
-itself. Thus, the root of the overall BST would contain the highest number for its size
-attribute since every single node is rooted at the root.
+update_size(x) updates the size attribute of a node, x, in the BST. The size attribute
+of a node indicates how many nodes are rooted at that subtree including the subtree root
+node itself. Thus, the root of the overall BST would contain the highest number for its
+size attribute since every single node is rooted at the root.
 
 Complexity
 ==========
