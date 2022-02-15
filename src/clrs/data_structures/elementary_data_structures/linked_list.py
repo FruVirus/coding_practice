@@ -90,7 +90,7 @@ store the new head of the left and right linked lists.
 and store the final head returned after merging.
     7. Return the final head of the merged linked list.
 
-1. merge_sort() is recursively called until the base cause when the linked list h just
+1. merge_sort() is recursively called until the base case when the linked list h just
 contains one node. When this happens, merge_sort() just returns the linked list as is.
 Then, merge() is called to join the left and right halves of the overall linked list
 together.
