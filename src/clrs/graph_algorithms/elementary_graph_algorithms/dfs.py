@@ -185,8 +185,8 @@ Intuition
 
 DFS works for undirected or directed graphs with no weights (or unit weights).
 
-Undirected graphs only have tree or back edges. Directed graphs have tree, forward,
-back, and cross edges.
+Undirected graphs only have tree or back edges. Directed graphs have tree, back,
+forward, and cross edges.
 
 Strongly connected components only make sense for directed graphs.
 
