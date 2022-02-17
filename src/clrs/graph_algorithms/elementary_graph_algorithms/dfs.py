@@ -230,7 +230,7 @@ The for-loops in dfs() take time Theta(V) each. dfs_recurse() is called exactly 
 each vertex v in V, since the vertex u on which dfs_recurse() is invoked must be white
 and the first thing dfs_recurse() does is paint vertex u gray. During an execution of
 dfs_recurse(), the for-loop executes |Adj[v]| times and the sum of |Adj[v]| for all v in
-V is Theta(E). dfs_recurse() is called exactly once for each vertex v in V.
+V is Theta(E).
 
 We can perform a topological sort in time Theta(V + E), since DFS takes Theta(V + E)
 time and it takes O(1) time to insert each of the |V| vertices onto the front of the
