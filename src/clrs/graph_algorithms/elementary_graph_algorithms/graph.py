@@ -194,9 +194,8 @@ class Graph:
     def connected_components(self):
         self.make_set()
         for u, v in self.edges:
-            u, v = self.vertices[u], self.vertices[v]
-            if self.find_set(u) is not self.find_set(v):
-                self.union(u, v)
+            if not self.same_component(u, v):
+                self.union(self.vertices[u], self.vertices[v])
 
     def deg(self, k, out=False):
         return sum(self.adj_matrix[k]) if out else sum(r[k] for r in self.adj_matrix)
