@@ -73,7 +73,7 @@ where:
     P is a permutation matrix
 
 We call matrices L, U, and P satisfying equation (28.4) an LUP decomposition of the
-matrix A. Every non-singular matrix posses such a decomposition.
+matrix A. Every non-singular matrix possesses such a decomposition.
 
 Computing an LUP decomposition for the matrix A has the advantage that we can more
 easily solve linear systems when they are triangular, as is the case for both matrices L
