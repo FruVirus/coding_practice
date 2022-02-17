@@ -15,10 +15,6 @@ order. As we process each vertex, we relax each edge that leaves the vertex.
 After calling dag(), calling print_path(s, v) will print the shortest path between the
 source s and a given vertex v in the graph.
 
-The total number of paths in a DAG can be computed by counting the number of paths whose
-start point is at each vertex v. Assume that initially, we have v.paths = 0 for all v in
-V.
-
 An interesting application of single-source shortest paths in DAGs arises in determining
 critical paths in PERT chart analysis. Edges represent jobs to be performed, and edge
 weights represent the time required to perform particular jobs. If edge (u, v) enters
