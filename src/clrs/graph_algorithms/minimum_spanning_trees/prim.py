@@ -30,8 +30,8 @@ Prim's algorithm works for a connected, undirected graph with weights.
 A spanning tree is a subgraph of a graph that is acyclic and connects all of the
 vertices using exactly |V| - 1 edges while minimizing the total weight of the edges.
 
-The brute force approach to finding a MST is to try all combination of |V| - 1 edges and
-check each total weight. However, we can also use a greedy algorithm to find the MST
+The brute force approach to finding a MST is to try all combinations of |V| - 1 edges
+and check each total weight. However, we can also use a greedy algorithm to find the MST
 without having to iterate over all possible combinations.
 
 In Prim's algorithm, the edges in set A always forms a single tree. The tree starts from
@@ -40,10 +40,12 @@ an arbitrary root vertex r and grows until the tree spans all vertices in V.
 Prims's algorithm works as follows:
 
 1. From a weighted graph, select the minimum cost edge first.
+
 2. For the rest of the procedure, always select the minimum cost edge but make sure the
 newly selected edge does NOT connect to the already selected vertices --> this forms and
 maintains a single tree with no cycles.
-3. Note that although a non-light edge might be added to the tree, it can be overwritten
+
+3. Note that although a non-light edge might be added to the heap, it can be overwritten
 later on by an edge with a lower weight. The heap queue is maintained by the key
 attribute, which corresponds to the lowest edge weight found so far. When we do a
 change() operation on the heap queue, the heap queue is reheapified such that the next
