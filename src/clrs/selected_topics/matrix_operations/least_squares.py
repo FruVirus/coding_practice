@@ -99,8 +99,8 @@ Intuition
 ---------
 
 Comparing the normal equation to Ax = b, we have A.T * A = A, c = x, and A.T * y = b.
-Thus, we can use lup_solver() to perform linear least squares approximation to find the
-vector c.
+Thus, we can use lup_solver() to perform least squares approximation to find the vector
+c.
 
 We can only do this since we chose to minimize the norm of the error vector eta when
 minimizing the approximation errors---this gives us a least squares solution. Minimizing
