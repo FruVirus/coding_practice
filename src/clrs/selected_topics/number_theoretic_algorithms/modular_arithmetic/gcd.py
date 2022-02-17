@@ -34,7 +34,7 @@ The extended form of Euclid's algorithm
 ---------------------------------------
 
 We extend the algorithm to compute the integer coefficients x and y such that:
-d = gcd(a, b) = ax + by, where x and y acn be zero or negative. These coefficients are
+d = gcd(a, b) = ax + by, where x and y can be zero or negative. These coefficients are
 useful for computing modular multiplicative inverses.
 
 The number of recursive calls made in the extended version is equal to the number of
