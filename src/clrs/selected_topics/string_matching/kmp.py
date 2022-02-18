@@ -26,7 +26,8 @@ pi[q] is the length of the longest prefix of P that is a proper suffix of P_q.
 Intuition
 ---------
 
-KMP avoids backtracking through the text during the matching process.
+KMP avoids backtracking through the text during the matching process and avoids
+precomputing the full transition function for a string-matching automaton.
 
 Consider the following example:
 
