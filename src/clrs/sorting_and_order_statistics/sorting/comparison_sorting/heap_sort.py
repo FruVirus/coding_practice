@@ -26,7 +26,7 @@ sort() assumes that the unordered input array is already a max-heap array and so
 by moving 0-th item in the heap array to the i-th element of the for-loop. Since the
 for-loop is iterated in reverse, the maximum element is put into the last index of the
 heap array, and so on. Each time the movement is conducted, the heap array is rebuilt
-(with a smaller heap size) for the 0-th index..
+(with a smaller heap size) for the 0-th index.
 
 Heapsort is an asymptotically optimal comparison sort.
 
