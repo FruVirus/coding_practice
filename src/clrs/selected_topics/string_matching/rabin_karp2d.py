@@ -4,7 +4,8 @@ Overview
 
 For 2D, the idea is to find the hash of each column in t and p and compare the hash
 values. For any column, if hash values are equal, then check for the corresponding row
-values.
+hash values. If both the column and row hash values are equal, then we check each
+character in the pattern against the text.
 
 Intuition
 ---------
