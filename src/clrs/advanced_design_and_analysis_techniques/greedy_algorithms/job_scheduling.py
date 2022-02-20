@@ -68,8 +68,8 @@ Since the jobs are sorted by decreasing penalties, the greedy choice is to alway
 include the first job since it has the highest penalty. Then the subproblem becomes
 finding the job with the next highest penalty that also fits within the deadlines. Once
 we add a job to a time slot following this greedy strategy, no other jobs can be placed
-into the same time slot. This approach is safe since the jobs are sorted by decreasing
-penalties.
+into the same time slot (although it can be placed in earlier time slots if available).
+This approach is safe since the jobs are sorted by decreasing penalties.
 
 Complexity
 ==========
