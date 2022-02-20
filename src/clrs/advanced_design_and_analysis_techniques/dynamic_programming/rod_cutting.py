@@ -136,6 +136,10 @@ of dynamic programming is linear in the number of vertices and edges.
 Intuition
 ---------
 
+The p array holds the price for each length of rod; i.e., the first element in p is the
+price of a rod of length 1, the second element in p is the price of a rod of length 2,
+and so on.
+
 The r array holds the maximum revenue that can be obtained by cutting a rod of a certain
 length---r[0] holds the maximum revenue obtained from cutting a rod of length 0
 (i.e., 0), r[1] holds the maximum revenue obtained from cutting a rod of length 1, and
