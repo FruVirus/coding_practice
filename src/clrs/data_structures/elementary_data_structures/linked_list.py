@@ -193,7 +193,7 @@ SLL:
 
 class Node:
     def __init__(self, k):
-        self.k, self.next, self.prev = k, None, None
+        self.k, self.prev, self.next = k, None, None
 
 
 class SLL:
