@@ -106,7 +106,8 @@ is a path weight from i to itself, if it is negative, then this means that there
 path from i to itself (i.e., a cycle) with negative weight. Note that the values in the
 d matrix never increase during the Floyd-Warshall algorithm. Initially, the values are
 0 along the main diagonal and float("inf") everywhere else. Each iteration sets a value
-in the d matrix whose minimum value is always non-negative.
+in the d matrix whose minimum value is always non-negative unless there is a
+negative-weight cycle.
 
 Complexity
 ==========
