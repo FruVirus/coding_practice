@@ -184,7 +184,7 @@ delete. When a fix is required, we care about the color of the sibling (w) of th
 2. x's sibling w is black, and both of w's children are black.
 3. x's sibling w is black, w's left child is red, and w's right child is black (we
 transform this to case 4).
-4. x's sibling w is black, and w's right child is red.
+4. x's sibling w is black, w's left child is black and w's right child is red.
 
 In all cases, we essentially perform rotations and/or re-colorings in order to maintain
 property 5 in some form or fashion.
