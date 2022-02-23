@@ -51,12 +51,13 @@ vertex u in the depth-first forest iff v is discovered during the time in which 
 gray.
 
 Another important property of DFS is that discovery and finishing times have parenthesis
-structure. The history discovery and finishing times makes a well-formed expression in
-the sense that the parentheses are properly nested. In any DFS, for any two vertices u
-and v, either: 1) [u.d, u.f] and [v.d, v.f] are entirely disjoint and neither u nor v is
-a descendant of the other in the depth-first forest, 2) [u.d, u.f] is contained entirely
-within [v.d, v.f] and u is a descendant of v in a depth-first tree, or 3) [v.d, v.f] is
-contained entirely within [u.d, u.f] and v is a descendant of u in a depth-first tree.
+structure. The history of discovery and finishing times makes a well-formed expression
+in the sense that the parentheses are properly nested. In any DFS, for any two vertices
+u and v, either: 1) [u.d, u.f] and [v.d, v.f] are entirely disjoint and neither u nor v
+is a descendant of the other in the depth-first forest, 2) [u.d, u.f] is contained
+entirely within [v.d, v.f] and u is a descendant of v in a depth-first tree, or 3)
+[v.d, v.f] is contained entirely within [u.d, u.f] and v is a descendant of u in a
+depth-first tree.
 
 Vertex v is a proper descendant of vertex u in a depth-first forest for a graph G iff
 u.d < v.d < v.f < u.f.
