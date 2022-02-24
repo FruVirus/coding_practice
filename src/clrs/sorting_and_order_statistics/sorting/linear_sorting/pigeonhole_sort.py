@@ -33,7 +33,7 @@ pigeonhole_sort(): O(n + N) worst case.
 Space
 -----
 
-pigeonhole_sort(): O(n + N) for the pigeon holes array.
+pigeonhole_sort(): O(n + N) for the pigeonholes array.
 """
 
 
