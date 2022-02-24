@@ -114,22 +114,22 @@ pi table: [0, 0, 1, 2, 0]
 
 The pi table is filled in with the i indices for each longest prefix match. When a
 mismatch occurs, the values in the pi table transitions back to a previous longest
-longest prefix match if there is one or the value becomes 0 again.
+prefix match if there is one or the value becomes 0 again.
 
 2. Find matching starting with i = j = 0.
 
 We iterate through all characters in the text, t, to find occurrences of the complete
 pattern P.
 
-If p[j] == t[i], then we have a character match at index i in t and index j in p. Thus,
-we increment both indices by one. This occurs until i = j = 4.
+3. If p[j] == t[i], then we have a character match at index i in t and index j in p.
+Thus, we increment both indices by one. This occurs until i = j = 4.
 
-At i = j = 5, we have a mismatch between p[j] = d and t[i] = c. In addition, j != m so
-we don't have a complete pattern match yet. Thus, we can either transition index j back
-to the previous state in the pi table or advance index i by one position in the text. If
-we can still transition index j back in the pi table (i.e., j != 0), then we do so; this
-means that we may have a potential partial match so far and so we don't want to advance
-index i until we are sure that there are no more partial matches at index j.
+4. At i = j = 5, we have a mismatch between p[j] = d and t[i] = c. In addition, j != m
+so we don't have a complete pattern match yet. Thus, we can either transition index j
+back to the previous state in the pi table or advance index i by one position in the
+text. If we can still transition index j back in the pi table (i.e., j != 0), then we do
+so; this means that we may have a potential partial match so far and so we don't want to
+advance index i until we are sure that there are no more partial matches at index j.
 
 In other words, since we did not match ababc with ababd, we go back to ab and check if
 aba matches with abc. Since aba does not match with abc either, we transition index j
@@ -137,11 +137,11 @@ back in the pi table again so that j = 0 and check if a matches with c. Since a 
 match with c and j = 0, we have no choice but to advance the index i; this effectively
 starts the search over again in the text.
 
-If we have a partial match at any point when transitioning j back in the pi table, we
-we continue to check if p[j] == t[i] and increment the indices j and i accordingly.
+5. If we have a partial match at any point when transitioning j back in the pi table, we
+continue to check if p[j] == t[i] and increment the indices j and i accordingly.
 
-Once j == m, then we have a complete match of the pattern. The index j then transitions
-back to the previous state in the pi table.
+6. Once j == m, then we have a complete match of the pattern. The index j then
+transitions back to the previous state in the pi table.
 
 Complexity
 ==========
