@@ -11,7 +11,7 @@ Intuition
 ---------
 
 We extend Rabin Karp to 2D by calculating the hashes for each column just as in the 1D
-case, and then treating the hashes in each as the characters and hashing again across
+case, and then treating the hashes in each column as characters and hashing again across
 the rows.
 
 Complexity
