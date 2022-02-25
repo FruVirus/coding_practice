@@ -70,11 +70,7 @@ class Solution:
     def levelorder_iterative(self, root):
         if not root:
             return self.order
-        level, queue = 0, deque(
-            [
-                root,
-            ]
-        )
+        level, queue = 0, deque([root])
         while queue:
             self.order.append([])
             for _ in range(len(queue)):
