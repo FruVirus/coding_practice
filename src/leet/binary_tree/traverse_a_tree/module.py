@@ -26,16 +26,16 @@ Complexity
 Time
 ----
 
-inorderTraversal(), levelOrder(), postorderTraversal(), and preorderTraversal(): O(n).
+All: O(n).
 
 Space
 -----
 
-inorderTraversal(), levelOrder(), postorderTraversal(), and preorderTraversal(): O(n).
+All: O(n).
 """
 
 # Standard Library
-from typing import List, Optional
+from collections import deque
 
 
 class TreeNode:
@@ -46,56 +46,96 @@ class TreeNode:
 
 
 class Solution:
-    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        inorder, stack, curr = [], [], root
-        while curr is not None or stack:
-            while curr is not None:
+    def __init__(self):
+        self.order = []
+
+    def inorder_traversal_iterative(self, root):
+        stack, curr = [], root
+        while curr or stack:
+            while curr:
                 stack.append(curr)
                 curr = curr.left
             curr = stack.pop()
-            inorder.append(curr.val)
+            self.order.append(curr.val)
             curr = curr.right
-        return inorder
+        return self.order
 
-    def levelOrder(self, root: TreeNode) -> List[List[int]]:
-        levelorder = []
-        if not root:
-            return levelorder
-        stack = [(root, 0)]
-        while stack:
-            curr_node, level = stack.pop()
-            if len(levelorder) == level:
-                levelorder.append([])
-            levelorder[level].append(curr_node.val)
-            if curr_node.right:
-                stack.append((curr_node.right, level + 1))
-            if curr_node.left:
-                stack.append((curr_node.left, level + 1))
-        return levelorder
+    def inorder_traversal_recursive(self, root):
+        if root:
+            self.inorder_traversal_recursive(root.left)
+            self.order.append(root.val)
+            self.inorder_traversal_recursive(root.right)
+        return self.order
 
-    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    def levelorder_iterative(self, root):
         if not root:
-            return []
-        postorder, stack, curr = [], [], root
-        while curr is not None or stack:
-            if curr is None:
-                curr = stack.pop()
-                curr = curr.left
-            else:
-                stack.append(curr)
-                postorder.append(curr.val)
-                curr = curr.right
-        return list(reversed(postorder))
+            return self.order
+        level, queue = 0, deque(
+            [
+                root,
+            ]
+        )
+        while queue:
+            self.order.append([])
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                self.order[level].append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            level += 1
+        return self.order
 
-    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    def levelorder_recursive(self, root):
+        def bfs(node, level):
+            if node:
+                if len(self.order) == level:
+                    self.order.append([])
+                self.order[level].append(node.val)
+                bfs(node.left, level + 1)
+                bfs(node.right, level + 1)
+
+        bfs(root, 0)
+        return self.order
+
+    def postorder_traversal_iterative(self, root):
         if not root:
-            return []
-        preorder, stack = [], [root]
+            return self.order
+        stack = [root]
         while stack:
             node = stack.pop()
-            preorder.append(node.val)
+            if node:
+                self.order.append(node.val)
+                stack.append(node.left)
+                stack.append(node.right)
+        return self.order[::-1]
+
+    def postorder_traversal_recursive(self, root):
+        if not root:
+            return self.order
+        self.postorder_traversal_recursive(root.left)
+        self.postorder_traversal_recursive(root.right)
+        self.order.append(root.val)
+        return self.order
+
+    def preorder_traversal_iterative(self, root):
+        if not root:
+            return self.order
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            self.order.append(node.val)
             if node.right:
                 stack.append(node.right)
             if node.left:
                 stack.append(node.left)
-        return preorder
+        return self.order
+
+    def preorder_traversal_recursive(self, root):
+        if not root:
+            return self.order
+        self.order.append(root.val)
+        self.preorder_traversal_recursive(root.left)
+        self.preorder_traversal_recursive(root.right)
+        return self.order
