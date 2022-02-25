@@ -64,6 +64,12 @@ class MyStack:
     def __init__(self):
         self.q1 = deque()
 
+    def empty(self):
+        return len(self.q1) == 0
+
+    def pop(self):
+        return self.q1.popleft()
+
     def push(self, x):
         self.q1.append(x)
         len_ = len(self.q1)
@@ -71,11 +77,5 @@ class MyStack:
             self.q1.append(self.q1.popleft())
             len_ -= 1
 
-    def pop(self):
-        return self.q1.popleft()
-
     def top(self):
         return self.q1[0]
-
-    def empty(self):
-        return len(self.q1) == 0
