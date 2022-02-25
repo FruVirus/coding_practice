@@ -49,7 +49,7 @@ class Solution:
     def __init__(self):
         self.order = []
 
-    def inorder_traversal_iterative(self, root):
+    def inorder_iterative(self, root):
         stack, curr = [], root
         while curr or stack:
             while curr:
@@ -60,11 +60,11 @@ class Solution:
             curr = curr.right
         return self.order
 
-    def inorder_traversal_recursive(self, root):
+    def inorder_recursive(self, root):
         if root:
-            self.inorder_traversal_recursive(root.left)
+            self.inorder_recursive(root.left)
             self.order.append(root.val)
-            self.inorder_traversal_recursive(root.right)
+            self.inorder_recursive(root.right)
         return self.order
 
     def levelorder_iterative(self, root):
@@ -99,7 +99,7 @@ class Solution:
         bfs(root, 0)
         return self.order
 
-    def postorder_traversal_iterative(self, root):
+    def postorder_iterative(self, root):
         if not root:
             return self.order
         stack = [root]
@@ -111,15 +111,15 @@ class Solution:
                 stack.append(node.right)
         return self.order[::-1]
 
-    def postorder_traversal_recursive(self, root):
+    def postorder_recursive(self, root):
         if not root:
             return self.order
-        self.postorder_traversal_recursive(root.left)
-        self.postorder_traversal_recursive(root.right)
+        self.postorder_recursive(root.left)
+        self.postorder_recursive(root.right)
         self.order.append(root.val)
         return self.order
 
-    def preorder_traversal_iterative(self, root):
+    def preorder_iterative(self, root):
         if not root:
             return self.order
         stack = [root]
@@ -132,10 +132,10 @@ class Solution:
                 stack.append(node.left)
         return self.order
 
-    def preorder_traversal_recursive(self, root):
+    def preorder_recursive(self, root):
         if not root:
             return self.order
         self.order.append(root.val)
-        self.preorder_traversal_recursive(root.left)
-        self.preorder_traversal_recursive(root.right)
+        self.preorder_recursive(root.left)
+        self.preorder_recursive(root.right)
         return self.order
