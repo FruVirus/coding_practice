@@ -29,24 +29,24 @@ self.queue: O(n).
 
 class MyCircularQueue:
     def __init__(self, k):
-        self.capacity, self.count, self.head_index, self.queue = k, 0, 0, [0] * k
+        self.capacity, self.count, self.head, self.queue = k, 0, 0, [0] * k
 
     def dequeue(self):
         if self.is_empty():
             return False
-        self.head_index = (self.head_index + 1) % self.capacity
+        self.head = (self.head + 1) % self.capacity
         self.count -= 1
         return True
 
     def enqueue(self, value):
         if self.is_full():
             return False
-        self.queue[(self.head_index + self.count) % self.capacity] = value
+        self.queue[(self.head + self.count) % self.capacity] = value
         self.count += 1
         return True
 
     def front(self):
-        return -1 if self.is_empty() else self.queue[self.head_index]
+        return -1 if self.is_empty() else self.queue[self.head]
 
     def is_empty(self):
         return self.count == 0
@@ -57,4 +57,4 @@ class MyCircularQueue:
     def rear(self):
         if self.is_empty():
             return -1
-        return self.queue[(self.head_index + self.count - 1) % self.capacity]
+        return self.queue[(self.head + self.count - 1) % self.capacity]
