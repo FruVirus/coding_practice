@@ -34,15 +34,15 @@ class MyCircularQueue:
     def dequeue(self):
         if self.is_empty():
             return False
-        self.head = (self.head + 1) % self.capacity
         self.count -= 1
+        self.head = (self.head + 1) % self.capacity
         return True
 
     def enqueue(self, value):
         if self.is_full():
             return False
-        self.queue[(self.head + self.count) % self.capacity] = value
         self.count += 1
+        self.queue[(self.head + self.count - 1) % self.capacity] = value
         return True
 
     def front(self):
