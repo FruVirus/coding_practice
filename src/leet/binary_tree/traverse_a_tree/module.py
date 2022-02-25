@@ -94,10 +94,11 @@ class Solution:
         stack = [root]
         while stack:
             node = stack.pop()
-            if node:
-                self.order.append(node.val)
+            if node.left:
                 stack.append(node.left)
+            if node.right:
                 stack.append(node.right)
+            self.order.append(node.val)
         return self.order[::-1]
 
     def postorder_recursive(self, root):
