@@ -50,14 +50,14 @@ class Solution:
         self.order = []
 
     def inorder_iterative(self, root):
-        stack, curr = [], root
-        while curr or stack:
-            while curr:
-                stack.append(curr)
-                curr = curr.left
-            curr = stack.pop()
-            self.order.append(curr.val)
-            curr = curr.right
+        stack, node = [], root
+        while node or stack:
+            while node:
+                stack.append(node)
+                node = node.left
+            node = stack.pop()
+            self.order.append(node.val)
+            node = node.right
         return self.order
 
     def inorder_recursive(self, root):
