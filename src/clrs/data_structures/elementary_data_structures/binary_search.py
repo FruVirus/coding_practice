@@ -29,7 +29,7 @@ def bs_iterative(a, low, high, k):
 
 def bs_recursive(a, low, high, k):
     if low <= high:
-        mid = (low + high) // 2
+        mid = low + ((high - low) // 2)
         if a[mid] == k:
             return mid
         if a[mid] > k:
