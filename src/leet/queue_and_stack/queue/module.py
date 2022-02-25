@@ -42,7 +42,7 @@ class MyCircularQueue:
         if self.is_full():
             return False
         self.count += 1
-        self.queue[(self.head + self.count - 1) % self.capacity] = value
+        self.queue[self.tail()] = value
         return True
 
     def front(self):
@@ -55,6 +55,7 @@ class MyCircularQueue:
         return self.count == self.capacity
 
     def rear(self):
-        if self.is_empty():
-            return -1
-        return self.queue[(self.head + self.count - 1) % self.capacity]
+        return -1 if self.is_empty() else self.queue[self.tail()]
+
+    def tail(self):
+        return (self.head + self.count - 1) % self.capacity
