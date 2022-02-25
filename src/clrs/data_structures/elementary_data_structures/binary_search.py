@@ -17,7 +17,7 @@ bs_iterative() and bs_recursive(): O(lg n).
 
 def bs_iterative(a, low, high, k):
     while low <= high:
-        mid = int(low + ((high - low) / 2))
+        mid = low + ((high - low) // 2)
         if a[mid] == k:
             return mid
         if a[mid] > k:
