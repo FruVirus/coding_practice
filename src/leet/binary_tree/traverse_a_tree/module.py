@@ -43,7 +43,7 @@ class Solution:
         self.order = []
 
     def inorder_iterative(self, root):
-        stack, node = [], root
+        node, stack = root, []
         while node or stack:
             while node:
                 stack.append(node)
