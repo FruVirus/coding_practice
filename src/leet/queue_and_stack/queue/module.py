@@ -29,33 +29,33 @@ self.queue: O(n).
 
 class MyCircularQueue:
     def __init__(self, k):
-        self.capacity, self.count, self.head, self.queue = k, 0, 0, [0] * k
+        self.capacity, self.count, self.head_index, self.queue = k, 0, 0, [0] * k
 
     def dequeue(self):
-        if self.is_empty():
+        if self.empty():
             return False
         self.count -= 1
-        self.head = (self.head + 1) % self.capacity
+        self.head_index = (self.head_index + 1) % self.capacity
         return True
 
     def enqueue(self, value):
-        if self.is_full():
+        if self.full():
             return False
         self.count += 1
-        self.queue[self.tail()] = value
+        self.queue[self.tail_index()] = value
         return True
 
-    def front(self):
-        return -1 if self.is_empty() else self.queue[self.head]
+    def head(self):
+        return -1 if self.empty() else self.queue[self.head_index]
 
-    def is_empty(self):
+    def empty(self):
         return self.count == 0
 
-    def is_full(self):
+    def full(self):
         return self.count == self.capacity
 
-    def rear(self):
-        return -1 if self.is_empty() else self.queue[self.tail()]
-
     def tail(self):
-        return (self.head + self.count - 1) % self.capacity
+        return -1 if self.empty() else self.queue[self.tail_index()]
+
+    def tail_index(self):
+        return (self.head_index + self.count - 1) % self.capacity
