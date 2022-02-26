@@ -56,8 +56,8 @@ class MyQueue:
         self.peek()
         return self.s2.pop()
 
-    def push(self, x):
-        self.s1.append(x)
+    def push(self, val):
+        self.s1.append(val)
 
 
 class MyStack:
@@ -70,8 +70,8 @@ class MyStack:
     def pop(self):
         return self.q1.popleft()
 
-    def push(self, x):
-        self.q1.append(x)
+    def push(self, val):
+        self.q1.append(val)
         len_ = len(self.q1)
         while len_ > 1:
             self.q1.append(self.q1.popleft())
