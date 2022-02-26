@@ -38,6 +38,9 @@ class MyCircularQueue:
         self.head_index = (self.head_index + 1) % self.capacity
         return True
 
+    def empty(self):
+        return self.count == 0
+
     def enqueue(self, val):
         if self.full():
             return False
@@ -45,14 +48,11 @@ class MyCircularQueue:
         self.queue[self.tail_index()] = val
         return True
 
-    def head(self):
-        return -1 if self.empty() else self.queue[self.head_index]
-
-    def empty(self):
-        return self.count == 0
-
     def full(self):
         return self.count == self.capacity
+
+    def head(self):
+        return -1 if self.empty() else self.queue[self.head_index]
 
     def tail(self):
         return -1 if self.empty() else self.queue[self.tail_index()]
