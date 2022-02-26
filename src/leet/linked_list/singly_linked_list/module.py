@@ -34,14 +34,14 @@ All: O(1).
 """
 
 
-class ListNode:
+class Node:
     def __init__(self, val):
         self.val, self.prev, self.next = val, None, None
 
 
 class SLL:
     def __init__(self):
-        self.head, self.size = ListNode(0), 0
+        self.head, self.size = Node(0), 0
 
     def add_at_head(self, val):
         self.add_at_index(0, val)
@@ -49,7 +49,7 @@ class SLL:
     def add_at_index(self, index, val):
         if index > self.size:
             return
-        index, prev, node = 0 if index < 0 else index, self.head, ListNode(val)
+        index, prev, node = 0 if index < 0 else index, self.head, Node(val)
         for _ in range(index):
             prev = prev.next
         self.size += 1
@@ -78,18 +78,18 @@ class SLL:
 
 class DLL:
     def __init__(self):
-        self.head, self.tail, self.size = ListNode(0), ListNode(0), 0
+        self.head, self.tail, self.size = Node(0), Node(0), 0
         self.head.next, self.tail.prev = self.tail, self.head
 
     def add_at_head(self, val):
-        prev, next, node = self.head, self.head.next, ListNode(val)
+        prev, next, node = self.head, self.head.next, Node(val)
         self.size += 1
         prev.next, next.prev, node.prev, node.next = node, node, prev, next
 
     def add_at_index(self, index, val):
         if index > self.size:
             return
-        index, node = 0 if index < 0 else index, ListNode(val)
+        index, node = 0 if index < 0 else index, Node(val)
         if index < self.size - index:
             prev = self.head
             for _ in range(index):
@@ -104,7 +104,7 @@ class DLL:
         prev.next, next.prev, node.prev, node.next = node, node, prev, next
 
     def add_at_tail(self, val):
-        prev, next, node = self.tail.prev, self.tail, ListNode(val)
+        prev, next, node = self.tail.prev, self.tail, Node(val)
         self.size += 1
         prev.next, next.prev, node.prev, node.next = node, node, prev, next
 
