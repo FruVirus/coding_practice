@@ -38,11 +38,11 @@ class MyCircularQueue:
         self.head_index = (self.head_index + 1) % self.capacity
         return True
 
-    def enqueue(self, value):
+    def enqueue(self, val):
         if self.full():
             return False
         self.count += 1
-        self.queue[self.tail_index()] = value
+        self.queue[self.tail_index()] = val
         return True
 
     def head(self):
