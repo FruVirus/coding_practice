@@ -31,7 +31,7 @@ lint:
 	isort .
 	black .
 	flake8 .
-	mypy src/ --ignore-missing-imports --exclude=leet
+	mypy src/ --ignore-missing-imports
 	pylint src/
 
 ########## TESTING ##########
