@@ -49,7 +49,7 @@ class SLL:
     def add_at_index(self, index, val):
         if index > self.size:
             return
-        index, prev, node = 0 if index < 0 else index, self.head, Node(val)
+        index, prev, node = max(0, index), self.head, Node(val)
         for _ in range(index):
             prev = prev.next
         self.size += 1
@@ -89,7 +89,7 @@ class DLL:
     def add_at_index(self, index, val):
         if index > self.size:
             return
-        index, node = 0 if index < 0 else index, Node(val)
+        index, node = max(0, index), Node(val)
         if index < self.size - index:
             prev = self.head
             for _ in range(index):
