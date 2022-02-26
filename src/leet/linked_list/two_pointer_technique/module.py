@@ -34,6 +34,7 @@ Space
 All: O(1).
 """
 
+
 # pylint: disable=R0201
 
 
