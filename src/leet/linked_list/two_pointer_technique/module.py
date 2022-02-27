@@ -38,7 +38,7 @@ All: O(1).
 # pylint: disable=R0201
 
 
-class Solution:
+class Cycle:
     def detect_cycle(self, head):
         if not head:
             return None
