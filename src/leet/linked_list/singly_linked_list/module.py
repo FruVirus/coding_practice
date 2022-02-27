@@ -81,15 +81,18 @@ class DLL:
         self.head, self.tail, self.size = Node(0), Node(0), 0
         self.head.next, self.tail.prev = self.tail, self.head
 
-    def add_at_head(self, val):
-        prev, next, node = self.head, self.head.next, Node(val)
+    def _add(self, prev, next, val):
         self.size += 1
+        node = Node(val)
         prev.next, next.prev, node.prev, node.next = node, node, prev, next
+
+    def add_at_head(self, val):
+        self._add(self.head, self.head.next, val)
 
     def add_at_index(self, index, val):
         if index > self.size:
             return
-        index, node = max(0, index), Node(val)
+        index = max(0, index)
         if index < self.size - index:
             prev = self.head
             for _ in range(index):
@@ -100,13 +103,10 @@ class DLL:
             for _ in range(self.size - index):
                 next = next.prev
             prev = next.prev
-        self.size += 1
-        prev.next, next.prev, node.prev, node.next = node, node, prev, next
+        self._add(prev, next, val)
 
     def add_at_tail(self, val):
-        prev, next, node = self.tail.prev, self.tail, Node(val)
-        self.size += 1
-        prev.next, next.prev, node.prev, node.next = node, node, prev, next
+        self._add(self.tail.prev, self.tail, val)
 
     def delete_at_index(self, index):
         if index < 0 or index >= self.size:
