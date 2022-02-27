@@ -38,7 +38,7 @@ All: O(n).
 from collections import deque
 
 
-class Solution:
+class Traversal:
     def __init__(self):
         self.order = []
 
