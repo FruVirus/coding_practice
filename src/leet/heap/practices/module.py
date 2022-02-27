@@ -28,20 +28,20 @@ Complexity
 Time
 ----
 
+KthSmallest: min(n, k) + k * lg(min(n, k)).
+
 MedianFinder: O(5 * lg n) + O(1) = O(lg n).
 
 TopKFrequent: O(n).
 
-KthSmallest: min(n, k) + k * lg(min(n, k)).
-
 Space
 -----
+
+KthSmallest: O(min(n, k)).
 
 MedianFinder: O(n).
 
 TopKFrequent: O(n).
-
-KthSmallest: O(min(n, k)).
 """
 
 # pylint: disable=R0201
