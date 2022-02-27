@@ -17,21 +17,21 @@ Complexity
 Time
 ----
 
-MyQueue:
+QueueStack:
     self.push(): O(1).
     self.pop(): O(1) amortized.
 
-MyStack:
+StackQueue:
     self.push(): O(n).
     self.pop(): O(1).
 
 Space
 -----
 
-MyQueue:
+QueueStack:
     self.s1 and self.s2: O(n).
 
-MyStack:
+StackQueue:
     self.q1: O(n).
 """
 
@@ -39,7 +39,7 @@ MyStack:
 from collections import deque
 
 
-class MyQueue:
+class QueueStack:
     def __init__(self):
         self.s1, self.s2 = [], []
 
@@ -60,7 +60,7 @@ class MyQueue:
         self.s1.append(val)
 
 
-class MyStack:
+class StackQueue:
     def __init__(self):
         self.q1 = deque()
 

@@ -26,7 +26,7 @@ Complexity
 Time
 ----
 
-detect_cycle() and has_cycle(): O(n).
+All: O(n).
 
 Space
 -----
