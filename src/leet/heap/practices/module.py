@@ -54,8 +54,6 @@ from collections import Counter
 
 class KthSmallest:
     def kth_smallest(self, matrix, k):
-        if k == 1:
-            return matrix[0][0]
         min_heap = [(matrix[r][0], r, 0) for r in range(min(len(matrix), k))]
         heapq.heapify(min_heap)
         while k > 0:
