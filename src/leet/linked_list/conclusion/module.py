@@ -10,7 +10,7 @@ Complexity
 Time
 ----
 
-rotate_right(): O(n).
+RotateRight: O(n).
 
 Space
 -----
@@ -22,7 +22,7 @@ All: O(1).
 # pylint: disable=R0201
 
 
-class Solution:
+class RotateRight:
     def rotate_right(self, head, k):
         if not head:
             return None
