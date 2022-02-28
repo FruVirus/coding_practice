@@ -11,12 +11,12 @@ Complexity
 Time
 ----
 
-sorted_squares: O(n).
+sorted_squares(): O(n).
 
 Space
 -----
 
-sorted_squares: O(n).
+sorted_squares(): O(n).
 """
 
 
