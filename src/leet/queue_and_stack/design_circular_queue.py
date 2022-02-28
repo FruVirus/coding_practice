@@ -18,12 +18,14 @@ Complexity
 Time
 ----
 
-All: O(1).
+CircularQueue:
+    All: O(1).
 
 Space
 -----
 
-self.queue: O(n).
+CircularQueue:
+    self.queue: O(n).
 """
 
 
