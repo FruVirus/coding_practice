@@ -38,7 +38,7 @@ bs_recursive(): O(lg n) stack space.
 """
 
 
-def bs_iterative_one(a, k):
+def bs_one(a, k):
     low, high = 0, len(a) - 1
     while low <= high:
         mid = low + ((high - low) // 2)
@@ -51,7 +51,7 @@ def bs_iterative_one(a, k):
     return None
 
 
-def bs_iterative_two(a, k):
+def bs_two(a, k):
     low, high = 0, len(a)
     while low < high:
         mid = low + ((high - low) // 2)
@@ -64,7 +64,7 @@ def bs_iterative_two(a, k):
     return low if low != len(a) and a[low] == k else None
 
 
-def bs_iterative_three(a, k):
+def bs_three(a, k):
     low, high = 0, len(a) - 1
     while low + 1 < high:
         mid = low + ((high - low) // 2)
