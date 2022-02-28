@@ -65,12 +65,12 @@ def ks_bu(w, c, pw_index, sol):
 
 
 def ks_td(w, c, pw_index, sol):
-    w_index = pw_index[0]
-    if c - w[w_index] >= 0:
-        sol.append((w_index, 1))
-        ks_td(w, c - w[w_index], pw_index[1:], sol)
+    i = pw_index[0]
+    if c - w[i] >= 0:
+        sol.append((i, 1))
+        ks_td(w, c - w[i], pw_index[1:], sol)
     else:
-        sol.append((w_index, c / w[w_index]))
+        sol.append((i, c / w[i]))
 
 
 def ks(p, w, c, td=False):
