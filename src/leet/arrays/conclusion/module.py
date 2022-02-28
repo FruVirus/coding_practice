@@ -27,7 +27,7 @@ class MinMeetingRooms:
         start_times = sorted([i[0] for i in intervals])
         end_times = sorted([i[1] for i in intervals])
         start_ptr = end_ptr = num_rooms = 0
-        for _ in range(len(intervals)):
+        while start_ptr < len(intervals) and end_ptr < len(intervals):
             if start_times[start_ptr] < end_times[end_ptr]:
                 num_rooms += 1
             else:
