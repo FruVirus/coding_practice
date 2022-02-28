@@ -41,7 +41,7 @@ bs_recursive(): O(lg n) stack space.
 def bs_one(a, k):
     low, high = 0, len(a) - 1
     while low <= high:
-        mid = low + ((high - low) // 2)
+        mid = low + (high - low) // 2
         if a[mid] == k:
             return mid
         if a[mid] > k:
@@ -54,7 +54,7 @@ def bs_one(a, k):
 def bs_two(a, k):
     low, high = 0, len(a)
     while low < high:
-        mid = low + ((high - low) // 2)
+        mid = low + (high - low) // 2
         if a[mid] == k:
             return mid
         if a[mid] > k:
@@ -67,7 +67,7 @@ def bs_two(a, k):
 def bs_three(a, k):
     low, high = 0, len(a) - 1
     while low + 1 < high:
-        mid = low + ((high - low) // 2)
+        mid = low + (high - low) // 2
         if a[mid] == k:
             return mid
         if a[mid] > k:
@@ -83,7 +83,7 @@ def bs_three(a, k):
 
 def bs_recursive(a, low, high, k):
     if low <= high:
-        mid = low + ((high - low) // 2)
+        mid = low + (high - low) // 2
         if a[mid] == k:
             return mid
         if a[mid] > k:
