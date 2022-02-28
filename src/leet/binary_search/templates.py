@@ -1,27 +1,27 @@
 """
-Overview
-========
+Binary Search Template I
+------------------------
 
-Binary search searches for the index of an item k in an array by recursively splitting
-the array in two. The input array is assumed to be sorted in increasing order.
+bs_one() is used to search for an element or condition which can be determined by
+accessing a single index in the array.
 
-Intuition
----------
+Binary Search Template II
+-------------------------
 
-bs_iterative_one() is used to search for an element or condition which can be determined
-by accessing a single index in the array.
+bs_two() is used to search for an element or condition which requires accessing the
+current index and its immediate right neighbor's index in the array. Post-processing is
+required since the loop/recursion ends when you have 1 element left. Thus, we need to
+assess if the remaining element meets the condition. This guarantees that the search
+space is at least 2 in size at each step.
 
-bs_iterative_two() is used to search for an element or condition which requires
-accessing the current index and its immediate right neighbor's index in the array.
-Post-processing is required since the loop/recursion ends when you have 1 element left.
-Thus, we need to assess if the remaining element meets the condition. This guarantees
-that the search space is at least 2 in size at each step.
+Binary Search Template III
+--------------------------
 
-bs_iterative_three() is used to search for an element or condition which requires
-accessing the current index and its immediate left and right neighbor's index in the
-array. Post-processing is required since the loop/recursion ends when you have 2
-elements left. Thus, we need to assess if the remaining elements meet the condition.
-This guarantees that th search space is at least 3 in size at each step.
+bs_three() is used to search for an element or condition which requires accessing the
+current index and its immediate left and right neighbor's index in the array.
+Post-processing is required since the loop/recursion ends when you have 2 elements left.
+Thus, we need to assess if the remaining elements meet the condition. This guarantees
+that th search space is at least 3 in size at each step.
 
 Complexity
 ==========
@@ -29,8 +29,7 @@ Complexity
 Time
 ----
 
-bs_iterative_one(), bs_iterative_two(), bs_iterative_three(), and bs_recursive():
-O(lg n).
+bs_one(), bs_two(), bs_three(), and bs_recursive(): O(lg n).
 
 Space
 -----
