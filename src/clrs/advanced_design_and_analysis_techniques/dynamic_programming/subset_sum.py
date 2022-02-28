@@ -45,10 +45,10 @@ As another example, the value of v[1][4] tells us if we can match a capacity of 
 some combination of the first two items (items 0 and 1). If we can match the capacity
 without taking item 1, then this is v[0][4] since we keep the same capacity and look at
 the entry for the previous item 0. If we cannot match the capacity without taking item
-1, then we check if we can take take item 1 in order to match the capacity. In order to
-check this, we look at v[0][2] since this element means we take item 1, subtract its
-weight of 2, and get a remaining weight of 2. In this case, since v[0][2] = 0, it means
-that we cannot match the capacity of 4 by using any combination of the first two items.
+1, then we check if we can take item 1 in order to match the capacity. In order to check
+this, we look at v[0][2] since this element means we take item 1, subtract its weight of
+2, and get a remaining weight of 2. In this case, since v[0][2] = 0, it means that we
+cannot match the capacity of 4 by using any combination of the first two items.
 
 Complexity
 ==========
