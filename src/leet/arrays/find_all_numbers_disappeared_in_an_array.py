@@ -24,4 +24,4 @@ def find_disappeared_numbers(nums):
     n = [0] * len(nums)
     for num in nums:
         n[num - 1] = num
-    return [i + 1 for i, x in enumerate(n) if x == 0]
+    return [i for i, x in enumerate(n, 1) if x == 0]
