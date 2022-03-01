@@ -27,9 +27,9 @@ def max_depth(root):
         return 0
     depth, stack = 0, [(root, 1)]
     while stack:
-        root, curr_depth = stack.pop()
-        if root:
+        node, curr_depth = stack.pop()
+        if node:
             depth = max(depth, curr_depth)
-            stack.append((root.left, curr_depth + 1))
-            stack.append((root.right, curr_depth + 1))
+            stack.append((node.left, curr_depth + 1))
+            stack.append((node.right, curr_depth + 1))
     return depth
