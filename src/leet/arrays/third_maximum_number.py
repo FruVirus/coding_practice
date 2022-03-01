@@ -22,8 +22,8 @@ third_max(): O(1).
 
 def third_max(nums):
     max_set = set()
-    for i in nums:
-        max_set.add(i)
+    for num in nums:
+        max_set.add(num)
         if len(max_set) == 3:
             max_set.remove(min(max_set))
     return min(max_set) if len(max_set) == 3 else max(max_set)
