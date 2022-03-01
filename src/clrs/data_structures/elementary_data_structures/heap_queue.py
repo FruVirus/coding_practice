@@ -97,7 +97,7 @@ keys and continuing if the element's key is larger, and terminating if the eleme
 is smaller, since the max-heap property now holds.
 
 The procedure delete() deletes a key referenced by the index i. If the key at index i is
-greater than or equal to the key at the end of the array, then we exchange keys at index
+greater than or equal to the key at the end of the heap, then we exchange keys at index
 i and index self.heap_size and re-heapify at index i to ensure that the subtree rooted
 at the parent of i remains a max-heap. In other words, since the key at index i is
 greater than or equal to the key at index self.heap_size and we switch the two keys, we
