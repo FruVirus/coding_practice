@@ -22,9 +22,11 @@ sorted_squares(): O(n).
 
 def sorted_squares(nums):
     i, j, sol = 0, len(nums) - 1, [0] * len(nums)
-    for index in reversed(range(len(nums))):
+    k = j
+    while k >= 0:
         if abs(nums[i]) <= abs(nums[j]):
-            j, sol[index] = j - 1, nums[j] ** 2
+            j, sol[k] = j - 1, nums[j] ** 2
         else:
-            i, sol[index] = i + 1, nums[i] ** 2
+            i, sol[k] = i + 1, nums[i] ** 2
+        k -= 1
     return sol
