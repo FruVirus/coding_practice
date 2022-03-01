@@ -120,7 +120,7 @@ def find_max(a, low=None, high=None):
         low, high = 0, len(a) - 1
     if low == high:
         return low, high, a[low]
-    mid = (low + high) // 2
+    mid = low + (high - low) // 2
     llow, lhigh, lsum = find_max(a, low, mid)
     rlow, rhigh, rsum = find_max(a, mid + 1, high)
     clow, chigh, csum = find_cross(a, low, mid, high)
