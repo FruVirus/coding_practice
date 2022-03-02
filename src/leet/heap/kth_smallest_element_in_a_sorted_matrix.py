@@ -16,7 +16,7 @@ Complexity
 Time
 ----
 
-kth_smallest(): min(n, k) + k * lg(min(n, k)).
+kth_smallest(): O(min(n, k) + k * lg(min(n, k))).
 
 Space
 -----
