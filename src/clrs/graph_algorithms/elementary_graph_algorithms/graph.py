@@ -24,7 +24,7 @@ the vertices adjacent to u in G.
 If G is a directed graph, the sum of the lengths of all the adjacency lists is |E|. If G
 is an undirected graph, the sum of the lengths of all the adjacency lists is 2 * |E|.
 For both directed and undirected graphs, the adjacency-list representation has the
-desirable property that the amount of memory it requires it Theta(V + E).
+desirable property that the amount of memory it requires is Theta(V + E).
 
 A potential disadvantage of the adjacency-list representation is that it provides no
 quicker way to determine whether a given edge (u, v) is present in the graph than to
