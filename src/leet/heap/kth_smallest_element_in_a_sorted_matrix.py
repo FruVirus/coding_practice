@@ -24,8 +24,6 @@ Space
 kth_smallest(): O(min(n, k)).
 """
 
-# pylint: disable=R0201
-
 # Standard Library
 import heapq
 
