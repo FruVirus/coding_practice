@@ -29,6 +29,6 @@ def is_symmetric(root):
                 return False
             stack.append((left.left, right.right))
             stack.append((left.right, right.left))
-        elif not (left is None and right is None):
+        elif left or right:
             return False
     return True
