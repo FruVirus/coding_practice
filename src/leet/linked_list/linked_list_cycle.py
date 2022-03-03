@@ -36,6 +36,6 @@ def detect_cycle(head):
     if not (fast and fast.next):
         return None
     ptr1, ptr2 = head, fast.next
-    while ptr1 != ptr2:
+    while ptr1 is not ptr2:
         ptr1, ptr2 = ptr1.next, ptr2.next
     return ptr1
