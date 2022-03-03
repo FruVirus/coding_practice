@@ -21,9 +21,9 @@ is_symmetric: O(n).
 
 
 def is_symmetric(root):
-    stack = [(root.left, root.right)]
+    stack = [(root.right, root.left)]
     while stack:
-        right, left = stack.pop()
+        left, right = stack.pop()
         if left and right:
             if left.val != right.val:
                 return False
