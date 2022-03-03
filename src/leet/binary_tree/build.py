@@ -19,12 +19,12 @@ Complexity
 Time
 ----
 
-build_tree_postorder and build_tree_preorder: O(n).
+build_postorder() and build_preorder(): O(n).
 
 Space
 -----
 
-build_tree_postorder and build_tree_preorder: O(n).
+build_postorder() and build_preorder(): O(n).
 """
 
 
@@ -33,7 +33,7 @@ class TreeNode:
         self.left, self.right, self.val = left, right, val
 
 
-def build_tree_preorder(inorder, preorder):
+def build_preorder(inorder, preorder):
     def helper(in_left, in_right):
         if in_left <= in_right:
             val = preorder.pop(0)
@@ -47,7 +47,7 @@ def build_tree_preorder(inorder, preorder):
     return helper(0, len(inorder) - 1)
 
 
-def build_tree_postorder(inorder, postorder):
+def build_postorder(inorder, postorder):
     def helper(in_left, in_right):
         if in_left <= in_right:
             val = postorder.pop()
