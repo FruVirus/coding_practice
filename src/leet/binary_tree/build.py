@@ -33,20 +33,6 @@ class TreeNode:
         self.left, self.right, self.val = left, right, val
 
 
-def build_preorder(inorder, preorder):
-    def helper(in_left, in_right):
-        if in_left <= in_right:
-            val = preorder.pop(0)
-            root, index = TreeNode(val), idx_map[val]
-            root.left = helper(in_left, index - 1)
-            root.right = helper(index + 1, in_right)
-            return root
-        return None
-
-    idx_map = {val: idx for idx, val in enumerate(inorder)}
-    return helper(0, len(inorder) - 1)
-
-
 def build_postorder(inorder, postorder):
     def helper(in_left, in_right):
         if in_left <= in_right:
@@ -54,6 +40,20 @@ def build_postorder(inorder, postorder):
             root, index = TreeNode(val), idx_map[val]
             root.right = helper(index + 1, in_right)
             root.left = helper(in_left, index - 1)
+            return root
+        return None
+
+    idx_map = {val: idx for idx, val in enumerate(inorder)}
+    return helper(0, len(inorder) - 1)
+
+
+def build_preorder(inorder, preorder):
+    def helper(in_left, in_right):
+        if in_left <= in_right:
+            val = preorder.pop(0)
+            root, index = TreeNode(val), idx_map[val]
+            root.left = helper(in_left, index - 1)
+            root.right = helper(index + 1, in_right)
             return root
         return None
 
