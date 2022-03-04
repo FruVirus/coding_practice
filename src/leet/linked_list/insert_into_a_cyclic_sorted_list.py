@@ -34,8 +34,8 @@ class Node:
         self.val, self.next = val, next
 
 
-def insert(head, insert_val):
-    node = Node(insert_val)
+def insert(head, val):
+    node = Node(val)
     if not head:
         node.next = node
         return node
@@ -43,11 +43,11 @@ def insert(head, insert_val):
     while True:
         if head is curr.next:
             break
-        if curr.val <= insert_val <= curr.next.val:
+        if curr.val <= val <= curr.next.val:
             break
-        if insert_val >= curr.val > curr.next.val:
+        if val >= curr.val > curr.next.val:
             break
-        if curr.val > curr.next.val >= insert_val:
+        if curr.val > curr.next.val >= val:
             break
         curr = curr.next
     node.next, curr.next = curr.next, node
