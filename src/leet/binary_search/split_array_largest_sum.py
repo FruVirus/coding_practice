@@ -13,7 +13,7 @@ Complexity
 Time
 ----
 
-split_array: O(n * lg(s)), where n is the length of nums and s is the sum of integers in
+split_array: O(n * lg s), where n is the length of nums and s is the sum of integers in
 the nums.
 
 Space
