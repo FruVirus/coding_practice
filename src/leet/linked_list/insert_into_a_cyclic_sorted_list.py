@@ -41,11 +41,14 @@ def insert(head, insert_val):
         return node
     curr = head
     while True:
-        if head is curr.next or curr.val <= insert_val <= curr.next.val:
+        if head is curr.next:
             break
-        if curr.val > curr.next.val:
-            if curr.val <= insert_val or curr.next.val >= insert_val:
-                break
+        if curr.val <= insert_val <= curr.next.val:
+            break
+        if insert_val >= curr.val > curr.next.val:
+            break
+        if curr.val > curr.next.val >= insert_val:
+            break
         curr = curr.next
     node.next, curr.next = curr.next, node
     return head
