@@ -26,11 +26,11 @@ class Node:
 
 
 def remove_nth_from_end(head, n):
-    temp = Node()
-    temp.next, slow, fast = head, temp, temp
+    node = Node()
+    node.next, prev, curr = head, node, node
     for _ in range(n + 1):
-        fast = fast.next
-    while fast:
-        slow, fast = slow.next, fast.next
-    slow.next = slow.next.next
-    return temp.next
+        curr = curr.next
+    while curr:
+        prev, curr = prev.next, curr.next
+    prev.next = prev.next.next
+    return node.next
