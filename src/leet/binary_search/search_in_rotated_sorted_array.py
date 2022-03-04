@@ -32,7 +32,7 @@ search(): O(1).
 def search(nums, target):
     low, high = 0, len(nums) - 1
     while low <= high:
-        mid = low + ((high - low) // 2)
+        mid = low + (high - low) // 2
         if nums[mid] == target:
             return mid
         if nums[mid] >= nums[low]:
