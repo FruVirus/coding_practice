@@ -35,8 +35,7 @@ from collections import Counter
 def intersect(nums1, nums2):
     nums1.sort()
     nums2.sort()
-    sol = set()
-    i = j = 0
+    i, j, sol = 0, 0, set()
     while i < len(nums1) and j < len(nums2):
         if nums1[i] == nums2[j]:
             sol.add(nums1[i])
