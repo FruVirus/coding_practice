@@ -23,8 +23,6 @@ connect(): O(1).
 
 
 def connect(root):
-    if not root:
-        return None
     leftmost = root
     while leftmost:
         prev, node, leftmost = None, leftmost, None
