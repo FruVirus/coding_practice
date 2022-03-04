@@ -22,7 +22,8 @@ Complexity
 Time
 ----
 
-find_min(): O(lg n)/O(n) expected/worse case.
+find_min(): O(lg n)/O(n) expected/worse case. Worst case occurs when the array contains
+all identical elements.
 
 Space
 -----
