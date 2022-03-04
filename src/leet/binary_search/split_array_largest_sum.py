@@ -38,8 +38,7 @@ def split_array(nums, m):
     while low <= high:
         mid = low + (high - low) // 2
         if min_subarrays_required(mid) <= m:
-            high = mid - 1
-            min_sum = mid
+            min_sum, high = mid, mid - 1
         else:
             low = mid + 1
     return min_sum
