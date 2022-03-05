@@ -36,8 +36,7 @@ def sol(l1, l2):
         val = (l1.val if l1 else 0) + (l2.val if l2 else 0) + carry
         carry, val = val // 10, val % 10
         curr.next = Node(val)
-        curr = curr.next
-        l1, l2 = l1.next if l1 else None, l2.next if l2 else None
+        curr, l1, l2 = curr.next, l1.next if l1 else None, l2.next if l2 else None
     if carry > 0:
         curr.next = Node(carry)
     return node.next
