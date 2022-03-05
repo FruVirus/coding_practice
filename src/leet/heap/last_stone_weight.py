@@ -37,7 +37,7 @@ import heapq
 
 
 def sol(stones):
-    stones = [-1 * stone for stone in stones]
+    stones = [-stone for stone in stones]
     heapq.heapify(stones)
     while len(stones) > 1:
         y, x = heapq.heappop(stones), heapq.heappop(stones)
