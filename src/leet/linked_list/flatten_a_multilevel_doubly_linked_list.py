@@ -32,15 +32,15 @@ flatten(head): O(n).
 
 
 class Node:
-    def __init__(self, val, prev, next, child):
+    def __init__(self, val=0, prev=None, next=None, child=None):
         self.val, self.prev, self.next, self.child = val, prev, next, child
 
 
 def sol(head):
     if not head:
         return None
-    temp = Node(0, None, head, None)
-    prev, stack = temp, [head]
+    node = Node(next=head)
+    prev, stack = node, [head]
     while stack:
         curr = stack.pop()
         prev.next, curr.prev = curr, prev
@@ -50,5 +50,5 @@ def sol(head):
             stack.append(curr.child)
             curr.child = None
         prev = curr
-    temp.next.prev = None
-    return temp.next
+    node.next.prev = None
+    return node.next
