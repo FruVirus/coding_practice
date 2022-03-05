@@ -32,7 +32,7 @@ kWeakestRows(mat, k): O(k).
 import heapq
 
 
-def kWeakestRows(mat, k):
+def sol(mat, k):
     heap, rows = [], []
 
     def get_num_ones(row):
