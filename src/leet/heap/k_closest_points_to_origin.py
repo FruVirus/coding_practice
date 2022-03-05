@@ -33,7 +33,7 @@ def sol(points, k):
     heap = [(-(x ** 2 + y ** 2), i) for i, (x, y) in enumerate(points) if i < k]
     heapq.heapify(heap)
     for i in range(k, len(points)):
-        dist = -(points[i][0] ** 2 + points[i][1] ** 2)
-        if dist > heap[0][0]:
-            heapq.heappushpop(heap, (dist, i))
+        dist = points[i][0] ** 2 + points[i][1] ** 2
+        if dist < -heap[0][0]:
+            heapq.heappushpop(heap, (-dist, i))
     return [points[i] for _, i in heap]
