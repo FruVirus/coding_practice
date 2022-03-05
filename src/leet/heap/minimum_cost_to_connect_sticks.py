@@ -31,7 +31,7 @@ import heapq
 def sol(sticks):
     cost = 0
     heapq.heapify(sticks)
-    for _ in range(len(sticks) - 1):
+    while len(sticks) > 1:
         one, two = heapq.heappop(sticks), heapq.heappop(sticks)
         cost += one + two
         heapq.heappush(sticks, one + two)
