@@ -59,9 +59,9 @@ def sol(head):
         if node.random:
             node.next.random = node.random.next
         node = node.next.next
-    head_old, head_new, head = head, head.next, head.next
+    head_old, head_new, head_cloned = head, head.next, head.next
     while head_old:
         head_old.next = head_old.next.next
         head_new.next = head_new.next.next if head_new.next else None
         head_old, head_new = head_old.next, head_new.next
-    return head
+    return head_cloned
