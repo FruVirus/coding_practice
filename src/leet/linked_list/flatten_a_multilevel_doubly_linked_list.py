@@ -22,12 +22,12 @@ Complexity
 Time
 ----
 
-flatten(): O(n).
+flatten(head): O(n).
 
 Space
 -----
 
-flatten(): O(n).
+flatten(head): O(n).
 """
 
 
@@ -36,7 +36,7 @@ class Node:
         self.val, self.prev, self.next, self.child = val, prev, next, child
 
 
-def flatten(head):
+def sol(head):
     if not head:
         return None
     temp = Node(0, None, head, None)

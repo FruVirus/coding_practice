@@ -24,12 +24,12 @@ Complexity
 Time
 ----
 
-lastStoneWeight(): O(n * lg n).
+lastStoneWeight(stones): O(n * lg n).
 
 Space
 -----
 
-lastStoneWeight(): O(1).
+lastStoneWeight(stones): O(1).
 """
 
 # Standard Library

@@ -23,7 +23,7 @@ MedianFinder: O(n).
 import heapq
 
 
-class MedianFinder:
+class Sol:
     def __init__(self):
         self.max_heap, self.min_heap = [], []
 
