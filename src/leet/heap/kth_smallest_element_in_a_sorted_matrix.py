@@ -16,19 +16,19 @@ Complexity
 Time
 ----
 
-kth_smallest(): O(min(n, k) + k * lg(min(n, k))).
+kthSmallest(): O(min(n, k) + k * lg(min(n, k))).
 
 Space
 -----
 
-kth_smallest(): O(min(n, k)).
+kthSmallest(): O(min(n, k)).
 """
 
 # Standard Library
 import heapq
 
 
-def kth_smallest(matrix, k):
+def sol(matrix, k):
     min_heap = [(matrix[r][0], r, 0) for r in range(min(len(matrix), k))]
     heapq.heapify(min_heap)
     while k > 0:
