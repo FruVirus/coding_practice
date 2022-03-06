@@ -39,7 +39,7 @@ class Node:
 def sol(head):
     if not head:
         return None
-    node = Node(next=head)
+    node = Node()
     prev, stack = node, [head]
     while stack:
         curr = stack.pop()
