@@ -12,8 +12,8 @@ Time
 ----
 
 QueueStack:
-    self.push(self, val): O(1).
-    self.pop(self): O(1) amortized.
+    def push(self, val): O(1).
+    def pop(self): O(1) amortized.
 
 Space
 -----
