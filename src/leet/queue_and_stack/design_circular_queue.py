@@ -29,7 +29,7 @@ CircularQueue:
 """
 
 
-class CircularQueue:
+class Sol:
     def __init__(self, k):
         self.capacity, self.count, self.head_index, self.queue = k, 0, 0, [0] * k
 

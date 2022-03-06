@@ -12,8 +12,8 @@ Time
 ----
 
 StackQueue:
-    self.push(): O(n).
-    self.pop(): O(1).
+    self.push(self, val): O(n).
+    self.pop(self): O(1).
 
 Space
 -----
@@ -26,7 +26,7 @@ StackQueue:
 from collections import deque
 
 
-class StackQueue:
+class Sol:
     def __init__(self):
         self.q1 = deque()
 

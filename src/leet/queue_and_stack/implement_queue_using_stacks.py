@@ -12,8 +12,8 @@ Time
 ----
 
 QueueStack:
-    self.push(): O(1).
-    self.pop(): O(1) amortized.
+    self.push(self, val): O(1).
+    self.pop(self): O(1) amortized.
 
 Space
 -----
@@ -23,7 +23,7 @@ QueueStack:
 """
 
 
-class QueueStack:
+class Sol:
     def __init__(self):
         self.s1, self.s2 = [], []
 
