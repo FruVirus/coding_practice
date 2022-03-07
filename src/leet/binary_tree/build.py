@@ -19,25 +19,25 @@ Complexity
 Time
 ----
 
-build_postorder() and build_preorder(): O(n).
+buildTree() and buildTree(): O(n).
 
 Space
 -----
 
-build_postorder() and build_preorder(): O(n).
+buildTree() and buildTree(): O(n).
 """
 
 
-class TreeNode:
+class Node:
     def __init__(self, val=0, left=None, right=None):
         self.left, self.right, self.val = left, right, val
 
 
-def build_postorder(inorder, postorder):
+def sol_postorder(inorder, postorder):
     def helper(in_left, in_right):
         if in_left <= in_right:
             val = postorder.pop()
-            root, index = TreeNode(val), idx_map[val]
+            root, index = Node(val), idx_map[val]
             root.right = helper(index + 1, in_right)
             root.left = helper(in_left, index - 1)
             return root
@@ -47,11 +47,11 @@ def build_postorder(inorder, postorder):
     return helper(0, len(inorder) - 1)
 
 
-def build_preorder(inorder, preorder):
+def sol_preorder(inorder, preorder):
     def helper(in_left, in_right):
         if in_left <= in_right:
             val = preorder.pop(0)
-            root, index = TreeNode(val), idx_map[val]
+            root, index = Node(val), idx_map[val]
             root.left = helper(in_left, index - 1)
             root.right = helper(index + 1, in_right)
             return root
