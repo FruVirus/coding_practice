@@ -13,16 +13,16 @@ Complexity
 Time
 ----
 
-connect(): O(n).
+connect(root): O(n).
 
 Space
 -----
 
-connect(): O(1).
+connect(root): O(1).
 """
 
 
-def connect(root):
+def sol(root):
     leftmost = root
     while leftmost:
         prev, node, leftmost = None, leftmost, None
