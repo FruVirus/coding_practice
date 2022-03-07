@@ -15,14 +15,14 @@ Time
 ----
 
 Solution:
-    def clone_graph_stack(self, node): O(n + m), where n is the number of nodes
-(vertices) and m is the number of edges.
+    def clone_bfs(node) and def clone_dfs(self, node): O(n + m), where n is the number
+of nodes (vertices) and m is the number of edges.
 
 Space
 -----
 
 Solution:
-    def clone_graph_stack(self, node): O(n).
+    def clone_bfs(node) and def clone_dfs(self, node): O(n).
 """
 
 # Standard Library
@@ -39,7 +39,7 @@ class Sol:
         self.visited = {}
 
     @staticmethod
-    def clone_graph_queue(node):
+    def clone_bfs(node):
         if not node:
             return node
         visited, queue = {node: Node(node.val)}, deque([node])
@@ -52,12 +52,12 @@ class Sol:
                 visited[curr_node].neighbors.append(visited[n])
         return visited[node]
 
-    def clone_graph_stack(self, node):
+    def clone_dfs(self, node):
         if not node:
             return node
         if node in self.visited:
             return self.visited[node]
         clone = Node(node.val)
         self.visited[node] = clone
-        clone.neighbors = [self.clone_graph_stack(n) for n in node.neighbors]
+        clone.neighbors = [self.clone_dfs(n) for n in node.neighbors]
         return clone
