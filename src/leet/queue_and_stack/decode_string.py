@@ -21,28 +21,29 @@ Complexity
 Time
 ----
 
-decodeString(n): O(n^(h / 2)), where h is the height of the N-ary tree.
+decodeString(n): O(max(k) * n), max(k) is the maximum number of times we have to iterate
+through the string to decode a pattern and n is the size of the string s.
 
 Space
 -----
 
-decodeString(n): O(sqrt(n)^h).
+decodeString(n): O(m + n), where m is the number of letters and n is the number of
+digits in string s.
 """
 
 
 def sol(s):
     stack = []
-    for i in s:
-        if i != "]":
-            stack.append(i)
+    for char in s:
+        if char != "]":
+            stack.append(char)
             continue
-        str_ = ""
+        num = str_ = ""
         while stack:
             char = stack.pop()
             if char == "[":
                 break
             str_ = char + str_
-        num = ""
         while stack:
             if not stack[-1].isdigit():
                 break
