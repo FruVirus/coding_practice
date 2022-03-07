@@ -13,16 +13,16 @@ Complexity
 Time
 ----
 
-has_path_sum: O(n).
+hasPathSum(root, target_sum): O(n).
 
 Space
 -----
 
-has_path_sum: O(n).
+hasPathSum(root, target_sum): O(n).
 """
 
 
-def has_path_sum(root, target_sum):
+def sol(root, target_sum):
     if not root:
         return False
     stack = [(root, target_sum - root.val)]
@@ -30,8 +30,8 @@ def has_path_sum(root, target_sum):
         node, sum_ = stack.pop()
         if sum_ == 0 and not (node.left or node.right):
             return True
-        if node.right:
-            stack.append((node.right, sum_ - node.right.val))
         if node.left:
             stack.append((node.left, sum_ - node.left.val))
+        if node.right:
+            stack.append((node.right, sum_ - node.right.val))
     return False
