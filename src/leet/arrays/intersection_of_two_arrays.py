@@ -18,14 +18,14 @@ Complexity
 Time
 ----
 
-intersect(nums1, nums2): O(n * lg n).
-intersect_two(nums1, nums2): O(n + m).
+intersection(nums1, nums2): O(n * lg n).
+intersect(nums1, nums2): O(n + m).
 
 Space
 -----
 
-intersect(nums1, nums2): O(1).
-intersect_two(nums1, nums2): O(min(n, m)).
+intersection(nums1, nums2): O(1).
+intersect(nums1, nums2): O(min(n, m)).
 """
 
 # Standard Library
