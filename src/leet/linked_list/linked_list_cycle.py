@@ -16,16 +16,16 @@ Complexity
 Time
 ----
 
-detect_cycle(): O(n).
+detectCycle(head): O(n).
 
 Space
 -----
 
-detect_cycle(): O(1).
+detectCycle(head): O(1).
 """
 
 
-def detect_cycle(head):
+def sol(head):
     if not head:
         return None
     slow, fast = head, head.next
