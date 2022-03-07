@@ -11,12 +11,12 @@ Complexity
 Time
 ----
 
-remove_elements(): O(n).
+removeElements(head, val): O(n).
 
 Space
 -----
 
-remove_elements(): O(1).
+removeElements(head, val): O(1).
 """
 
 
@@ -25,7 +25,7 @@ class Node:
         self.val, self.next = val, next
 
 
-def remove_elements(head, val):
+def sol(head, val):
     node = Node()
     node.next, prev, curr = head, node, head
     while curr:
