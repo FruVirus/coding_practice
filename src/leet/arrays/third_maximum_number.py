@@ -11,16 +11,16 @@ Complexity
 Time
 ----
 
-third_max(): O(n).
+thirdMax(nums): O(n).
 
 Space
 -----
 
-third_max(): O(1).
+thirdMax(nums): O(1).
 """
 
 
-def third_max(nums):
+def sol(nums):
     max_set = set()
     for num in nums:
         max_set.add(num)
