@@ -16,12 +16,12 @@ Complexity
 Time
 ----
 
-kthSmallest(): O(min(n, k) + k * lg(min(n, k))).
+kthSmallest(matrix, k): O(min(n, k) + k * lg(min(n, k))).
 
 Space
 -----
 
-kthSmallest(): O(min(n, k)).
+kthSmallest(matrix, k): O(min(n, k)).
 """
 
 # Standard Library
