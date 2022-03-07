@@ -37,7 +37,7 @@ def sol(rooms):
                 queue.append((row, col))
     while queue:
         row, col = queue.popleft()
-        for x, y in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+        for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             r, c = row + x, col + y
             if 0 <= r < m and 0 <= c < n and rooms[r][c] == float("inf"):
                 rooms[r][c] = rooms[row][col] + 1
