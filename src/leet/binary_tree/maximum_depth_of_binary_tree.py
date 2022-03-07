@@ -13,16 +13,16 @@ Complexity
 Time
 ----
 
-max_depth: O(n).
+maxDepth: O(n).
 
 Space
 -----
 
-max_depth: O(n) or O(lg n) if the tree is balanced.
+maxDepth: O(n) or O(lg n) if the tree is balanced.
 """
 
 
-def max_depth(root):
+def sol(root):
     if not root:
         return 0
     depth, stack = 0, [(root, 1)]
