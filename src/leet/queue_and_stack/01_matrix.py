@@ -36,7 +36,7 @@ def sol(mat):
         row, col = queue.popleft()
         for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             r, c = row + x, col + y
-            if 0 <= r < m and 0 <= c < n and dist[r][c] > dist[row][col] + 1:
+            if 0 <= r < m and 0 <= c < n and dist[r][c] > dist[row][col]:
                 dist[r][c] = dist[row][col] + 1
                 queue.append((r, c))
     return dist
