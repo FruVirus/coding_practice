@@ -11,16 +11,16 @@ Complexity
 Time
 ----
 
-find_max_consecutive_ones(): O(n).
+find_max_consecutive_ones(nums): O(n).
 
 Space
 -----
 
-find_max_consecutive_ones(): O(1).
+find_max_consecutive_ones(nums): O(1).
 """
 
 
-def find_max_consecutive_ones(nums):
+def sol(nums):
     last_zero, longest_ones, num_ones = -1, 0, 0
     for i, num in enumerate(nums):
         if num == 0:
