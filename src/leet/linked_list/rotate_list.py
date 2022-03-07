@@ -10,16 +10,16 @@ Complexity
 Time
 ----
 
-rotate_right(): O(n).
+rotateRight(head, k): O(n).
 
 Space
 -----
 
-rotate_right(): O(1).
+rotateRight(head, k): O(1).
 """
 
 
-def rotate_right(head, k):
+def sol(head, k):
     if not head:
         return None
     if not head.next or k == 0:
