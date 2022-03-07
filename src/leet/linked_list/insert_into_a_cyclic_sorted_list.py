@@ -20,12 +20,12 @@ Complexity
 Time
 ----
 
-insert(): O(n).
+insert(head, val): O(n).
 
 Space
 -----
 
-insert(): O(1).
+insert(head, val): O(1).
 """
 
 
@@ -34,7 +34,7 @@ class Node:
         self.val, self.next = val, next
 
 
-def insert(head, val):
+def sol(head, val):
     node = Node(val)
     if not head:
         node.next = node
