@@ -11,16 +11,16 @@ Complexity
 Time
 ----
 
-find_disappeared_numbers(): O(n).
+find_disappeared_numbers(nums): O(n).
 
 Space
 -----
 
-find_disappeared_numbers(): O(1).
+find_disappeared_numbers(nums): O(1).
 """
 
 
-def find_disappeared_numbers(nums):
+def sol(nums):
     n = [0] * len(nums)
     for num in nums:
         n[num - 1] = num
