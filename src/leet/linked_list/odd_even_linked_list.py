@@ -18,16 +18,16 @@ Complexity
 Time
 ----
 
-odd_even_list(): O(n).
+oddEvenList(head): O(n).
 
 Space
 -----
 
-odd_even_list(): O(1).
+oddEvenList(head): O(1).
 """
 
 
-def odd_even_list(head):
+def sol(head):
     if not head:
         return None
     odd, even, even_start = head, head.next, head.next
