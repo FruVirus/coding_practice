@@ -18,21 +18,21 @@ Complexity
 Time
 ----
 
-intersect(): O(n * lg n).
-intersect_two(): O(n + m).
+intersect(nums1, nums2): O(n * lg n).
+intersect_two(nums1, nums2): O(n + m).
 
 Space
 -----
 
-intersect(): O(1).
-intersect_two(): O(min(n, m)).
+intersect(nums1, nums2): O(1).
+intersect_two(nums1, nums2): O(min(n, m)).
 """
 
 # Standard Library
 from collections import Counter
 
 
-def intersect(nums1, nums2):
+def sol_one(nums1, nums2):
     nums1.sort()
     nums2.sort()
     i, j, sol = 0, 0, set()
@@ -48,7 +48,7 @@ def intersect(nums1, nums2):
     return sol
 
 
-def intersect_two(nums1, nums2):
+def sol_two(nums1, nums2):
     if len(nums1) > len(nums2):
         nums1, nums2 = nums2, nums1
     count, k = Counter(nums1), 0
