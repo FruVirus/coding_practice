@@ -11,16 +11,16 @@ Complexity
 Time
 ----
 
-is_symmetric: O(n).
+isSymmetric(root): O(n).
 
 Space
 -----
 
-is_symmetric: O(n).
+isSymmetric(root): O(n).
 """
 
 
-def is_symmetric(root):
+def sol(root):
     stack = [(root.right, root.left)]
     while stack:
         left, right = stack.pop()
