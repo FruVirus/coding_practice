@@ -24,7 +24,7 @@ lowestCommonAncestor(root, p, q): O(n).
 """
 
 
-def lca(root, p, q):
+def sol(root, p, q):
     ancestors, parent, stack = set(), {root: None}, [root]
     while not (p in parent and q in parent):
         node = stack.pop()
