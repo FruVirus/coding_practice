@@ -34,7 +34,7 @@ class Sol:
 
     def next(self, val):
         self.count += 1
-        self.wsum = self.wsum - self.queue[(self.head_index + 1) % self.capacity] + val
         self.head_index = (self.head_index + 1) % self.capacity
+        self.wsum = self.wsum - self.queue[self.head_index] + val
         self.queue[self.head_index] = val
         return self.wsum / min(self.capacity, self.count)
