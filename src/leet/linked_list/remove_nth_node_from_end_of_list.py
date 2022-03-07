@@ -11,12 +11,12 @@ Complexity
 Time
 ----
 
-remove_nth_from_end(): O(n).
+removeNthFromEnd(head, n): O(n).
 
 Space
 -----
 
-remove_nth_from_end(): O(1).
+removeNthFromEnd(head, n): O(1).
 """
 
 
@@ -25,7 +25,7 @@ class Node:
         self.val, self.next = val, next
 
 
-def remove_nth_from_end(head, n):
+def sol(head, n):
     node = Node()
     node.next, prev, curr = head, node, node
     for _ in range(n + 1):
