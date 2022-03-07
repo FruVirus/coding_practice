@@ -11,19 +11,19 @@ Complexity
 Time
 ----
 
-topk_frequent(): O(n).
+topKFrequent(nums, k): O(n).
 
 Space
 -----
 
-topk_frequent(): O(n).
+topKFrequent(nums, k): O(n).
 """
 
 # Standard Library
 from collections import Counter
 
 
-def topk_frequent(nums, k):
+def sol(nums, k):
     b = [[] for _ in range(len(nums) + 1)]
     for num, freq in Counter(nums).items():
         b[freq].append(num)

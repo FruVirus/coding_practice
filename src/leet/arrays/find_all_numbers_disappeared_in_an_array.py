@@ -11,12 +11,12 @@ Complexity
 Time
 ----
 
-find_disappeared_numbers(nums): O(n).
+findDisappearedNumbers(nums): O(n).
 
 Space
 -----
 
-find_disappeared_numbers(nums): O(1).
+findDisappearedNumbers(nums): O(1).
 """
 
 

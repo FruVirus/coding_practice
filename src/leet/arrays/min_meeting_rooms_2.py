@@ -11,12 +11,12 @@ Complexity
 Time
 ----
 
-min_meeting_rooms(intervals): O(n * lg n).
+minMeetingRooms(intervals): O(n * lg n).
 
 Space
 -----
 
-min_meeting_rooms(intervals): O(n).
+minMeetingRooms(intervals): O(n).
 """
 
 

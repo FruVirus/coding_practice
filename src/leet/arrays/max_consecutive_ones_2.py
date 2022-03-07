@@ -11,12 +11,12 @@ Complexity
 Time
 ----
 
-find_max_consecutive_ones(nums): O(n).
+findMaxConsecutiveOnes(nums): O(n).
 
 Space
 -----
 
-find_max_consecutive_ones(nums): O(1).
+findMaxConsecutiveOnes(nums): O(1).
 """
 
 
