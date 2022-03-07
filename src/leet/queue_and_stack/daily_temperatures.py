@@ -13,23 +13,23 @@ Complexity
 Time
 ----
 
-dailyTemperatures(temperatures): O(n).
+dailyTemperatures(temps): O(n).
 
 Space
 -----
 
-dailyTemperatures(temperatures): O(1).
+dailyTemperatures(temps): O(1).
 """
 
 
-def sol(temperatures):
-    stack, hottest = [0] * len(temperatures), -float("inf")
-    for curr_day in reversed(range(len(temperatures))):
-        if temperatures[curr_day] >= hottest:
-            hottest = temperatures[curr_day]
+def sol(temps):
+    stack, hottest = [0] * len(temps), -float("inf")
+    for curr_day in reversed(range(len(temps))):
+        if temps[curr_day] >= hottest:
+            hottest = temps[curr_day]
         else:
             days = 1
-            while temperatures[curr_day + days] <= temperatures[curr_day]:
+            while temps[curr_day + days] <= temps[curr_day]:
                 days += stack[curr_day + days]
             stack[curr_day] = days
     return stack
