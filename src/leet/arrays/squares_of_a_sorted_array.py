@@ -11,16 +11,16 @@ Complexity
 Time
 ----
 
-sorted_squares(): O(n).
+sorted_squares(nums): O(n).
 
 Space
 -----
 
-sorted_squares(): O(n).
+sorted_squares(nums): O(n).
 """
 
 
-def sorted_squares(nums):
+def sol(nums):
     i, j, sol = 0, len(nums) - 1, [0] * len(nums)
     k = j
     while k >= 0:
