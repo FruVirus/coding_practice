@@ -19,16 +19,16 @@ Complexity
 Time
 ----
 
-merge(): O(n + m).
+merge(nums1, m, nums2, n): O(n + m).
 
 Space
 -----
 
-merge(): O(1).
+merge(nums1, m, nums2, n): O(1).
 """
 
 
-def merge(nums1, m, nums2, n):
+def sol(nums1, m, nums2, n):
     i, j, k = m - 1, n - 1, m + n - 1
     while j >= 0:
         if i >= 0 and nums1[i] > nums2[j]:
