@@ -10,16 +10,16 @@ Complexity
 Time
 ----
 
-is_palindrome(): O(n).
+isPalindrome(head): O(n).
 
 Space
 -----
 
-is_palindrome(): O(1).
+isPalindrome(head): O(1).
 """
 
 
-def is_palindrome(head):
+def sol(head):
     curr, fast, temp = head, head.next, None
     while fast and fast.next:
         curr, temp = reverse(curr, temp)
