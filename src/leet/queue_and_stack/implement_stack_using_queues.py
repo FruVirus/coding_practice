@@ -11,14 +11,14 @@ Complexity
 Time
 ----
 
-StackQueue:
+MyStack:
     def push(self, val): O(n).
     def pop(self): O(1).
 
 Space
 -----
 
-StackQueue:
+MyStack:
     self.q1: O(n).
 """
 
