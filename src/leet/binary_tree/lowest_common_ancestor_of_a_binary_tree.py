@@ -15,17 +15,17 @@ Complexity
 Time
 ----
 
-lca: O(n).
+lowestCommonAncestor(root, p, q): O(n).
 
 Space
 -----
 
-lca: O(n).
+lowestCommonAncestor(root, p, q): O(n).
 """
 
 
 def lca(root, p, q):
-    ancestors, node, parent, stack = set(), root, {root: None}, [root]
+    ancestors, parent, stack = set(), {root: None}, [root]
     while not (p in parent and q in parent):
         node = stack.pop()
         if node.left:
