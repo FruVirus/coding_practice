@@ -11,12 +11,14 @@ Complexity
 Time
 ----
 
-MedianFinder: O(5 * lg n) + O(1) = O(lg n).
+MedianFinder:
+    def add_num(self, num): O(5 * lg n) + O(1) = O(lg n).
 
 Space
 -----
 
-MedianFinder: O(n).
+MedianFinder:
+    self.max_heap and self.min_heap: O(n).
 """
 
 # Standard Library
