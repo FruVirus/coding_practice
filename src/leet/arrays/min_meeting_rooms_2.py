@@ -11,16 +11,16 @@ Complexity
 Time
 ----
 
-min_meeting_rooms(): O(n * lg n).
+min_meeting_rooms(intervals): O(n * lg n).
 
 Space
 -----
 
-min_meeting_rooms(): O(n).
+min_meeting_rooms(intervals): O(n).
 """
 
 
-def min_meeting_rooms(intervals):
+def sol(intervals):
     s = sorted([i[0] for i in intervals])
     f = sorted([i[1] for i in intervals])
     k = num_rooms = 0
