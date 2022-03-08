@@ -42,5 +42,5 @@ def sol(stones):
     while len(stones) > 1:
         y, x = heapq.heappop(stones), heapq.heappop(stones)
         if x != y:
-            heapq.heappush(stones, (y - x))
+            heapq.heappush(stones, y - x)
     return 0 if not stones else -stones[0]
