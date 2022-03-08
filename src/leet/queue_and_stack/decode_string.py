@@ -48,6 +48,6 @@ def sol(s):
             else:
                 num = char + num
                 if not (stack and stack[-1].isdigit()):
+                    stack.append(int(num) * str_)
                     break
-        stack.append(int(num) * str_)
     return "".join(stack)
