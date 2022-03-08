@@ -19,9 +19,12 @@ Space
 findDisappearedNumbers(nums): O(1).
 """
 
+# pylint: disable=C0200
+
 
 def sol(nums):
-    n = [0] * len(nums)
-    for num in nums:
-        n[num - 1] = num
-    return [i for i, x in enumerate(n, 1) if x == 0]
+    for i in range(len(nums)):
+        new_index = abs(nums[i]) - 1
+        if nums[new_index] > 0:
+            nums[new_index] *= -1
+    return [i for i in range(1, len(nums) + 1) if nums[i - 1] > 0]
