@@ -51,17 +51,17 @@ def sol(head):
         return None
     node = head
     while node:
-        cloned = Node(node.val)
-        cloned.next, node.next = node.next, cloned
-        node = cloned.next
+        clone = Node(node.val)
+        clone.next, node.next = node.next, clone
+        node = clone.next
     node = head
     while node:
         if node.random:
             node.next.random = node.random.next
         node = node.next.next
-    head_old, head_new, head_cloned = head, head.next, head.next
+    head_old, head_new, head_clone = head, head.next, head.next
     while head_old:
         head_old.next = head_old.next.next
         head_new.next = head_new.next.next if head_new.next else None
         head_old, head_new = head_old.next, head_new.next
-    return head_cloned
+    return head_clone
