@@ -16,7 +16,7 @@ findDiagonalOrder(mat): O(m * n).
 Space
 -----
 
-findDiagonalOrder(mat): O(m * n).
+findDiagonalOrder(mat): O(min(m, n)).
 """
 
 # pylint: disable=C0200
