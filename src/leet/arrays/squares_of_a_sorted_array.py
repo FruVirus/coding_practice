@@ -24,9 +24,9 @@ def sol(nums):
     i, j, sol = 0, len(nums) - 1, [0] * len(nums)
     k = j
     while k >= 0:
-        if abs(nums[i]) <= abs(nums[j]):
-            j, sol[k] = j - 1, nums[j] ** 2
-        else:
+        if abs(nums[i]) > abs(nums[j]):
             i, sol[k] = i + 1, nums[i] ** 2
+        else:
+            j, sol[k] = j - 1, nums[j] ** 2
         k -= 1
     return sol
