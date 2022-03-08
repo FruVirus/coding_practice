@@ -33,7 +33,7 @@ def sol(grid):
             if grid[row][col] != "1":
                 continue
             num_islands += 1
-            grid[row][col] = 0
+            grid[row][col] = "0"
             queue = deque([(row, col)])
             while queue:
                 r, c = queue.popleft()
