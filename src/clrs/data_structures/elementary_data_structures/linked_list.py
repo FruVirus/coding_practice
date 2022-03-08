@@ -202,7 +202,7 @@ class SLL:
 
     def delete(self, x):
         x = self.search(x)
-        curr, prev = self.head, None
+        prev, curr = None, self.head
         while curr is not None and curr.k != x.k:
             prev, curr = curr, curr.next
         if prev is None:
@@ -299,10 +299,10 @@ class DLL(SLL):
 
     @staticmethod
     def partition(low, high):
-        x, i = high.k, low.prev
+        x, i = high, low.prev
         j = low
         while j is not high:
-            if j.k <= x:
+            if j.k <= x.k:
                 i = low if i is None else i.next
                 i.k, j.k = j.k, i.k
             j = j.next
