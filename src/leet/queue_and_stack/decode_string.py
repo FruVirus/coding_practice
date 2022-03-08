@@ -21,13 +21,13 @@ Complexity
 Time
 ----
 
-decodeString(n): O(max(k) * n), max(k) is the maximum number of times we have to iterate
+decodeString(s): O(max(k) * n), max(k) is the maximum number of times we have to iterate
 through the string to decode a pattern and n is the size of the string s.
 
 Space
 -----
 
-decodeString(n): O(m + n), where m is the number of letters and n is the number of
+decodeString(s): O(m + n), where m is the number of letters and n is the number of
 digits in string s.
 """
 
