@@ -13,12 +13,12 @@ Complexity
 Time
 ----
 
-maxDepth: O(n).
+maxDepth(root): O(n).
 
 Space
 -----
 
-maxDepth: O(n) or O(lg n) if the tree is balanced.
+maxDepth(root): O(n) or O(lg n) if the tree is balanced.
 """
 
 
