@@ -35,21 +35,21 @@ from collections import deque
 
 
 def sol(deadends, target):
-    def neighbors(combo):
+    def get_combos(combo):
         for i in range(4):
             x = int(combo[i])
             for d in [-1, 1]:
                 yield combo[:i] + str((x + d) % 10) + combo[i + 1 :]
 
-    queue, visited = deque([("0000", 0)]), {"0000"}
+    visited, queue = {"0000"}, deque([("0000", 0)])
     while queue:
         combo, num_turns = queue.popleft()
         if combo == target:
             return num_turns
         if combo in deadends:
             continue
-        for neighbor in neighbors(combo):
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append((neighbor, num_turns + 1))
+        for c in get_combos(combo):
+            if c not in visited:
+                visited.add(c)
+                queue.append((c, num_turns + 1))
     return -1
