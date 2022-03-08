@@ -30,6 +30,8 @@ Space
 openLock(deadends, target): O(a^n + d).
 """
 
+# pylint: disable=C0200
+
 # Standard Library
 from collections import deque
 
