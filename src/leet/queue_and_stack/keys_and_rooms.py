@@ -33,8 +33,7 @@ def sol(rooms):
     seen = [False] * len(rooms)
     seen[0], stack = True, [0]
     while stack:
-        room = stack.pop()
-        for key in rooms[room]:
+        for key in rooms[stack.pop()]:
             if not seen[key]:
                 seen[key] = True
                 stack.append(key)
