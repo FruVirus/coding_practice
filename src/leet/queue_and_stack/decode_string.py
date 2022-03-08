@@ -42,13 +42,12 @@ def sol(s):
         while stack:
             char = stack.pop()
             if char == "[":
-                break
-            str_ = char + str_
-        while stack:
-            if not stack[-1].isdigit():
-                break
-            char = stack.pop()
-            num = char + num
-        str_ = int(num) * str_
-        stack.extend(str_)
+                continue
+            if not char.isdigit():
+                str_ = char + str_
+            else:
+                num = char + num
+                if not (stack and stack[-1].isdigit()):
+                    break
+        stack.extend(int(num) * str_)
     return "".join(stack)
