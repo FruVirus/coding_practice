@@ -37,9 +37,9 @@ from collections import deque
 def sol(deadends, target):
     def get_combos(combo):
         for i in range(4):
-            x = int(combo[i])
+            c = int(combo[i])
             for d in [-1, 1]:
-                yield combo[:i] + str((x + d) % 10) + combo[i + 1 :]
+                yield combo[:i] + str((c + d) % 10) + combo[i + 1 :]
 
     visited, queue = {"0000"}, deque([("0000", 0)])
     while queue:
