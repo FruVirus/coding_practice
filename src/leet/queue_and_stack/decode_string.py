@@ -49,5 +49,5 @@ def sol(s):
                 num = char + num
                 if not (stack and stack[-1].isdigit()):
                     break
-        stack.extend(int(num) * str_)
+        stack.append(int(num) * str_)
     return "".join(stack)
