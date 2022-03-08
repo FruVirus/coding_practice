@@ -36,7 +36,7 @@ from collections import deque
 
 def sol(deadends, target):
     def get_combos(combo):
-        for i in range(4):
+        for i in range(len(combo)):
             c = int(combo[i])
             for d in [-1, 1]:
                 yield combo[:i] + str((c + d) % 10) + combo[i + 1 :]
