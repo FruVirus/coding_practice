@@ -24,8 +24,8 @@ from collections import Counter
 
 
 def sol(nums, k):
-    b = [[] for _ in range(len(nums) + 1)]
+    b = [[] for _ in range(len(nums))]
     for num, freq in Counter(nums).items():
-        b[freq].append(num)
+        b[freq - 1].append(num)
     flat = [item for sublist in b for item in sublist]
     return flat[len(flat) - k :]
