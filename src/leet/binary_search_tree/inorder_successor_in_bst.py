@@ -29,6 +29,5 @@ def sol(root, p):
         if p.val >= root.val:
             root = root.right
         else:
-            successor = root
-            root = root.left
+            successor, root = root, root.left
     return successor
