@@ -24,17 +24,17 @@ duplicateZeros(arr): O(1).
 
 
 def sol(arr):
-    num_zeros, len_ = 0, len(arr) - 1
-    for i in range(len_ + 1):
-        if i > len_ - num_zeros:
+    num_zeros, n = 0, len(arr) - 1
+    for i in range(n + 1):
+        if i > n - num_zeros:
             break
         if arr[i] == 0:
-            if i == len_ - num_zeros:
-                arr[len_] = 0
-                len_ -= 1
+            if i == n - num_zeros:
+                arr[n] = 0
+                n -= 1
                 break
             num_zeros += 1
-    last = len_ - num_zeros + 1
+    last = n - num_zeros + 1
     for i in reversed(range(last)):
         if arr[i] == 0:
             arr[i + num_zeros] = 0
