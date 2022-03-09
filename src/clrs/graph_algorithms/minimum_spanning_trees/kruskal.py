@@ -56,9 +56,10 @@ For a disconnected graph, Kruskal's algorithm will NOT find the MST for the over
 graph but it MIGHT find the MST for EACH component.
 
 Two vertices A and B start off as separate trees. Since they are not the same component,
-they are joined together to form the same component. Afterwards, if one of the two
-vertices is encountered again, it will not be added to the minimum spanning tree if it
-belongs to an existing component already.
+they are joined together to form the same component (if their edge is the minimum cost
+edge among all edges in the graph). Afterwards, if one of the two vertices is
+encountered again, it will not be added to the minimum spanning tree since it belongs to
+an existing component already.
 
 Complexity
 ==========
