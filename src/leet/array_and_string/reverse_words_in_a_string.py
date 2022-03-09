@@ -30,12 +30,12 @@ reverseWords(s): O(n).
 
 def sol(s):
     i, reverse_s = 0, ""
-    while i != len(s):
+    while i < len(s):
         if s[i] == " ":
             i += 1
             continue
         word = ""
-        while i != len(s) and s[i] != " ":
+        while i < len(s) and s[i] != " ":
             word += s[i]
             i += 1
         reverse_s = " " + word + reverse_s
