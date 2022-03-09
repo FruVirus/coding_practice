@@ -45,15 +45,15 @@ def test_dag():
     graph.dag(1, True)
     for v in graph.vertices.values():
         if v.k == 0:
-            assert v.d == float("inf") and v.p is None
+            assert v.d == -float("inf") and v.p is None
         if v.k == 1:
             assert v.d == 0 and v.p is None
         if v.k == 2:
-            assert v.d == -2 and v.p.k == 1
+            assert v.d == 2 and v.p.k == 1
         if v.k == 3:
-            assert v.d == -9 and v.p.k == 2
+            assert v.d == 9 and v.p.k == 2
         if v.k == 4:
-            assert v.d == -8 and v.p.k == 3
+            assert v.d == 8 and v.p.k == 3
         if v.k == 5:
-            assert v.d == -10 and v.p.k == 3
+            assert v.d == 10 and v.p.k == 3
     assert graph.num_total_paths() == 10

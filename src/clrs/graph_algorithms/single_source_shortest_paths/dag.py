@@ -65,14 +65,12 @@ from src.clrs.graph_algorithms.elementary_graph_algorithms.dfs import DFS
 class DAG(DFS):
     def dag(self, s, longest=False):
         assert self.directed
-        if longest:
-            self.weights = {k: -v for k, v in self.weights.items()}
         u = self.top_sort().head
-        self.init_single_source(s)
+        self.init_single_source(s, longest)
         while u is not None:
             u_node, v = self.vertices[u.k], self.adj_list[u.k].head
             while v is not None:
-                self.relax(u_node, self.vertices[v.k])
+                self.relax(u_node, self.vertices[v.k], longest)
                 v = v.next
             u = u.next
 

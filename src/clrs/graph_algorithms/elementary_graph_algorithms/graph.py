@@ -205,9 +205,9 @@ class Graph:
             x.p = self.find_set(x.p)
         return x.p
 
-    def init_single_source(self, s):
+    def init_single_source(self, s, longest=False):
         for v in self.vertices.values():
-            v.c, v.d, v.p = 0, float("inf"), None
+            v.c, v.d, v.p = 0, -float("inf") if longest else float("inf"), None
         self.vertices[s].c, self.vertices[s].d = 1, 0
 
     @staticmethod
@@ -234,9 +234,12 @@ class Graph:
             self.print_path(s.k, v.p.k)
             print(v.k)
 
-    def relax(self, u, v):
+    def relax(self, u, v, longest=False):
         w = self.weights[(u.k, v.k)]
-        if v.d > u.d + w:
+        if longest:
+            if v.d < u.d + w:
+                v.d, v.p = u.d + w, u
+        elif v.d > u.d + w:
             v.d, v.p = u.d + w, u
 
     def same_component(self, u, v):
