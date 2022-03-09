@@ -22,17 +22,17 @@ Complexity
 Time
 ----
 
-find_min(): O(lg n)/O(n) expected/worse case. Worst case occurs when the array contains
-all identical elements.
+findMin(nums): O(lg n)/O(n) expected/worse case. Worst case occurs when the array
+contains all identical elements.
 
 Space
 -----
 
-find_min(): O(1).
+findMin(nums): O(1).
 """
 
 
-def find_min(nums):
+def sol(nums):
     low, high = 0, len(nums) - 1
     while low < high:
         mid = low + (high - low) // 2

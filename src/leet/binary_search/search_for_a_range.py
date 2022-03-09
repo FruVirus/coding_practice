@@ -15,16 +15,16 @@ Complexity
 Time
 ----
 
-search_range(): O(lg n).
+searchRange(nums, target): O(lg n).
 
 Space
 -----
 
-search_range(): O(1).
+searchRange(nums, target): O(1).
 """
 
 
-def search_range(nums, target):
+def sol(nums, target):
     lower_bound = find_bound(nums, target, True)
     return [-1, -1] if lower_bound == -1 else [lower_bound, find_bound(nums, target)]
 

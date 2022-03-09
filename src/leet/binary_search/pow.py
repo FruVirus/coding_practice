@@ -10,16 +10,16 @@ Complexity
 Time
 ----
 
-my_pow(): O(lg n).
+myPow(x, n): O(lg n).
 
 Space
 -----
 
-my_pow(): O(1).
+myPow(x, n): O(1).
 """
 
 
-def my_pow(x, n):
+def sol(x, n):
     n, x = (n, x) if n > 0 else (-n, 1 / x)
     ans = 1
     while n > 0:

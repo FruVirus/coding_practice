@@ -21,16 +21,16 @@ Complexity
 Time
 ----
 
-two_sum(nums, target): O(n).
+twoSum(nums, target): O(n).
 
 Space
 -----
 
-two_sum(nums, target): O(1).
+twoSum(nums, target): O(1).
 """
 
 
-def two_sum(nums, target):
+def sol(nums, target):
     low, high = 0, len(nums) - 1
     while low < high:
         num = nums[low] + nums[high]

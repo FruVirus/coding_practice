@@ -16,17 +16,17 @@ Complexity
 Time
 ----
 
-find_duplicate(): O(n * lg n).
-find_duplicate_cycle(): O(n).
+findDuplicate(nums): O(n * lg n).
+findDuplicate_cycle(nums): O(n).
 
 Space
 -----
 
-find_duplicate() and find_duplicate_cycle: O(1).
+findDuplicate(nums) and findDuplicate_cycle(nums): O(1).
 """
 
 
-def find_duplicate(nums):
+def sol(nums):
     low, high = 1, len(nums) - 1
     while low <= high:
         mid = low + (high - low) // 2
@@ -38,7 +38,7 @@ def find_duplicate(nums):
     return duplicate
 
 
-def find_duplicate_cycle(nums):
+def sol_cycle(nums):
     tortoise = hare = nums[0]
     while True:
         tortoise, hare = nums[tortoise], nums[nums[hare]]

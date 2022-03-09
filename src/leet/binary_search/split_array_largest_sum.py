@@ -13,17 +13,17 @@ Complexity
 Time
 ----
 
-split_array: O(n * lg s), where n is the length of nums and s is the sum of integers in
-the nums.
+splitArray(nums, m): O(n * lg s), where n is the length of nums and s is the sum of
+integers in the nums.
 
 Space
 -----
 
-split_array: O(1).
+splitArray(nums, m): O(1).
 """
 
 
-def split_array(nums, m):
+def sol(nums, m):
     def min_subarrays_required(max_sum_allowed):
         current_sum = splits_required = 0
         for num in nums:

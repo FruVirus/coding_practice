@@ -11,17 +11,17 @@ Complexity
 Time
 ----
 
-find_closest_elements(): O(lg(n - k) + k), where O(k) is the time taken to build the
-final output.
+findClosestElements(arr, k, x): O(lg(n - k) + k), where O(k) is the time taken to build
+the final output.
 
 Space
 -----
 
-find_closest_elements(): O(1).
+findClosestElements(arr, k, x): O(1).
 """
 
 
-def find_closest_elements(arr, k, x):
+def sol(arr, k, x):
     low, high = 0, len(arr) - k
     while low < high:
         mid = low + (high - low) // 2

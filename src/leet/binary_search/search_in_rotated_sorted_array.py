@@ -20,16 +20,16 @@ Complexity
 Time
 ----
 
-search(): O(lg n).
+search(nums, target): O(lg n).
 
 Space
 -----
 
-search(): O(1).
+search(nums, target): O(1).
 """
 
 
-def search(nums, target):
+def sol(nums, target):
     low, high = 0, len(nums) - 1
     while low <= high:
         mid = low + (high - low) // 2

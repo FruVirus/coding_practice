@@ -17,16 +17,16 @@ Complexity
 Time
 ----
 
-find_peak_element(): O(lg n).
+findPeakElement(nums): O(lg n).
 
 Space
 -----
 
-find_peak_element(): O(1).
+findPeakElement(nums): O(1).
 """
 
 
-def find_peak_element(nums):
+def sol(nums):
     low, high = 0, len(nums) - 1
     while low < high:
         mid = low + (high - low) // 2
