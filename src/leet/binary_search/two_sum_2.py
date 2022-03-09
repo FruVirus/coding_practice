@@ -21,19 +21,19 @@ Complexity
 Time
 ----
 
-two_sum(): O(n).
+two_sum(nums, target): O(n).
 
 Space
 -----
 
-two_sum(): O(1).
+two_sum(nums, target): O(1).
 """
 
 
-def two_sum(numbers, target):
-    low, high = 0, len(numbers) - 1
+def two_sum(nums, target):
+    low, high = 0, len(nums) - 1
     while low < high:
-        num = numbers[low] + numbers[high]
+        num = nums[low] + nums[high]
         if num == target:
             return [low + 1, high + 1]
         if num < target:
