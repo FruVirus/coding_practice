@@ -22,7 +22,10 @@ If t = 3, then the bucket windows are of size 4 and:
 Because of the organization, whenever a new number comes in, we only have to check the
 current bucket window and its adjacent neighbors to the left and right. All other bucket
 windows will be out of the range of t (i.e., it will contain numbers whose absolute
-difference with the new number will be greater than t).
+difference with the new number will be greater than t). If the new number is in the
+current bucket window, then we know that it satisfies the condition
+abs(nums[i] - nums[j]) <= t. If we have to check adjacent bucket windows, then we also
+need to check if the absolute difference is <= t.
 
 To take into account the condition abs(i - j) <= k, we use a sliding window where we
 delete the key at index nums[i - k] // w if i >= k.
