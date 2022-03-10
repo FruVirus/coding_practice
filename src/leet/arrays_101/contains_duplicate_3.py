@@ -12,12 +12,12 @@ Complexity
 Time
 ----
 
-containsNearbyAlmostDuplicate(nums, k, t): O().
+containsNearbyAlmostDuplicate(nums, k, t): O(n).
 
 Space
 -----
 
-containsNearbyAlmostDuplicate(nums, k, t): O().
+containsNearbyAlmostDuplicate(nums, k, t): O(min(n, k)).
 """
 
 # pylint: disable=C0200
