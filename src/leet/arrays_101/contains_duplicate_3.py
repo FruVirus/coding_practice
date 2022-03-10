@@ -47,14 +47,14 @@ containsNearbyAlmostDuplicate(nums, k, t): O(min(n, k)).
 def sol(nums, k, t):
     b, w = {}, t + 1
     for i in range(len(nums)):
-        b_index = nums[i] // w
-        if b_index in b:
+        j = nums[i] // w
+        if j in b:
             return True
-        if b_index - 1 in b and abs(nums[i] - b[b_index - 1]) < w:
+        if j - 1 in b and abs(nums[i] - b[j - 1]) < w:
             return True
-        if b_index + 1 in b and abs(nums[i] - b[b_index + 1]) < w:
+        if j + 1 in b and abs(nums[i] - b[j + 1]) < w:
             return True
-        b[b_index] = nums[i]
+        b[j] = nums[i]
         if i >= k:
             del b[nums[i - k] // w]
     return False
