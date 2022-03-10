@@ -37,7 +37,7 @@ class Sol:
     def __init__(self, k, nums):
         self.k, self.heap = k, nums
         heapq.heapify(self.heap)
-        while len(self.heap) > k:
+        while len(self.heap) > self.k:
             heapq.heappop(self.heap)
 
     def add(self, val):
