@@ -49,3 +49,24 @@ def bucket_sort(a):
             insertion_sort(i)
             x.extend(i)
     return x
+
+
+def bucket_sort_ints(a, num_buckets=5):
+    amin, amax = min(a), max(a)
+    b_range, b, x = (amax - amin) / num_buckets, [[] for _ in range(num_buckets)], []
+    for i in a:
+        diff = (i - amin) / b_range - int((i - amin) / b_range)
+        print(diff, i, amin, b_range)
+        if diff == 0:
+            b[int((i - amin) / b_range) - 1].append(i)
+        else:
+            b[int((i - amin) / b_range)].append(i)
+    for i in b:
+        if i:
+            insertion_sort(i)
+            x.extend(i)
+    return x
+
+
+a = [9.8, 0.6, 10.1, 1.9, 3.07, 3.04, 5.0, 8.0, 4.8, 7.68]
+print(bucket_sort_ints(a))
