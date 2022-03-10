@@ -11,12 +11,14 @@ from tests.conftest import PARAM
 @PARAM(
     "a",
     [
+        [9.8, 0.6, 10.1, 1.9, 3.07, 3.04, 5.0, 8.0, 4.8, 7.68],
         [0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68],
         [-0.78, -0.17, -0.39, -0.26, -0.72, -0.94, -0.21, -0.12, -0.23, -0.68],
     ],
 )
 def test_bucket_sort(a):
-    assert bucket_sort.bucket_sort(a) == sorted(a)
+    bucket_sort.bucket_sort(a)
+    assert a == sorted(a)
 
 
 @PARAM(

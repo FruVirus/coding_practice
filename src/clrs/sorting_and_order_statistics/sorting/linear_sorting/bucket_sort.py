@@ -40,33 +40,15 @@ from src.clrs.sorting_and_order_statistics.sorting.comparison_sorting.insertion_
 
 
 def bucket_sort(a):
-    n, x = len(a), []
-    b = [[] for _ in range(n)]
-    for i in range(n):
-        b[int(n * a[i])].append(a[i])
-    for i in b:
-        if i:
-            insertion_sort(i)
-            x.extend(i)
-    return x
-
-
-def bucket_sort_ints(a, num_buckets=5):
-    amin, amax = min(a), max(a)
-    b_range, b, x = (amax - amin) / num_buckets, [[] for _ in range(num_buckets)], []
+    amin, amax, num_buckets = min(a), max(a), len(a) // 5
+    w, b = (amax - amin) / num_buckets, [[] for _ in range(num_buckets)]
     for i in a:
-        diff = (i - amin) / b_range - int((i - amin) / b_range)
-        print(diff, i, amin, b_range)
-        if diff == 0:
-            b[int((i - amin) / b_range) - 1].append(i)
-        else:
-            b[int((i - amin) / b_range)].append(i)
-    for i in b:
-        if i:
-            insertion_sort(i)
-            x.extend(i)
-    return x
-
-
-a = [9.8, 0.6, 10.1, 1.9, 3.07, 3.04, 5.0, 8.0, 4.8, 7.68]
-print(bucket_sort_ints(a))
+        float_index = (i - amin) / w
+        int_index = int(float_index)
+        index = int_index - 1 if float_index == int_index and i != amin else int_index
+        b[index].append(i)
+    i = 0
+    for list_ in b:
+        if list_:
+            insertion_sort(list_)
+            a[i : i + len(list_)], i = list_, i + len(list_)
