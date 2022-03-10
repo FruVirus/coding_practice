@@ -24,16 +24,16 @@ containsNearbyAlmostDuplicate(nums, k, t): O(min(n, k)).
 
 
 def sol(nums, k, t):
-    buckets, w = {}, t + 1
+    b, w = {}, t + 1
     for i in range(len(nums)):
-        j = nums[i] // w
-        if j in buckets:
+        b_index = nums[i] // w
+        if b_index in b:
             return True
-        if j - 1 in buckets and abs(nums[i] - buckets[j - 1]) < w:
+        if b_index - 1 in b and abs(nums[i] - b[b_index - 1]) < w:
             return True
-        if j + 1 in buckets and abs(nums[i] - buckets[j + 1]) < w:
+        if b_index + 1 in b and abs(nums[i] - b[b_index + 1]) < w:
             return True
-        buckets[j] = nums[i]
+        b[b_index] = nums[i]
         if i >= k:
-            del buckets[nums[i - k] // w]
+            del b[nums[i - k] // w]
     return False
