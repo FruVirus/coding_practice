@@ -36,13 +36,14 @@ from src.clrs.sorting_and_order_statistics.sorting.comparison_sorting.quicksort 
 )
 
 
-def random_select(a, low, high, i):
-    if low == high:
-        return a[low]
-    pivot = partition(a, low, high)
-    k = pivot - low + 1
-    if i == k:
-        return a[pivot]
-    if i < k:
-        return random_select(a, low, pivot - 1, i)
-    return random_select(a, pivot + 1, high, i - k)
+def random_select(a, i):
+    low, high = 0, len(a) - 1
+    while low <= high:
+        pivot = partition(a, low, high)
+        if i == pivot + 1:
+            return a[pivot]
+        if i < pivot + 1:
+            high = pivot - 1
+        else:
+            low = pivot + 1
+    return None
