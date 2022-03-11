@@ -29,11 +29,11 @@ import heapq
 
 
 def sol(matrix, k):
-    min_heap = [(matrix[r][0], r, 0) for r in range(min(len(matrix), k))]
-    heapq.heapify(min_heap)
+    heap = [(matrix[r][0], r, 0) for r in range(min(len(matrix), k))]
+    heapq.heapify(heap)
     while k > 0:
-        val, r, c = heapq.heappop(min_heap)
+        val, r, c = heapq.heappop(heap)
         if c < len(matrix[0]) - 1:
-            heapq.heappush(min_heap, (matrix[r][c + 1], r, c + 1))
+            heapq.heappush(heap, (matrix[r][c + 1], r, c + 1))
         k -= 1
     return val
