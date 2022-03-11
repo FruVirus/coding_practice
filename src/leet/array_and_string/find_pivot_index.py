@@ -30,7 +30,7 @@ pivotIndex(nums): O(1).
 def sol(nums):
     sum_, left_sum = sum(nums), 0
     for i, num in enumerate(nums):
-        if left_sum == (sum_ - left_sum - num):
+        if left_sum == sum_ - left_sum - num:
             return i
         left_sum += num
     return -1
