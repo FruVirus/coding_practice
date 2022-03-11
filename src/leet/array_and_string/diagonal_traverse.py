@@ -1,10 +1,9 @@
 """
-Reverse Linked List II
-----------------------
+Diagonal Traverse
+-----------------
 
-Given the head of a singly linked list and two integers left and right where
-left <= right, reverse the nodes of the list from position left to position right, and
-return the reversed list.
+Given an m x n matrix mat, return an array of all the elements of the array in a
+diagonal order.
 
 Complexity
 ==========
@@ -12,28 +11,25 @@ Complexity
 Time
 ----
 
-reverseBetween(head, left, right): O(n).
+findDiagonalOrder(mat): O(m * n).
 
 Space
 -----
 
-reverseBetween(head, left, right): O(1).
+findDiagonalOrder(mat): O(min(m, n)).
 """
 
+# pylint: disable=C0200
 
-def sol(head, left, right):
-    if not head:
-        return None
-    temp, curr = None, head
-    for _ in range(left - 1):
-        temp, curr = curr, curr.next
-    conn, tail = temp, curr
-    for _ in range(right - left + 1):
-        next, curr.next = curr.next, temp
-        curr, temp = next, curr
-    if conn:
-        conn.next = temp
-    else:
-        head = temp
-    tail.next = curr
-    return head
+
+def sol(mat):
+    diag, sol = {}, []
+    for i in range(len(mat)):
+        for j in range(len(mat[i])):
+            if i + j not in diag:
+                diag[i + j] = [mat[i][j]]
+            else:
+                diag[i + j].append(mat[i][j])
+    for diag_level, diag_elements in diag.items():
+        sol.extend(diag_elements if diag_level % 2 != 0 else reversed(diag_elements))
+    return sol
