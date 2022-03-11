@@ -23,7 +23,7 @@ def sol(x, n):
     n, x = (n, x) if n > 0 else (-n, 1 / x)
     ans = 1
     while n > 0:
-        if n % 2 == 1:
+        if n % 2 != 0:
             ans *= x
         x *= x
         n //= 2
