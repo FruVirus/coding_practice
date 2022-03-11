@@ -12,7 +12,7 @@ Time
 ----
 
 MedianFinder:
-    def add_num(self, num): O(5 * lg n) + O(1) = O(lg n).
+    def add_num(self, val): O(5 * lg n) + O(1) = O(lg n).
 
 Space
 -----
@@ -29,8 +29,8 @@ class Sol:
     def __init__(self):
         self.max_heap, self.min_heap = [], []
 
-    def add_num(self, num):
-        heapq.heappush(self.max_heap, -num)
+    def add_num(self, val):
+        heapq.heappush(self.max_heap, -val)
         heapq.heappush(self.min_heap, -self.max_heap[0])
         heapq.heappop(self.max_heap)
         if len(self.max_heap) < len(self.min_heap):
