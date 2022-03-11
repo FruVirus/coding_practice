@@ -21,7 +21,7 @@ isSymmetric(root): O(n).
 
 
 def sol(root):
-    stack = [(root.right, root.left)]
+    stack = [(root.left, root.right)]
     while stack:
         left, right = stack.pop()
         if left and right:
@@ -29,6 +29,6 @@ def sol(root):
                 return False
             stack.append((left.left, right.right))
             stack.append((left.right, right.left))
-        elif left or right:
+        elif (not left and right) or (left and not right):
             return False
     return True
