@@ -20,9 +20,7 @@ rotateRight(head, k): O(1).
 
 
 def sol(head, k):
-    if not head:
-        return None
-    if not head.next or k == 0:
+    if not (head and head.next) or k == 0:
         return head
     count, old_tail = 1, head
     while old_tail.next:
