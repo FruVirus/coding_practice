@@ -27,7 +27,7 @@ isValidBST(root): O(n).
 
 
 def sol(root):
-    node, stack, prev = root, [], -float("inf")
+    node, prev, stack = root, -float("inf"), []
     while node or stack:
         while node:
             stack.append(node)
@@ -35,6 +35,5 @@ def sol(root):
         node = stack.pop()
         if node.val <= prev:
             return False
-        prev = node.val
-        node = node.right
+        prev, node = node.val, node.right
     return True
