@@ -24,7 +24,7 @@ reverseBetween(head, left, right): O(1).
 def sol(head, left, right):
     if not head:
         return None
-    temp, curr = None, head
+    curr, temp = head, None
     for _ in range(left - 1):
         temp, curr = curr, curr.next
     conn, tail = temp, curr
