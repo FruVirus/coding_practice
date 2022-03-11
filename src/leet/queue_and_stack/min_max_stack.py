@@ -42,7 +42,7 @@ class Sol:
             self.min_stack[-1][1] -= 1
         if self.min_stack[-1][1] == 0:
             self.min_stack.pop()
-        self.stack.pop()
+        return self.stack.pop()
 
     def push(self, val):
         self.stack.append(val)
