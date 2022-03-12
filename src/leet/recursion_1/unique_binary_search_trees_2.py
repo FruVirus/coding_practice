@@ -11,12 +11,12 @@ Complexity
 Time
 ----
 
-generateTrees(n): O().
+generateTrees(n): O(4^n / n^(1 / 2)).
 
 Space
 -----
 
-generateTrees(n): O().
+generateTrees(n): O(4^n / n^(1 / 2)).
 """
 
 
