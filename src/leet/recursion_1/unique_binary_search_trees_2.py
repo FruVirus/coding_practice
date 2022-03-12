@@ -26,8 +26,12 @@ class Node:
 
 
 def sol(n):
+    cache = {}
+
     def generate_trees(start, end):
         if start <= end:
+            if (start, end) in cache:
+                return cache[(start, end)]
             all_trees = []
             for i in range(start, end + 1):
                 left_trees = generate_trees(start, i - 1)
@@ -37,6 +41,7 @@ def sol(n):
                         tree = Node(i)
                         tree.left, tree.right = l, r
                         all_trees.append(tree)
+            cache[(start, end)] = all_trees
             return all_trees
         return [None]
 
