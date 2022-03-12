@@ -29,6 +29,6 @@ def sol(root):
                 return False
             stack.append((left.left, right.right))
             stack.append((left.right, right.left))
-        elif (not left and right) or (left and not right):
+        elif left or right:
             return False
     return True
