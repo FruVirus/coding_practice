@@ -61,19 +61,18 @@ class Sol:
         return self.order
 
     def levelorder_iterative(self, root):
-        if not root:
-            return self.order
-        level, queue = 0, deque([root])
-        while queue:
-            self.order.append([])
-            for _ in range(len(queue)):
-                node = queue.popleft()
-                self.order[level].append(node.val)
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-            level += 1
+        if root:
+            level, queue = 0, deque([root])
+            while queue:
+                self.order.append([])
+                for _ in range(len(queue)):
+                    node = queue.popleft()
+                    self.order[level].append(node.val)
+                    if node.left:
+                        queue.append(node.left)
+                    if node.right:
+                        queue.append(node.right)
+                level += 1
         return self.order
 
     def levelorder_recursive(self, root):
@@ -89,43 +88,39 @@ class Sol:
         return self.order
 
     def postorder_iterative(self, root):
-        if not root:
-            return self.order
-        stack = [root]
-        while stack:
-            node = stack.pop()
-            if node.left:
-                stack.append(node.left)
-            if node.right:
-                stack.append(node.right)
-            self.order.append(node.val)
+        if root:
+            stack = [root]
+            while stack:
+                node = stack.pop()
+                if node.left:
+                    stack.append(node.left)
+                if node.right:
+                    stack.append(node.right)
+                self.order.append(node.val)
         return self.order[::-1]
 
     def postorder_recursive(self, root):
-        if not root:
-            return self.order
-        self.postorder_recursive(root.left)
-        self.postorder_recursive(root.right)
-        self.order.append(root.val)
+        if root:
+            self.postorder_recursive(root.left)
+            self.postorder_recursive(root.right)
+            self.order.append(root.val)
         return self.order
 
     def preorder_iterative(self, root):
-        if not root:
-            return self.order
-        stack = [root]
-        while stack:
-            node = stack.pop()
-            self.order.append(node.val)
-            if node.right:
-                stack.append(node.right)
-            if node.left:
-                stack.append(node.left)
+        if root:
+            stack = [root]
+            while stack:
+                node = stack.pop()
+                self.order.append(node.val)
+                if node.right:
+                    stack.append(node.right)
+                if node.left:
+                    stack.append(node.left)
         return self.order
 
     def preorder_recursive(self, root):
-        if not root:
-            return self.order
-        self.order.append(root.val)
-        self.preorder_recursive(root.left)
-        self.preorder_recursive(root.right)
+        if root:
+            self.order.append(root.val)
+            self.preorder_recursive(root.left)
+            self.preorder_recursive(root.right)
         return self.order
