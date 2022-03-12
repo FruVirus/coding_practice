@@ -19,11 +19,13 @@ Space
 findMaxConsecutiveOnes(nums): O(1).
 """
 
+# pylint: disable=C0200
+
 
 def sol(nums):
     last_zero, longest_ones, num_ones = -1, 0, 0
-    for i, num in enumerate(nums):
-        if num == 0:
+    for i in range(len(nums)):
+        if nums[i] == 0:
             num_ones, last_zero = i - last_zero, i
         else:
             num_ones += 1
