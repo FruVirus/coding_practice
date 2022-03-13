@@ -29,12 +29,12 @@ MovingAverage: O(n), where n is the window size.
 
 class Sol:
     def __init__(self, size):
-        self.capacity, self.count, self.head_index, self.queue = size, 0, 0, [0] * size
+        self.capacity, self.count, self.tail_index, self.queue = size, 0, 0, [0] * size
         self.wsum = 0
 
     def next(self, val):
         self.count += 1
-        self.head_index = (self.head_index + 1) % self.capacity
-        self.wsum = self.wsum - self.queue[self.head_index] + val
-        self.queue[self.head_index] = val
+        self.tail_index = (self.tail_index + 1) % self.capacity
+        self.wsum = self.wsum - self.queue[self.tail_index] + val
+        self.queue[self.tail_index] = val
         return self.wsum / min(self.capacity, self.count)
