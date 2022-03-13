@@ -25,16 +25,16 @@ searchRange(nums, target): O(1).
 
 
 def sol(nums, target):
-    lower_bound = find_bound(nums, target, True)
-    return [-1, -1] if lower_bound == -1 else [lower_bound, find_bound(nums, target)]
+    lbound = find_bound(nums, target, True)
+    return [-1, -1] if lbound == -1 else [lbound, find_bound(nums, target)]
 
 
-def find_bound(nums, target, lower_bound=False):
+def find_bound(nums, target, lbound=False):
     low, high = 0, len(nums) - 1
     while low <= high:
         mid = low + (high - low) // 2
         if nums[mid] == target:
-            if lower_bound:
+            if lbound:
                 if mid == low or nums[mid - 1] < target:
                     return mid
                 high = mid - 1
@@ -42,8 +42,8 @@ def find_bound(nums, target, lower_bound=False):
                 if mid == high or nums[mid + 1] > target:
                     return mid
                 low = mid + 1
-        elif nums[mid] > target:
-            high = mid - 1
-        else:
+        elif nums[mid] < target:
             low = mid + 1
+        else:
+            high = mid - 1
     return -1
