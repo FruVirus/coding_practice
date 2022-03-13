@@ -80,9 +80,8 @@ def sol(a, b):
         b_left = b[b_mid] if b_mid >= 0 else -float("inf")
         b_right = b[b_mid + 1] if b_mid + 1 < n else float("inf")
         if a_left <= b_right and b_left <= a_right:
-            if total % 2 == 1:
-                return min(a_right, b_right)
-            return (max(a_left, b_left) + min(a_right, b_right)) / 2
+            med = min(a_right, b_right)
+            return med if total % 2 == 1 else (max(a_left, b_left) + med) / 2
         if a_left < b_right:
             low = a_mid + 1
         else:
