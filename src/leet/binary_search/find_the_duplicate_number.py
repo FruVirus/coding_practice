@@ -72,7 +72,7 @@ findDuplicate(nums) and findDuplicate_cycle(nums): O(1).
 """
 
 
-def sol(nums):
+def sol_bs(nums):
     low, high = 1, len(nums) - 1
     while low <= high:
         mid = low + (high - low) // 2
