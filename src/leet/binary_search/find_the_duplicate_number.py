@@ -78,10 +78,10 @@ def sol(nums):
         mid = low + (high - low) // 2
         count = sum(num <= mid for num in nums)
         if count > mid:
-            duplicate, high = mid, mid - 1
+            dup, high = mid, mid - 1
         else:
             low = mid + 1
-    return duplicate
+    return dup
 
 
 def sol_cycle(nums):
