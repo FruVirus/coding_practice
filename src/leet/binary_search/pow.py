@@ -4,6 +4,14 @@ Find Minimum in Rotated Sorted Array
 
 Implement pow(x, n), which calculates x raised to the power n (i.e., x^n).
 
+Intuition
+---------
+
+The method is based on the observation that, for a positive integer n, we have:
+
+    x^n =   x * (x^2)^((n - 1) / 2), if n is odd
+            (x^2) * (n / 2), if n is even
+
 Complexity
 ==========
 
