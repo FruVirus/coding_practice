@@ -72,21 +72,20 @@ splitArray(nums, m): O(1).
 
 
 def sol(nums, m):
-    def min_subarrays_required(max_sum_allowed):
-        current_sum = splits_required = 0
+    def get_num_splits(max_sum):
+        curr_sum = num_splits = 0
         for num in nums:
-            if current_sum + num <= max_sum_allowed:
-                current_sum += num
+            if curr_sum + num <= max_sum:
+                curr_sum += num
             else:
-                current_sum = num
-                splits_required += 1
-        return splits_required + 1
+                curr_sum, num_splits = num, num_splits + 1
+        return num_splits + 1
 
-    low, high, min_sum = max(nums), sum(nums), None
+    low, high = max(nums), sum(nums)
     while low <= high:
         mid = low + (high - low) // 2
-        if min_subarrays_required(mid) <= m:
-            min_sum, high = mid, mid - 1
-        else:
+        if get_num_splits(mid) > m:
             low = mid + 1
-    return min_sum
+        else:
+            max_sum, high = mid, mid - 1
+    return max_sum
