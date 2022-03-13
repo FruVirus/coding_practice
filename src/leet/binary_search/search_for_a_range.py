@@ -9,6 +9,37 @@ If target is not found in the array, return [-1, -1].
 
 You must write an algorithm with O(log n) runtime complexity.
 
+Intuition
+---------
+
+Instead of using a linear-scan approach to find the boundaries once the target has been
+found, let's use two binary searches to find the first and last position of the target.
+We can make a small tweak to the checks we perform on the middle element. This tweak
+will help us determine the first and the last position of an element.
+
+Normally, we compare nums[mid] == target because we simply need to check if we found our
+target or not. But now, apart from checking for equality, we also need to check if mid
+is the first or the last index where the target occurs.
+
+There are two situations where an index will be the first occurrence of the target in
+the array.
+
+    1. If mid is the same as low which implies our mid element is the first element
+in the remaining subarray.
+
+    2. The element to the left of this index is not equal to the target that we are
+searching for; i.e. nums[mid - 1] != target. If this condition is not met, we should
+keep searching on the left side of the array for the first occurrence of the target.
+
+There are two situations where an index will be the last occurrence of the target in the
+array.
+
+    1. If mid is the same as high which implies our mid element is the last element of
+the remaining subarray.
+    2. If the element to the right of mid is not equal to the target we are searching
+for; i.e. nums[mid + 1] != target. If this condition is not met, we should keep
+searching on the right side of the array for the last occurrence of the target.
+
 Complexity
 ==========
 
