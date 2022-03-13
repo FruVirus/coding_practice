@@ -83,7 +83,7 @@ def sol(a, b):
             if total % 2 == 1:
                 return min(a_right, b_right)
             return (max(a_left, b_left) + min(a_right, b_right)) / 2
-        if a_left > b_right:
-            high = a_mid - 1
-        else:
+        if a_left < b_right:
             low = a_mid + 1
+        else:
+            high = a_mid - 1
