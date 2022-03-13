@@ -73,16 +73,16 @@ def sol(a, b):
     low, high, total = 0, m - 1, m + n
     half = total // 2
     while True:
-        a_mid = low + (high - low) // 2
-        b_mid = half - a_mid - 2
-        a_left = a[a_mid] if a_mid >= 0 else -float("inf")
-        a_right = a[a_mid + 1] if a_mid + 1 < m else float("inf")
-        b_left = b[b_mid] if b_mid >= 0 else -float("inf")
-        b_right = b[b_mid + 1] if b_mid + 1 < n else float("inf")
-        if a_left <= b_right and b_left <= a_right:
-            med = min(a_right, b_right)
-            return med if total % 2 == 1 else (max(a_left, b_left) + med) / 2
-        if a_left < b_right:
-            low = a_mid + 1
+        amid = low + (high - low) // 2
+        bmid = half - amid - 2
+        aleft = a[amid] if amid >= 0 else -float("inf")
+        aright = a[amid + 1] if amid + 1 < m else float("inf")
+        bleft = b[bmid] if bmid >= 0 else -float("inf")
+        bright = b[bmid + 1] if bmid + 1 < n else float("inf")
+        if aleft <= bright and bleft <= aright:
+            med = min(aright, bright)
+            return med if total % 2 == 1 else (max(aleft, bleft) + med) / 2
+        if aleft < bright:
+            low = amid + 1
         else:
-            high = a_mid - 1
+            high = amid - 1
