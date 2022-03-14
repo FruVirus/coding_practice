@@ -77,10 +77,10 @@ def sol_bs(nums):
     while low <= high:
         mid = low + (high - low) // 2
         count = sum(num <= mid for num in nums)
-        if count > mid:
-            dup, high = mid, mid - 1
-        else:
+        if count <= mid:
             low = mid + 1
+        else:
+            dup, high = mid, mid - 1
     return dup
 
 
