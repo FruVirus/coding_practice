@@ -15,6 +15,15 @@ same element twice.
 
 Your solution must use only constant extra space.
 
+Intuition
+---------
+
+Since the input array is sorted, we can use two indices, initially pointing to the first
+and the last element, respectively. Compare the sum of these two elements with target.
+If the sum is equal to target, we found the exactly only solution. If it is less than
+target, we increase the smaller index by one. If it is greater than target, we decrease
+the larger index by one. Repeat the comparison until the solution is found.
+
 Complexity
 ==========
 
