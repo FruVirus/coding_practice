@@ -34,10 +34,8 @@ def sol(n):
                 return cache[(start, end)]
             all_trees = []
             for i in range(start, end + 1):
-                left_trees = generate_trees(start, i - 1)
-                right_trees = generate_trees(i + 1, end)
-                for l in left_trees:
-                    for r in right_trees:
+                for l in generate_trees(start, i - 1):
+                    for r in generate_trees(i + 1, end):
                         tree = Node(i)
                         tree.left, tree.right = l, r
                         all_trees.append(tree)
