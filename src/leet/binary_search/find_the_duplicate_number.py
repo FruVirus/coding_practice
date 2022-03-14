@@ -62,13 +62,13 @@ Complexity
 Time
 ----
 
-findDuplicate(nums): O(n * lg n).
+findDuplicate_bs(nums): O(n * lg n).
 findDuplicate_cycle(nums): O(n).
 
 Space
 -----
 
-findDuplicate(nums) and findDuplicate_cycle(nums): O(1).
+findDuplicate_bs(nums) and findDuplicate_cycle(nums): O(1).
 """
 
 
