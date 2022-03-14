@@ -65,8 +65,6 @@ def merge(l, r):
         else:
             a.append(r[j])
             j += 1
-    if i < len(l):
-        a.extend(l[i:])
-    if j < len(r):
-        a.extend(r[j:])
+    a.extend(l[i:])
+    a.extend(r[j:])
     return a
