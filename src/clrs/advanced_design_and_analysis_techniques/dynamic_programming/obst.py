@@ -71,7 +71,7 @@ then w[0][2] = 0.45 is the sum of all the p's and q's from 0 to 2.
 
 The matrix r contains the index r for which k_r is the root of an OBST containing keys
 k_i, ..., k_j. If element r[i][j] = r[1][2] = 1, then this means that the OBST with keys
-k_1 and k_2 has k_1 as its root.
+between k_1 and k_2 has k_1 as its root.
 
 Complexity
 ==========
