@@ -14,6 +14,25 @@ of target if it is in nums, or -1 if it is not in nums.
 
 You must write an algorithm with O(log n) runtime complexity.
 
+Intuition
+---------
+
+The idea is that we add some additional condition checks in the normal binary search in
+order to better narrow down the scope of the search.
+
+If nums[mid] == target, then the job is done and we return mid.
+
+Otherwise, there can be two situations:
+
+    1. Mid element is larger than the first element in the array, i.e. the subarray from
+the first element to the mid element is non-rotated. If the target is located in the
+non-rotated subarray, then we decrease high. Otherwise, we increase low.
+
+    2. Mid element is smaller than the first element of the array, i.e. the rotation
+index is somewhere between 0 and mid. It implies that the sub-array from the mid element
+to the last one is non-rotated. If the target is located in the non-rotated subarray,
+then we increase low. Otherwise, we decrease high.
+
 Complexity
 ==========
 
