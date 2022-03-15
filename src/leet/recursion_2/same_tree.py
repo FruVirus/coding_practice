@@ -23,12 +23,8 @@ isSameTree(p, q): O(n).
 
 
 def sol(p, q):
-    stack = [(p, q)]
-    while stack:
-        p, q = stack.pop()
-        if p and q and p.val == q.val:
-            stack.append((p.left, q.left))
-            stack.append((p.right, q.right))
-        elif p or q:
-            return False
-    return True
+    if not (p or q):
+        return True
+    if not (p and q) or p.val != q.val:
+        return False
+    return sol(p.right, q.right) and sol(p.left, q.left)
