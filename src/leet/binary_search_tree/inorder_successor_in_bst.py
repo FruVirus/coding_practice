@@ -14,16 +14,17 @@ Complexity
 Time
 ----
 
-inorderSuccessor(root, p): O(n).
+inorderSuccessor_one(root, p) and inorderSuccessor_two(root, p): O(n).
 
 Space
 -----
 
-inorderSuccessor(root, p): O(1).
+inorderSuccessor_one(root, p): O(1).
+inorderSuccessor_two(root, p): O(n).
 """
 
 
-def sol(root, p):
+def sol_one(root, p):
     successor = None
     while root:
         if p.val >= root.val:
@@ -31,3 +32,22 @@ def sol(root, p):
         else:
             successor, root = root, root.left
     return successor
+
+
+def sol_two(root, p):
+    if p.right:
+        leftmost = p.right
+        while leftmost.left:
+            leftmost = leftmost.left
+        return leftmost
+    return inorder(root, p)[1]
+
+
+def inorder(node, p, prev=None, successor=None):
+    if node:
+        prev, successor = inorder(node.left, p, prev, successor)
+        if prev is p and not successor:
+            successor = node
+        else:
+            prev, successor = inorder(node.right, p, node, successor)
+    return prev, successor
