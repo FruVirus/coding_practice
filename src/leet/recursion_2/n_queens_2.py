@@ -13,12 +13,12 @@ Complexity
 Time
 ----
 
-totalNQueens(n): O().
+totalNQueens(n): O(n!).
 
 Space
 -----
 
-totalNQueens(n): O().
+totalNQueens(n): O(n).
 """
 
 
