@@ -219,7 +219,7 @@ class SLL:
     @staticmethod
     def get_middle(h):
         slow, fast = h, h.next
-        while fast and fast.next:
+        while not (fast is None or fast.next is None):
             slow, fast = slow.next, fast.next.next
         return slow
 
