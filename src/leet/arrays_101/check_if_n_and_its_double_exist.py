@@ -22,8 +22,8 @@ checkIfExist(arr): O(n).
 
 def sol(arr):
     double = set()
-    for i in arr:
-        if 2 * i in double or (i % 2 == 0 and i // 2 in double):
+    for num in arr:
+        if 2 * num in double or (num % 2 == 0 and num // 2 in double):
             return True
-        double.add(i)
+        double.add(num)
     return False
