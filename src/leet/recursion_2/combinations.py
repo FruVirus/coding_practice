@@ -27,6 +27,8 @@ def sol(n, k):
         if len(curr) == k:
             sol.append(curr[:])
             return
+        if k - len(curr) > n - first + 1:
+            return
         for i in range(first, n + 1):
             curr.append(i)
             backtrack(i + 1, curr)
