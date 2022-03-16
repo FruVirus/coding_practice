@@ -11,12 +11,12 @@ Complexity
 Time
 ----
 
-permute(nums): O().
+permute(nums): O(n!) < O() < O(n * n!).
 
 Space
 -----
 
-permute(nums): O().
+permute(nums): O(n!).
 """
 
 
