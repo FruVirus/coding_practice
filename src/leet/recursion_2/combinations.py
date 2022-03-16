@@ -23,6 +23,8 @@ combine(n, k): O(nCk).
 
 
 def sol(n, k):
+    sol, curr = [], []
+
     def backtrack(first, curr):
         if len(curr) == k:
             sol.append(curr[:])
@@ -34,6 +36,5 @@ def sol(n, k):
             backtrack(i + 1, curr)
             curr.pop()
 
-    sol, curr = [], []
     backtrack(1, curr)
     return sol
