@@ -42,8 +42,8 @@ def random_select(a, i):
         pivot = partition(a, low, high)
         if i == pivot + 1:
             return a[pivot]
-        if i < pivot + 1:
-            high = pivot - 1
-        else:
+        if i > pivot + 1:
             low = pivot + 1
+        else:
+            high = pivot - 1
     return None
