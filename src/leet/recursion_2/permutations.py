@@ -5,6 +5,21 @@ Permutations
 Given an array nums of distinct integers, return all the possible permutations. You can
 return the answer in any order.
 
+Intuition
+---------
+
+Here is a backtrack function which takes the index of the first integer to consider as
+an argument backtrack(first).
+
+    1. If the first integer to consider has index n that means that the current
+permutation is done.
+
+    2. Iterate over the integers from index first to index n - 1.
+        - Place i-th integer first in the permutation, i.e. swap(nums[first], nums[i]).
+        - Proceed to create all permutations which starts from i-th integer:
+backtrack(first + 1).
+        - Backtrack; i.e. swap(nums[first], nums[i]) back.
+
 Complexity
 ==========
 
