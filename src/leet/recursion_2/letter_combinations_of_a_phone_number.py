@@ -14,7 +14,7 @@ Intuition
 Use a backtracking function to generate all possible combinations.
 
     1. The function should take 2 primary inputs: the current combination of letters we
-have, path, and the index we are currently checking.
+have, combo, and the index we are currently checking.
 
     2. As a base case, if our current combination of letters is the same length as the
 input digits, that means we have a complete combination. Therefore, add it to our
@@ -23,10 +23,10 @@ answer, and backtrack.
     3. Otherwise, get all the letters that correspond with the current digit we are
 looking at, digits[index].
 
-    4. Loop through these letters. For each letter, add the letter to our current path,
+    4. Loop through these letters. For each letter, add the letter to our current combo,
 and call backtrack again, but move on to the next digit by incrementing index by 1.
 
-    5. Make sure to remove the letter from path once finished with it.
+    5. Make sure to remove the letter from combo once finished with it.
 
 Complexity
 ==========
