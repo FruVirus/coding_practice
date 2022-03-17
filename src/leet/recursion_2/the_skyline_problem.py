@@ -101,33 +101,17 @@ getSkyline(buildings): O(n).
 # Standard Library
 import heapq
 
-from collections import defaultdict
-
 
 def sol(buildings):
-    counter, heap, sol, walls = defaultdict(int), [], [], []
-    for left, right, height in buildings:
-        walls.append((left, height))
-        walls.append((right, -height))
-    walls.sort()
-    for pos, height in walls:
-        if height > 0:
-            if not heap or height > -heap[0]:
-                if sol and sol[-1][0] == pos:
-                    sol[-1][1] = height
-                else:
-                    sol.append([pos, height])
-            heapq.heappush(heap, -height)
-            counter[height] += 1
-        else:
-            counter[-height] -= 1
-            while heap and counter[-heap[0]] == 0:
-                heapq.heappop(heap)
-            new_height = 0 if not heap else -heap[0]
-            if sol[-1][0] == pos:
-                sol[-1][1] = new_height
-            else:
-                sol.append([pos, new_height])
-        if len(sol) > 1 and sol[-1][1] == sol[-2][1]:
-            sol.pop()
-    return sol
+    points = [(l, -h, r) for l, r, h in buildings]
+    points += list((r, 0, 0) for _, r, _ in buildings)
+    sol, heap = [[0, 0]], [(0, float("inf"))]
+    points.sort()
+    for l, h, r in points:
+        while heap[0][1] <= l:
+            heapq.heappop(heap)
+        if h != 0:
+            heapq.heappush(heap, (h, r))
+        if sol[-1][1] != -heap[0][0]:
+            sol.append((l, -heap[0][0]))
+    return sol[1:]
