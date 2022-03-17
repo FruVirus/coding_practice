@@ -45,44 +45,48 @@ Whenever we encounter the end of a building, we need to remove that building fro
 priority queue. If the max in the priority queue changes, it means that the building
 needs to be part of the final answer.
 
-Example
-
-buildings = [[1, 3, 3], [2, 4, 4], [5, 8, 2], [6, 7, 4], [8, 9, 4]]
-
-1. We will split the left and right sides of the buildings into two different points.
-The left side of the building will have a positive height and the right side of the
-building will have a negative height. This way, we can sort all the buildings by their
-x-coordinate (i.e., left side) first.
-
-walls = [
-    (1, 3), (2, 4), (3, -3), (4, -4), (5, 2), (6, 4), (7, -4), (8, -2), (8, 4), (9, -4)
-]
-
-2. As we iterate through walls, if we encounter a left side (i.e., a tuple with a
-positive height), we add the height of the building into the queue, and then check if
-adding the building height changes the max in the queue. For every time the queue's max
-changes upon adding a new building height, we add the tuple to the final answer.
-
-3. As we iterate through walls, if we encounter a right side (i.e., a tuple with a
-negative height), we remove its corresponding height from the queue, and then check if
-removing the building height changes the max in the queue. For every time the queue's
-max changes upon removing a building's height. we add the tuple (right side, max(queue))
-to the final answer.
-
 Edge Cases
 
 1. Two or more buildings share the same left side. In this case, we should sort the
-buildings in decreasing order of their heights. Thus, we should process (0, 3) first and
-then (0, 2).
+buildings in decreasing order of their heights. Thus, we should process (0, 3, s) first
+and then (0, 2, s), where s denotes start.
 
 2. Two or more buildings share the same right side. In this case, we should sort the
-buildings in increasing order of their heights. Thus, we should process (5, 2) first and
-then (5, 3).
+buildings in increasing order of their heights. Thus, we should process (5, 2, e) first
+and then (5, 3, e), where e denotes end.
 
 3. The right side of a build overlaps with the left side of the next building. In this
 case, we should sort the buildings so that the left side of the next building comes
 before the right side of the current building. Thus, we should process (7, 3, s) first
 and then (7, 2, e), where s/e denotes start/end.
+
+Notes
+
+1. We will sort the building by their left sides first (since we're iterating from left
+to right), followed by their heights (heights will be negative since we want to keep a
+max heap), followed by their right sides.
+
+2. We account for the first edge case by making the heights negative in the sorted
+list. In this manner, if two buildings start at x = 0, the taller building will have a
+more negative height and will be considered first in the max heap.
+
+3. We account for the second edge case by adding an extra list of 3-tuples (r, 0, 0) so
+that the heights are effectively equal for buildings that end at the same x position.
+
+4. We account for the third edge case by making the heights negative in the sorted list
+and by adding an extra list of 3-tuples (r, 0, 0). In this manner, the start of the next
+building is always considered before the end of the current building in the sorted list
+since the heights are negative.
+
+5. We only encounter the start of a building if the height is negative (i.e., non-zero).
+In this case, we immediately push the height of that building along with its right side
+to the max heap. If the max in the max heap changes (i.e., it is not the same as the
+last max in the solution), then we add the left side of the new building along with the
+max in the max heap to the solution.
+
+6. We only encounter the end of a building when the left side coordinate is greater than
+or equal to the coordinate of the max entry in the max heap. In this case, we remove
+that building from the max heap.
 
 Complexity
 ==========
