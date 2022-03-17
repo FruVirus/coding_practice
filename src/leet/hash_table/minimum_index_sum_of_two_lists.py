@@ -17,16 +17,19 @@ Complexity
 Time
 ----
 
-findRestaurant(list1, list2): O().
+findRestaurant(list1, list2): O(m + n), where m and n are the lengths of list1 and
+list2, respectively.
 
 Space
 -----
 
-findRestaurant(list1, list2): O().
+findRestaurant(list1, list2): O(min(m, n) * x), where x is the average string length.
 """
 
 
 def sol(list1, list2):
+    if len(list1) > len(list2):
+        list1, list2 = list2, list1
     l1_map, min_sum, sol = {l1: i1 for i1, l1 in enumerate(list1)}, float("inf"), []
     for i2, l2 in enumerate(list2):
         if l2 in l1_map:
