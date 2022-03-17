@@ -21,7 +21,11 @@ So we can XOR all bits together to find the unique number.
 
 nums = [4, 1, 2, 1, 2]
 
-
+0 ^ 4 = 4
+4 ^ 1 = 5
+5 ^ 2 = 7
+7 ^ 1 = 6
+6 ^ 2 = 4
 
 Complexity
 ==========
