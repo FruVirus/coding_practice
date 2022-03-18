@@ -31,17 +31,17 @@ treeToDoublyList_iterative(root) and treeToDoublyLst_recursive(root): O(n).
 def sol_iterative(root):
     if not root:
         return None
-    first, curr, last, stack = None, root.left, None, [root]
-    while curr or stack:
-        while curr:
-            stack.append(curr)
-            curr = curr.left
-        curr = stack.pop()
+    first, node, last, stack = None, root.left, None, [root]
+    while node or stack:
+        while node:
+            stack.append(node)
+            node = node.left
+        node = stack.pop()
         if not first:
-            first = curr
+            first = node
         if last:
-            last.right, curr.left = curr, last
-        last, curr = curr, curr.right
+            last.right, node.left = node, last
+        last, node = node, node.right
     last.right, first.left = first, last
     return first
 
