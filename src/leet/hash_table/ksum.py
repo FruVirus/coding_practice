@@ -43,7 +43,7 @@ fourSum(nums, target): O(n), for the has set.
 def sol(nums, target):
     def ksum(nums, target, k):
         average_value, sol = target // k, []
-        if not nums or (average_value < nums[0] or nums[-1] < average_value):
+        if not nums or average_value < nums[0] or nums[-1] < average_value:
             return sol
         if k == 2:
             return twosum_hash(nums, target)
@@ -63,13 +63,12 @@ def sol(nums, target):
 
     def twosum_pointers(nums, target):
         low, high, sol = 0, len(nums) - 1, []
+        n = high
         while low < high:
             curr_sum = nums[low] + nums[high]
             if curr_sum < target or (low > 0 and nums[low] == nums[low - 1]):
                 low += 1
-            elif curr_sum > target or (
-                high < len(nums) - 1 and nums[high] == nums[high + 1]
-            ):
+            elif curr_sum > target or (high < n and nums[high] == nums[high + 1]):
                 high -= 1
             else:
                 sol.append([nums[low], nums[high]])
