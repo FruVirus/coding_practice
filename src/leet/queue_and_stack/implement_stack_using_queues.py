@@ -11,14 +11,14 @@ Complexity
 Time
 ----
 
-MyStack:
+Sol:
     def push(self, val): O(n).
     def pop(self): O(1).
 
 Space
 -----
 
-MyStack:
+Sol:
     self.q1: O(n).
 """
 
