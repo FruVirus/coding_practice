@@ -61,7 +61,7 @@ totalNQueens(n): O(n^2).
 
 
 def sol(n):
-    sol, board = [], [["."] * n for _ in range(n)]
+    sol = []
 
     def backtrack(row, cols, diags, anti_diags, board):
         if row == n:
@@ -83,5 +83,5 @@ def sol(n):
             board[row][col] = "."
         return count
 
-    count = backtrack(0, set(), set(), set(), board)
+    count = backtrack(0, set(), set(), set(), [["."] * n for _ in range(n)])
     return count, sol
