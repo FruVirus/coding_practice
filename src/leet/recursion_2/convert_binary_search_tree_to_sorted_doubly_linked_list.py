@@ -37,10 +37,10 @@ def sol_iterative(root):
             stack.append(node)
             node = node.left
         node = stack.pop()
-        if not first:
-            first = node
         if last:
             last.right, node.left = node, last
+        else:
+            first = node
         last, node = node, node.right
     last.right, first.left = first, last
     return first
