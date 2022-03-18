@@ -47,11 +47,10 @@ def serialize(root):
 
 def deserialize(data):
     def deserialize_recurse(l):
-        if l[0] == "None":
-            l.pop(0)
+        root = l.pop(0)
+        if root == "None":
             return None
-        root = Node(l[0])
-        l.pop(0)
+        root = Node(root)
         root.left, root.right = deserialize_recurse(l), deserialize_recurse(l)
         return root
 
