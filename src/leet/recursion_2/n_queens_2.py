@@ -69,17 +69,17 @@ def sol(n):
             return 1
         count = 0
         for col in range(n):
-            curr_diag, curr_anti_diag = row - col, row + col
-            if col in cols or curr_diag in diags or curr_anti_diag in anti_diags:
+            diag, anti_diag = row - col, row + col
+            if col in cols or diag in diags or anti_diag in anti_diags:
                 continue
             cols.add(col)
-            diags.add(curr_diag)
-            anti_diags.add(curr_anti_diag)
+            diags.add(diag)
+            anti_diags.add(anti_diag)
             board[row][col] = "Q"
             count += backtrack(row + 1, cols, diags, anti_diags, board)
             cols.remove(col)
-            diags.remove(curr_diag)
-            anti_diags.remove(curr_anti_diag)
+            diags.remove(diag)
+            anti_diags.remove(anti_diag)
             board[row][col] = "."
         return count
 
