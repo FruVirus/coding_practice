@@ -56,7 +56,7 @@ mapping = {
 
 
 def sol(digits):
-    sol, curr = [], []
+    sol = []
     if not digits:
         return sol
 
@@ -69,5 +69,5 @@ def sol(digits):
             backtrack(index + 1, combo)
             combo.pop()
 
-    backtrack(0, curr)
+    backtrack(0, [])
     return sol
