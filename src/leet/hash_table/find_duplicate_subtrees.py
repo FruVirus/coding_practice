@@ -9,6 +9,13 @@ them.
 
 Two trees are duplicate if they have the same structure with the same node values.
 
+Intuition
+---------
+
+As the function recurses, the keys of dups are unique hashes of subtrees and the values
+are lists containing roots with those unique hashes. If a given hash has more than one
+root, then that is a duplicate subtree in the overall binary tree.
+
 Complexity
 ==========
 
