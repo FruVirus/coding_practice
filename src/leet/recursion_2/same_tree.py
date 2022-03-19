@@ -28,4 +28,4 @@ def sol(p, q):
         return True
     if not (p and q) or p.val != q.val:
         return False
-    return sol(p.right, q.right) and sol(p.left, q.left)
+    return sol(p.left, q.left) and sol(p.right, q.right)
