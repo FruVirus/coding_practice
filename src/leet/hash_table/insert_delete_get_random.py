@@ -32,6 +32,8 @@ the element to its index.
 
 In either case, we need a hashmap that maps elements to their indices.
 
+With duplicates, we also have to map values to all indices that have those values.
+
 Complexity
 ==========
 
@@ -56,15 +58,21 @@ Sol:
 # Standard Library
 import random
 
+from collections import defaultdict
+
 
 class Sol:
-    def __init__(self):
-        self.dict, self.list = {}, []
+    def __init__(self, dups=False):
+        self.dict, self.dups, self.list = defaultdict(set) if dups else {}, dups, []
 
     def get_random(self):
         return random.choice(self.list)
 
     def insert(self, val):
+        if self.dups:
+            self.dict[val].add(len(self.list))
+            self.list.append(val)
+            return len(self.dict[val]) == 1
         if val in self.dict:
             return False
         self.dict[val] = len(self.list)
@@ -72,6 +80,15 @@ class Sol:
         return True
 
     def remove(self, val):
+        if self.dups:
+            if self.dict[val]:
+                last, remove = self.list[-1], self.dict[val].pop()
+                self.list[remove] = last
+                self.dict[last].add(remove)
+                self.dict[last].discard(len(self.list) - 1)
+                self.list.pop()
+                return True
+            return False
         if val in self.dict:
             last, index = self.list[-1], self.dict[val]
             self.list[index], self.dict[last] = last, index
