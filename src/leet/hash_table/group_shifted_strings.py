@@ -14,6 +14,12 @@ We can keep shifting the string to form a sequence.
 Given an array of strings, group all strings[i] that belong to the same shifting
 sequence. You may return the answer in any order.
 
+Intuition
+---------
+
+Strings in the same shifting sequence will have the same collection of differences
+between all the consecutive letters.
+
 Complexity
 ==========
 
@@ -40,7 +46,6 @@ from collections import defaultdict
 def sol(strings):
     shifts = defaultdict(list)
     for s in strings:
-        str_len = len(s)
-        str_diff = tuple((ord(s[i + 1]) - ord(s[i])) % 26 for i in range(str_len - 1))
-        shifts[(str_len, str_diff)].append(s)
+        str_diff = tuple((ord(s[i + 1]) - ord(s[i])) % 26 for i in range(len(s) - 1))
+        shifts[str_diff].append(s)
     return shifts.values()
