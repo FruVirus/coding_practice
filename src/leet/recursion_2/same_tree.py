@@ -2,10 +2,11 @@
 Same Tree
 ---------
 
-Given two integers n and k, return all possible combinations of k numbers out of the
-range [1, n].
+Given the roots of two binary trees p and q, write a function to check if they are the
+same or not.
 
-You may return the answer in any order.
+Two binary trees are considered the same if they are structurally identical, and the
+nodes have the same value.
 
 Complexity
 ==========
