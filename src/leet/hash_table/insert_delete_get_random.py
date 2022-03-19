@@ -26,7 +26,7 @@ compute a random value in constant time.
 
 Using an array provides insert and get_random in average constant time, although it has
 problems with deleting a value. To delete a value at an arbitrary index takes linear
-time. The solution here is swap the element to delete with the last onen and pop the
+time. The solution here is swap the element to delete with the last one and pop the
 last element out. In order to do this in constant time, one needs a hashmap which maps
 the element to its index.
 
