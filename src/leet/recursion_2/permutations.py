@@ -36,12 +36,12 @@ permute(nums): O(n!).
 
 
 def sol(nums):
-    n, sol = len(nums), []
+    sol = []
 
     def backtrack(first=0):
-        if first == n:
+        if first == len(nums):
             sol.append(nums[:])
-        for i in range(first, n):
+        for i in range(first, len(nums)):
             nums[first], nums[i] = nums[i], nums[first]
             backtrack(first + 1)
             nums[first], nums[i] = nums[i], nums[first]
