@@ -1,6 +1,6 @@
 """
-Insert Delete GetRandom O(1)
-----------------------------
+Insert Delete GetRandom O(1) - Duplicates allowed
+-------------------------------------------------
 
 Implement the RandomizedSet class:
 
