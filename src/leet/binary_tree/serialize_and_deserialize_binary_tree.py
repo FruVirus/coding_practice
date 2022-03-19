@@ -32,26 +32,26 @@ class Node:
         self.val, self.left, self.right = x, None, None
 
 
-def serialize(root):
-    def serialize_recurse(root, s):
+def sol_serialize(root):
+    def serialize(root, s):
         if not root:
             s += "None,"
         else:
             s += str(root.val) + ","
-            s = serialize_recurse(root.left, s)
-            s = serialize_recurse(root.right, s)
+            s = serialize(root.left, s)
+            s = serialize(root.right, s)
         return s
 
-    return serialize_recurse(root, "")
+    return serialize(root, "")
 
 
-def deserialize(data):
-    def deserialize_recurse(l):
+def sol_deserialize(data):
+    def deserialize(l):
         root = l.pop(0)
         if root == "None":
             return None
         root = Node(root)
-        root.left, root.right = deserialize_recurse(l), deserialize_recurse(l)
+        root.left, root.right = deserialize(l), deserialize(l)
         return root
 
-    return deserialize_recurse(data.split(","))
+    return deserialize(data.split(","))
