@@ -31,11 +31,11 @@ If the base case conditions have not been met, then the array has positive area 
 target could potentially be present. Therefore, we seek along the matrix's middle column
 for an index row such that matrix[row - 1][mid] < target < matrix[row][mid] (obviously,
 if we find target during this process, we immediately return true). The existing matrix
-can be partitioned into four submatrice around this index; the top-left and bottom-right
-submatrice cannot contain target (via the argument outlined in Base Case section), so we
-can prune them from the search space. Additionally, the bottom-left and top-right
-submatrice are sorted two-dimensional matrices, so we can recursively apply this
-algorithm to them.
+can be partitioned into four submatrices around this index; the top-left and
+bottom-right submatrices cannot contain target (via the argument outlined in Base Case
+section), so we can prune them from the search space. Additionally, the bottom-left and
+top-right submatrices are sorted two-dimensional matrices, so we can recursively apply
+this algorithm to them.
 
 Search Space Reduction Approach
 
