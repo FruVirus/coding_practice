@@ -35,6 +35,8 @@ from collections import defaultdict
 
 
 def sol(root):
+    dups = defaultdict(list)
+
     def helper(root):
         if root:
             l_hash = helper(root.left)
@@ -44,6 +46,5 @@ def sol(root):
             return c_hash
         return "None"
 
-    dups = defaultdict(list)
     helper(root)
     return [l[0] for l in dups.values() if len(l) > 1]
