@@ -22,7 +22,7 @@ Time
 
 groupStrings(strings): O(n * k), where n is the length of strings and k is the maximum
 length of a string in strings. We iterate over all n strings and for each string, we
-iterate over all the charaters to generate the hash value, which takes O(k) time.
+iterate over all the characters to generate the hash value, which takes O(k) time.
 
 Space
 -----
