@@ -93,7 +93,7 @@ class Sol:
             last, index = self.list[-1], self.dict[val]
             self.list[index] = last
             self.dict[last] = index
-            self.list.pop()
             del self.dict[val]
+            self.list.pop()
             return True
         return False
