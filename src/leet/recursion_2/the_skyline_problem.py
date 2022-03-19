@@ -108,7 +108,7 @@ import heapq
 
 def sol(buildings):
     points = [(l, -h, r) for l, r, h in buildings]
-    points += list((r, 0, 0) for _, r, _ in buildings)
+    points += [(r, 0, 0) for _, r, _ in buildings]
     sol, heap = [[0, 0]], [(0, float("inf"))]
     points.sort()
     for l, h, r in points:
