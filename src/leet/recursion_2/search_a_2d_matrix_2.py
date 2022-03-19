@@ -69,9 +69,6 @@ searchMatrix_ssr(matrix, target): O(1).
 
 
 def sol_dc(matrix, target):
-    if not matrix:
-        return False
-
     def search(l, r, u, d):
         if l > r or u > d or target < matrix[u][l] or target > matrix[d][r]:
             return False
@@ -86,15 +83,12 @@ def sol_dc(matrix, target):
 
 
 def sol_ssr(matrix, target):
-    if not matrix:
-        return False
-    h, w = len(matrix), len(matrix[0])
-    row, col = h - 1, 0
-    while col < w and row >= 0:
-        if matrix[row][col] > target:
-            row -= 1
-        elif matrix[row][col] < target:
+    col, row = 0, len(matrix) - 1
+    while row >= 0 and col < len(matrix[0]):
+        if matrix[row][col] == target:
+            return True
+        if matrix[row][col] < target:
             col += 1
         else:
-            return True
+            row -= 1
     return False
