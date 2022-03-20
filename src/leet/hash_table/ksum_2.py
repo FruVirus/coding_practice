@@ -60,14 +60,14 @@ from collections import defaultdict
 def sol(nums1, nums2, nums3, nums4):
     m, lists = defaultdict(int), [nums1, nums2, nums3, nums4]
 
-    def add_to_hash(i, total):
+    def add_to_hash(i=0, total=0):
         if i == len(lists) // 2:
             m[total] += 1
         else:
             for num in lists[i]:
                 add_to_hash(i + 1, total + num)
 
-    def count_coms(i, com):
+    def count_coms(i=len(lists) // 2, com=0):
         if i == len(lists):
             return m[com]
         count = 0
@@ -75,8 +75,5 @@ def sol(nums1, nums2, nums3, nums4):
             count += count_coms(i + 1, com - num)
         return count
 
-    def ksum_count():
-        add_to_hash(0, 0)
-        return count_coms(len(lists) // 2, 0)
-
-    return ksum_count()
+    add_to_hash()
+    return count_coms()
