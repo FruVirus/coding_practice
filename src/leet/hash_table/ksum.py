@@ -28,6 +28,27 @@ the sum. The average value of these values is at least target // k.
 We cannot obtain a sum of target if the smallest value in nums is greater than
 target // k or if the largest value in nums is smaller than target // k.
 
+Consider the three sum problem:
+
+nums = [-4, -1, -1, 0, 1, 2], target = 0, k = 3
+
+The values for nums, target, and k passed to ksum in each iteration of the main for-loop
+in ksum are:
+
+[-1, -1, 0, 1, 2], -4, 2
+[-1, 0, 1, 2], -1, 2
+[1, 2], 0, 2
+[2], 1, 2
+[], 2, 2
+
+Basically, in each iteration of the main for-loop, we take the i-th element in nums and
+see if we can make a sum of target - nums[i] with k - 1 elements in the subarray that
+does not contain the i-th element. We skip over the second -1 since that would lead to a
+duplicate answer of [-1, 0, 1].
+
+When k = 2, then we have the base recursion problem of twosum, which we can solve
+directly using either the hash or two pointers approach.
+
 Complexity
 ==========
 
