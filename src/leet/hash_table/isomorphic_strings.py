@@ -27,10 +27,10 @@ keys in the dictionaries are all valid ASCII characters.
 
 
 def sol(s, t):
-    map_s, map_t = {}, {}
-    for char_s, char_t in zip(s, t):
-        if not (char_s in map_s or char_t in map_t):
-            map_s[char_s], map_t[char_t] = char_t, char_s
-        elif map_s.get(char_s) != char_t or map_t.get(char_t) != char_s:
+    maps, mapt = {}, {}
+    for chars, chart in zip(s, t):
+        if not (chars in maps or chart in mapt):
+            maps[chars], mapt[chart] = chart, chars
+        elif maps.get(chars) != chart or mapt.get(chart) != chars:
             return False
     return True
