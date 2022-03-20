@@ -14,6 +14,14 @@ You may return the answer in any order.
 Intuition
 ---------
 
+The two pointers pattern requires the array to be sorted, so we do that first. Also,
+it's easier to deal with duplicates if the array is sorted: repeated values are next to
+each other and easy to skip.
+
+The hash implementation here is almost the same as in Two Sum: One-pass Hash Table. The
+only difference is the check to avoid duplicates. Since the array is sorted, we can
+just compare the found pair with the last one in the result sol.
+
 If we have not run out of numbers to add, then there are k remaining values to add to
 the sum. The average value of these values is at least target // k.
 
@@ -33,7 +41,7 @@ complexity.
 Space
 -----
 
-fourSum(nums, target): O(n), for the has set.
+fourSum(nums, target): O(n), for the hash set.
 """
 
 
@@ -42,8 +50,8 @@ fourSum(nums, target): O(n), for the has set.
 
 def sol(nums, target):
     def ksum(nums, target, k):
-        average_value, sol = target // k, []
-        if not nums or average_value < nums[0] or nums[-1] < average_value:
+        avg_value, sol = target // k, []
+        if not nums or avg_value < nums[0] or avg_value > nums[-1]:
             return sol
         if k == 2:
             return twosum_hash(nums, target)
