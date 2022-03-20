@@ -91,8 +91,8 @@ def sol(nums, target):
         return sol
 
     def twosum_pointers(nums, target):
-        low, high, sol = 0, len(nums) - 1, []
-        n = high
+        low, high = 0, len(nums) - 1
+        n, sol = high, []
         while low < high:
             curr_sum = nums[low] + nums[high]
             if curr_sum < target or (low > 0 and nums[low] == nums[low - 1]):
