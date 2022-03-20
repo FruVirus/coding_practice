@@ -69,7 +69,7 @@ fourSum(nums, target): O(n), for the hash set.
 # pylint: disable=R1260,C0200,W0612
 
 
-def sol(nums, target):
+def sol(nums, target, k):
     def ksum(nums, target, k):
         avg_value, sol = target // k, []
         if not nums or avg_value < nums[0] or avg_value > nums[-1]:
@@ -106,4 +106,4 @@ def sol(nums, target):
         return sol
 
     nums.sort()
-    return ksum(nums, target, 4)
+    return ksum(nums, target, k)
