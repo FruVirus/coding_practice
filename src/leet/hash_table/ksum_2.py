@@ -70,10 +70,7 @@ def sol(nums1, nums2, nums3, nums4):
     def count_coms(i=len(lists) // 2, com=0):
         if i == len(lists):
             return m[com]
-        count = 0
-        for num in lists[i]:
-            count += count_coms(i + 1, com - num)
-        return count
+        return sum(count_coms(i + 1, com - num) for num in lists[i])
 
     add_to_hash()
     return count_coms()
