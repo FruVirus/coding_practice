@@ -55,12 +55,12 @@ class Sol:
     def __init__(self):
         self.num_counts = defaultdict(int)
 
-    def add(self, number):
-        self.num_counts[number] += 1
+    def add(self, val):
+        self.num_counts[val] += 1
 
-    def find(self, value):
+    def find(self, val):
         for num in self.num_counts:
-            com = value - num
+            com = val - num
             if num != com:
                 if com in self.num_counts:
                     return True
