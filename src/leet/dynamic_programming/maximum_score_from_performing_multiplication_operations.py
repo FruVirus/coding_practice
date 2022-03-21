@@ -14,6 +14,38 @@ operation (1-indexed), you will:
 
 Return the maximum score after performing m operations.
 
+Intuition
+---------
+
+At each state, we have to perform an operation. As stated in the problem description, we
+need to decide whether to take from the left end (nums[left]) or the right end
+(nums[right]) of the current nums. Then we need to multiply the number we choose by
+multipliers[i], add this value to our score, and finally remove the number we chose from
+nums. For implementation purposes, "removing" a number from nums means incrementing our
+state variables i and left so that they point to the next two left and right numbers.
+
+Let mult = multipliers[i] and right = nums.length - 1 - (i - left). The only decision we
+have to make is whether to take from the left or right of nums.
+
+    - If we choose left, we gain mult * nums[left] points from this operation. Then, the
+next operation will occur at (i + 1, left + 1). i gets incremented at every operation
+because it represents how many operations we have done, and left gets incremented
+because it represents how many left operations we have done. Therefore, our total score
+is mult * nums[left] + dp(i + 1, left + 1).
+
+    - If we choose right, we gain mult * nums[right] points from this operation. Then,
+the next operation will occur at (i + 1, left). Therefore, our total score is
+mult * nums[right] + dp(i + 1, left).
+
+Since we want to maximize our score, we should choose the side that gives more points.
+This gives us our recurrence relation:
+
+    - dp(i, left) = max(
+        mult * nums[left] + dp(i + 1, left + 1), mult * nums[right] + dp(i + 1, left)
+    )
+
+When i = m, that means we have no operations left. Therefore, we should return 0.
+
 Complexity
 ==========
 
