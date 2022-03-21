@@ -42,14 +42,10 @@ def sol(board):
         for c in range(n):
             val = board[r][c]
             if val != ".":
-                if val in rows[r]:
+                idx = 3 * (r // 3) + c // 3
+                if val in rows[r] or val in cols[c] or val in boxes[idx]:
                     return False
                 rows[r].add(val)
-                if val in cols[c]:
-                    return False
                 cols[c].add(val)
-                idx = 3 * (r // 3) + c // 3
-                if val in boxes[idx]:
-                    return False
                 boxes[idx].add(val)
     return True
