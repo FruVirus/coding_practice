@@ -57,7 +57,7 @@ class Sol:
     def abbrev(word):
         return word if len(word) < 3 else word[0] + str(len(word) - 2) + word[-1]
 
-    def is_unique(self, word: str) -> bool:
+    def is_unique(self, word):
         abbrev = self.abbrev(word)
         if abbrev not in self.dict:
             return True
