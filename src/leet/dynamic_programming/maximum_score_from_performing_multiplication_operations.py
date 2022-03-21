@@ -61,10 +61,6 @@ maximumScore(nums, multipliers): O(m^2).
 """
 
 
-# Standard Library
-from functools import lru_cache
-
-
 def sol_bu(nums, mults):
     n, m = len(nums), len(mults)
     dp = [[0] * (m + 1) for _ in range(m + 1)]
@@ -80,15 +76,17 @@ def sol_bu(nums, mults):
 
 def sol_td(nums, mults):
     n, m = len(nums), len(mults)
+    memo = [[-float("inf")] * (m + 1) for _ in range(m + 1)]
 
-    @lru_cache(2000)
     def dp(i, left):
         if i == m:
             return 0
-        mult, right = mults[i], n - (i - left) - 1
-        return max(
-            mult * nums[left] + dp(i + 1, left + 1),
-            mult * nums[right] + dp(i + 1, left),
-        )
+        if memo[i][left] == -float("inf"):
+            mult, right = mults[i], n - (i - left) - 1
+            memo[i][left] = max(
+                mult * nums[left] + dp(i + 1, left + 1),
+                mult * nums[right] + dp(i + 1, left),
+            )
+        return memo[i][left]
 
     return dp(0, 0)
