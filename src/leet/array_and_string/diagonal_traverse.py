@@ -22,15 +22,15 @@ findDiagonalOrder(mat): O(min(m, n)).
 
 # pylint: disable=C0200
 
+# Standard Library
+from collections import defaultdict
+
 
 def sol(mat):
-    diag, sol = {}, []
+    diag, sol = defaultdict(list), []
     for i in range(len(mat)):
         for j in range(len(mat[i])):
-            if i + j not in diag:
-                diag[i + j] = [mat[i][j]]
-            else:
-                diag[i + j].append(mat[i][j])
+            diag[i + j].append(mat[i][j])
     for diag_level, diag_elements in diag.items():
         sol.extend(diag_elements if diag_level % 2 != 0 else reversed(diag_elements))
     return sol
