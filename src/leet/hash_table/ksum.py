@@ -55,14 +55,14 @@ Complexity
 Time
 ----
 
-fourSum(nums, target): O(n^(k - 1)). We have k - 2 loops iterating over n elements and
-twosum is O(n). Note that for k > 2, sorting the array does not change the overall time
-complexity.
+fourSum(nums, target, k): O(n^(k - 1)). We have k - 2 loops iterating over n elements
+and twosum is O(n). Note that for k > 2, sorting the array does not change the overall
+time complexity.
 
 Space
 -----
 
-fourSum(nums, target): O(n), for the hash set.
+fourSum(nums, target, k): O(n), for the hash set.
 """
 
 
