@@ -94,10 +94,10 @@ def sol(nums, target, k):
         low, high = 0, len(nums) - 1
         n, sol = high, []
         while low < high:
-            curr_sum = nums[low] + nums[high]
-            if curr_sum < target or (low > 0 and nums[low] == nums[low - 1]):
+            num = nums[low] + nums[high]
+            if num < target or (low > 0 and nums[low] == nums[low - 1]):
                 low += 1
-            elif curr_sum > target or (high < n and nums[high] == nums[high + 1]):
+            elif num > target or (high < n and nums[high] == nums[high + 1]):
                 high -= 1
             else:
                 sol.append([nums[low], nums[high]])
