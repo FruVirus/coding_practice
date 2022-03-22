@@ -105,5 +105,4 @@ def sol(nums, target, k):
                 high -= 1
         return sol
 
-    nums.sort()
-    return ksum(nums, target, k)
+    return ksum(nums.sort(), target, k)
