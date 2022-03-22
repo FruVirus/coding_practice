@@ -84,10 +84,10 @@ def sol(nums, target, k):
 
     def twosum_hash(nums, target):
         com, sol = set(), []
-        for i in range(len(nums)):
-            if (not sol or sol[-1][1] != nums[i]) and target - nums[i] in com:
-                sol.append([target - nums[i], nums[i]])
-            com.add(nums[i])
+        for num in nums:
+            if (not sol or sol[-1][1] != num) and target - num in com:
+                sol.append([target - num, num])
+            com.add(num)
         return sol
 
     def twosum_pointers(nums, target):
