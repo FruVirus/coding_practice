@@ -40,6 +40,10 @@ on updating the dp array as per the equation dp[j] = min(dp[j - 1], dp[j], prev)
 prev refers to the old dp[j - 1]. For every row, we repeat the same process and update
 in the same dp array.
 
+In other words, prev is the value of dp[i - 1][j - 1] from the previous iteration of the
+inner for-loop, dp[j] is the value of dp[i - 1][j] (before it gets reassigned), and
+dp[j - 1] is the value of dp[i - 1][j].
+
 Complexity
 ==========
 
