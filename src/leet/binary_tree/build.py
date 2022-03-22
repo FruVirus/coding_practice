@@ -19,12 +19,12 @@ Complexity
 Time
 ----
 
-buildTree() and buildTree(): O(n).
+buildTree_postorder() and buildTree_preorder(): O(n).
 
 Space
 -----
 
-buildTree() and buildTree(): O(n).
+buildTree_postorder() and buildTree_preorder(): O(n).
 """
 
 
