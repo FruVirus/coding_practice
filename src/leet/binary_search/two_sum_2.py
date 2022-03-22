@@ -4,11 +4,11 @@ Two Sum II - Input array is sorted
 
 Given a 1-indexed array of integers numbers that is already sorted in non-decreasing
 order, find two numbers such that they add up to a specific target number. Let these two
-numbers be numbers[index1] and numbers[index2] where
-1 <= index1 < index2 <= numbers.length.
+numbers be numbers[index_1] and numbers[index_2] where
+1 <= index_1 < index_2 <= numbers.length.
 
 Return the indices of the two numbers, index1 and index2, added by one as an integer
-array [index1, index2] of length 2.
+array [index_1, index_2] of length 2.
 
 The tests are generated such that there is exactly one solution. You may not use the
 same element twice.
