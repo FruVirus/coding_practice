@@ -26,9 +26,9 @@ Time
 
 BSTIterator:
     def __init__(self, root): O(n).
+    def has_next(self): O(1).
     def inorder_leftmost(self, root): O(n).
     def next(self): O(1) amortized.
-    def has_next(self): O(1).
 
 Space
 -----
