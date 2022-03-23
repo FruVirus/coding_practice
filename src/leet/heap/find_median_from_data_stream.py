@@ -13,6 +13,7 @@ Time
 
 MedianFinder:
     def add_num(self, val): O(5 * lg n) + O(1) = O(lg n).
+    def find_median(self): O(1).
 
 Space
 -----
