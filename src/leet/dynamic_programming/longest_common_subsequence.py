@@ -16,13 +16,20 @@ A common subsequence of two strings is a subsequence that is common to both stri
 Intuition
 ---------
 
+If the first character of each string is not the same, then either one or both of those
+characters will not be used in the final result. Therefore, the length of the longest
+common subsequence is max(LCS(p1 + 1, p2), LCS(p1, p2 + 1)).
+
+When the first character of each string is the same, the length of the longest common
+subsequence is 1 + LCS(p1 + 1, p2 + 1). In other words, we add 1 to represent the same
+first character from both strings and then solve the resulting subproblem (that has the
+first character removed from each string).
+
 In the standard approach, we only ever looked at the current column and the previous
-column. After that, previously computed columns are no longer needed.
-
-We can save a lot of space by only keeping track of the last two columns.
-
-This reduces the space complexity to be proportional to the length of the word going
-down. We should make sure this is the shortest of the two words.
+column. After that, previously computed columns are no longer needed. We can save a lot
+of space by only keeping track of the last two columns. This reduces the space
+complexity to be proportional to the length of the shorter word. We should make sure
+this is the shortest of the two words.
 
 Complexity
 ==========
@@ -45,9 +52,7 @@ def sol_bu(text1, text2):
     prev, curr = [0] * (len(text1) + 1), [0] * (len(text1) + 1)
     for col in reversed(range(len(text2))):
         for row in reversed(range(len(text1))):
-            if text2[col] == text1[row]:
-                curr[row] = 1 + prev[row + 1]
-            else:
-                curr[row] = max(prev[row], curr[row + 1])
+            cond = text1[row] == text2[col]
+            curr[row] = 1 + prev[row + 1] if cond else max(prev[row], curr[row + 1])
         prev, curr = curr, prev
     return prev[0]
