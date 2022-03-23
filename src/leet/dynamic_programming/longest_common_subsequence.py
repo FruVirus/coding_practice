@@ -49,10 +49,11 @@ longestCommonSubsequence(text1, text2): O(min(m, n)).
 def sol_bu(text1, text2):
     if len(text1) > len(text2):
         text1, text2 = text2, text1
-    prev, curr = [0] * (len(text1) + 1), [0] * (len(text1) + 1)
-    for col in reversed(range(len(text2))):
-        for row in reversed(range(len(text1))):
-            cond = text1[row] == text2[col]
-            curr[row] = 1 + prev[row + 1] if cond else max(prev[row], curr[row + 1])
+    m, n = len(text1), len(text2)
+    prev, curr = [0] * (m + 1), [0] * (m + 1)
+    for col in range(1, n + 1):
+        for row in range(1, m + 1):
+            cond = text1[row - 1] == text2[col - 1]
+            curr[row] = 1 + prev[row - 1] if cond else max(prev[row], curr[row - 1])
         prev, curr = curr, prev
-    return prev[0]
+    return prev[-1]
