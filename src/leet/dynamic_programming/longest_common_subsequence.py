@@ -43,11 +43,11 @@ def sol_bu(text1, text2):
     if len(text1) > len(text2):
         text1, text2 = text2, text1
     prev, curr = [0] * (len(text1) + 1), [0] * (len(text1) + 1)
-    for i in reversed(range(len(text2))):
-        for j in reversed(range(len(text1))):
-            if text2[i] == text1[j]:
-                curr[j] = 1 + prev[j + 1]
+    for col in reversed(range(len(text2))):
+        for row in reversed(range(len(text1))):
+            if text2[col] == text1[row]:
+                curr[row] = 1 + prev[row + 1]
             else:
-                curr[j] = max(prev[j], curr[j + 1])
+                curr[row] = max(prev[row], curr[row + 1])
         prev, curr = curr, prev
     return prev[0]
