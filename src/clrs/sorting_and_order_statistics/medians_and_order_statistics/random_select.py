@@ -40,10 +40,12 @@ def random_select(a, i):
     low, high = 0, len(a) - 1
     while low <= high:
         pivot = partition(a, low, high)
-        if i == pivot + 1:
+        k = pivot - low + 1
+        if i == k:
             return a[pivot]
-        if i > pivot + 1:
+        if i > k:
             low = pivot + 1
+            i -= k
         else:
             high = pivot - 1
     return None
