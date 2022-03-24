@@ -40,6 +40,7 @@ Time
 ----
 
 Sol:
+    def __init__(self): O(1).
     def pop(self): O(1).
     def push(self, val): O(1).
 
