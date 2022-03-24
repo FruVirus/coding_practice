@@ -51,7 +51,7 @@ class Sol:
         return True
 
     def full(self):
-        return self.count == self.capacity
+        return self.capacity == self.count
 
     def head(self):
         return -1 if self.empty() else self.queue[self.head_index]
