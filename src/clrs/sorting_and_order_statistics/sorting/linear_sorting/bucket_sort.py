@@ -42,11 +42,13 @@ from src.clrs.sorting_and_order_statistics.sorting.comparison_sorting.insertion_
 def bucket_sort(a):
     amin, amax, num_buckets = min(a), max(a), len(a) // 5
     w, b = (amax - amin) / num_buckets, [[] for _ in range(num_buckets)]
-    for i in a:
-        float_index = (i - amin) / w
+    for num in a:
+        float_index = (num - amin) / w
         int_index = int(float_index)
-        index = int_index - 1 if float_index == int_index and i != amin else int_index
-        b[index].append(i)
+        bucket_index = int_index
+        if float_index == int_index and num != amin:
+            bucket_index -= 1
+        b[bucket_index].append(num)
     i = 0
     for list_ in b:
         if list_:
