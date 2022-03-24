@@ -45,7 +45,7 @@ def random_select(a, i):
             return a[pivot]
         if i > k:
             low = pivot + 1
-            i -= k
+            # i -= k
         else:
             high = pivot - 1
     return None
