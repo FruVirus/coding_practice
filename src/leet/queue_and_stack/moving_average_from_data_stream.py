@@ -17,7 +17,8 @@ Complexity
 Time
 ----
 
-MovingAverage: O(1).
+MovingAverage:
+    def __init__(self, size): O(1).
     def next(self, val): O(1).
 
 Space
