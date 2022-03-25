@@ -77,10 +77,8 @@ def sol_td(coins, amount):
     count = [0] * amount
 
     def dp(coins, amount):
-        if amount < 0:
-            return -1
-        if amount == 0:
-            return 0
+        if amount <= 0:
+            return amount
         if count[amount - 1] != 0:
             return count[amount - 1]
         val = float("inf")
