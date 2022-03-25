@@ -66,6 +66,6 @@ def sol_stack(heights):
     for i, height in enumerate(heights):
         while stack and stack[-1][1] > height:
             r, h, l = i, stack.pop()[1], stack[-1][0]
-            max_area = max((r - l - 1) * h, max_area)
+            max_area = max(max_area, (r - l - 1) * h)
         stack.append((i, height))
     return max_area
