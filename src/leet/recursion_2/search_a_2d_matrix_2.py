@@ -72,12 +72,12 @@ def sol_dc(matrix, target):
     def search(l, r, u, d):
         if l > r or u > d or target < matrix[u][l] or target > matrix[d][r]:
             return False
-        mid, row = l + (r - l) // 2, u
-        while row <= d and matrix[row][mid] <= target:
-            if matrix[row][mid] == target:
+        col, row = l + (r - l) // 2, u
+        while row <= d and matrix[row][col] <= target:
+            if matrix[row][col] == target:
                 return True
             row += 1
-        return search(l, mid - 1, row, d) or search(mid + 1, r, u, row - 1)
+        return search(l, col - 1, row, d) or search(col + 1, r, u, row - 1)
 
     return search(0, len(matrix[0]) - 1, 0, len(matrix) - 1)
 
