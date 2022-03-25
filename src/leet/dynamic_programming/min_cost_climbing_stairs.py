@@ -20,15 +20,17 @@ minCostClimbingStairs(cost): O(n).
 Space
 -----
 
-minCostClimbingStairs(cost): O(n).
+minCostClimbingStairs_bu(cost): O(1).
+minCostClimbingStairs_td(cost): O(n).
 """
 
 
 def sol_bu(cost):
-    dp = [0] * (len(cost) + 1)
+    one = two = 0
     for i in range(2, len(cost) + 1):
-        dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2])
-    return dp[-1]
+        temp = one
+        one, two = min(one + cost[i - 1], two + cost[i - 2]), temp
+    return one
 
 
 def sol_td(cost):
