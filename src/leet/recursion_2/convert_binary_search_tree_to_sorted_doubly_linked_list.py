@@ -31,7 +31,7 @@ treeToDoublyList_iterative(root) and treeToDoublyLst_recursive(root): O(n).
 def sol_iterative(root):
     if not root:
         return None
-    first, node, last, stack = None, root, None, []
+    first, last, node, stack = None, None, root, []
     while node or stack:
         while node:
             stack.append(node)
