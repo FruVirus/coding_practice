@@ -38,7 +38,9 @@ Example
 
 coins = [1, 2, 3], amount = 4
 
-If we had coins = [1] and amount 4, then dp = [0, 1, 2, 3, 4].
+If we had coins = [1] and amount 4, then dp = [0, 1, 2, 3, 4], where the number in each
+index of the array signifies how many 1c coins it would take to make 0, 1, 2, 3, and 4
+cents, respectively.
 If we had coins = [1, 2] and amount 4, then dp = [0, 1, 1, 2, 2].
 If we had coins = [1, 2, 3] and amount 4, then dp = [0, 1, 1, 1, 2].
 
