@@ -24,8 +24,8 @@ findDisappearedNumbers(nums): O(1).
 
 
 def sol(nums):
-    for i in range(len(nums)):
-        new_index = abs(nums[i]) - 1
+    for num in nums:
+        new_index = abs(num) - 1
         if nums[new_index] > 0:
             nums[new_index] *= -1
     return [i for i in range(1, len(nums) + 1) if nums[i - 1] > 0]
