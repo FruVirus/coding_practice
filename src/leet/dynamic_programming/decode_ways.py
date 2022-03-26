@@ -81,10 +81,8 @@ def sol_bu(s):
         return 0
     one = two = 1
     for i in range(1, len(s)):
-        curr = 0
-        if s[i] != "0":
-            curr = one
-        if 10 <= int(s[i - 1 : i + 1]) <= 26:
+        curr = 0 if s[i] == "0" else one
+        if 10 <= int(s[i - 1: i + 1]) <= 26:
             curr += two
         one, two = curr, one
     return one
