@@ -52,7 +52,7 @@ should pay attention to the fact that when the coin loop is outside, we will cou
 many combinations are possible with say 2c coin and then add that number to the ways in
 which the same amount can be created using 3c coin. This imposition of order removes the
 double counting. Compare that with the situation where the coins are in the inner loop.
-Here we would calculate how many ways we can create an amount using all coins (i.e. 1
+Here we would calculate how many ways we can create an amount using all coins (i.e., 1
 and 2 both) and then for the next amount of interest, we will count using all coins
 (i.e., 1 and 2 both again). As you see, we are counting both 1c after 2c and 2c after 1c
 scenarios, causing the double counting.
