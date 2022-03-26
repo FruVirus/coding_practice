@@ -57,7 +57,7 @@ to them with a success. Thus, leading to number of ways of reaching the end.
 dp[i] = Number of ways of decoding substring s[:i]. So we might say dp[i] = dp[i - 1] +
 dp[i - 2], which is not always true for this decode ways problem---only when the decode
 is possible we add the results of the previous indices. Thus, in this race we don't just
-pass the baton. The baton is passexd to the next index or not depending on possibility
+pass the baton. The baton is passed to the next index or not depending on possibility
 of the decode.
 
 Complexity
