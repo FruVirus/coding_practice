@@ -41,7 +41,7 @@ Time
 ----
 
 Sol:
-    def __init__(self): O(1).
+    def __init__(self, dups=False): O(1).
     def get_random(self): O(1).
     def insert(self, val): O(1), average case.
     def remove(self, val): O(1), average case.
