@@ -68,8 +68,7 @@ coinChange(coins, amount): O(s).
 
 
 def sol_bu(coins, amount):
-    dp = [float("inf")] * (amount + 1)
-    dp[0] = 0
+    dp = [0] + [float("inf")] * amount
     for coin in coins:
         for i in range(coin, amount + 1):
             dp[i] = min(dp[i], dp[i - coin] + 1)
