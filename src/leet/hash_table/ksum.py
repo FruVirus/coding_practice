@@ -84,7 +84,7 @@ def sol(nums, target, k):
 
     def twosum_hash(nums, target):
         com, sol = set(), []
-        for num in nums:
+        for i, num in enumerate(nums):
             if (not sol or sol[-1][1] != num) and target - num in com:
                 sol.append([target - num, num])
             com.add(num)
