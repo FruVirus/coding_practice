@@ -91,7 +91,7 @@ def sol_bu(s):
 def sol_td(s):
     memo = {}
 
-    def dp(s, index):
+    def dp(index):
         if index == len(s):
             return 1
         if s[index] == "0":
@@ -99,10 +99,10 @@ def sol_td(s):
         if index == len(s) - 1:
             return 1
         if index not in memo:
-            num_decodes = dp(s, index + 1)
-            if int(s[index : index + 2]) <= 26:
-                num_decodes += dp(s, index + 2)
+            num_decodes = dp(index + 1)
+            if int(s[index: index + 2]) <= 26:
+                num_decodes += dp(index + 2)
             memo[index] = num_decodes
         return memo[index]
 
-    return dp(s, 0)
+    return dp(0)
