@@ -76,8 +76,6 @@ def sol_bu(coins, amount):
 
 
 def sol_td(coins, amount):
-    if amount == 0:
-        return 0
     count = [0] * amount
 
     def dp(coins, amount):
