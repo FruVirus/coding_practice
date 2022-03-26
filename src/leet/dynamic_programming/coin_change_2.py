@@ -73,9 +73,8 @@ change(coins, amount): O(n).
 
 
 def sol_bu(coins, amount):
-    dp = [0] * (amount + 1)
-    dp[0] = 1
+    dp = [1] + [0] * amount
     for coin in coins:
-        for x in range(coin, amount + 1):
-            dp[x] += dp[x - coin]
-    return dp[amount]
+        for i in range(coin, amount + 1):
+            dp[i] += dp[i - coin]
+    return dp[-1]
