@@ -82,7 +82,7 @@ def sol_bu(s):
     one = two = 1
     for i in range(1, len(s)):
         curr = 0 if s[i] == "0" else one
-        if 10 <= int(s[i - 1: i + 1]) <= 26:
+        if 10 <= int(s[i - 1 : i + 1]) <= 26:
             curr += two
         one, two = curr, one
     return one
@@ -100,7 +100,7 @@ def sol_td(s):
             return 1
         if index not in memo:
             num_decodes = dp(index + 1)
-            if int(s[index: index + 2]) <= 26:
+            if int(s[index : index + 2]) <= 26:
                 num_decodes += dp(index + 2)
             memo[index] = num_decodes
         return memo[index]

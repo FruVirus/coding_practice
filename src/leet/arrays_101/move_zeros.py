@@ -22,9 +22,6 @@ moveZeroes(nums): O(1).
 """
 
 
-# pylint: disable = C0200
-
-
 def sol(nums):
     last_non_zero = 0
     for num in nums:
