@@ -106,6 +106,23 @@ def sol_bu(job_diff, d):
     n = len(job_diff)
     if n < d:
         return -1
+    dp = [[float("inf")] * (d + 1) for _ in range(n)]
+    dp[-1][d] = job_diff[-1]
+    for i in reversed(range(n - 1)):
+        dp[i][d] = max(dp[i + 1][d], job_diff[i])
+    for day in range(d - 1, 0, -1):
+        for i in range(day - 1, n - (d - day)):
+            hardest = 0
+            for j in range(i, n - (d - day)):
+                hardest = max(hardest, job_diff[j])
+                dp[i][day] = min(dp[i][day], hardest + dp[j + 1][day + 1])
+    return dp[0][1]
+
+
+def sol_td(job_diff, d):
+    n = len(job_diff)
+    if n < d:
+        return -1
     hardest, hardest_remaining, memo = 0, [0] * n, {}
     for i in reversed(range(n)):
         hardest = max(hardest, job_diff[i])
@@ -123,20 +140,3 @@ def sol_bu(job_diff, d):
         return memo[(job_index, day)]
 
     return dp(0, 1)
-
-
-def sol_td(job_diff, d):
-    n = len(job_diff)
-    if n < d:
-        return -1
-    dp = [[float("inf")] * (d + 1) for _ in range(n)]
-    dp[-1][d] = job_diff[-1]
-    for i in reversed(range(n - 1)):
-        dp[i][d] = max(dp[i + 1][d], job_diff[i])
-    for day in range(d - 1, 0, -1):
-        for i in range(day - 1, n - (d - day)):
-            hardest = 0
-            for j in range(i, n - (d - day)):
-                hardest = max(hardest, job_diff[j])
-                dp[i][day] = min(dp[i][day], hardest + dp[j + 1][day + 1])
-    return dp[0][1]
