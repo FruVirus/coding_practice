@@ -20,9 +20,6 @@ findDisappearedNumbers(nums): O(1).
 """
 
 
-# pylint: disable=C0200
-
-
 def sol(nums):
     for num in nums:
         new_index = abs(num) - 1
