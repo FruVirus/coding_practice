@@ -30,8 +30,8 @@ def sol_td(n, k, target):
         if d == n:
             return int(curr_sum == target)
         if (d, curr_sum) not in memo:
-            total_sum = sum(dp(d + 1, curr_sum + i) for i in range(1, k + 1)) % mod
-            memo[(d, curr_sum)] = total_sum
+            total_sum = sum(dp(d + 1, curr_sum + i) for i in range(1, k + 1))
+            memo[(d, curr_sum)] = total_sum % mod
         return memo[(d, curr_sum)]
 
     return dp(0, 0) % mod
