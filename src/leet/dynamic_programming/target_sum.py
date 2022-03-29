@@ -28,12 +28,6 @@ sum + nums[i] and sum - nums[i] respectively along with the updated current inde
 i + 1. Whenever we reach the end of the array, we compare the sum obtained with S. If
 they are equal, we increment the count value to be returned.
 
-For every call to calculate(nums, i, sum, S), we store the result obtained in
-memo[i][sum + total], where total stands for the sum of all the elements from the input
-array. The factor of total has been added as an offset to the sum value to map all the
-sums possible to positive integer range. By making use of memoization, we can get the
-result of each redundant function call in constant time.
-
 Complexity
 ==========
 
@@ -51,16 +45,15 @@ findTargetSumWays_td(nums, target): O(n * t).
 
 
 def sol_td(nums, target):
-    total = sum(nums)
-    memo = [[-float("inf")] * (2 * total + 1) for _ in range(len(nums))]
+    memo = {}
 
     def dp(i, sum_):
         if i == len(nums):
             return int(sum_ == target)
-        if memo[i][sum_ + total] == -float("inf"):
+        if (i, sum_) not in memo:
             add = dp(i + 1, sum_ + nums[i])
             subtract = dp(i + 1, sum_ - nums[i])
-            memo[i][sum_ + total] = add + subtract
-        return memo[i][sum_ + total]
+            memo[(i, sum_)] = add + subtract
+        return memo[(i, sum_)]
 
     return dp(0, 0)
