@@ -61,7 +61,7 @@ class Sol:
     def find(self, val):
         for num in self.num_counts:
             com = val - num
-            if num != com:
+            if com != num:
                 if com in self.num_counts:
                     return True
             elif self.num_counts[num] > 1:
