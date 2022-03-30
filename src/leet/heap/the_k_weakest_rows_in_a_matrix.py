@@ -36,7 +36,7 @@ def sol(mat, k):
     heap, rows = [], []
 
     def get_num_ones(row):
-        low, high = 0, len(mat[0])
+        low, high = 0, len(mat[row])
         while low < high:
             mid = low + (high - low) // 2
             if row[mid] == 1:
