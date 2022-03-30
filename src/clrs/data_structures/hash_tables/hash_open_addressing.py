@@ -151,7 +151,7 @@ class HashOpen(HashChain):
         self._reduce()
 
     def hash_double(self, i, k):
-        if (self.size & (self.size - 1) == 0) and self.size != 0:
+        if self.size & (self.size - 1) == 0 and self.size != 0:
             h1, h2 = self.hash_div(k), self.hash_mul(k)
             if h2 % 2 == 0:
                 h2 += 1
