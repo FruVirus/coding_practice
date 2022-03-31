@@ -15,6 +15,7 @@ Time
 ----
 
 Solution:
+    def __init__(self): O(1].
     def clone_bfs(node) and def clone_dfs(self, node): O(n + m), where n is the number
 of nodes (vertices) and m is the number of edges.
 
