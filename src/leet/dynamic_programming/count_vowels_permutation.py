@@ -70,19 +70,19 @@ def sol_td(n):
     memo, mod = {}, 10 ** 9 + 7
 
     def dp(i, vowel):
-        total = 1
+        if i <= 1:
+            return 1
         if (i, vowel) not in memo:
-            if i > 1:
-                if vowel == "a":
-                    total = dp(i - 1, "e") + dp(i - 1, "i") + dp(i - 1, "u")
-                elif vowel == "e":
-                    total = dp(i - 1, "a") + dp(i - 1, "i")
-                elif vowel == "i":
-                    total = dp(i - 1, "e") + dp(i - 1, "o")
-                elif vowel == "o":
-                    total = dp(i - 1, "i")
-                else:
-                    total = dp(i - 1, "i") + dp(i - 1, "o")
+            if vowel == "a":
+                total = dp(i - 1, "e") + dp(i - 1, "i") + dp(i - 1, "u")
+            elif vowel == "e":
+                total = dp(i - 1, "a") + dp(i - 1, "i")
+            elif vowel == "i":
+                total = dp(i - 1, "e") + dp(i - 1, "o")
+            elif vowel == "o":
+                total = dp(i - 1, "i")
+            else:
+                total = dp(i - 1, "i") + dp(i - 1, "o")
             memo[(i, vowel)] = total % mod
         return memo[(i, vowel)]
 
