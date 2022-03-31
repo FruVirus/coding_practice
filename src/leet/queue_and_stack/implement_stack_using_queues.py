@@ -12,8 +12,8 @@ Time
 ----
 
 Sol:
-    def push(self, val): O(n).
     def pop(self): O(1).
+    def push(self, val): O(n).
 
 Space
 -----
