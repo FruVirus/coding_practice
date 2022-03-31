@@ -86,7 +86,7 @@ def sol_td(coins, amount):
             for coin in coins:
                 rem = dp(amount - coin)
                 if 0 <= rem < val:
-                    val = 1 + rem
+                    val = rem + 1
             memo[amount] = val if val != float("inf") else -1
         return memo[amount]
 
