@@ -76,19 +76,18 @@ def sol_bu(coins, amount):
 
 
 def sol_td(coins, amount):
-    memo = [0] * amount
+    memo = {}
 
     def dp(amount):
         if amount <= 0:
             return amount
-        if memo[amount - 1] != 0:
-            return memo[amount - 1]
-        val = float("inf")
-        for coin in coins:
-            rem = dp(amount - coin)
-            if 0 <= rem < val:
-                val = 1 + rem
-        memo[amount - 1] = val if val != float("inf") else -1
-        return memo[amount - 1]
+        if amount not in memo:
+            val = float("inf")
+            for coin in coins:
+                rem = dp(amount - coin)
+                if 0 <= rem < val:
+                    val = 1 + rem
+            memo[amount] = val if val != float("inf") else -1
+        return memo[amount]
 
     return dp(amount)
