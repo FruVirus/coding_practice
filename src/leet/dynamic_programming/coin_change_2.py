@@ -27,7 +27,7 @@ For example, suppose we have a 2 cent coin. The number of combinations to make l
 2 cents is not impacted by a 2 cent coin. Starting from 2 cents, we have the following:
 
 To make 2 cents using a 2 cent coin: # of ways to make 2 cents using no coins +
-# of ways to make 0 cents using a 2 cent coin = 0 + 1 = 1.
+# of ways to make 2 cents using a 2 cent coin = 0 + 1 = 1.
 
 Now the strategy is here:
 
