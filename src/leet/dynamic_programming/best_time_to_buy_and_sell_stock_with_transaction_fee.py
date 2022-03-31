@@ -41,7 +41,7 @@ maxProfit(prices, fee): O(1).
 
 def sol_bu(prices, fee):
     cash, hold = 0, -prices[0]
-    for i in range(1, len(prices)):
-        cash = max(cash, hold + prices[i] - fee)
-        hold = max(hold, cash - prices[i])
+    for price in prices[1:]:
+        cash = max(cash, hold + price - fee)
+        hold = max(hold, cash - price)
     return cash
