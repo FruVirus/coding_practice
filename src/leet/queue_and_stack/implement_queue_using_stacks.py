@@ -12,8 +12,8 @@ Time
 ----
 
 Sol:
-    def push(self, val): O(1).
     def pop(self): O(1) amortized.
+    def push(self, val): O(1).
 
 Space
 -----
