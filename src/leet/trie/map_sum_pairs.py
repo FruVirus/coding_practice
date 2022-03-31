@@ -48,7 +48,7 @@ class Sol:
     def __init__(self):
         self.map, self.root = defaultdict(int), TrieNode()
 
-    def insert(self, key: str, val: int) -> None:
+    def insert(self, key, val):
         delta = val - self.map[key]
         self.map[key] = val
         node = self.root
@@ -57,7 +57,7 @@ class Sol:
             node = node.children[char]
             node.score += delta
 
-    def sum(self, prefix: str) -> int:
+    def sum(self, prefix):
         node = self.root
         for char in prefix:
             if char not in node.children:
