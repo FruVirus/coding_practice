@@ -42,7 +42,8 @@ longestCommonSubsequence(text1, text2): O(m * n).
 Space
 -----
 
-longestCommonSubsequence(text1, text2): O(min(m, n)).
+longestCommonSubsequence_bu(text1, text2): O(min(m, n)).
+longestCommonSubsequence_td(text1, text2): O(m * n).
 """
 
 
@@ -57,3 +58,19 @@ def sol_bu(text1, text2):
             curr[row] = 1 + prev[row - 1] if cond else max(prev[row], curr[row - 1])
         prev, curr = curr, prev
     return prev[-1]
+
+
+def sol_td(text1, text2):
+    memo = {}
+
+    def dp(t1, t2):
+        if t1 == len(text1) or t2 == len(text2):
+            return 0
+        if (t1, t2) not in memo:
+            if text1[t1] == text2[t2]:
+                memo[(t1, t2)] = 1 + dp(t1 + 1, t2 + 1)
+            else:
+                memo[(t1, t2)] = max(dp(t1, t2 + 1), dp(t1 + 1, t2))
+        return memo[(t1, t2)]
+
+    return dp(0, 0)
