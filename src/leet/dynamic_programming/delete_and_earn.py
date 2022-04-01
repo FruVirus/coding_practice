@@ -100,7 +100,7 @@ def sol_bu(nums):
     max_points = [0] + [points[1]] + [0] * (max_num - 1)
     for num in range(2, len(max_points)):
         max_points[num] = max(max_points[num - 1], max_points[num - 2] + points[num])
-    return max_points[max_num]
+    return max_points[-1]
 
 
 def sol_td(nums):
