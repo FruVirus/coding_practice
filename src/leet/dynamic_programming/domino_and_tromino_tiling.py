@@ -110,8 +110,8 @@ def sol_bu(n):
     f_prev, f_curr, p_curr = 1, 2, 1
     for _ in range(3, n + 1):
         temp = f_curr
-        f_curr = (f_curr + f_prev + 2 * p_curr)
-        p_curr = (p_curr + f_prev)
+        f_curr = f_curr + f_prev + 2 * p_curr
+        p_curr = p_curr + f_prev
         f_prev = temp
     return f_curr
 
@@ -123,14 +123,14 @@ def sol_td(n):
         if n <= 2:
             return n
         if n not in memof:
-            memof[n] = (f(n - 1) + f(n - 2) + 2 * p(n - 1))
+            memof[n] = f(n - 1) + f(n - 2) + 2 * p(n - 1)
         return memof[n]
 
     def p(n):
         if n == 2:
             return 1
         if n not in memop:
-            memop[n] = (p(n - 1) + f(n - 2))
+            memop[n] = p(n - 1) + f(n - 2)
         return memop[n]
 
     return f(n)
