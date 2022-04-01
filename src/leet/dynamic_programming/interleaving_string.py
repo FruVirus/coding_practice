@@ -102,15 +102,16 @@ def sol_bu(s1, s2, s3):
     dp = [False] * (l2 + 1)
     for i in range(l1 + 1):
         for j in range(l2 + 1):
+            k = i + j - 1
             if i == j == 0:
                 dp[j] = True
             elif i == 0:
-                dp[j] = dp[j - 1] and s2[j - 1] == s3[i + j - 1]
+                dp[j] = dp[j - 1] and s2[j - 1] == s3[k]
             elif j == 0:
-                dp[j] = dp[j] and s1[i - 1] == s3[i + j - 1]
+                dp[j] = dp[j] and s1[i - 1] == s3[k]
             else:
-                a = dp[j] and s1[i - 1] == s3[i + j - 1]
-                b = dp[j - 1] and s2[j - 1] == s3[i + j - 1]
+                a = dp[j] and s1[i - 1] == s3[k]
+                b = dp[j - 1] and s2[j - 1] == s3[k]
                 dp[j] = a or b
     return dp[-1]
 
