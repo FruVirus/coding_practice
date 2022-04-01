@@ -104,17 +104,15 @@ def sol_bu(nums):
 
 
 def sol_td(nums):
-    max_num, memo, points = max(nums), {}, defaultdict(int)
+    memo, points = {}, defaultdict(int)
     for num in nums:
         points[num] += num
 
-    def max_points(num):
-        if num == 0:
-            return 0
-        if num == 1:
-            return points[1]
+    def dp(num):
+        if num < 2:
+            return 0 if num == 0 else points[1]
         if num not in memo:
-            memo[num] = max(max_points(num - 1), max_points(num - 2) + points[num])
+            memo[num] = max(dp(num - 1), dp(num - 2) + points[num])
         return memo[num]
 
-    return max_points(max_num)
+    return dp(max(nums))
