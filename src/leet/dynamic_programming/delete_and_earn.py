@@ -98,8 +98,8 @@ def sol_bu(nums):
     for num in nums:
         points[num] += num
     max_points = [0] + [points[1]] + [0] * (max_num - 1)
-    for num in range(2, len(max_points)):
-        max_points[num] = max(max_points[num - 1], max_points[num - 2] + points[num])
+    for i in range(2, len(max_points)):
+        max_points[i] = max(max_points[i - 1], max_points[i - 2] + points[i])
     return max_points[-1]
 
 
@@ -108,11 +108,11 @@ def sol_td(nums):
     for num in nums:
         points[num] += num
 
-    def dp(num):
-        if num < 2:
-            return 0 if num == 0 else points[1]
-        if num not in memo:
-            memo[num] = max(dp(num - 1), dp(num - 2) + points[num])
-        return memo[num]
+    def dp(i):
+        if i < 2:
+            return 0 if i == 0 else points[1]
+        if i not in memo:
+            memo[i] = max(dp(i - 1), dp(i - 2) + points[i])
+        return memo[i]
 
     return dp(max(nums))
