@@ -50,28 +50,17 @@ Complexity
 Time
 ----
 
-maximalSquare_bu(matrix) and maximalSquare_opt(matrix): O(m * n).
+maximalSquare(matrix): O(m * n).
 
 Space
 -----
 
-maximalSquare_bu(matrix): O(m * n).
-maximalSquare_opt(matrix): O(n).
+maximalSquare_bu(matrix): O(n).
+maximalSquare_td(matrix): O(m * n).
 """
 
 
 def sol_bu(matrix):
-    rows, cols = len(matrix), len(matrix[0])
-    dp, maxsqlen = [[0] * (cols + 1) for _ in range(rows + 1)], 0
-    for i in range(1, rows + 1):
-        for j in range(1, cols + 1):
-            if matrix[i - 1][j - 1] == "1":
-                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
-                maxsqlen = max(maxsqlen, dp[i][j])
-    return maxsqlen ** 2
-
-
-def sol_opt(matrix):
     rows, cols = len(matrix), len(matrix[0])
     dp, maxsqlen, prev = [0] * (cols + 1), 0, 0
     for i in range(1, rows + 1):
@@ -84,3 +73,22 @@ def sol_opt(matrix):
                 dp[j] = 0
             prev = temp
     return maxsqlen ** 2
+
+
+def sol_td(matrix):
+    memo, m, n = {}, len(matrix), len(matrix[0])
+
+    def dp(row, col):
+        if row < 0 or col < 0 or row > m - 1 or col > n - 1 or matrix[row][col] == "0":
+            return 0
+        if (row, col) not in memo:
+            memo[(row, col)] = 1 + min(
+                dp(row + 1, col), dp(row, col + 1), dp(row + 1, col + 1)
+            )
+        return memo[(row, col)]
+
+    max_area = 0
+    for row in range(m):
+        for col in range(n):
+            max_area = max(max_area, dp(row, col) ** 2)
+    return max_area
