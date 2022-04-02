@@ -30,8 +30,8 @@ def sol_bu(nums):
     if len(nums) == 1:
         return nums[0]
     rob_first, rob_next = nums[0], max(nums[0], nums[1])
-    for i in range(2, len(nums)):
-        rob_curr = max(rob_next, rob_first + nums[i])
+    for num in nums[2:]:
+        rob_curr = max(rob_next, rob_first + num)
         rob_first, rob_next = rob_next, rob_curr
     return rob_next
 
