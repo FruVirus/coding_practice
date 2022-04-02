@@ -107,13 +107,13 @@ numTilings_td(n): O(n).
 def sol_bu(n):
     if n <= 2:
         return n
-    f_prev, f_curr, p_curr = 1, 2, 1
+    fprev, fcurr, pcurr = 1, 2, 1
     for _ in range(3, n + 1):
-        temp = f_curr
-        f_curr = f_curr + f_prev + 2 * p_curr
-        p_curr = p_curr + f_prev
-        f_prev = temp
-    return f_curr
+        temp = fcurr
+        fcurr = fcurr + fprev + 2 * pcurr
+        pcurr = pcurr + fprev
+        fprev = temp
+    return fcurr
 
 
 def sol_td(n):
