@@ -69,7 +69,7 @@ def sol_bu(nums):
 
 def sol_bs(nums):
     sub = [nums[0]]
-    for num in nums:
+    for num in nums[1:]:
         if num > sub[-1]:
             sub.append(num)
         else:
