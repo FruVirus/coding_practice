@@ -94,10 +94,10 @@ from collections import defaultdict
 
 
 def sol_bu(nums):
-    max_num, points = max(nums), defaultdict(int)
+    points = defaultdict(int)
     for num in nums:
         points[num] += num
-    dp = [0] + [points[1]] + [0] * (max_num - 1)
+    dp = [0] + [points[1]] + [0] * (max(nums) - 1)
     for i in range(2, len(dp)):
         dp[i] = max(dp[i - 1], dp[i - 2] + points[i])
     return dp[-1]
