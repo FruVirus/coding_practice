@@ -89,7 +89,4 @@ def sol_td(matrix):
             memo[(i, j)] = 1 + min(dp(i + 1, j), dp(i, j + 1), dp(i + 1, j + 1))
         return memo[(i, j)]
 
-    for i in range(m):
-        for j in range(n):
-            maxlen = max(maxlen, dp(i, j))
-    return maxlen ** 2
+    return max(dp(i, j) for i in range(m) for j in range(n)) ** 2
