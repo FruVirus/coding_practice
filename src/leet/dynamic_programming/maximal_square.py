@@ -80,19 +80,16 @@ def sol_bu(matrix):
 
 
 def sol_td(matrix):
-    memo, m, n = {}, len(matrix), len(matrix[0])
+    memo, m, n, maxlen = {}, len(matrix), len(matrix[0]), 0
 
-    def dp(row, col):
-        if not (0 <= row < m and 0 <= col < n and matrix[row][col] == "1"):
+    def dp(i, j):
+        if not (0 <= i < m and 0 <= j < n and matrix[i][j] == "1"):
             return 0
-        if (row, col) not in memo:
-            memo[(row, col)] = 1 + min(
-                dp(row + 1, col), dp(row, col + 1), dp(row + 1, col + 1)
-            )
-        return memo[(row, col)]
+        if (i, j) not in memo:
+            memo[(i, j)] = 1 + min(dp(i + 1, j), dp(i, j + 1), dp(i + 1, j + 1))
+        return memo[(i, j)]
 
-    max_area = 0
-    for row in range(m):
-        for col in range(n):
-            max_area = max(max_area, dp(row, col) ** 2)
-    return max_area
+    for i in range(m):
+        for j in range(n):
+            maxlen = max(maxlen, dp(i, j))
+    return maxlen ** 2
