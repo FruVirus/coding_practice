@@ -52,13 +52,13 @@ Complexity
 Time
 ----
 
-maximumScore(nums, multipliers): O(m^2), where m is the length of multipliers.
+maximumScore(nums, mults): O(m^2), where m is the length of multipliers.
 
 Space
 -----
 
-maximumScore_bu(nums, multipliers): O(m).
-maximumScore_td(nums, multipliers): O(m^2).
+maximumScore_bu(nums, mults): O(m).
+maximumScore_td(nums, mults): O(m^2).
 """
 
 
