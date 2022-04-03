@@ -28,8 +28,7 @@ minCostClimbingStairs_td(cost): O(n).
 def sol_bu(cost):
     one = two = 0
     for i in range(2, len(cost) + 1):
-        temp = one
-        one, two = min(one + cost[i - 1], two + cost[i - 2]), temp
+        one, two = min(one + cost[i - 1], two + cost[i - 2]), one
     return one
 
 
