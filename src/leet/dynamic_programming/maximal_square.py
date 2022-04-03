@@ -42,7 +42,11 @@ in the same dp array.
 
 In other words, prev is the value of dp[i - 1][j - 1] from the previous iteration of the
 inner for-loop, dp[j] is the value of dp[i - 1][j] (before it gets reassigned), and
-dp[j - 1] is the value of dp[i][j - 1].
+dp[j - 1] is the value of dp[i][j - 1]. Note that dp[j] gets assigned to temp before
+dp[j] gets reassigned (if there is a "1") and then temp gets assigned to prev. Since
+dp[j] gets assigned to temp first, this effectively serves to capture the "j - 1"
+aspect. Since prev is updated inside the j for-loop, each subsequent iteration of i sees
+prev coming from "i - 1".
 
 Complexity
 ==========
