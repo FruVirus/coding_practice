@@ -76,17 +76,17 @@ def sol_bu(nums, mults):
 
 def sol_td(nums, mults):
     n, m = len(nums), len(mults)
-    memo = [[-float("inf")] * m for _ in range(m)]
+    memo = {}
 
     def dp(i, left):
         if i == m:
             return 0
-        if memo[i][left] == -float("inf"):
+        if (i, left) not in memo:
             mult, right = mults[i], n - (i - left) - 1
-            memo[i][left] = max(
+            memo[(i, left)] = max(
                 mult * nums[left] + dp(i + 1, left + 1),
                 mult * nums[right] + dp(i + 1, left),
             )
-        return memo[i][left]
+        return memo[(i, left)]
 
     return dp(0, 0)
