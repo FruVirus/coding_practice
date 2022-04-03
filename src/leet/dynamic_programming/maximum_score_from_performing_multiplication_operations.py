@@ -57,21 +57,22 @@ maximumScore(nums, multipliers): O(m^2), where m is the length of multipliers.
 Space
 -----
 
-maximumScore(nums, multipliers): O(m^2).
+maximumScore_bu(nums, multipliers): O(m).
+maximumScore_td(nums, multipliers): O(m^2).
 """
 
 
 def sol_bu(nums, mults):
     n, m = len(nums), len(mults)
-    dp = [[0] * (m + 1) for _ in range(m + 1)]
+    dp, curr = [0] * (m + 1), [0] * (m + 1)
     for i in reversed(range(m)):
         for left in range(i, -1, -1):
             mult, right = mults[i], n - (i - left) - 1
-            dp[i][left] = max(
-                mult * nums[left] + dp[i + 1][left + 1],
-                mult * nums[right] + dp[i + 1][left],
+            curr[left] = max(
+                mult * nums[left] + dp[left + 1], mult * nums[right] + dp[left]
             )
-    return dp[0][0]
+        dp, curr = curr, dp
+    return dp[0]
 
 
 def sol_td(nums, mults):

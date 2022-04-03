@@ -80,7 +80,7 @@ def sol_bu(matrix):
 
 
 def sol_td(matrix):
-    memo, m, n, maxlen = {}, len(matrix), len(matrix[0]), 0
+    memo, m, n = {}, len(matrix), len(matrix[0])
 
     def dp(i, j):
         if not (0 <= i < m and 0 <= j < n and matrix[i][j] == "1"):
