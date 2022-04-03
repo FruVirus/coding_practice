@@ -65,18 +65,18 @@ maximalSquare_td(matrix): O(m * n).
 
 
 def sol_bu(matrix):
-    rows, cols = len(matrix), len(matrix[0])
-    dp, maxsqlen, prev = [0] * (cols + 1), 0, 0
-    for i in range(1, rows + 1):
-        for j in range(1, cols + 1):
+    m, n = len(matrix), len(matrix[0])
+    dp, maxlen, prev = [0] * (n + 1), 0, 0
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
             temp = dp[j]
             if matrix[i - 1][j - 1] == "1":
                 dp[j] = 1 + min(dp[j], dp[j - 1], prev)
-                maxsqlen = max(maxsqlen, dp[j])
+                maxlen = max(maxlen, dp[j])
             else:
                 dp[j] = 0
             prev = temp
-    return maxsqlen ** 2
+    return maxlen ** 2
 
 
 def sol_td(matrix):
