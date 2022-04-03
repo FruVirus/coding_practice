@@ -64,15 +64,15 @@ maximumScore_td(nums, multipliers): O(m^2).
 
 def sol_bu(nums, mults):
     n, m = len(nums), len(mults)
-    dp, curr = [0] * (m + 1), [0] * (m + 1)
+    prev, curr = [0] * (m + 1), [0] * (m + 1)
     for i in reversed(range(m)):
         for left in range(i, -1, -1):
             mult, right = mults[i], n - (i - left) - 1
             curr[left] = max(
-                mult * nums[left] + dp[left + 1], mult * nums[right] + dp[left]
+                mult * nums[left] + prev[left + 1], mult * nums[right] + prev[left]
             )
-        dp, curr = curr, dp
-    return dp[0]
+        prev, curr = curr, prev
+    return prev[0]
 
 
 def sol_td(nums, mults):
