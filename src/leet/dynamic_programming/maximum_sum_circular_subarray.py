@@ -54,10 +54,10 @@ maxSubarraySumCircular(nums): O(n) for the inverted array.
 
 
 def sol_bu(nums):
-    def kadane(a):
-        curr = best = a[0]
-        for i in range(1, len(a)):
-            curr = max(curr + a[i], a[i])
+    def kadane(nums):
+        curr = best = nums[0]
+        for num in nums[1:]:
+            curr = max(curr + num, num)
             best = max(best, curr)
         return best
 
