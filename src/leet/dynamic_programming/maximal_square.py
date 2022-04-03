@@ -67,7 +67,7 @@ def sol_bu(matrix):
         for j in range(1, cols + 1):
             temp = dp[j]
             if matrix[i - 1][j - 1] == "1":
-                dp[j] = min(dp[j], dp[j - 1], prev) + 1
+                dp[j] = 1 + min(dp[j], dp[j - 1], prev)
                 maxsqlen = max(maxsqlen, dp[j])
             else:
                 dp[j] = 0
