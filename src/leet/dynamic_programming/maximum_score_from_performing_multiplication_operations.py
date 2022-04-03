@@ -66,7 +66,7 @@ def sol_bu(nums, mults):
     n, m = len(nums), len(mults)
     prev, curr = [0] * (m + 1), [0] * (m + 1)
     for i in reversed(range(m)):
-        for left in range(i, -1, -1):
+        for left in reversed(range(i + 1)):
             mult, right = mults[i], n - (i - left) - 1
             curr[left] = max(
                 mult * nums[left] + prev[left + 1], mult * nums[right] + prev[left]
