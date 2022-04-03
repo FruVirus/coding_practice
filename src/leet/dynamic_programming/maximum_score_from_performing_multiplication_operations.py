@@ -76,8 +76,7 @@ def sol_bu(nums, mults):
 
 
 def sol_td(nums, mults):
-    n, m = len(nums), len(mults)
-    memo = {}
+    n, m, memo = len(nums), len(mults), {}
 
     def dp(i, left):
         if i == m:
