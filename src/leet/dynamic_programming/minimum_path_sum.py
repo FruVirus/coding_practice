@@ -32,7 +32,8 @@ minPathSum(grid): O(m * n).
 Space
 -----
 
-minPathSum(grid): O(n).
+minPathSum_bu(grid): O(n).
+minPathSum_td(grid): O(n).
 """
 
 
@@ -53,18 +54,18 @@ def sol_bu(grid):
 def sol_td(grid):
     memo, m, n = {}, len(grid), len(grid[0])
 
-    def dp(row, col):
-        grid_sum = grid[row][col]
-        if row == m - 1 and col == n - 1:
-            return grid_sum
-        if (row, col) not in memo:
-            if row == m - 1 and col != n - 1:
-                path_sum = grid_sum + dp(row, col + 1)
-            elif row != m - 1 and col == n - 1:
-                path_sum = grid_sum + dp(row + 1, col)
+    def dp(i, j):
+        val = grid[i][j]
+        if i == m - 1 and j == n - 1:
+            return val
+        if (i, j) not in memo:
+            if i == m - 1 and j != n - 1:
+                val += dp(i, j + 1)
+            elif i != m - 1 and j == n - 1:
+                val += dp(i + 1, j)
             else:
-                path_sum = grid_sum + min(dp(row + 1, col), dp(row, col + 1))
-            memo[(row, col)] = path_sum
-        return memo[(row, col)]
+                val += min(dp(i + 1, j), dp(i, j + 1))
+            memo[(i, j)] = val
+        return memo[(i, j)]
 
     return dp(0, 0)
