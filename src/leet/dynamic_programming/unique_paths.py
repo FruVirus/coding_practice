@@ -76,16 +76,16 @@ def sol_bu(m, n):
 def sol_td(m, n):
     memo = {}
 
-    def dp(row, col):
-        if row == col == 0:
+    def dp(i, j):
+        if i == j == 0:
             return 1
-        if (row, col) not in memo:
+        if (i, j) not in memo:
             num_paths = 0
-            if row > 0:
-                num_paths += dp(row - 1, col)
-            if col > 0:
-                num_paths += dp(row, col - 1)
-            memo[(row, col)] = num_paths
-        return memo[(row, col)]
+            if i > 0:
+                num_paths += dp(i - 1, j)
+            if j > 0:
+                num_paths += dp(i, j - 1)
+            memo[(i, j)] = num_paths
+        return memo[(i, j)]
 
     return dp(m - 1, n - 1)
