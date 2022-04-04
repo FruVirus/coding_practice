@@ -50,8 +50,8 @@ numWays_td(n, k): O(n).
 
 
 def sol_bu(n, k):
-    if n == 1:
-        return k
+    if n <= 2:
+        return k ** n
     one, two = k * k, k
     for _ in range(3, n + 1):
         curr = (k - 1) * (one + two)
