@@ -32,7 +32,7 @@ def sol_bu(n, k, target):
     for die in range(2, n + 1):
         for curr_sum in reversed(range(target + 1)):
             dp[curr_sum] = sum(dp[max(die - 1, curr_sum - k) : curr_sum])
-    return dp[target]
+    return dp[-1]
 
 
 def sol_td(n, k, target):
