@@ -68,41 +68,41 @@ minCost_td(costs): O(n * k).
 
 def sol_bu(costs):
     n, k, prev_min_color = len(costs), len(costs[0]), None
-    prev_min_cost = prev_next_min_cost = float("inf")
+    prev_min_cost = prev_second_min_cost = float("inf")
     for color, cost in enumerate(costs[0]):
         if cost < prev_min_cost:
             prev_min_color = color
-            prev_min_cost, prev_next_min_cost = cost, prev_min_cost
-        elif cost < prev_next_min_cost:
-            prev_next_min_cost = cost
-    for house in range(1, n):
+            prev_min_cost, prev_second_min_cost = cost, prev_min_cost
+        elif cost < prev_second_min_cost:
+            prev_second_min_cost = cost
+    for i in range(1, n):
         min_color = None
-        min_cost = next_min_cost = float("inf")
+        min_cost = second_min_cost = float("inf")
         for color in range(k):
-            cost = costs[house][color]
-            cost += prev_next_min_cost if color == prev_min_color else prev_min_cost
+            cost = costs[i][color]
+            cost += prev_second_min_cost if color == prev_min_color else prev_min_cost
             if cost < min_cost:
                 min_color = color
-                min_cost, next_min_cost = cost, min_cost
-            elif cost < next_min_cost:
-                next_min_cost = cost
+                min_cost, second_min_cost = cost, min_cost
+            elif cost < second_min_cost:
+                second_min_cost = cost
         prev_min_color = min_color
-        prev_min_cost, prev_next_min_cost = min_cost, next_min_cost
+        prev_min_cost, prev_second_min_cost = min_cost, second_min_cost
     return prev_min_cost
 
 
 def sol_td(costs):
-    memo = {}
+    memo, n, k = {}, len(costs), len(costs[0])
 
-    def dp(n, color):
-        if n == len(costs) - 1:
-            return costs[n][color]
-        if (n, color) not in memo:
+    def dp(i, color):
+        if i == n - 1:
+            return costs[i][color]
+        if (i, color) not in memo:
             cost = float("inf")
-            for next_color in range(len(costs[0])):
+            for next_color in range(k):
                 if next_color != color:
-                    cost = min(cost, costs[n][color] + dp(n + 1, next_color))
-            memo[(n, color)] = cost
-        return memo[(n, color)]
+                    cost = min(cost, costs[i][color] + dp(i + 1, next_color))
+            memo[(i, color)] = cost
+        return memo[(i, color)]
 
-    return min(dp(0, k) for k in range(len(costs[0])))
+    return min(dp(0, k_) for k_ in range(k))
