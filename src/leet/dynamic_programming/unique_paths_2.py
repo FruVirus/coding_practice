@@ -39,7 +39,7 @@ def sol_bu(grid):
         for j in range(n):
             if grid[i][j] == 0:
                 curr[j] = dp[j] if j == 0 else dp[j] + curr[j - 1]
-        dp, curr = curr, [0] * n
+        dp = curr
     return dp[-1]
 
 
