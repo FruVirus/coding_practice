@@ -106,37 +106,36 @@ def sol_bu(job_diff, d):
     n = len(job_diff)
     if n < d:
         return -1
-    dp = [[float("inf")] * (d + 1) for _ in range(n)]
-    dp[-1][d] = job_diff[-1]
-    for i in reversed(range(n - 1)):
-        dp[i][d] = max(dp[i + 1][d], job_diff[i])
-    for day in range(d - 1, 0, -1):
-        for i in range(day - 1, n - (d - day)):
-            hardest = 0
-            for j in range(i, n - (d - day)):
-                hardest = max(hardest, job_diff[j])
-                dp[i][day] = min(dp[i][day], hardest + dp[j + 1][day + 1])
-    return dp[0][1]
+    dp = [float("inf")] * n + [0]
+    for day in range(1, d + 1):
+        new_dp = list(dp)
+        for i in range(n - day + 1):
+            curr_diff, new_dp[i] = 0, float("inf")
+            for j in range(i, n - day + 1):
+                curr_diff = max(curr_diff, job_diff[j])
+                new_dp[i] = min(new_dp[i], curr_diff + dp[j + 1])
+        dp = new_dp
+    return dp[0]
 
 
 def sol_td(job_diff, d):
     n = len(job_diff)
     if n < d:
         return -1
-    hardest, hardest_remaining, memo = 0, [0] * n, {}
+    memo, curr_diff, max_diff_remaining = {}, 0, [0] * n
     for i in reversed(range(n)):
-        hardest = max(hardest, job_diff[i])
-        hardest_remaining[i] = hardest
+        curr_diff = max(curr_diff, job_diff[i])
+        max_diff_remaining[i] = curr_diff
 
-    def dp(job_index, day):
+    def dp(i, day):
         if day == d:
-            return hardest_remaining[job_index]
-        if (job_index, day) not in memo:
-            best, hardest = float("inf"), 0
-            for i in range(job_index, n - (d - day)):
-                hardest = max(hardest, job_diff[i])
-                best = min(best, hardest + dp(i + 1, day + 1))
-            memo[(job_index, day)] = best
-        return memo[(job_index, day)]
+            return max_diff_remaining[i]
+        if (i, day) not in memo:
+            best_diff, curr_diff = float("inf"), 0
+            for i in range(i, n - (d - day)):
+                curr_diff = max(curr_diff, job_diff[i])
+                best_diff = min(best_diff, curr_diff + dp(i + 1, day + 1))
+            memo[(i, day)] = best_diff
+        return memo[(i, day)]
 
     return dp(0, 1)
