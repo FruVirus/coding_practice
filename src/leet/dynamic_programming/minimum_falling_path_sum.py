@@ -28,14 +28,14 @@ minFallingPathSum_td(matrix): O(n^2).
 
 def sol_bu(matrix):
     n = len(matrix)
-    dp, temp = matrix[0][:], [0] * n
+    dp, curr = matrix[0][:], [0] * n
     for i in range(1, n):
         for j in range(n):
             above = dp[j]
             above_left = float("inf") if j == 0 else dp[j - 1]
             above_right = float("inf") if j == n - 1 else dp[j + 1]
-            temp[j] = matrix[i][j] + min(above, above_left, above_right)
-        dp, temp = temp, dp
+            curr[j] = matrix[i][j] + min(above, above_left, above_right)
+        dp, curr = curr, dp
     return min(dp)
 
 
