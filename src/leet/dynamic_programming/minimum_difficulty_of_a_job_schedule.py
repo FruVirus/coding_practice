@@ -131,11 +131,11 @@ def sol_td(job_diff, d):
         if day == d:
             return max_diff_remaining[i]
         if (i, day) not in memo:
-            best_diff, curr_diff = float("inf"), 0
+            curr_diff, curr = 0, float("inf")
             for j in range(i, n - (d - day)):
                 curr_diff = max(curr_diff, job_diff[j])
-                best_diff = min(best_diff, curr_diff + dp(j + 1, day + 1))
-            memo[(i, day)] = best_diff
+                curr = min(curr, curr_diff + dp(j + 1, day + 1))
+            memo[(i, day)] = curr
         return memo[(i, day)]
 
     return dp(0, 1)
