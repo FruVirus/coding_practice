@@ -79,13 +79,10 @@ def sol_td(m, n):
     def dp(i, j):
         if i == j == 0:
             return 1
+        if i < 0 or j < 0:
+            return 0
         if (i, j) not in memo:
-            num_paths = 0
-            if i > 0:
-                num_paths += dp(i - 1, j)
-            if j > 0:
-                num_paths += dp(i, j - 1)
-            memo[(i, j)] = num_paths
+            memo[(i, j)] = dp(i - 1, j) + dp(i, j - 1)
         return memo[(i, j)]
 
     return dp(m - 1, n - 1)
