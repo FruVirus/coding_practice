@@ -68,8 +68,8 @@ def sol_td(nums, target):
             return 1 if sum_ == target else 0
         if (i, sum_) not in memo:
             add = dp(i + 1, sum_ + nums[i])
-            subtract = dp(i + 1, sum_ - nums[i])
-            memo[(i, sum_)] = add + subtract
+            sub = dp(i + 1, sum_ - nums[i])
+            memo[(i, sum_)] = add + sub
         return memo[(i, sum_)]
 
     return dp(0, 0)
