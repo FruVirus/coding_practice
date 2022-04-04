@@ -30,32 +30,29 @@ uniquePathsWithObstacles_td(grid): O(m * n).
 
 def sol_bu(grid):
     m, n = len(grid), len(grid[0])
-    dp, temp = [1 - i for i in grid[0]], [0] * n
+    dp = [1 - i for i in grid[0]]
     for i in range(1, len(dp)):
         if dp[i - 1] == 0:
             dp[i] = 0
-    for row in range(1, m):
-        for col in range(n):
-            if grid[row][col] == 0:
-                temp[col] = dp[col] if col == 0 else dp[col] + temp[col - 1]
-        dp, temp = temp, [0] * n
+    for i in range(1, m):
+        curr = [0] * n
+        for j in range(n):
+            if grid[i][j] == 0:
+                curr[j] = dp[j] if j == 0 else dp[j] + curr[j - 1]
+        dp, curr = curr, [0] * n
     return dp[-1]
 
 
 def sol_td(grid):
     memo, m, n = {}, len(grid), len(grid[0])
 
-    def dp(row, col):
-        if row == col == 0:
-            return 1 - grid[row][col]
-        if (row, col) not in memo:
-            num_paths = 0
-            if grid[row][col] == 0:
-                if row > 0:
-                    num_paths += dp(row - 1, col)
-                if col > 0:
-                    num_paths += dp(row, col - 1)
-            memo[(row, col)] = num_paths
-        return memo[(row, col)]
+    def dp(i, j):
+        if i == j == 0:
+            return 1 if grid[i][j] == 0 else 0
+        if i < 0 or j < 0:
+            return 0
+        if (i, j) not in memo:
+            memo[(i, j)] = dp(i - 1, j) + dp(i, j - 1) if grid[i][j] == 0 else 0
+        return memo[(i, j)]
 
     return dp(m - 1, n - 1)
