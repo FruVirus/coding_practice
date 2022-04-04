@@ -29,9 +29,9 @@ def sol_bu(n, k, target):
     dp = [0] * (target + 1)
     for i in range(1, min(target + 1, k + 1)):
         dp[i] = 1
-    for die in range(2, n + 1):
+    for d in range(2, n + 1):
         for curr_sum in reversed(range(target + 1)):
-            dp[curr_sum] = sum(dp[max(die - 1, curr_sum - k) : curr_sum])
+            dp[curr_sum] = sum(dp[max(d - 1, curr_sum - k) : curr_sum])
     return dp[-1]
 
 
