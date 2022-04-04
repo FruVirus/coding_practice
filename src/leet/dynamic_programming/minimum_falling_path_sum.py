@@ -21,14 +21,15 @@ minFallingPathSum(matrix): O(m * n).
 Space
 -----
 
-minFallingPathSum(matrix): O(n).
+minFallingPathSum_bu(matrix): O(n).
+minFallingPathSum_td(matrix): O(n^2).
 """
 
 
 def sol_bu(matrix):
-    m, n = len(matrix), len(matrix[0])
+    n = len(matrix)
     dp, temp = matrix[0][:], [0] * n
-    for i in range(1, m):
+    for i in range(1, n):
         for j in range(n):
             above = dp[j]
             above_left = float("inf") if j == 0 else dp[j - 1]
@@ -41,16 +42,16 @@ def sol_bu(matrix):
 def sol_td(matrix):
     memo, n = {}, len(matrix)
 
-    def dp(row, col):
-        if row == n:
+    def dp(i, j):
+        if i == n:
             return 0
-        if col < 0 or col > n - 1:
+        if j < 0 or j > n - 1:
             return float("inf")
-        if (row, col) not in memo:
-            above = dp(row + 1, col)
-            above_left = dp(row + 1, col - 1)
-            above_right = dp(row + 1, col + 1)
-            memo[(row, col)] = matrix[row][col] + min(above, above_left, above_right)
-        return memo[(row, col)]
+        if (i, j) not in memo:
+            above = dp(i + 1, j)
+            above_left = dp(i + 1, j - 1)
+            above_right = dp(i + 1, j + 1)
+            memo[(i, j)] = matrix[i][j] + min(above, above_left, above_right)
+        return memo[(i, j)]
 
-    return min(dp(0, col) for col in range(n))
+    return min(dp(0, j) for j in range(n))
