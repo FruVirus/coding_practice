@@ -34,14 +34,30 @@ Complexity
 Time
 ----
 
-findTargetSumWays_td(nums, target): O(n * t), where n is the length of nums and t refers
-to the sum of the nums array.
+findTargetSumWays(nums, target): O(n * t), where n is the length of nums and t refers to
+the sum of the nums array.
 
 Space
 -----
 
+findTargetSumWays_bu(nums, target): O(t).
 findTargetSumWays_td(nums, target): O(n * t).
 """
+
+
+def sol_bu(nums, target):
+    sum_ = sum(nums)
+    dp = [0] * (2 * sum_ + 1)
+    dp[nums[0] + sum_] = 1
+    dp[-nums[0] + sum_] += 1
+    for i in range(1, len(nums)):
+        curr = [0] * (2 * sum_ + 1)
+        for j in range(-sum_, sum_ + 1):
+            if dp[j + sum_] > 0:
+                curr[j + sum_ + nums[i]] += dp[j + sum_]
+                curr[j + sum_ - nums[i]] += dp[j + sum_]
+        dp = curr
+    return 0 if abs(target) > sum_ else dp[target + sum_]
 
 
 def sol_td(nums, target):
@@ -49,7 +65,7 @@ def sol_td(nums, target):
 
     def dp(i, sum_):
         if i == len(nums):
-            return int(sum_ == target)
+            return 1 if sum_ == target else 0
         if (i, sum_) not in memo:
             add = dp(i + 1, sum_ + nums[i])
             subtract = dp(i + 1, sum_ - nums[i])
