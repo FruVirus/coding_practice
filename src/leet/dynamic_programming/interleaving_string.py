@@ -117,7 +117,7 @@ def sol_bu(s1, s2, s3):
 
 
 def sol_td(s1, s2, s3):
-    l1, l2, l3, memo = len(s1), len(s2), len(s3), {}
+    memo, l1, l2, l3 = {}, len(s1), len(s2), len(s3)
 
     def dp(i, j, k):
         if i == l1:
