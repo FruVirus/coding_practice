@@ -108,13 +108,13 @@ def sol_bu(job_diff, d):
         return -1
     dp = [float("inf")] * n + [0]
     for day in range(1, d + 1):
-        new_dp = list(dp)
+        curr = list(dp)
         for i in range(n - day + 1):
-            curr_diff, new_dp[i] = 0, float("inf")
+            curr_diff, curr[i] = 0, float("inf")
             for j in range(i, n - day + 1):
                 curr_diff = max(curr_diff, job_diff[j])
-                new_dp[i] = min(new_dp[i], curr_diff + dp[j + 1])
-        dp = new_dp
+                curr[i] = min(curr[i], curr_diff + dp[j + 1])
+        dp = curr
     return dp[0]
 
 
