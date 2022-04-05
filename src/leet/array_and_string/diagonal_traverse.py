@@ -29,7 +29,7 @@ from collections import defaultdict
 def sol(mat):
     diag, sol = defaultdict(list), []
     for i in range(len(mat)):
-        for j in range(len(mat[i])):
+        for j in range(len(mat[0])):
             diag[i + j].append(mat[i][j])
     for diag_level, diag_elements in diag.items():
         sol.extend(diag_elements if diag_level % 2 != 0 else reversed(diag_elements))
