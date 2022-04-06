@@ -41,7 +41,7 @@ def sol(root):
         if root:
             lhash = helper(root.left)
             rhash = helper(root.right)
-            thash = str(root.val) + "(" + lhash + ")" + "(" + rhash + ")"
+            thash = str(root.val) + "(" + lhash + ")(" + rhash + ")"
             dups[thash].append(root)
             return thash
         return "None"
