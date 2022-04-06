@@ -76,7 +76,7 @@ def sol_td(s, word_dict):
         if i not in memo:
             memo[i] = False
             for j in range(i + 1, n + 1):
-                if s[i:j] in word_dict and dp(j):
+                if dp(j) and s[i:j] in word_dict:
                     memo[i] = True
                     break
         return memo[i]
