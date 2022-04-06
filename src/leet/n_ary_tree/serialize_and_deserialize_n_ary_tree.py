@@ -52,15 +52,15 @@ class Node:
 def sol_serialize(root):
     sol = []
 
-    def serialize_(root, sol):
+    def serialize(root, sol):
         if not root:
             return
         sol.append(chr(root.val + 36))
         for child in root.children:
-            serialize_(child, sol)
+            serialize(child, sol)
         sol.append("#")
 
-    serialize_(root, sol)
+    serialize(root, sol)
     return "".join(sol)
 
 
@@ -68,14 +68,14 @@ def sol_deserialize(data):
     if not data:
         return None
 
-    def deserialize_(data, index):
+    def deserialize(data, index):
         if index.get_value() == len(data):
             return None
         node = Node(ord(data[index.get_value()]) - 36, [])
         index.increment()
         while data[index.get_value()] != "#":
-            node.children.append(deserialize_(data, index))
+            node.children.append(deserialize(data, index))
         index.increment()
         return node
 
-    return deserialize_(data, WrappableInt(0))
+    return deserialize(data, WrappableInt(0))
