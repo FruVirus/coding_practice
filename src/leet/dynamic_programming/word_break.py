@@ -57,8 +57,9 @@ wordBreak(s, word_dict): O(n).
 
 
 def sol_bu(s, word_dict):
-    dp = [True] + [False] * len(s)
-    for i in range(1, len(s) + 1):
+    n = len(s)
+    dp = [True] + [False] * n
+    for i in range(1, n + 1):
         for j in range(i):
             if dp[j] and s[j:i] in word_dict:
                 dp[i] = True
@@ -67,14 +68,14 @@ def sol_bu(s, word_dict):
 
 
 def sol_td(s, word_dict):
-    memo = {}
+    memo, n = {}, len(s)
 
     def dp(i):
-        if i == len(s):
+        if i == n:
             return True
         if i not in memo:
             memo[i] = False
-            for j in range(i + 1, len(s) + 1):
+            for j in range(i + 1, n + 1):
                 if s[i:j] in word_dict and dp(j):
                     memo[i] = True
                     break
