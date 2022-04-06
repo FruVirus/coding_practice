@@ -136,8 +136,8 @@ def sol_encode_dfs(root):
     if len(root.children) > 0:
         root_bnode.left = sol_encode_dfs(root.children[0])
     curr = root_bnode.left
-    for i in range(1, len(root.children)):
-        curr.right = sol_encode_dfs(root.children[i])
+    for child in root.children[1:]:
+        curr.right = sol_encode_dfs(child)
         curr = curr.right
     return root_bnode
 
