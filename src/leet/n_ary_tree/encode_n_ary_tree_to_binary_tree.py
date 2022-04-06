@@ -122,9 +122,9 @@ def sol_decode_bfs(data):
         parent, curr = queue.popleft()
         sib = curr.left
         while sib:
-            new_bnode = Node(sib.val, [])
-            parent.children.append(new_bnode)
-            queue.append((new_bnode, sib))
+            new_node = Node(sib.val, [])
+            parent.children.append(new_node)
+            queue.append((new_node, sib))
             sib = sib.right
     return root
 
