@@ -35,13 +35,13 @@ serialize(root) and deserialize(data): O(n).
 
 class WrappableInt:
     def __init__(self, x):
-        self.value = x
+        self.val = x
 
-    def get_value(self):
-        return self.value
+    def get_val(self):
+        return self.val
 
     def increment(self):
-        self.value += 1
+        self.val += 1
 
 
 class Node:
@@ -52,15 +52,15 @@ class Node:
 def sol_serialize(root):
     sol = []
 
-    def serialize(root, sol):
+    def serialize(root):
         if not root:
             return
         sol.append(chr(root.val + 36))
         for child in root.children:
-            serialize(child, sol)
+            serialize(child)
         sol.append("#")
 
-    serialize(root, sol)
+    serialize(root)
     return "".join(sol)
 
 
@@ -68,14 +68,14 @@ def sol_deserialize(data):
     if not data:
         return None
 
-    def deserialize(data, index):
-        if index.get_value() == len(data):
+    def deserialize(index):
+        if index.get_val() == len(data):
             return None
-        node = Node(ord(data[index.get_value()]) - 36, [])
+        node = Node(ord(data[index.get_val()]) - 36, [])
         index.increment()
-        while data[index.get_value()] != "#":
-            node.children.append(deserialize(data, index))
+        while data[index.get_val()] != "#":
+            node.children.append(deserialize(index))
         index.increment()
         return node
 
-    return deserialize(data, WrappableInt(0))
+    return deserialize(WrappableInt(0))
