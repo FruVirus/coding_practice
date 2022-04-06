@@ -42,12 +42,11 @@ def sol_serialize(root):
     sol = []
 
     def serialize(root):
-        if not root:
-            return
-        sol.append(chr(root.val + 36))
-        for child in root.children:
-            serialize(child)
-        sol.append("#")
+        if root:
+            sol.append(chr(root.val + 36))
+            for child in root.children:
+                serialize(child)
+            sol.append("#")
 
     serialize(root)
     return "".join(sol)
@@ -61,13 +60,13 @@ def sol_deserialize(data):
 
     def deserialize():
         nonlocal index
-        if index == len(data):
-            return None
-        node = Node(ord(data[index]) - 36, [])
-        index += 1
-        while data[index] != "#":
-            node.children.append(deserialize())
-        index += 1
-        return node
+        if index != len(data):
+            node = Node(ord(data[index]) - 36, [])
+            index += 1
+            while data[index] != "#":
+                node.children.append(deserialize())
+            index += 1
+            return node
+        return None
 
     return deserialize()
