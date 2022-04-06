@@ -133,7 +133,7 @@ def sol_encode_dfs(root):
     if not root:
         return None
     root_bnode = TreeNode(root.val)
-    if len(root.children) > 0:
+    if root.children:
         root_bnode.left = sol_encode_dfs(root.children[0])
     curr = root_bnode.left
     for child in root.children[1:]:
