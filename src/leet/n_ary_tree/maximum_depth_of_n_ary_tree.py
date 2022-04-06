@@ -28,6 +28,5 @@ def sol(root):
         node, curr_depth = stack.pop()
         if node:
             depth = max(depth, curr_depth)
-            for child in node.children:
-                stack.append((child, curr_depth + 1))
+            stack.extend((child, curr_depth + 1) for child in node.children)
     return depth
