@@ -83,7 +83,7 @@ def sol_td(matrix):
     memo, m, n = {}, len(matrix), len(matrix[0])
 
     def dp(i, j):
-        if not (0 <= i < m and 0 <= j < n and matrix[i][j] == "1"):
+        if not (i < m and j < n and matrix[i][j] == "1"):
             return 0
         if (i, j) not in memo:
             memo[(i, j)] = 1 + min(dp(i + 1, j), dp(i, j + 1), dp(i + 1, j + 1))
