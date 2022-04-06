@@ -33,6 +33,19 @@ mapSum.sum("ap");           // return 3 (apple = 3)
 mapSum.insert("app", 2);
 mapSum.sum("ap");           // return 5 (apple + app = 3 + 2 = 5)
 
+Intuition
+---------
+
+We can remember the answer for all possible prefixes in a HashMap score. When we get a
+new (key, val) pair, we update every prefix of key appropriately: each prefix will be
+changed by delta = val - map[key], where map is the previously associated value of key
+(zero if undefined.)
+
+Since we are dealing with prefixes, a Trie (prefix tree) is a natural data structure to
+approach this problem. For every node of the trie corresponding to some prefix, we will
+remember the desired answer (score) and store it at this node. As in Approach #2, this
+involves modifying each node by delta = val - map[key].
+
 Complexity
 ==========
 
