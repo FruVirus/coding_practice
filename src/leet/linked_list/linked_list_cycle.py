@@ -35,7 +35,7 @@ def sol(head):
             break
     if not (fast and fast.next):
         return None
-    ptr1, ptr2 = head, fast.next
-    while ptr1 is not ptr2:
-        ptr1, ptr2 = ptr1.next, ptr2.next
-    return ptr1
+    slow, fast = head, fast.next
+    while slow is not fast:
+        slow, fast = slow.next, fast.next
+    return slow
