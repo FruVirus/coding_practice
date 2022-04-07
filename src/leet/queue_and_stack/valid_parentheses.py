@@ -30,7 +30,7 @@ def sol(s):
     for char in s:
         if char in openings:
             stack.append(char)
-        elif not stack or char != openings[stack[-1]]:
+        elif not (stack and char == openings[stack[-1]]):
             return False
         else:
             stack.pop()
