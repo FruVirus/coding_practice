@@ -13,6 +13,13 @@ shortest length.
 
 Return the sentence after the replacement.
 
+Example
+
+Input: dictionary = ["cat","bat","rat"],
+sentence = "the cattle was rattled by the battery"
+
+Output: "the cat was rat by the bat"
+
 Complexity
 ==========
 
