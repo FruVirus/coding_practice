@@ -29,16 +29,19 @@ Space
 floodFill(image, sr, sc, new_color): O(n).
 """
 
+# Standard Library
+from collections import deque
+
 
 def sol(image, sr, sc, new_color):
-    m, n, stack = len(image), len(image[0]), [(sr, sc)]
+    m, n, queue = len(image), len(image[0]), deque([(sr, sc)])
     orig_color, image[sr][sc] = image[sr][sc], new_color
-    while stack:
-        sr, sc = stack.pop()
+    while queue:
+        sr, sc = queue.popleft()
         for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             sr_, sc_ = sr + x, sc + y
             if 0 <= sr_ < m and 0 <= sc_ < n and image[sr_][sc_] != new_color:
                 if image[sr_][sc_] == orig_color:
                     image[sr_][sc_] = new_color
-                    stack.append((sr_, sc_))
+                    queue.append((sr_, sc_))
     return image
