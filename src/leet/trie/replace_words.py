@@ -63,7 +63,4 @@ def sol(dictionary, sentence):
     trie = Trie()
     for word in dictionary:
         trie.insert(word)
-    new_sentence, sol = sentence.split(" "), ""
-    for word in new_sentence:
-        sol += trie.search(word) + " "
-    return sol[:-1]
+    return " ".join(trie.search(word) for word in sentence.split(" "))
