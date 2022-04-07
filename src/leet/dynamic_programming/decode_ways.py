@@ -89,14 +89,14 @@ def sol_bu(s):
 
 
 def sol_td(s):
-    memo = {}
+    memo, n = {}, len(s)
 
     def dp(index):
-        if index == len(s):
+        if index == n:
             return 1
         if s[index] == "0":
             return 0
-        if index == len(s) - 1:
+        if index == n - 1:
             return 1
         if index not in memo:
             num_decodes = dp(index + 1)
