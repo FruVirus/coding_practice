@@ -28,6 +28,11 @@ The implementation is also pretty simple:
 end of current XOR.
     - If not, just go down to the same bit. Add 0-bit at the end of current XOR.
 
+NB: We first need to compute the binary representation of all numbers in nums and ensure
+that their binary representations all have the same length. Thus, we find the binary
+representation of the maximum number in nums and left zero-pad all other numbers as
+needed.
+
 Complexity
 ==========
 
@@ -54,9 +59,7 @@ def sol(nums):
     for num in nums:
         curr_xor, node, xor_node = 0, trie, trie
         for bit in num:
-            if bit not in node:
-                node[bit] = {}
-            node = node[bit]
+            node = node.setdefault(bit, {})
             flipped_bit = 1 - bit
             if flipped_bit in xor_node:
                 curr_xor, xor_node = (curr_xor << 1) | 1, xor_node[flipped_bit]
