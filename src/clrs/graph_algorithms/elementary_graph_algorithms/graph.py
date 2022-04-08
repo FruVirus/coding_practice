@@ -144,11 +144,14 @@ Time
 
 Adjacency list transpose: O(V + E).
 Adjacency matrix transpose: O(V^2).
+find_set(): O(lg V).
 init_single_source(): Theta(V).
 print_path(): Linear in the number of vertices in the path printed since each recursive
 call is for a path one vertex shorter.
 relax(): O(1).
+same_component(): O(lg V).
 transitive_closer(): Theta(V^3).
+union(): O(lg V).
 
 Space
 -----
