@@ -73,19 +73,19 @@ Time
 ----
 
 Sol:
-    def __init__(self, sentences, times, k=3): O().
-    def add_word(self, word): O().
-    def get_prefixes(self): O().
-    def input(self, c): O().
+    def __init__(self, sentences, times, k=3): O(m), where m is the word length.
+    def add_word(self, word): O(m).
+    def input(self, c): O(m * lg m).
+    def starts_with(self): O(m).
 
 Space
 -----
 
 Sol:
-    def __init__(self, sentences, times, k=3): O().
-    def add_word(self, word): O().
-    def get_prefixes(self): O().
-    def input(self, c): O().
+    def __init__(self, sentences, times, k=3): O(m).
+    def add_word(self, word): O(m).
+    def input(self, c): O(1).
+    def starts_with(self): O(1).
 """
 
 
