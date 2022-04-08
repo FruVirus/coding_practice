@@ -84,6 +84,10 @@ For example:
     '#': [4]}}}}
 }
 
+NB: The backtracking index starts at 1 since we start the word square matching at the
+second letter of the word in words. For example, if the first word is "area", then we
+are looking for other words that starts with "r".
+
 Complexity
 ==========
 
