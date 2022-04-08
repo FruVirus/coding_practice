@@ -58,8 +58,7 @@ class Sol:
 
     def search(self, word):
         def search_(index, node):
-            for i in range(index, len(word)):
-                char = word[i]
+            for i, char in enumerate(word[index:], index):
                 if char == ".":
                     for child in node.children.values():
                         if search_(i + 1, child):
