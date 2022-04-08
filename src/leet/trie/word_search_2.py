@@ -109,10 +109,9 @@ def sol(board, words):
     sol, m, n, trie = [], len(board), len(board[0]), build_trie(words)
 
     def backtrack(i, j, node):
-        char, parent = board[i][j], node
+        char, start = board[i][j], node
         if char in node:
-            board[i][j] = "#"
-            node = node[char]
+            board[i][j], node = "#", node[char]
             if "$" in node:
                 sol.append(node["$"])
                 del node["$"]
@@ -121,7 +120,7 @@ def sol(board, words):
                     backtrack(r, c, node)
             board[i][j] = char
             if not node:
-                parent.pop(char)
+                start.pop(char)
 
     for i in range(m):
         for j in range(n):
