@@ -144,14 +144,17 @@ Time
 
 Adjacency list transpose: O(V + E).
 Adjacency matrix transpose: O(V^2).
-find_set(): O(lg V).
+find_set(): O(m * alpha(V)), where m is the number of union operations and alpha(V) is
+generally O(1) on average.
 init_single_source(): Theta(V).
 print_path(): Linear in the number of vertices in the path printed since each recursive
 call is for a path one vertex shorter.
 relax(): O(1).
-same_component(): O(lg V).
+same_component(): O(m * alpha(V)), where m is the number of union operations and
+alpha(V) is generally O(1) on average.
 transitive_closer(): Theta(V^3).
-union(): O(lg V).
+union(): O(m * alpha(V)), where m is the number of union operations and alpha(V) is
+generally O(1) on average.
 
 Space
 -----
