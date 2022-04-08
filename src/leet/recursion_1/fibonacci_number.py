@@ -24,8 +24,8 @@ fib(n): O(n).
 def sol(n):
     if n < 2:
         return n
-    prev1, prev2, curr = 1, 0, 0
+    one, two, curr = 1, 0, 0
     for _ in range(2, n + 1):
-        curr = prev1 + prev2
-        prev1, prev2 = curr, prev1
+        curr = one + two
+        one, two = curr, one
     return curr
