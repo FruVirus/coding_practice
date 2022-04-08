@@ -55,11 +55,7 @@ def sol_bu(days, costs):
     dp = [0] * (days[-1] + 1)
     for i in range(1, days[-1] + 1):
         if i in days:
-            dp[i] = min(
-                dp[max(i - 1, 0)] + costs[0],
-                dp[max(i - 7, 0)] + costs[1],
-                dp[max(i - 30, 0)] + costs[2],
-            )
+            dp[i] = min(dp[max(i - d, 0)] + c for c, d in zip(costs, [1, 7, 30]))
         else:
             dp[i] = dp[i - 1]
     return dp[-1]
