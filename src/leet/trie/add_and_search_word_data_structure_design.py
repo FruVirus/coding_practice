@@ -23,7 +23,7 @@ Sol:
     def __init__(self): O(1).
     def add_word(self, word): O(m), where m is the word length.
     def search(self, word): O(m) for words without dots and O(n * 26^m) for a word with
-all dots, where n is the nuber of keys.
+all dots, where n is the number of keys.
 
 Space
 -----
