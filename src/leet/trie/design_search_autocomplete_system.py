@@ -104,20 +104,20 @@ class Sol:
             node["$"].append(self.idx_map[word])
 
     def input(self, c):
-        if c == "#":
-            if self.curr_sent in self.idx_map:
-                self.times[self.idx_map[self.curr_sent]] += 1
-            else:
-                self.sents.append(self.curr_sent)
-                self.idx_map[self.curr_sent] = self.num_sents
-                self.times.append(1)
-                self.num_sents += 1
-                self.add_word(self.curr_sent)
-            self.curr_sent = ""
-            return []
-        self.curr_sent += c
-        topk = sorted([(-self.times[i], self.sents[i]) for i in self.starts_with()])
-        return [s[1] for s in topk[: self.k]]
+        if c != "#":
+            self.curr_sent += c
+            topk = sorted([(-self.times[i], self.sents[i]) for i in self.starts_with()])
+            return [s[1] for s in topk[: self.k]]
+        if self.curr_sent in self.idx_map:
+            self.times[self.idx_map[self.curr_sent]] += 1
+        else:
+            self.sents.append(self.curr_sent)
+            self.idx_map[self.curr_sent] = self.num_sents
+            self.times.append(1)
+            self.num_sents += 1
+            self.add_word(self.curr_sent)
+        self.curr_sent = ""
+        return []
 
     def starts_with(self):
         node = self.trie
