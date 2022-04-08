@@ -53,9 +53,15 @@ Let's now take a step back and see what we have. Our experimenting has shown us 
 word 2 is the concatenation of a 5-letter palindrome and then the reverse of word 1,
 that the combined pair of word 1 and word 2 is a palindrome.
 
+[C, A, T,| 1, 2, 3, 2, 1, T, A, C]
+ word 1           word 2
+
 Another case can also be seen here. If instead word 1 was the concatenation of the
 reverse of word 2 and then a 5-letter palindrome, the combined pair of word 1 and word 2
 would also be a palindrome.
+
+[C, A, T, 1, 2, 3, 2, 1,| T, A, C]
+         word 1           word 2
 
 Don't forget that the empty string is also a valid word. How could we form a palindrome
 with it? This is an important edge case we'll now think about.
@@ -125,20 +131,17 @@ The simplest way to put all of this into code is to iterate over the list of wor
 do the following for each word.
 
     1. Check if the reverse of word is present. If it is, then we have a case 1 pair by
-appending the reverse onto the end of word.
+appending the reverse onto the end of word. In addition, we should check that the index
+of the reversed word is not the same as the current word since this would mean that a
+word is forming a palindrome with itself (which is not allowed).
 
-    2. For each suffix of word, check if the suffix is a palindrome. if it is a
+    2. For each suffix of word, check if the suffix is a palindrome. If it is a
 palindrome, then reverse the remaining prefix and check if it's in the list. If it is,
 then this is an example of case 2.
 
-    3. For each prefix of word, check if the prefix is a palindrome. if it is a
+    3. For each prefix of word, check if the prefix is a palindrome. If it is a
 palindrome, then reverse the remaining suffix and check if it's in the list. If it is,
 then this is an example of case 3.
-
-If we do this for each word, we will get all palindrome pairs exactly once. The most
-challenging idea here is that we are treating our current word as word 2 for case 2. The
-reason we do this is because treating it as word 1 would mean we had to guess possible
-prefixes for word 2, which would be very, very inefficient.
 
 To ensure the implementation is efficient, we can put all the words into a hash table
 with the word as the key and the original index as the value (as the output must be the
@@ -150,11 +153,11 @@ want to add a pair that includes that same word twice. This case only comes up i
 1, because case 1 is the only case that deals with pairs where the words are of equal
 length.
 
-Examples of case 2 can be found by calling remaining_suffixes and then reversing each of
-the suffixes found and looking them up.
-
-Examples of case 3 can be found by calling remaining_prefixes and then reversing each of
+Examples of case 2 can be found by calling remaining_prefixes and then reversing each of
 the prefixes found and looking them up.
+
+Examples of case 3 can be found by calling remaining_suffixes and then reversing each of
+the suffixes found and looking them up.
 
 It would be possible to simplify further (not done here) by recognizing that case 1 is
 really just a special case of case 2 and case 3. This is because the empty string is a
