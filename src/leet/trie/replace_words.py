@@ -55,14 +55,14 @@ class Trie:
         node.is_end = True
 
     def search(self, word):
-        node, sol = self.root, ""
+        node, root = self.root, ""
         for char in word:
             node = node.children.get(char, None)
             if not node:
                 return word
-            sol += char
+            root += char
             if node.is_end:
-                return sol
+                return root
         return word
 
 
