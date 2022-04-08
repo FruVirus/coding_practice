@@ -106,14 +106,14 @@ prefixes of all words (in the worst case, we have no overlapping prefixes).
 def sol(words):
     sol, trie = [], build_trie(words)
 
-    def backtrack(step, word_squares):
-        if step == len(words[0]):
+    def backtrack(index, word_squares):
+        if index == len(words[0]):
             sol.append(word_squares[:])
             return
-        prefix = "".join([word[step] for word in word_squares])
+        prefix = "".join([word[index] for word in word_squares])
         for word in starts_with(prefix, words, trie):
             word_squares.append(word)
-            backtrack(step + 1, word_squares)
+            backtrack(index + 1, word_squares)
             word_squares.pop()
 
     for word in words:
@@ -126,12 +126,7 @@ def build_trie(words):
     for i, word in enumerate(words):
         node = trie
         for char in word:
-            if char in node:
-                node = node[char]
-            else:
-                new_node = {"#": []}
-                node[char] = new_node
-                node = new_node
+            node = node.setdefault(char, {"#": []})
             node["#"].append(i)
     return trie
 
