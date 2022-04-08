@@ -100,9 +100,7 @@ class Sol:
     def add_word(self, word):
         node = self.trie
         for char in word:
-            if char not in node:
-                node[char] = {"$": []}
-            node = node[char]
+            node = node.setdefault(char, {"$": []})
             node["$"].append(self.idx_map[word])
 
     def input(self, c):
