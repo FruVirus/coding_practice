@@ -26,6 +26,6 @@ isSameTree(p, q): O(n).
 def sol(p, q):
     if not (p or q):
         return True
-    if not (p and q) or p.val != q.val:
+    if not (p and q and p.val == q.val):
         return False
     return sol(p.left, q.left) and sol(p.right, q.right)
