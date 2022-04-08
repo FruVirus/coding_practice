@@ -178,16 +178,16 @@ palindromePairs(words): O((n + k)^2).
 
 
 def sol(words):
-    idx_map, sol = {word: i for i, word in enumerate(words)}, []
+    sol, idx_map = [], {word: i for i, word in enumerate(words)}
 
     def is_palindrome(word):
         return word == word[::-1]
 
-    def remaining_suffixes(word):
-        return [word[i + 1 :] for i in range(len(word)) if is_palindrome(word[: i + 1])]
-
     def remaining_prefixes(word):
         return [word[:i] for i in range(len(word)) if is_palindrome(word[i:])]
+
+    def remaining_suffixes(word):
+        return [word[i + 1 :] for i in range(len(word)) if is_palindrome(word[: i + 1])]
 
     for i, word in enumerate(words):
         reversed_word = word[::-1]
