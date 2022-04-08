@@ -45,12 +45,10 @@ def sol_td(matrix):
     def dp(i, j):
         if i == n:
             return 0
-        if j < 0 or j > n - 1:
-            return float("inf")
         if (i, j) not in memo:
             above = dp(i + 1, j)
-            above_left = dp(i + 1, j - 1)
-            above_right = dp(i + 1, j + 1)
+            above_left = float("inf") if j == 0 else dp(i + 1, j - 1)
+            above_right = float("inf") if j == n - 1 else dp(i + 1, j + 1)
             memo[(i, j)] = matrix[i][j] + min(above, above_left, above_right)
         return memo[(i, j)]
 
