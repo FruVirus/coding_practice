@@ -45,10 +45,10 @@ def sol_bu(prices):
 
 
 def sol_td(prices):
-    memo = {}
+    memo, n = {}, len(prices)
 
     def dp(i, holding):
-        if i >= len(prices):
+        if i >= n:
             return 0
         if (i, holding) not in memo:
             do_nothing = dp(i + 1, holding)
