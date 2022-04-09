@@ -120,10 +120,10 @@ def sol_bu(k, prices):
 
 
 def sol_td(k, prices):
-    memo = {}
+    memo, n = {}, len(prices)
 
     def dp(i, k, holding):
-        if k == 0 or i == len(prices):
+        if k == 0 or i == n:
             return 0
         if (i, k, holding) not in memo:
             do_nothing = dp(i + 1, k, holding)
