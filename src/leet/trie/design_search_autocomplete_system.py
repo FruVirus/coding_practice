@@ -121,8 +121,8 @@ class Sol:
 
     def starts_with(self):
         node = self.trie
-        for char in self.curr_sent:
-            if char not in node:
+        for word in self.curr_sent:
+            if word not in node:
                 return []
-            node = node[char]
+            node = node[word]
         return node["$"]
