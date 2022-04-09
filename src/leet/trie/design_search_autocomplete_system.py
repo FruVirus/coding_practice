@@ -95,13 +95,13 @@ class Sol:
         self.curr_sent, self.num_sents = "", len(self.sents)
         self.idx_map, self.trie = {s: i for i, s in enumerate(self.sents)}, {}
         for s in self.sents:
-            self.add_word(s)
+            self.add_sent(s)
 
-    def add_word(self, word):
+    def add_sent(self, sent):
         node = self.trie
-        for char in word:
-            node = node.setdefault(char, {"$": []})
-            node["$"].append(self.idx_map[word])
+        for word in sent:
+            node = node.setdefault(word, {"$": []})
+            node["$"].append(self.idx_map[sent])
 
     def input(self, c):
         if c != "#":
@@ -115,7 +115,7 @@ class Sol:
             self.idx_map[self.curr_sent] = self.num_sents
             self.times.append(1)
             self.num_sents += 1
-            self.add_word(self.curr_sent)
+            self.add_sent(self.curr_sent)
         self.curr_sent = ""
         return []
 
