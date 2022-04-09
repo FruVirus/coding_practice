@@ -130,8 +130,8 @@ def build_trie(words):
     for i, word in enumerate(words):
         node = trie
         for char in word:
-            node = node.setdefault(char, {"#": []})
-            node["#"].append(i)
+            node = node.setdefault(char, {"$": []})
+            node["$"].append(i)
     return trie
 
 
@@ -141,4 +141,4 @@ def starts_with(prefix, words, trie):
         if char not in node:
             return []
         node = node[char]
-    return [words[i] for i in node["#"]]
+    return [words[i] for i in node["$"]]
