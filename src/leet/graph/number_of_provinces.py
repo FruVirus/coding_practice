@@ -22,26 +22,28 @@ Time
 
 findCircleNum(is_connected): O(n^2).
 
+Sol:
+    def __init__(self, size): O(n).
+    def connected(self, x, y): O(1).
+    def find(self, x): O(1).
+    def union(self, x, y): O(1).
+
 Space
 -----
 
 findCircleNum(is_connected): O(n).
+
+Sol:
+    def __init__(self, size): O(n).
 """
 
 
-def sol(is_connected):
-    n = len(is_connected)
-    dset = Sol(n)
-    for i in range(n):
-        for j in range(i + 1, n):
-            if is_connected[i][j] == 1:
-                dset.union(i, j)
-    return dset.get_count()
-
-
-class Sol:
+class DisjointSet:
     def __init__(self, size):
         self.count, self.rank, self.root = size, [1] * size, list(range(size))
+
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
 
     def find(self, x):
         if x != self.root[x]:
@@ -61,3 +63,13 @@ class Sol:
                 if self.rank[rootx] == self.rank[rooty]:
                     self.rank[rooty] += 1
             self.count -= 1
+
+
+def sol(is_connected):
+    n = len(is_connected)
+    dset = DisjointSet(n)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if is_connected[i][j] == 1:
+                dset.union(i, j)
+    return dset.get_count()
