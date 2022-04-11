@@ -211,10 +211,10 @@ class SLL:
             prev.next = curr.next
 
     def get_last(self):
-        node = self.head
-        while node.next is not None:
-            node = node.next
-        return node
+        x = self.head
+        while x.next is not None:
+            x = x.next
+        return x
 
     @staticmethod
     def get_middle(h):
