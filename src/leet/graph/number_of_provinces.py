@@ -26,6 +26,7 @@ Sol:
     def __init__(self, size): O(n).
     def connected(self, x, y): O(1).
     def find(self, x): O(1).
+    def get_count(self): O(1).
     def union(self, x, y): O(1).
 
 Space
