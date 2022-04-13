@@ -8,6 +8,9 @@ between nodes a_i and b_i in the graph.
 
 Return true if the edges of the given graph make up a valid tree, and false otherwise.
 
+Intuition
+---------
+
 1. G is fully connected if, and only if, we started a depth-first search from a single
 source and discovered all nodes in G during it.
 
@@ -44,11 +47,10 @@ from src.leet.graph.number_of_provinces import DisjointSet
 def sol_dfs(n, edges):
     if len(edges) != n - 1:
         return False
-    adj_list = [[] for _ in range(n)]
+    adj_list, seen, stack = [[] for _ in range(n)], {0}, [0]
     for u, v in edges:
         adj_list[u].append(v)
         adj_list[v].append(u)
-    seen, stack = {0}, [0]
     while stack:
         node = stack.pop()
         for v in adj_list[node]:
