@@ -124,7 +124,6 @@ Time
 
 calcEquation_dfs(equations, values, queries): O(m * n), where m is the number of queries
 and n is the number of input equations.
-
 calcEquation_dset(equations, values, queries): O((m + n) * alpha(n)).
 
 Space
