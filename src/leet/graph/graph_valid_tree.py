@@ -8,9 +8,17 @@ between nodes a_i and b_i in the graph.
 
 Return true if the edges of the given graph make up a valid tree, and false otherwise.
 
-According to the definition of tree on Wikipedia: “a tree is an undirected graph in
-which any two vertices are connected by exactly one path. In other words, any connected
-graph without simple cycles is a tree.”
+1. G is fully connected if, and only if, we started a depth-first search from a single
+source and discovered all nodes in G during it.
+
+2. G contains no cycles if, and only if, the depth-first search never goes back to an
+already discovered node. We need to be careful though not to count trivial cycles of the
+form A → B → A that occur with most implementations of undirected edges.
+
+For the graph to be a valid tree, it must have exactly n - 1 edges. Any less, and it
+can't possibly be fully connected. Any more, and it has to contain cycles. Additionally,
+if the graph is fully connected and contains exactly n - 1 edges, it can't possibly
+contain a cycle, and therefore must be a tree!
 
 Complexity
 ==========
@@ -18,43 +26,39 @@ Complexity
 Time
 ----
 
-validTree(n, edges): O(n), where n is the number of nodes.
+validTree_dfs(n, edges) and validTree_dset(n, edges): O(n), where n is the number of
+nodes.
 
 Space
 -----
 
-validTree(n, edges): O(n).
+validTree_dfs(n, edges) and validTree_dset(n, edges): O(n), where n is the number of
+nodes.
 """
 
 
-class DisjointSet:
-    def __init__(self, size):
-        self.count, self.rank, self.root = size, [1] * size, list(range(size))
-
-    def connected(self, x, y):
-        return self.find(x) == self.find(y)
-
-    def find(self, x):
-        if x != self.root[x]:
-            self.root[x] = self.find(self.root[x])
-        return self.root[x]
-
-    def get_count(self):
-        return self.count
-
-    def union(self, x, y):
-        rootx, rooty = self.find(x), self.find(y)
-        if rootx != rooty:
-            if self.rank[rootx] > self.rank[rooty]:
-                self.root[rooty] = rootx
-            else:
-                self.root[rootx] = rooty
-                if self.rank[rootx] == self.rank[rooty]:
-                    self.rank[rooty] += 1
-            self.count -= 1
+# Repository Library
+from src.leet.graph.number_of_provinces import DisjointSet
 
 
-def sol(n, edges):
+def sol_dfs(n, edges):
+    if len(edges) != n - 1:
+        return False
+    adj_list = [[] for _ in range(n)]
+    for u, v in edges:
+        adj_list[u].append(v)
+        adj_list[v].append(u)
+    seen, stack = {0}, [0]
+    while stack:
+        node = stack.pop()
+        for v in adj_list[node]:
+            if v not in seen:
+                seen.add(v)
+                stack.append(v)
+    return len(seen) == n
+
+
+def sol_dset(n, edges):
     if len(edges) != n - 1:
         return False
     dset = DisjointSet(n)
