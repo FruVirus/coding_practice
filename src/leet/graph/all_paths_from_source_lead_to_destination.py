@@ -66,7 +66,7 @@ leadsToDestination(n, edges, src, dest): O(v + e).
 """
 
 
-def sol(n, edges, source, destination):
+def sol(n, edges, src, dest):
     adj_list, done = [[] for _ in range(n)], [None] * n
     for u, v in edges:
         adj_list[u].append(v)
@@ -75,7 +75,7 @@ def sol(n, edges, source, destination):
         if done[node] is not None:
             return done[node]
         if len(adj_list[node]) == 0:
-            return node == destination
+            return node == dest
         done[node] = False
         for next_node in adj_list[node]:
             if not backtrack(next_node):
@@ -83,4 +83,4 @@ def sol(n, edges, source, destination):
         done[node] = True
         return True
 
-    return backtrack(source)
+    return backtrack(src)
