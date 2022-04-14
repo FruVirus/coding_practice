@@ -61,6 +61,23 @@ At the same time, we also push all the adjacent cells in a priority queue
 differenceMatrix, i.e., the cell with minimum absolute difference with its adjacent
 cells would be at the top of the queue.
 
+We begin by adding the source cell (x = 0, y = 0) in the queue. Now, until we have
+visited the destination cell or the queue is not empty, we visit each cell in the queue
+sorted in the order of priority. The less is the difference value (absolute difference
+with adjacent cell) of a cell, the higher is its priority.
+
+    - Get the cell from the top of the queue curr and visit the current cell.
+
+    - For each of the 4 cells adjacent to the current cell, calculate the maxDifference
+which is the maximum absolute difference to reach the adjacent cell
+(adjacentX, adjacentY) from current cell (curr.x, curr.y).
+
+    - If the current value of the adjacent cell (adjacentX, adjacentY) in the
+difference matrix is greater than the maxDifference, we must update that value with
+maxDifference. In other words, we have found that the path from the current cell to the
+adjacent cell takes lesser efforts than the other paths that have reached the adjacent
+cell so far. Also, we must add this updated difference value in the queue.
+
 Ideally, for updating the priority queue, we must delete the old value and reinsert with
 the new maxDifference value. But, as we know that the updated maximum value is always
 lesser than the old value and would be popped from the queue and visited before the old
@@ -124,7 +141,7 @@ def sol_dijkstra(heights):
     visited = [[False] * n for _ in range(m)]
     heap = [(0, 0, 0)]
     while heap:
-        difference, row, col = heapq.heappop(heap)
+        _, row, col = heapq.heappop(heap)
         visited[row][col] = True
         for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             r, c = row + x, col + y
