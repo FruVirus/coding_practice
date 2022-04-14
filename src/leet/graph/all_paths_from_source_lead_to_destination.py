@@ -71,16 +71,16 @@ def sol(n, edges, src, dest):
     for u, v in edges:
         adj_list[u].append(v)
 
-    def backtrack(node):
-        if done[node] is not None:
-            return done[node]
-        if len(adj_list[node]) == 0:
-            return node == dest
-        done[node] = False
-        for next_node in adj_list[node]:
-            if not backtrack(next_node):
+    def backtrack(u):
+        if done[u] is not None:
+            return done[u]
+        if len(adj_list[u]) == 0:
+            return u == dest
+        done[u] = False
+        for v in adj_list[u]:
+            if not backtrack(v):
                 return False
-        done[node] = True
+        done[u] = True
         return True
 
     return backtrack(src)
