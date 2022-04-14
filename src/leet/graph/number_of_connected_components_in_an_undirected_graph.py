@@ -54,8 +54,7 @@ def sol_dfs(n, edges):
             seen.add(u)
             stack = [u]
             while stack:
-                node = stack.pop()
-                for v in adj_list[node]:
+                for v in adj_list[stack.pop()]:
                     if v not in seen:
                         seen.add(v)
                         stack.append(v)
