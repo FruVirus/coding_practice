@@ -74,7 +74,7 @@ O(E * lg V) if all vertices are reachable from the source.
 Time
 ----
 
-dijkstra(): O(E * lg V) if E = o(V^2 / lg V) and using a min-priority queue, O(V^2)
+dijkstra(): O(V + E * lg V) if E = o(V^2 / lg V) and using a min-priority queue, O(V^2)
 using an array.
 """
 
