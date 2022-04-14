@@ -20,13 +20,36 @@ Complexity
 Time
 ----
 
+validPath_bfs(n, edges, source, destination) and
 validPath_dfs(n, edges, source, destination): O(v + e).
 
 Space
 -----
 
-validPath_dfs(n, edges, source, destination): O(v + e).
+validPath_bfs(n, edges, source, destination) and
+validPath_dfs(n, edges, source, destination): O(v).
 """
+
+
+# Standard Library
+from collections import deque
+
+
+def sol_bfs(n, edges, source, destination):
+    adj_list = [[] for _ in range(n)]
+    for u, v in edges:
+        adj_list[u].append(v)
+        adj_list[v].append(u)
+    seen, queue = set(), deque([source])
+    while queue:
+        node = queue.popleft()
+        if node == destination:
+            return True
+        for v in adj_list[node]:
+            if v not in seen:
+                seen.add(v)
+                queue.append(v)
+    return False
 
 
 def sol_dfs(n, edges, source, destination):
@@ -39,8 +62,7 @@ def sol_dfs(n, edges, source, destination):
         node = stack.pop()
         if node == destination:
             return True
-        if node in seen:
-            continue
-        seen.add(node)
-        stack.extend(adj_list[node])
+        if node not in seen:
+            seen.add(node)
+            stack.extend(adj_list[node])
     return False
