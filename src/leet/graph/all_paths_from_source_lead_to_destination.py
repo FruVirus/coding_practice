@@ -4,7 +4,7 @@ All Paths from Source Lead to Destination
 
 Given the edges of a directed graph where edges[i] = [a_i, b_i] indicates there is an
 edge between nodes a_i and b_i, and two nodes source and destination of this graph,
-determine whether or not all paths starting from source eventually, end at destination,
+determine whether or not all paths starting from source eventually end at destination,
 that is:
 
     - At least one path exists from the source node to the destination node
@@ -57,12 +57,12 @@ Complexity
 Time
 ----
 
-leadsToDestination(n, edges, source, destination): O(v).
+leadsToDestination(n, edges, src, dest): O(v).
 
 Space
 -----
 
-leadsToDestination(n, edges, source, destination): O(v + e).
+leadsToDestination(n, edges, src, dest): O(v + e).
 """
 
 
