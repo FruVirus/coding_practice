@@ -87,7 +87,7 @@ def sol_dset(s, pairs):
     root_to_component = defaultdict(list)
     for i in range(n):
         root_to_component[dset.find(i)].append(i)
-    for root, components in root_to_component.items():
+    for components in root_to_component.values():
         chars = sorted([s[i] for i in components])
         for c, i in zip(chars, components):
             s[i] = c

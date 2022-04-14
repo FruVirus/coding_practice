@@ -74,16 +74,15 @@ def sol_two(grid):
         keep_going = False
         for row in range(m):
             for col in range(n):
-                if grid[row][col] == minutes:
-                    for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                        r, c = row + x, col + y
-                        if 0 <= r < m and 0 <= c < n and grid[r][c] == 1:
-                            grid[r][c] = minutes + 1
-                            keep_going = True
+                if grid[row][col] != minutes:
+                    continue
+                for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                    r, c = row + x, col + y
+                    if 0 <= r < m and 0 <= c < n and grid[r][c] == 1:
+                        grid[r][c] = minutes + 1
+                        keep_going = True
         if keep_going:
             minutes += 1
-    for row in range(m):
-        for col in range(n):
-            if grid[row][col] == 1:
-                return -1
+    if any(grid[row][col] == 1 for row in range(m) for col in range(n)):
+        return -1
     return minutes - 2
