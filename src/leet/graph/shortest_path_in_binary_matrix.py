@@ -14,11 +14,6 @@ different and they share an edge or a corner).
 
 The length of a clear path is the number of visited cells of this path.
 
-Intuition
----------
-
-
-
 Complexity
 ==========
 
@@ -42,20 +37,12 @@ def sol(grid):
     if grid[0][0] == 1 or grid[-1][-1] == 1:
         return -1
     n, queue, visited = len(grid), deque([(0, 0, 1)]), {(0, 0)}
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
     while queue:
         row, col, dist = queue.popleft()
         if row == col == n - 1:
             return dist
-        for x, y in [
-            (-1, 0),
-            (1, 0),
-            (0, -1),
-            (0, 1),
-            (-1, -1),
-            (-1, 1),
-            (1, -1),
-            (1, 1),
-        ]:
+        for x, y in directions:
             r, c = row + x, col + y
             if 0 <= r < n and 0 <= c < n and (r, c) not in visited and grid[r][c] == 0:
                 visited.add((r, c))
