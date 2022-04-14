@@ -27,7 +27,7 @@ Space
 -----
 
 validPath_bfs(n, edges, source, destination) and
-validPath_dfs(n, edges, source, destination): O(v).
+validPath_dfs(n, edges, source, destination): O(v + e).
 """
 
 

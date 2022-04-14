@@ -14,13 +14,31 @@ Complexity
 Time
 ----
 
-allPathsSourceTarget_dfs(graph): O(2^n * n), where n is the number of nodes.
+allPathsSourceTarget_bfs(graph) and allPathsSourceTarget_dfs(graph): O(2^n * n), where
+n is the number of nodes.
 
 Space
 -----
 
-allPathsSourceTarget_dfs(graph): O(2^n * n).
+allPathsSourceTarget_bfs(graph) and allPathsSourceTarget_dfs(graph): O(2^n * n).
 """
+
+
+# Standard Library
+from collections import deque
+
+
+def sol_bfs(graph):
+    queue, sol = deque([(0, [0])]), []
+    while queue:
+        node, vlist = queue.popleft()
+        for v in graph[node]:
+            path = vlist + [v]
+            if v == len(graph) - 1:
+                sol.append(path)
+            else:
+                queue.append((v, path))
+    return sol
 
 
 def sol_dfs(graph):
