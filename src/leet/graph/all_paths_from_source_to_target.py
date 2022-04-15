@@ -31,8 +31,8 @@ from collections import deque
 def sol_bfs(graph):
     queue, sol = deque([(0, [0])]), []
     while queue:
-        node, vlist = queue.popleft()
-        for v in graph[node]:
+        u, vlist = queue.popleft()
+        for v in graph[u]:
             path = vlist + [v]
             if v == len(graph) - 1:
                 sol.append(path)
@@ -44,9 +44,9 @@ def sol_bfs(graph):
 def sol_dfs(graph):
     stack, sol = [(0, [])], []
     while stack:
-        node, vlist = stack.pop()
-        if node == len(graph) - 1:
-            sol.append(vlist + [node])
+        u, vlist = stack.pop()
+        if u == len(graph) - 1:
+            sol.append(vlist + [u])
         else:
-            stack.extend((v, vlist + [node]) for v in graph[node])
+            stack.extend((v, vlist + [u]) for v in graph[u])
     return sol
