@@ -29,15 +29,13 @@ from collections import deque
 
 
 def sol_bfs(graph):
-    queue, sol = deque([(0, [0])]), []
+    queue, sol = deque([(0, [])]), []
     while queue:
         u, vlist = queue.popleft()
-        for v in graph[u]:
-            path = vlist + [v]
-            if v == len(graph) - 1:
-                sol.append(path)
-            else:
-                queue.append((v, path))
+        if u == len(graph) - 1:
+            sol.append(vlist + [u])
+        else:
+            queue.extend((v, vlist + [u]) for v in graph[u])
     return sol
 
 
