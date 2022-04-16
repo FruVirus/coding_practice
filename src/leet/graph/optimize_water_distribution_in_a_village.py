@@ -87,7 +87,7 @@ def sol_prim(n, wells, pipes):
         adj_list[v].append((cost, u))
     heapq.heapify(adj_list[0])
     edges, mst, total_cost = adj_list[0], {0}, 0
-    while len(mst) <= n:
+    while len(mst) < n + 1:
         cost, u = heapq.heappop(edges)
         if u not in mst:
             mst.add(u)
