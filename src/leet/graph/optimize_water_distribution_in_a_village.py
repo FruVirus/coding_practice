@@ -68,14 +68,13 @@ from src.leet.graph.number_of_provinces import DisjointSet
 
 def sol_kruskal(n, wells, pipes):
     edges = [(cost, 0, i) for i, cost in enumerate(wells, 1)]
-    for one, two, cost in pipes:
-        edges.append((cost, one, two))
-    edges.sort(key=lambda x: x[0])
+    for u, v, cost in pipes:
+        edges.append((cost, u, v))
     dset, total_cost = DisjointSet(n + 1), 0
-    for cost, one, two in edges:
-        if not dset.connected(one, two):
+    for cost, u, v in sorted(edges, key=lambda x: x[0]):
+        if not dset.connected(u, v):
             total_cost += cost
-            dset.union(one, two)
+            dset.union(u, v)
     return total_cost
 
 
@@ -83,17 +82,17 @@ def sol_prim(n, wells, pipes):
     adj_list = [[] for _ in range(n + 1)]
     for i, cost in enumerate(wells, 1):
         adj_list[0].append((cost, i))
-    for one, two, cost in pipes:
-        adj_list[one].append((cost, two))
-        adj_list[two].append((cost, one))
+    for u, v, cost in pipes:
+        adj_list[u].append((cost, v))
+        adj_list[v].append((cost, u))
     heapq.heapify(adj_list[0])
     edges, mst, total_cost = adj_list[0], {0}, 0
     while len(mst) <= n:
-        cost, house = heapq.heappop(edges)
-        if house not in mst:
-            mst.add(house)
+        cost, u = heapq.heappop(edges)
+        if u not in mst:
+            mst.add(u)
             total_cost += cost
-            for new_cost, new_house in adj_list[house]:
-                if new_house not in mst:
-                    heapq.heappush(edges, (new_cost, new_house))
+            for new_cost, v in adj_list[u]:
+                if v not in mst:
+                    heapq.heappush(edges, (new_cost, v))
     return total_cost

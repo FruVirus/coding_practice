@@ -65,7 +65,7 @@ findCheapestPrice(): O(v).
 def sol(n, flights, src, dst, k):
     prev, curr = [float("inf")] * n, [float("inf")] * n
     prev[src] = curr[src] = 0
-    for k_ in range(k + 1):
+    for _ in range(k + 1):
         for u, v, w in flights:
             du, dv = prev[u], curr[v]
             if dv > du + w:
