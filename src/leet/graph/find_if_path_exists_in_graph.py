@@ -51,16 +51,15 @@ def sol_bfs(n, edges, src, dst):
 
 
 def sol_dfs(n, edges, src, dst):
-    adj_list = [[] for _ in range(n)]
+    adj_list, stack, seen = [[] for _ in range(n)], [src], set()
     for u, v in edges:
-        adj_list[u].append(v)
-        adj_list[v].append(u)
-    seen, stack = set(), [src]
+        adj_list[u].append(u)
+        adj_list[v].append(v)
     while stack:
-        node = stack.pop()
-        if node == dst:
+        u = stack.pop()
+        if u == dst:
             return True
-        if node not in seen:
-            seen.add(node)
-            stack.extend(adj_list[node])
+        if u not in seen:
+            seen.add(u)
+            stack.extend(adj_list[u])
     return False
