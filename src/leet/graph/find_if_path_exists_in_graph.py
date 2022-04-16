@@ -36,19 +36,17 @@ from collections import deque
 
 
 def sol_bfs(n, edges, src, dst):
-    adj_list = [[] for _ in range(n)]
+    adj_list, queue, seen = [[] for _ in range(n)], deque([src]), set()
     for u, v in edges:
         adj_list[u].append(v)
         adj_list[v].append(u)
-    seen, queue = set(), deque([src])
     while queue:
-        node = queue.popleft()
-        if node == dst:
+        u = queue.popleft()
+        if u == dst:
             return True
-        for v in adj_list[node]:
-            if v not in seen:
-                seen.add(v)
-                queue.append(v)
+        if u not in seen:
+            seen.add(u)
+            queue.extend(adj_list[u])
     return False
 
 
