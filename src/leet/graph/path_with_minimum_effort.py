@@ -42,8 +42,7 @@ Dijkstra Approach
 If we observe, the problem is similar to finding the shortest path from a source cell to
 a destination cell. Here, the shortest path is the one with minimum absolute difference
 between every adjacent cells in that path. Also, since there is height associated with
-each cell, simple BFS traversal won't be sufficient (since the height is effectively a
-weight between cells).
+each cell, simple BFS traversal won't be sufficient.
 
 The absolute difference between adjacent cells A and B can be perceived as the weight of
 an edge from cell A to cell B. Thus, we could use Dijkstra's Algorithm which is used to
@@ -63,7 +62,7 @@ differenceMatrix, i.e., the cell with minimum absolute difference with its adjac
 cells would be at the top of the queue.
 
 We begin by adding the source cell (x = 0, y = 0) in the queue. Now, until we have
-visited the destination cell or the queue is not empty, we visit each cell in the queue
+visited the destination cell or the queue is empty, we visit each cell in the queue
 sorted in the order of priority. The less is the difference value (absolute difference
 with adjacent cell) of a cell, the higher is its priority.
 
@@ -139,8 +138,7 @@ def sol_dijkstra(heights):
     m, n = len(heights), len(heights[0])
     effort = [[float("inf")] * n for _ in range(m)]
     effort[0][0] = 0
-    visited = [[False] * n for _ in range(m)]
-    heap = [(0, 0, 0)]
+    heap, visited = [(0, 0, 0)], [[False] * n for _ in range(m)]
     while heap:
         _, row, col = heapq.heappop(heap)
         visited[row][col] = True
