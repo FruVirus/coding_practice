@@ -73,8 +73,8 @@ def sol_kruskal(n, wells, pipes):
     dset, total_cost = DisjointSet(n + 1), 0
     for cost, u, v in sorted(edges, key=lambda x: x[0]):
         if not dset.connected(u, v):
-            total_cost += cost
             dset.union(u, v)
+            total_cost += cost
     return total_cost
 
 
