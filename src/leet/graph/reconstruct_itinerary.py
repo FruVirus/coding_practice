@@ -67,23 +67,22 @@ from collections import defaultdict
 
 
 def sol(tickets):
-    graph, visited, sol = defaultdict(list), {}, []
-    for ticket in tickets:
-        origin, dest = ticket[0], ticket[1]
-        graph[origin].append(dest)
-    for origin, dests in graph.items():
-        dests.sort()
-        visited[origin] = [False] * len(dests)
+    adj_list, visited, sol = defaultdict(list), {}, []
+    for src, dst in tickets:
+        adj_list[src].append(dst)
+    for src, dsts in adj_list.items():
+        dsts.sort()
+        visited[src] = [False] * len(dsts)
 
-    def backtrack(origin, route):
+    def backtrack(src, route):
         if len(route) == len(tickets) + 1:
             sol.extend(route)
             return True
-        for i, dest in enumerate(graph[origin]):
-            if not visited[origin][i]:
-                visited[origin][i] = True
-                done = backtrack(dest, route + [dest])
-                visited[origin][i] = False
+        for i, dst in enumerate(adj_list[src]):
+            if not visited[src][i]:
+                visited[src][i] = True
+                done = backtrack(dst, route + [dst])
+                visited[src][i] = False
                 if done:
                     return True
         return False
