@@ -62,8 +62,6 @@ minCostToSupplyWater_prim(n, wells, pipes): O(n + m).
 # Standard Library
 import heapq
 
-from collections import defaultdict
-
 # Repository Library
 from src.leet.graph.number_of_provinces import DisjointSet
 
@@ -82,7 +80,7 @@ def sol_kruskal(n, wells, pipes):
 
 
 def sol_prim(n, wells, pipes):
-    adj_list = defaultdict(list)
+    adj_list = [[] for _ in range(n + 1)]
     for i, cost in enumerate(wells, 1):
         adj_list[0].append((cost, i))
     for one, two, cost in pipes:
