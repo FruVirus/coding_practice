@@ -20,14 +20,14 @@ Complexity
 Time
 ----
 
-validPath_bfs(n, edges, source, destination) and
-validPath_dfs(n, edges, source, destination): O(v + e).
+validPath_bfs(n, edges, src, dst) and
+validPath_dfs(n, edges, src, dst): O(v + e).
 
 Space
 -----
 
-validPath_bfs(n, edges, source, destination) and
-validPath_dfs(n, edges, source, destination): O(v + e).
+validPath_bfs(n, edges, src, dst) and
+validPath_dfs(n, edges, src, dst): O(v + e).
 """
 
 
@@ -35,15 +35,15 @@ validPath_dfs(n, edges, source, destination): O(v + e).
 from collections import deque
 
 
-def sol_bfs(n, edges, source, destination):
+def sol_bfs(n, edges, src, dst):
     adj_list = [[] for _ in range(n)]
     for u, v in edges:
         adj_list[u].append(v)
         adj_list[v].append(u)
-    seen, queue = set(), deque([source])
+    seen, queue = set(), deque([src])
     while queue:
         node = queue.popleft()
-        if node == destination:
+        if node == dst:
             return True
         for v in adj_list[node]:
             if v not in seen:
@@ -52,15 +52,15 @@ def sol_bfs(n, edges, source, destination):
     return False
 
 
-def sol_dfs(n, edges, source, destination):
+def sol_dfs(n, edges, src, dst):
     adj_list = [[] for _ in range(n)]
     for u, v in edges:
         adj_list[u].append(v)
         adj_list[v].append(u)
-    seen, stack = set(), [source]
+    seen, stack = set(), [src]
     while stack:
         node = stack.pop()
-        if node == destination:
+        if node == dst:
             return True
         if node not in seen:
             seen.add(node)
