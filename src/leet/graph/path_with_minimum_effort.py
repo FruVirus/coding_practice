@@ -145,9 +145,8 @@ def sol_dijkstra(heights):
         for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             r, c = row + x, col + y
             if 0 <= r < m and 0 <= c < n and not visited[r][c]:
-                curr_effort = abs(heights[row][col] - heights[r][c])
-                max_effort = max(curr_effort, effort[row][col])
-                if effort[r][c] > max_effort:
-                    effort[r][c] = max_effort
-                    heapq.heappush(heap, (max_effort, r, c))
+                effort_ = max(abs(heights[row][col] - heights[r][c]), effort[row][col])
+                if effort[r][c] > effort_:
+                    effort[r][c] = effort_
+                    heapq.heappush(heap, (effort_, r, c))
     return effort[-1][-1]
