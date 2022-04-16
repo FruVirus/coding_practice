@@ -30,11 +30,9 @@ networkDelayTime(times, n, k): O(n + e).
 # Standard Library
 import heapq
 
-from collections import defaultdict
-
 
 def sol(times, n, k):
-    adj_list = defaultdict(list)
+    adj_list = [[] for _ in range(n + 1)]
     for u, v, w in times:
         adj_list[u].append((v, w))
     heap, visited, max_time = [(0, k)], set(), 0
