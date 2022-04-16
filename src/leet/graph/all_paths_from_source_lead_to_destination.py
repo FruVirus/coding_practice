@@ -57,16 +57,16 @@ Complexity
 Time
 ----
 
-leadsToDestination(n, edges, src, dest): O(v).
+leadsToDestination(n, edges, src, dst): O(v).
 
 Space
 -----
 
-leadsToDestination(n, edges, src, dest): O(v + e).
+leadsToDestination(n, edges, src, dst): O(v + e).
 """
 
 
-def sol(n, edges, src, dest):
+def sol(n, edges, src, dst):
     adj_list, done = [[] for _ in range(n)], [None] * n
     for u, v in edges:
         adj_list[u].append(v)
@@ -75,7 +75,7 @@ def sol(n, edges, src, dest):
         if done[u] is not None:
             return done[u]
         if len(adj_list[u]) == 0:
-            return u == dest
+            return u == dst
         done[u] = False
         for v in adj_list[u]:
             if not backtrack(v):
