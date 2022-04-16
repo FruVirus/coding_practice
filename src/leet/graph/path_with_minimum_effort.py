@@ -42,7 +42,8 @@ Dijkstra Approach
 If we observe, the problem is similar to finding the shortest path from a source cell to
 a destination cell. Here, the shortest path is the one with minimum absolute difference
 between every adjacent cells in that path. Also, since there is height associated with
-each cell, simple BFS traversal won't be sufficient.
+each cell, simple BFS traversal won't be sufficient (since the height is effectively a
+weight between cells).
 
 The absolute difference between adjacent cells A and B can be perceived as the weight of
 an edge from cell A to cell B. Thus, we could use Dijkstra's Algorithm which is used to
