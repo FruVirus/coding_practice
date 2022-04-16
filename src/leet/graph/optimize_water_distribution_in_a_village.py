@@ -79,20 +79,20 @@ def sol_kruskal(n, wells, pipes):
 
 
 def sol_prim(n, wells, pipes):
-    adj_list = [[] for _ in range(n + 1)]
+    edges = [[] for _ in range(n + 1)]
     for i, cost in enumerate(wells, 1):
-        adj_list[0].append((cost, i))
+        edges[0].append((cost, i))
     for u, v, cost in pipes:
-        adj_list[u].append((cost, v))
-        adj_list[v].append((cost, u))
-    heapq.heapify(adj_list[0])
-    heap, mst, total_cost = adj_list[0], {0}, 0
+        edges[u].append((cost, v))
+        edges[v].append((cost, u))
+    heapq.heapify(edges[0])
+    heap, mst, total_cost = edges[0], {0}, 0
     while len(mst) < n + 1:
         cost, u = heapq.heappop(heap)
         if u not in mst:
             mst.add(u)
             total_cost += cost
-            for new_cost, v in adj_list[u]:
+            for new_cost, v in edges[u]:
                 if v not in mst:
                     heapq.heappush(heap, (new_cost, v))
     return total_cost
