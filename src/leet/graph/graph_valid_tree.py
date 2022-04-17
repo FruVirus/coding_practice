@@ -23,6 +23,11 @@ can't possibly be fully connected. Any more, and it has to contain cycles. Addit
 if the graph is fully connected and contains exactly n - 1 edges, it can't possibly
 contain a cycle, and therefore must be a tree!
 
+NB: If len(edges) == n - 1, then it's still possible for a graph to be an invalid tree
+if there are disconnected components. For example, n = 5 and edges =
+[[0,1],[0,4],[1,4],[2,3]] should return False even though len(edges) == n - 1, since
+there are two connected components instead of one.
+
 Complexity
 ==========
 
