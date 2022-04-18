@@ -7,4 +7,6 @@ graph_algorithms:                           9
 ----------------------------------------------
 selected_topics:                            10
 sorting_and_order_statistics:               12
+
+Total:                                      52
 """

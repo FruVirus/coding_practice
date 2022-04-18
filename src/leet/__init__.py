@@ -7,7 +7,7 @@ binary_tree:            8
 --------------------------
 dynamic_programming:    28
 --------------------------
-graph:                  25
+graph:                  22
 --------------------------
 hash_table:             18
 heap:                   8
@@ -18,4 +18,6 @@ queue_and_stack:        17
 recursion_1:            4
 recursion_2:            10
 trie:                   9
+
+Total:                  186
 """
