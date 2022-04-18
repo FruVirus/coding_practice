@@ -52,15 +52,15 @@ from src.leet.graph.number_of_provinces import DisjointSet
 def sol_dfs(n, edges):
     if len(edges) != n - 1:
         return False
-    adj_list, seen, stack = [[] for _ in range(n)], {0}, [0]
+    adj_list, seen, stack = [[] for _ in range(n)], set(), [0]
     for u, v in edges:
         adj_list[u].append(v)
         adj_list[v].append(u)
     while stack:
-        for v in adj_list[stack.pop()]:
-            if v not in seen:
-                seen.add(v)
-                stack.append(v)
+        u = stack.pop()
+        if u not in seen:
+            seen.add(u)
+            stack.extend(adj_list[u])
     return len(seen) == n
 
 
