@@ -298,9 +298,8 @@ def sol_dfs(words):
         if u in done:
             return done[u]
         done[u] = False
-        for v in adj_list[u]:
-            if not backtrack(v):
-                return False
+        if not all(backtrack(v) for v in adj_list[u]):
+            return False
         done[u] = True
         sol.append(u)
         return True
