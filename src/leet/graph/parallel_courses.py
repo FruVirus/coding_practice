@@ -115,9 +115,8 @@ def sol_dfs(n, relations):
         done[u] = True
         return True
 
-    for u in graph.keys():
-        if not is_dag(u):
-            return -1
+    if not all(is_dag(u) for u in graph):
+        return -1
     done = {}
 
     def backtrack(u):
