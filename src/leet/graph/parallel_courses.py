@@ -125,7 +125,7 @@ def sol_dfs(n, relations):
         max_courses = 1
         for v in graph[u]:
             num_courses = backtrack(v)
-            max_courses = max(num_courses + 1, max_courses)
+            max_courses = max(max_courses, num_courses + 1)
         done[u] = max_courses
         return max_courses
 
