@@ -130,7 +130,7 @@ def sol_dfs(n, relations):
         done[u] = max_courses
         return max_courses
 
-    return max(backtrack(u) for u in graph.keys())
+    return max(backtrack(u) for u in graph)
 
 
 def sol_kahn(n, relations):
