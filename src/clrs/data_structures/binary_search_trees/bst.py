@@ -127,10 +127,10 @@ class BST:
         return x
 
     def list(self, l, h):
-        result, node = [l], self.successor(l)
-        while node is not self.sentinel and node.key <= h:
-            result.append(node.key)
-            node = self.successor(node)
+        result, x = [l], self.successor(l)
+        while x is not self.sentinel and x.key <= h:
+            result.append(x.key)
+            x = self.successor(x)
         return result
 
     def max(self, x):
