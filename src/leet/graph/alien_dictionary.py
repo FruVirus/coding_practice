@@ -35,7 +35,7 @@ to return any one of them.
 list, including those that could be in any position within the ordering. It should not
 contain any additional letters that were not in the input.
 
-BFS Approach
+Kahn's Approach
 
 There are three parts to this problem.
 
