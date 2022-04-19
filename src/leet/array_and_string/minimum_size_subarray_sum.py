@@ -23,11 +23,11 @@ minSubArrayLen(nums, target): O(1).
 
 
 def sol(nums, target):
-    min_len, left, sum_ = float("inf"), 0, 0
+    left, min_len, sum_ = 0, float("inf"), 0
     for i, num in enumerate(nums):
         sum_ += num
         while sum_ >= target:
-            min_len = min(min_len, i + 1 - left)
+            min_len = min(min_len, i - left + 1)
             sum_ -= nums[left]
             left += 1
     return 0 if min_len == float("inf") else min_len
