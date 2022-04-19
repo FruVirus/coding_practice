@@ -308,12 +308,12 @@ def sol_dfs(words):
 
 
 def sol_kahn(words):
-    adj_list, indeg = defaultdict(set), {c: 0 for word in words for c in word}
+    adj_list, indeg = defaultdict(list), {c: 0 for word in words for c in word}
     for w1, w2 in zip(words, words[1:]):
         for c1, c2 in zip(w1, w2):
             if c1 != c2:
                 if c2 not in adj_list[c1]:
-                    adj_list[c1].add(c2)
+                    adj_list[c1].append(c2)
                     indeg[c2] += 1
                 break
         else:
