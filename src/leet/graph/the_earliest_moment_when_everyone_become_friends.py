@@ -36,8 +36,12 @@ from src.leet.graph.number_of_provinces import DisjointSet
 def sol(logs, n):
     if len(logs) < n - 1:
         return -1
-    earliest_ts, dset, logs = -1, DisjointSet(n), sorted(logs)
-    for ts, u, v in logs:
+    dset, earliest_ts = DisjointSet(n), -1
+    for (
+        ts,
+        u,
+        v,
+    ) in sorted(logs):
         dset.union(u, v)
         if dset.get_count() == 1:
             earliest_ts = ts
