@@ -67,22 +67,22 @@ from collections import defaultdict
 
 
 def sol(tickets):
-    adj_list, visited, sol = defaultdict(list), {}, []
+    adj_list, seen, sol = defaultdict(list), {}, []
     for src, dst in tickets:
         adj_list[src].append(dst)
     for src, dsts in adj_list.items():
         dsts.sort()
-        visited[src] = [False] * len(dsts)
+        seen[src] = [False] * len(dsts)
 
     def backtrack(src, route):
         if len(route) == len(tickets) + 1:
             sol.extend(route)
             return True
         for i, dst in enumerate(adj_list[src]):
-            if not visited[src][i]:
-                visited[src][i] = True
+            if not seen[src][i]:
+                seen[src][i] = True
                 done = backtrack(dst, route + [dst])
-                visited[src][i] = False
+                seen[src][i] = False
                 if done:
                     return True
         return False
