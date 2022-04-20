@@ -16,7 +16,7 @@ Complexity
 Time
 ----
 
-minFallingPathSum(matrix): O(n^2).
+minFallingPathSum_bu(matrix) and minFallingPathSum_td(matrix): O(n^2).
 
 Space
 -----
