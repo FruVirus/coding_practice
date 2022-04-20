@@ -80,14 +80,11 @@ def sol_dfs(num_courses, prereqs):
     done, sol = {}, []
 
     def backtrack(u):
-        if u in done:
-            return done[u]
-        done[u] = False
-        for v in graph[u]:
-            backtrack(v)
-        done[u] = True
-        sol.append(u)
-        return True
+        if u not in done:
+            done[u] = True
+            for v in graph[u]:
+                backtrack(v)
+            sol.append(u)
 
     for u in range(num_courses):
         backtrack(u)
