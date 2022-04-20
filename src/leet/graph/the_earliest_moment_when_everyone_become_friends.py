@@ -37,11 +37,7 @@ def sol(logs, n):
     if len(logs) < n - 1:
         return -1
     dset, earliest_ts = DisjointSet(n), -1
-    for (
-        ts,
-        u,
-        v,
-    ) in sorted(logs):
+    for ts, u, v in sorted(logs):
         dset.union(u, v)
         if dset.get_count() == 1:
             earliest_ts = ts
