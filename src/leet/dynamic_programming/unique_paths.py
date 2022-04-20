@@ -53,7 +53,7 @@ Complexity
 Time
 ----
 
-uniquePaths(m, n): O(m * n).
+uniquePaths_bu(m, n) and uniquePaths_td(m, n): O(m * n).
 
 Space
 -----
