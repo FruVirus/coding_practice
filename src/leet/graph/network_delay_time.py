@@ -32,16 +32,16 @@ import heapq
 
 
 def sol(times, n, k):
-    adj_list = [[] for _ in range(n + 1)]
+    graph = {i: [] for i in range(1, n + 1)}
     for u, v, w in times:
-        adj_list[u].append((v, w))
+        graph[u].append((v, w))
     heap, visited, max_time = [(0, k)], set(), 0
     while heap:
         time, u = heapq.heappop(heap)
         if u not in visited:
             visited.add(u)
             max_time = max(max_time, time)
-            for v, w in adj_list[u]:
+            for v, w in graph[u]:
                 if v not in visited:
                     heapq.heappush(heap, (time + w, v))
     return max_time if len(visited) == n else -1
