@@ -15,7 +15,7 @@ Complexity
 Time
 ----
 
-minCostClimbingStairs(cost): O(n).
+minCostClimbingStairs_bu(cost) and minCostClimbingStairs_td(cost): O(n).
 
 Space
 -----
