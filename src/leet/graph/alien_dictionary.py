@@ -279,16 +279,12 @@ the alien alphabet.
 """
 
 
-# Standard Library
-from collections import defaultdict
-
-
 def sol_dfs(words):
-    adj_list, done, sol = {c: [] for word in words for c in word}, {}, []
+    graph, done, sol = {c: [] for word in words for c in word}, {}, []
     for w1, w2 in zip(words, words[1:]):
         for c1, c2 in zip(w1, w2):
             if c1 != c2:
-                adj_list[c2].append(c1)
+                graph[c2].append(c1)
                 break
         else:
             if len(w2) < len(w1):
@@ -298,22 +294,23 @@ def sol_dfs(words):
         if u in done:
             return done[u]
         done[u] = False
-        if not all(backtrack(v) for v in adj_list[u]):
+        if not all(backtrack(v) for v in graph[u]):
             return False
         done[u] = True
         sol.append(u)
         return True
 
-    return "" if not all(backtrack(u) for u in adj_list) else "".join(sol)
+    return "" if not all(backtrack(u) for u in graph) else "".join(sol)
 
 
 def sol_kahn(words):
-    adj_list, indeg = defaultdict(list), {c: 0 for word in words for c in word}
+    graph = {c: [] for word in words for c in word}
+    indeg = {c: 0 for word in words for c in word}
     for w1, w2 in zip(words, words[1:]):
         for c1, c2 in zip(w1, w2):
             if c1 != c2:
-                if c2 not in adj_list[c1]:
-                    adj_list[c1].append(c2)
+                if c2 not in graph[c1]:
+                    graph[c1].append(c2)
                     indeg[c2] += 1
                 break
         else:
@@ -323,7 +320,7 @@ def sol_kahn(words):
     while stack:
         c1 = stack.pop()
         sol.append(c1)
-        for c2 in adj_list[c1]:
+        for c2 in graph[c1]:
             indeg[c2] -= 1
             if indeg[c2] == 0:
                 stack.append(c2)
