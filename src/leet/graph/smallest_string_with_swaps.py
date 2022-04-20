@@ -24,7 +24,7 @@ We can break the solution down into four steps: build a graph using the given pa
 find the connected components in the graph, sort the characters in each connected
 component in ascending order, and build the smallest string.
 
-Each list in root_to_indices will represent a different component in the graph. Then
+Each list in char_to_indices will represent a different component in the graph. Then
 we will sort each list of indices and each list of characters and place the i_th
 character at the i_th index in the smallest string.
 
@@ -83,10 +83,10 @@ def sol_dset(s, pairs):
     dset = DisjointSet(n)
     for u, v in pairs:
         dset.union(u, v)
-    root_to_indices = defaultdict(list)
+    char_to_indices = defaultdict(list)
     for i in range(n):
-        root_to_indices[dset.find(i)].append(i)
-    for root, indices in root_to_indices.items():
+        char_to_indices[dset.find(i)].append(i)
+    for indices in char_to_indices.values():
         chars = sorted([s[i] for i in indices])
         for c, i in zip(chars, indices):
             s[i] = c
