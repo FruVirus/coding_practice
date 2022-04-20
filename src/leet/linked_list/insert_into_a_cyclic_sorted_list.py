@@ -45,9 +45,7 @@ def sol(head, val):
             break
         if curr.val <= val <= curr.next.val:
             break
-        if val >= curr.val > curr.next.val:
-            break
-        if curr.val > curr.next.val >= val:
+        if val >= curr.val > curr.next.val or curr.val > curr.next.val >= val:
             break
         curr = curr.next
     node.next, curr.next = curr.next, node
