@@ -70,7 +70,8 @@ def sol_one(grid):
 
 
 def sol_two(grid):
-    m, n, minutes, keep_going = len(grid), len(grid[0]), 2, True
+    m, n = len(grid), len(grid[0])
+    minutes, keep_going = 2, True
     while keep_going:
         keep_going = False
         for row in range(m):
