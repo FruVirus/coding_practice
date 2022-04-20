@@ -36,30 +36,30 @@ from collections import deque
 
 
 def sol_bfs(n, edges, src, dst):
-    adj_list, queue, seen = [[] for _ in range(n)], deque([src]), set()
+    graph, queue, seen = {i: [] for i in range(n)}, deque([src]), set()
     for u, v in edges:
-        adj_list[u].append(v)
-        adj_list[v].append(u)
+        graph[u].append(v)
+        graph[v].append(u)
     while queue:
         u = queue.popleft()
         if u == dst:
             return True
         if u not in seen:
             seen.add(u)
-            queue.extend(adj_list[u])
+            queue.extend(graph[u])
     return False
 
 
 def sol_dfs(n, edges, src, dst):
-    adj_list, stack, seen = [[] for _ in range(n)], [src], set()
+    graph, stack, seen = {i: [] for i in range(n)}, [src], set()
     for u, v in edges:
-        adj_list[u].append(v)
-        adj_list[v].append(u)
+        graph[u].append(v)
+        graph[v].append(u)
     while stack:
         u = stack.pop()
         if u == dst:
             return True
         if u not in seen:
             seen.add(u)
-            stack.extend(adj_list[u])
+            stack.extend(graph[u])
     return False
