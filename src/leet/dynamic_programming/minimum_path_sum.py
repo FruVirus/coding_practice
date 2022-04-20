@@ -27,7 +27,7 @@ Complexity
 Time
 ----
 
-minPathSum(grid): O(m * n).
+minPathSum_bu(grid) and minPathSum_td(grid): O(m * n).
 
 Space
 -----
