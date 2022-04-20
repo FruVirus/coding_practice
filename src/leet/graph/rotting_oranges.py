@@ -44,13 +44,14 @@ from collections import deque
 
 
 def sol_one(grid):
-    m, n, fresh, minutes, queue = len(grid), len(grid[0]), 0, -1, deque()
+    m, n = len(grid), len(grid[0])
+    num_fresh, minutes, queue = 0, -1, deque()
     for row in range(m):
         for col in range(n):
             if grid[row][col] == 2:
                 queue.append((row, col))
             elif grid[row][col] == 1:
-                fresh += 1
+                num_fresh += 1
     queue.append((None, None))
     while queue:
         row, col = queue.popleft()
@@ -63,9 +64,9 @@ def sol_one(grid):
                 r, c = row + x, col + y
                 if 0 <= r < m and 0 <= c < n and grid[r][c] == 1:
                     grid[r][c] = 2
-                    fresh -= 1
+                    num_fresh -= 1
                     queue.append((r, c))
-    return minutes if fresh == 0 else -1
+    return minutes if num_fresh == 0 else -1
 
 
 def sol_two(grid):
