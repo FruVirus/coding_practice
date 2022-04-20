@@ -108,7 +108,7 @@ def sol_bu(job_diff, d):
         return -1
     dp = [float("inf")] * n + [0]
     for day in range(1, d + 1):
-        curr = list(dp)
+        curr = dp[:]
         for i in range(n - day + 1):
             curr_diff, curr[i] = 0, float("inf")
             for j in range(i, n - day + 1):
