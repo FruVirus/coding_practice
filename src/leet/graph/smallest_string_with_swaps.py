@@ -84,8 +84,8 @@ def sol_dset(s, pairs):
     for u, v in pairs:
         dset.union(u, v)
     char_to_indices = defaultdict(list)
-    for i in range(n):
-        char_to_indices[dset.find(i)].append(i)
+    for u in range(n):
+        char_to_indices[dset.find(u)].append(u)
     for indices in char_to_indices.values():
         chars = sorted([s[i] for i in indices])
         for c, i in zip(chars, indices):
