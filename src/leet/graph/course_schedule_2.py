@@ -61,44 +61,50 @@ findOrder_dfs(num_courses, prereqs) and findOrder_kahn(num_courses, prereqs): O(
 """
 
 
-# Standard Library
-from collections import defaultdict
-
-
 def sol_dfs(num_courses, prereqs):
-    adj_list, done = [[] for _ in range(num_courses)], [None] * num_courses
+    graph, done = {i: [] for i in range(num_courses)}, {}
     for v, u in prereqs:
-        adj_list[u].append(v)
-    dag, sol = True, []
+        graph[u].append(v)
+
+    def is_dag(u):
+        if u in done:
+            return done[u]
+        done[u] = False
+        if not all(is_dag(v) for v in graph[u]):
+            return False
+        done[u] = True
+        return True
+
+    if not all(is_dag(u) for u in graph):
+        return []
+    done, sol = {}, []
 
     def backtrack(u):
-        nonlocal dag
-        if dag:
-            done[u] = False
-            for v in adj_list[u]:
-                if done[v] is None:
-                    backtrack(v)
-                if done[v] is False:
-                    dag = False
-            done[u] = True
-            sol.append(u)
+        if u in done:
+            return done[u]
+        done[u] = False
+        for v in graph[u]:
+            backtrack(v)
+        done[u] = True
+        sol.append(u)
+        return True
 
     for u in range(num_courses):
-        if done[u] is None:
-            backtrack(u)
-    return sol[::-1] if dag else []
+        backtrack(u)
+    return sol[::-1]
 
 
 def sol_kahn(num_courses, prereqs):
-    adj_list, indeg, sol = [[] for _ in range(num_courses)], defaultdict(int), []
+    graph = {i: [] for i in range(num_courses)}
+    indeg = {i: 0 for i in range(num_courses)}
     for v, u in prereqs:
-        adj_list[u].append(v)
+        graph[u].append(v)
         indeg[v] += 1
-    stack = [i for i in range(num_courses) if i not in indeg]
+    stack, sol = [u for u in indeg if indeg[u] == 0], []
     while stack:
         u = stack.pop()
         sol.append(u)
-        for v in adj_list[u]:
+        for v in graph[u]:
             indeg[v] -= 1
             if indeg[v] == 0:
                 stack.append(v)
