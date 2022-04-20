@@ -44,17 +44,17 @@ from src.leet.graph.number_of_provinces import DisjointSet
 
 
 def sol_dfs(n, edges):
-    adj_list, count, seen = [[] for _ in range(n)], 0, set()
+    graph, count, seen = {i: [] for i in range(n)}, 0, set()
     for u, v in edges:
-        adj_list[u].append(v)
-        adj_list[v].append(u)
+        graph[u].append(v)
+        graph[v].append(u)
     for u in range(n):
         if u not in seen:
             count += 1
             seen.add(u)
             stack = [u]
             while stack:
-                for v in adj_list[stack.pop()]:
+                for v in graph[stack.pop()]:
                     if v not in seen:
                         seen.add(v)
                         stack.append(v)
