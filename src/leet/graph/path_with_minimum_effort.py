@@ -115,18 +115,18 @@ def sol_bs(heights):
             row, col = queue.popleft()
             if row == m - 1 and col == n - 1:
                 return True
-            visited[row][col] = True
+            seen[row][col] = True
             for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                 r, c = row + x, col + y
-                if 0 <= r < m and 0 <= c < n and not visited[r][c]:
+                if 0 <= r < m and 0 <= c < n and not seen[r][c]:
                     if abs(heights[row][col] - heights[r][c]) <= mid:
-                        visited[r][c] = True
+                        seen[r][c] = True
                         queue.append((r, c))
 
     low, high = 0, 10 ** 6
     while low < high:
         mid = low + (high - low) // 2
-        visited = [[False] * n for _ in range(m)]
+        seen = [[False] * n for _ in range(m)]
         if not bfs(mid):
             low = mid + 1
         else:
