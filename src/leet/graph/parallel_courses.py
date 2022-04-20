@@ -137,7 +137,7 @@ def sol_kahn(n, relations):
     for u, v in relations:
         graph[u].append(v)
         indeg[v] += 1
-    stack = [u for u in graph if indeg[u] == 0]
+    stack = [u for u in indeg if indeg[u] == 0]
     num_semesters = num_courses = 0
     while stack:
         num_semesters += 1
