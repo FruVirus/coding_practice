@@ -88,19 +88,19 @@ findMinHeightTrees(n, edges): O(v).
 
 
 def sol(n, edges):
-    adj_list = [set() for _ in range(n)]
+    graph = {i: set() for i in range(n)}
     for u, v in edges:
-        adj_list[u].add(v)
-        adj_list[v].add(u)
-    leaf_nodes = [u for u in range(n) if len(adj_list[u]) <= 1]
+        graph[u].add(v)
+        graph[v].add(u)
+    leaf_nodes = [u for u in range(n) if len(graph[u]) <= 1]
     while n > 2:
         n -= len(leaf_nodes)
         new_leaf_nodes = []
         while leaf_nodes:
             u = leaf_nodes.pop()
-            v = adj_list[u].pop()
-            adj_list[v].remove(u)
-            if len(adj_list[v]) == 1:
+            v = graph[u].pop()
+            graph[v].remove(u)
+            if len(graph[v]) == 1:
                 new_leaf_nodes.append(v)
         leaf_nodes = new_leaf_nodes
     return leaf_nodes
