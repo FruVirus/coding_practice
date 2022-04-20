@@ -67,17 +67,17 @@ leadsToDestination(n, edges, src, dst): O(v + e).
 
 
 def sol(n, edges, src, dst):
-    adj_list, done = [[] for _ in range(n)], {}
+    graph, done = {i: [] for i in range(n)}, {}
     for u, v in edges:
-        adj_list[u].append(v)
+        graph[u].append(v)
 
     def backtrack(u):
         if u in done:
             return done[u]
-        if len(adj_list[u]) == 0:
+        if len(graph[u]) == 0:
             return u == dst
         done[u] = False
-        if not all(backtrack(v) for v in adj_list[u]):
+        if not all(backtrack(v) for v in graph[u]):
             return False
         done[u] = True
         return True
