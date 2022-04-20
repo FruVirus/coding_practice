@@ -34,8 +34,8 @@ Complexity
 Time
 ----
 
-findTargetSumWays(nums, target): O(n * t), where n is the length of nums and t refers to
-the sum of the nums array.
+findTargetSumWays_bu(nums, target) and findTargetSumWays_td(nums, target): O(n * t),
+where n is the length of nums and t refers to the sum of the nums array.
 
 Space
 -----
