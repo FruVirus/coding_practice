@@ -138,13 +138,13 @@ def sol_dijkstra(heights):
     m, n = len(heights), len(heights[0])
     effort = [[float("inf")] * n for _ in range(m)]
     effort[0][0] = 0
-    heap, visited = [(0, 0, 0)], [[False] * n for _ in range(m)]
+    heap, seen = [(0, 0, 0)], [[False] * n for _ in range(m)]
     while heap:
         _, row, col = heapq.heappop(heap)
-        visited[row][col] = True
+        seen[row][col] = True
         for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             r, c = row + x, col + y
-            if 0 <= r < m and 0 <= c < n and not visited[r][c]:
+            if 0 <= r < m and 0 <= c < n and not seen[r][c]:
                 effort_ = max(abs(heights[row][col] - heights[r][c]), effort[row][col])
                 if effort[r][c] > effort_:
                     effort[r][c] = effort_
