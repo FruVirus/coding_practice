@@ -18,7 +18,7 @@ Complexity
 Time
 ----
 
-uniquePathsWithObstacles(grid): O(m * n).
+uniquePathsWithObstacles_bu(grid) and uniquePathsWithObstacles_td(grid): O(m * n).
 
 Space
 -----
