@@ -50,8 +50,8 @@ def sol_dfs(n, edges):
         graph[v].append(u)
     for u in range(n):
         if u not in seen:
-            count += 1
             seen.add(u)
+            count += 1
             stack = [u]
             while stack:
                 for v in graph[stack.pop()]:
