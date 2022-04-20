@@ -58,22 +58,21 @@ from src.leet.graph.number_of_provinces import DisjointSet
 def sol_dfs(s, pairs):
     s = list(s)
     n, seen = len(s), set()
-    adj_list = [[] for _ in range(n)]
+    graph = {i: [] for i in range(n)}
     for u, v in pairs:
-        adj_list[u].append(v)
-        adj_list[v].append(u)
+        graph[u].append(v)
+        graph[v].append(u)
     for u in range(n):
         if u not in seen:
-            chars, components, stack = [], [], [u]
+            chars, indices, stack = [], [], [u]
             while stack:
-                node = stack.pop()
-                for v in adj_list[node]:
+                for v in graph[stack.pop()]:
                     if v not in seen:
                         chars.append(s[v])
-                        components.append(v)
+                        indices.append(v)
                         seen.add(v)
                         stack.append(v)
-            for c, i in zip(sorted(chars), sorted(components)):
+            for c, i in zip(sorted(chars), sorted(indices)):
                 s[i] = c
     return "".join(s)
 
