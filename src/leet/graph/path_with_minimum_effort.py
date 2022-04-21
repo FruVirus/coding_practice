@@ -109,7 +109,7 @@ from collections import deque
 def sol_bs(heights):
     m, n = len(heights), len(heights[0])
 
-    def bfs(mid):
+    def bfs(effort):
         queue = deque([(0, 0)])
         while queue:
             row, col = queue.popleft()
@@ -119,18 +119,18 @@ def sol_bs(heights):
             for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                 r, c = row + x, col + y
                 if 0 <= r < m and 0 <= c < n and not seen[r][c]:
-                    if abs(heights[row][col] - heights[r][c]) <= mid:
+                    if abs(heights[row][col] - heights[r][c]) <= effort:
                         seen[r][c] = True
                         queue.append((r, c))
 
     low, high = 0, 10 ** 6
     while low < high:
-        mid = low + (high - low) // 2
+        effort = low + (high - low) // 2
         seen = [[False] * n for _ in range(m)]
-        if not bfs(mid):
-            low = mid + 1
+        if not bfs(effort):
+            low = effort + 1
         else:
-            high = mid
+            high = effort
     return low
 
 
