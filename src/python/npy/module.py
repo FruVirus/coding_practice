@@ -1,5 +1,8 @@
 # pylint: disable=C0114, E1121, R0204
 
+# Standard Library
+import math
+
 # Third Party Library
 import numpy as np
 
@@ -303,3 +306,284 @@ print()
 # Data Distribution
 x = np.random.choice([3, 5, 7, 9], p=[0.1, 0.3, 0.6, 0.0], size=(100))
 print(x)
+x = np.random.choice([3, 5, 7, 9], p=[0.1, 0.3, 0.6, 0.0], size=(3, 5))
+print(x)
+print()
+
+# Random Permutation
+arr = np.array([1, 2, 3, 4, 5])
+np.random.shuffle(arr)
+print(arr)
+arr = np.array([1, 2, 3, 4, 5])
+newarr = np.random.permutation(arr)
+print(newarr, newarr.base)
+print()
+
+# Seaborn Module
+# sns.distplot([0, 1, 2, 3, 4, 5])
+# plt.show()
+# sns.distplot([0, 1, 2, 3, 4, 5], hist=False)
+# plt.show()
+
+# Normal Distribution
+x = np.random.normal(size=(2, 3))
+print(x)
+x = np.random.normal(loc=1, scale=2, size=(2, 3))
+print(x)
+print()
+
+# Binomial Distribution
+x = np.random.binomial(n=10, p=0.5, size=10)
+print(x)
+print()
+
+# Poisson Distribution
+x = np.random.poisson(lam=2, size=10)
+print(x)
+print()
+
+# Uniform Distribution
+x = np.random.uniform(size=(2, 3))
+print(x)
+print()
+
+# Logistic Distribution
+x = np.random.logistic(loc=1, scale=2, size=(2, 3))
+print(x)
+print()
+
+# Multinomial Distribution
+x = np.random.multinomial(n=6, pvals=[1 / 6, 1 / 6, 1 / 6, 1 / 6, 1 / 6, 1 / 6])
+print(x)
+print()
+
+# Exponential Distribution
+x = np.random.exponential(scale=2, size=(2, 3))
+print(x)
+print()
+
+# Chi Square Distribution
+x = np.random.chisquare(df=2, size=(2, 3))
+print(x)
+print()
+
+# Rayleigh Distribution
+x = np.random.rayleigh(scale=2, size=(2, 3))
+print(x)
+print()
+
+# Pareto Distribution
+x = np.random.pareto(a=2, size=(2, 3))
+print(x)
+print()
+
+# Zipf Distribution
+x = np.random.zipf(a=2, size=(2, 3))
+print(x)
+print()
+
+# NumPy ufunc #
+
+# ufunc Intro
+x = [1, 2, 3, 4]
+y = [4, 5, 6, 7]
+z = np.add(x, y)
+print(z)
+print()
+
+
+# ufunc Create Function
+def myadd(x, y):
+    return x + y
+
+
+myadd = np.frompyfunc(myadd, 2, 1)
+print(myadd([1, 2, 3, 4], [5, 6, 7, 8]))
+print(type(np.add))
+print(type(np.concatenate))
+
+# ufunc Simple Arithmetic
+arr1 = np.array([10, 11, 12, 13, 14, 15])
+arr2 = np.array([20, 21, 22, 23, 24, 25])
+newarr = np.add(arr1, arr2)
+print(newarr)
+arr1 = np.array([10, 20, 30, 40, 50, 60])
+arr2 = np.array([20, 21, 22, 23, 24, 25])
+newarr = np.subtract(arr1, arr2)
+print(newarr)
+arr1 = np.array([10, 20, 30, 40, 50, 60])
+arr2 = np.array([20, 21, 22, 23, 24, 25])
+newarr = np.multiply(arr1, arr2)
+print(newarr)
+arr1 = np.array([10, 20, 30, 40, 50, 60])
+arr2 = np.array([3, 5, 10, 8, 2, 33])
+newarr = np.divide(arr1, arr2)
+print(newarr)
+arr1 = np.array([10, 20, 30, 40, 50, 60])
+arr2 = np.array([3, 5, 6, 8, 2, 33])
+newarr = np.power(arr1, arr2)
+print(newarr)
+arr1 = np.array([10, 20, 30, 40, 50, 60])
+arr2 = np.array([3, 7, 9, 8, 2, 33])
+newarr = np.mod(arr1, arr2)
+print(newarr)
+arr1 = np.array([10, 20, 30, 40, 50, 60])
+arr2 = np.array([3, 7, 9, 8, 2, 33])
+newarr = np.remainder(arr1, arr2)
+print(newarr)
+arr1 = np.array([10, 20, 30, 40, 50, 60])
+arr2 = np.array([3, 7, 9, 8, 2, 33])
+newarr = np.divmod(arr1, arr2)
+print(newarr)
+arr = np.array([-1, -2, 1, 2, 3, -4])
+newarr = np.absolute(arr)
+print(newarr)
+print()
+
+# ufunc Rounding Decimals
+arr = np.trunc([-3.1666, 3.6667])
+print(arr)
+arr = np.fix([-3.1666, 3.6667])
+print(arr)
+arr = np.around(3.1666, 3)
+print(arr)
+arr = np.floor([-3.1666, 3.6667])
+print(arr)
+arr = np.ceil([-3.1666, 3.6667])
+print(arr)
+print()
+
+# ufunc Logs
+arr = np.arange(1, 10)
+print(np.log2(arr))
+arr = np.arange(1, 10)
+print(np.log10(arr))
+arr = np.arange(1, 10)
+print(np.log(arr))
+nplog = np.frompyfunc(math.log, 2, 1)
+print(nplog(100, 15))
+print()
+
+# ufunc Summations
+arr1 = np.array([1, 2, 3])
+arr2 = np.array([1, 2, 3])
+newarr = np.sum([arr1, arr2])
+print(newarr)
+arr1 = np.array([1, 2, 3])
+arr2 = np.array([1, 2, 3])
+newarr = np.sum([arr1, arr2], axis=0)
+print(newarr)
+newarr = np.sum([arr1, arr2], axis=1)
+print(newarr)
+arr = np.array([1, 2, 3])
+newarr = np.cumsum(arr)
+print(newarr)
+print()
+
+# ufunc Products
+arr = np.array([1, 2, 3, 4])
+x = np.prod(arr)
+print(x)
+arr1 = np.array([1, 2, 3, 4])
+arr2 = np.array([5, 6, 7, 8])
+x = np.prod([arr1, arr2])
+print(x)
+arr1 = np.array([1, 2, 3, 4])
+arr2 = np.array([5, 6, 7, 8])
+newarr = np.prod([arr1, arr2], axis=0)
+print(newarr)
+newarr = np.prod([arr1, arr2], axis=1)
+print(newarr)
+arr = np.array([5, 6, 7, 8])
+newarr = np.cumprod(arr)
+print(newarr)
+print()
+
+# ufunc Differences
+arr = np.array([10, 15, 25, 5])
+newarr = np.diff(arr)
+print(newarr)
+arr = np.array([10, 15, 25, 5])
+newarr = np.diff(arr, n=2)
+print(newarr)
+print()
+
+# ufunc Finding LCM
+num1 = 4
+num2 = 6
+x = np.lcm(num1, num2)
+print(x)
+arr = np.array([3, 6, 9])
+x = np.lcm.reduce(arr)
+print(x)
+arr = np.arange(1, 11)
+x = np.lcm.reduce(arr)
+print(x)
+print()
+
+# ufunc Finding GCD
+num1 = 6
+num2 = 9
+x = np.gcd(num1, num2)
+print(x)
+arr = np.array([20, 8, 32, 36, 16])
+x = np.gcd.reduce(arr)
+print(x)
+print()
+
+# ufunc Trigonometric
+x = np.sin(np.pi / 2)
+print(x)
+arr = np.array([np.pi / 2, np.pi / 3, np.pi / 4, np.pi / 5])
+x = np.sin(arr)
+print(x)
+arr = np.array([90, 180, 270, 360])
+x = np.deg2rad(arr)
+print(x)
+arr = np.array([np.pi / 2, np.pi, 1.5 * np.pi, 2 * np.pi])
+x = np.rad2deg(arr)
+print(x)
+x = np.arcsin(1.0)
+print(x)
+arr = np.array([1, -1, 0.1])
+x = np.arcsin(arr)
+print(x)
+base = 3
+perp = 4
+x = np.hypot(base, perp)
+print(x)
+print()
+
+# ufunc Hyperbolic
+x = np.sinh(np.pi / 2)
+print(x)
+arr = np.array([np.pi / 2, np.pi / 3, np.pi / 4, np.pi / 5])
+x = np.cosh(arr)
+print(x)
+x = np.arcsinh(1.0)
+print(x)
+arr = np.array([0.1, 0.2, 0.5])
+x = np.arctanh(arr)
+print(x)
+print()
+
+# ufunc Set Operations
+arr = np.array([1, 1, 1, 2, 3, 4, 5, 5, 6, 7])
+x = np.unique(arr)
+print(x)
+arr1 = np.array([1, 2, 3, 4])
+arr2 = np.array([3, 4, 5, 6])
+newarr = np.union1d(arr1, arr2)
+print(newarr)
+arr1 = np.array([1, 2, 3, 4])
+arr2 = np.array([3, 4, 5, 6])
+newarr = np.intersect1d(arr1, arr2, assume_unique=True)
+print(newarr)
+set1 = np.array([1, 2, 3, 4])
+set2 = np.array([3, 4, 5, 6])
+newarr = np.setdiff1d(set1, set2, assume_unique=True)
+print(newarr)
+set1 = np.array([1, 2, 3, 4])
+set2 = np.array([3, 4, 5, 6])
+newarr = np.setxor1d(set1, set2, assume_unique=True)
+print(newarr)
