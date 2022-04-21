@@ -55,7 +55,6 @@ def sol_serialize(root):
 def sol_deserialize(data):
     if not data:
         return None
-
     index = 0
 
     def deserialize():
