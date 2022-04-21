@@ -92,7 +92,7 @@ def sol(n, edges):
     for u, v in edges:
         graph[u].add(v)
         graph[v].add(u)
-    leaf_nodes = [u for u in range(n) if len(graph[u]) <= 1]
+    leaf_nodes = [u for u in graph if len(graph[u]) <= 1]
     while n > 2:
         n -= len(leaf_nodes)
         new_leaf_nodes = []
