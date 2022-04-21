@@ -43,15 +43,15 @@ class Sol:
     def clone_bfs(node):
         if not node:
             return node
-        visited, queue = {node: Node(node.val)}, deque([node])
+        queue, seen = deque([node]), {node: Node(node.val)}
         while queue:
             curr_node = queue.popleft()
             for n in curr_node.neighbors:
-                if n not in visited:
-                    visited[n] = Node(n.val)
+                if n not in seen:
+                    seen[n] = Node(n.val)
                     queue.append(n)
-                visited[curr_node].neighbors.append(visited[n])
-        return visited[node]
+                seen[curr_node].neighbors.append(seen[n])
+        return seen[node]
 
     def clone_dfs(self, node):
         if not node:
