@@ -6,6 +6,8 @@ The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonac
 sequence, such that each number is the sum of the two preceding ones, starting from 0
 and 1.
 
+Given n, calculate F(n).
+
 Complexity
 ==========
 
