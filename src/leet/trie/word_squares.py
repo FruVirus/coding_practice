@@ -108,7 +108,7 @@ prefixes of all words (in the worst case, we have no overlapping prefixes).
 
 
 def sol(words):
-    sol, trie = [], build_trie(words)
+    trie, sol = build_trie(words), []
 
     def backtrack(index, word_squares):
         if index == len(words[0]):
