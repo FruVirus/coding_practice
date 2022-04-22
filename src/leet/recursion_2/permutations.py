@@ -38,7 +38,7 @@ permute(nums): O(n!).
 def sol(nums):
     sol = []
 
-    def backtrack(first=0):
+    def backtrack(first):
         if first == len(nums):
             sol.append(nums[:])
             return
@@ -47,5 +47,5 @@ def sol(nums):
             backtrack(first + 1)
             nums[first], nums[i] = nums[i], nums[first]
 
-    backtrack()
+    backtrack(0)
     return sol
