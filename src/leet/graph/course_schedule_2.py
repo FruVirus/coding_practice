@@ -62,7 +62,7 @@ findOrder_dfs(num_courses, prereqs) and findOrder_kahn(num_courses, prereqs): O(
 
 
 def sol_dfs(num_courses, prereqs):
-    graph, done = {i: [] for i in range(num_courses)}, {}
+    graph, done, sol = {i: [] for i in range(num_courses)}, {}, []
     for v, u in prereqs:
         graph[u].append(v)
 
@@ -76,8 +76,8 @@ def sol_dfs(num_courses, prereqs):
         return True
 
     if not all(is_dag(u) for u in graph):
-        return []
-    done, sol = {}, []
+        return sol
+    done = {}
 
     def backtrack(u):
         if u not in done:
