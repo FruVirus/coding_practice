@@ -181,7 +181,7 @@ palindromePairs(words): O((n + k)^2).
 
 
 def sol(words):
-    sol, idx_map = [], {word: i for i, word in enumerate(words)}
+    idx_map, sol = {word: i for i, word in enumerate(words)}, []
 
     def is_palindrome(word):
         return word == word[::-1]
