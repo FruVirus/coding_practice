@@ -45,7 +45,7 @@ largestRectangleArea_stack(heights): O(n).
 
 
 def sol_dc(heights):
-    def calculate_area(heights, start, end):
+    def calculate_area(start, end):
         if start <= end:
             min_index = start
             for i in range(start, end + 1):
@@ -53,12 +53,12 @@ def sol_dc(heights):
                     min_index = i
             return max(
                 heights[min_index] * (end - start + 1),
-                calculate_area(heights, start, min_index - 1),
-                calculate_area(heights, min_index + 1, end),
+                calculate_area(start, min_index - 1),
+                calculate_area(min_index + 1, end),
             )
         return 0
 
-    return calculate_area(heights, 0, len(heights) - 1)
+    return calculate_area(0, len(heights) - 1)
 
 
 def sol_stack(heights):
