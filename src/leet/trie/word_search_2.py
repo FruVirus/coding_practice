@@ -106,7 +106,8 @@ findWords(board, words): O(n), where n is the total number of letters in the dic
 
 
 def sol(board, words):
-    sol, m, n, trie = [], len(board), len(board[0]), build_trie(words)
+    m, n = len(board), len(board[0])
+    trie, sol = build_trie(words), []
 
     def backtrack(i, j, node):
         char, start = board[i][j], node
