@@ -176,21 +176,52 @@ ratings_records = [
 # select_movies_query = """
 # SELECT title, AVG(rating) as average_rating
 # FROM ratings
-# INNER JOIN movies
-#     ON movies.id = ratings.movie_id
+# INNER JOIN movies ON movies.id = ratings.movie_id
 # GROUP BY movie_id
 # ORDER BY average_rating DESC
 # LIMIT 5
 # """
-select_movies_query = """
-SELECT CONCAT(first_name, " ", last_name), COUNT(*) as num
-FROM reviewers
-INNER JOIN ratings
-    ON reviewers.id = ratings.reviewer_id
-GROUP BY reviewer_id
-ORDER BY num DESC
-LIMIT 1
+# select_movies_query = """
+# SELECT CONCAT(first_name, " ", last_name), COUNT(*) as num
+# FROM reviewers
+# INNER JOIN ratings ON reviewers.id = ratings.reviewer_id
+# GROUP BY reviewer_id
+# ORDER BY num DESC
+# LIMIT 1
+# """
+
+# update_query = """
+# UPDATE reviewers
+# SET last_name = "Cooper"
+# WHERE first_name = "Amy"
+# """
+#
+# select_reviewer_query = """
+# SELECT * FROM reviewers WHERE first_name = "Amy"
+# """
+
+update_query = """
+UPDATE ratings
+SET rating = %s
+WHERE movie_id = %s AND reviewer_id = %s;
+
+SELECT *
+FROM ratings
+WHERE movie_id = %s AND reviewer_id = %s
 """
+val_tuple = (
+    "5.0",
+    "18",
+    "15",
+    "18",
+    "15",
+)
+
+select_movies_query = """
+SELECT reviewer_id, movie_id FROM ratings
+WHERE reviewer_id = 2
+"""
+delete_query = "DELETE FROM ratings WHERE reviewer_id = 2"
 
 try:
     with connect(
@@ -221,6 +252,18 @@ try:
             # cursor.fetchall()
             # for row in cursor.fetchall():
             #     print(row)
-            pass
+            # cursor.execute(update_query)
+            # connection.commit()
+            # cursor.execute(select_reviewer_query)
+            # for row in cursor.fetchall():
+            #     print(row)
+            # for result in cursor.execute(update_query, val_tuple, multi=True):
+            #     if result.with_rows:
+            #         print(result.fetchall())
+            cursor.execute(select_movies_query)
+            for row in cursor.fetchall():
+                print(row)
+            cursor.execute(delete_query)
+            connection.commit()
 except Error as e:
     print(e)
