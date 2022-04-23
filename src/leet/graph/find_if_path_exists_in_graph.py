@@ -20,14 +20,12 @@ Complexity
 Time
 ----
 
-validPath_bfs(n, edges, src, dst) and
-validPath_dfs(n, edges, src, dst): O(v + e).
+validPath_bfs(n, edges, src, dst) and validPath_dfs(n, edges, src, dst): O(v + e).
 
 Space
 -----
 
-validPath_bfs(n, edges, src, dst) and
-validPath_dfs(n, edges, src, dst): O(v + e).
+validPath_bfs(n, edges, src, dst) and validPath_dfs(n, edges, src, dst): O(v + e).
 """
 
 
