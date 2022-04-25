@@ -20,7 +20,7 @@ Complexity
 Time
 ----
 
-findLength(nums1, nums2): O(m * n).
+findLength_bu(nums1, nums2): O(m * n).
 
 Space
 -----
