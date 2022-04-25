@@ -81,11 +81,11 @@ def print_name(prefix):
         print("Closing coroutine!!")
 
 
-corou = print_name("Dear")
-corou.__next__()
-corou.send("Fru")
-corou.send("Dear Fru")
-corou.close()
+coro = print_name("Dear")
+next(coro)
+coro.send("Fru")
+coro.send("Dear Fru")
+coro.close()
 print()
 
 
@@ -97,8 +97,7 @@ def producer(sentence, next_coroutine):
     """
 
     print("Producing tokens for: {}".format(sentence))
-    tokens = sentence.split(" ")
-    for token in tokens:
+    for token in sentence.split(" "):
         next_coroutine.send(token)
     print("Done with producing tokens!")
     print("Closing pattern_filter() coroutine!")
@@ -127,7 +126,7 @@ def pattern_filter(pattern="ing", next_coroutine=None):
 def print_token():
     """Act as a sink and simply print the received tokens.
 
-    NB: This coroutine is closed by the program simply exiting().
+    NB: This coroutine is closed by the program simply exiting.
     """
 
     print("I'm a sink. I'll print tokens!")
