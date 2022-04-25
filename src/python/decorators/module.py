@@ -73,7 +73,7 @@ def my_decorator(func):
     return my_wrapper
 
 
-# @my_decorator
+@my_decorator
 def names(firstName, secondName):
     print(
         "Your first and second names are {0} and {1} respectively".format(
@@ -111,8 +111,8 @@ def function_with_arguments(x, y, z, a=None, b=None):
 
 
 function_with_arguments(5, 15, 25, a="Fru", b="Poo")
-print()
 print(function_with_arguments.__name__)
+print()
 
 
 def coro(func):
@@ -148,25 +148,29 @@ def decorator_func(func):
     def inner(*args, **kwargs):  # pylint:disable=W0613
         print("Inside inner function")
         print("Decorated the function")
-        func()
+        print("I like ", kwargs["like"], " inside inner function")
+        func(**kwargs)
 
+    print("Returning inner function")
     return inner
 
 
 @decorator_func
-def func_to():
+def func_to(**kwargs):
     print("Inside actual function")
+    print("I like ", kwargs["like"], "inside func")
 
 
-func_to()
+func_to(like="Fru and Poo")
 print()
 
 
-def func_to2():
+def func_to2(**kwargs):
     print("Inside actual function")
+    print("I like ", kwargs["like"], "inside func")
 
 
-decorator_func(func_to2)()
+decorator_func(func_to2)(like="Fru and Poo")
 print()
 
 
@@ -175,9 +179,11 @@ def decorator(*args, **kwargs):  # pylint:disable=W0613
 
     def inner(func):
         print("Inside inner function")
+        print("Decorated the function")
         print("I like ", kwargs["like"])
         func()
 
+    print("Returning inner function")
     return inner
 
 
