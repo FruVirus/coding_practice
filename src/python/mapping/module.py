@@ -3,6 +3,8 @@
 # Standard Library
 import math
 
+from itertools import starmap
+
 
 def square(number):
     return number ** 2
@@ -94,3 +96,6 @@ def sanitized_sqrt(numbers):
 
 
 print(sanitized_sqrt([25, 9, 81, -16, 0]))
+print(list(map(pow, (2, 7), (4, 3))))
+print(list(starmap(pow, [(2, 7), (4, 3)])))
+print(list(map(pow, (2, 4), (7, 3))))
