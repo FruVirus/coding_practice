@@ -1,4 +1,9 @@
 # pylint: disable=C0114, E1121, R0204
+
+# Standard Library
+import math
+
+
 def square(number):
     return number ** 2
 
@@ -10,7 +15,7 @@ str_nums = ["4", "8", "6", "5", "3", "2", "8", "9", "2", "5"]
 int_nums = map(int, str_nums)
 print(list(int_nums))
 numbers = [-2, -1, 0, 1, 2]
-abs_values = list(map(abs, numbers))
+abs_values = list(map(abs, numbers))  # type: ignore
 print(abs_values)
 float_values = list(map(float, numbers))
 print(float_values)
@@ -32,3 +37,57 @@ with_spaces = ["processing ", "  strings", "with   ", " map   "]
 print(list(map(str.strip, with_spaces)))
 with_dots = ["processing..", "...strings", "with....", "..map.."]
 print(list(map(lambda s: s.strip("."), with_dots)))
+
+
+def rotate_chr(c):
+    rot_by = 3
+    c = c.lower()
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    if c not in alphabet:
+        return c
+    rotated_pos = ord(c) + rot_by
+    if rotated_pos <= ord(alphabet[-1]):
+        return chr(rotated_pos)
+    return chr(rotated_pos - len(alphabet))
+
+
+print("".join(map(rotate_chr, "My secret message goes here.")))
+numbers = [1, 2, 3, 4]
+print(list(map(lambda x: (x ** 2, x ** 3), numbers)))
+numbers = [1, 2, 3, 4, 5, 6, 7]
+print(list(map(math.factorial, numbers)))
+
+
+def to_fahrenheit(c):
+    return 9 / 5 * c + 32
+
+
+def to_celsius(f):
+    return (f - 32) * 5 / 9
+
+
+celsius_temps = [100, 40, 80]
+print(list(map(to_fahrenheit, celsius_temps)))
+fahr_temps = [212, 104, 176]
+print(list(map(to_celsius, fahr_temps)))
+print(list(map(float, ["12.3", "3.3", "-15.2"])))
+print(list(map(int, ["12", "3", "-15"])))
+
+
+def to_float(number):
+    try:
+        return float(number.replace(",", "."))
+    except ValueError:
+        return float("NaN")
+
+
+print(list(map(to_float, ["12.3", "3,3", "-15.2", "One"])))
+
+
+def is_positive(num):
+    return num >= 0
+
+
+def sanitized_sqrt(numbers):
+    cleaned_iter = map(math.sqrt, filter(is_positive, numbers))
+    return list(cleaned_iter)
