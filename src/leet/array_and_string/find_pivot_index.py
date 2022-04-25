@@ -28,7 +28,7 @@ pivotIndex(nums): O(1).
 
 
 def sol(nums):
-    sum_, left_sum = sum(nums), 0
+    left_sum, sum_ = 0, sum(nums)
     for i, num in enumerate(nums):
         if left_sum == sum_ - left_sum - num:
             return i
