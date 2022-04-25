@@ -1,7 +1,10 @@
 # pylint: disable=C0114, E1121, R0204
 
 # Standard Library
+import functools
 import math
+import operator
+import os
 
 from itertools import starmap
 
@@ -99,3 +102,6 @@ print(sanitized_sqrt([25, 9, 81, -16, 0]))
 print(list(map(pow, (2, 7), (4, 3))))
 print(list(starmap(pow, [(2, 7), (4, 3)])))
 print(list(map(pow, (2, 4), (7, 3))))
+files = os.listdir("./")
+print(list(map(os.path.getsize, files)))
+print(functools.reduce(operator.add, map(os.path.getsize, files)))
