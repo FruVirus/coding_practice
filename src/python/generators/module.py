@@ -68,7 +68,7 @@ becomes the value of the yield from expression.
 def gen():
     yield 1
     x = yield 42
-    print(x)
+    print(x)  # None, 100
     yield 2
 
 
@@ -76,34 +76,34 @@ def gen():
 c = gen()
 
 # Go to yield 1 line, return the value 1, and suspend execution.
-print(next(c))
+print(next(c))  # 1
 
 # Send a value of 100 to generator but it isn't saved by the yield 1 line. send() then
 # restarts the generator execution on yield 42 line. Generator returns value 42 and
 # suspends execution.
-print(c.send(100))
+print(c.send(100))  # 42
 
 # Calling next() continues execution of generator from x = yield 42 line but since we're
 # using next() instead of send(), we did not provide a value for x. Thus, x inside the
 # generator function is None. Generator continues to yield 2 line, returns the value 2,
 # and suspends execution.
-print(next(c))
+print(next(c))  # 2
 print()
 
 # Create generator object and store it in variable "c".
 c = gen()
 
 # Go to yield 1 line, return the value 1, and suspend execution.
-print(next(c))
+print(next(c))  # 1
 
 # Go to yield 42 line, return the value 42, and suspend execution.
-print(next(c))
+print(next(c))  # 42
 
 # Send a value of 100 to generator. This time, the value is saved into the variable x
 # since this was the point at which the generator previously stopped its execution.
-# Generator then continues its execution by printing x and then returning the value 42
+# Generator then continues its execution by printing x and then returning the value 2
 # (after which it suspends its execution again).
-print(c.send(100))
+print(c.send(100))  # 2
 print()
 
 
@@ -111,23 +111,22 @@ print()
 def gen2():
     z = yield 1
     x = yield 42
-    print(x, z)
+    print(x, z)  # 666 100
     yield 2
 
 
 c = gen2()
-print(next(c))
-print(c.send(100))
-print(c.send(666))
+print(next(c))  # 1
+print(c.send(100))  # 42
+print(c.send(666))  # 2
 print()
-
 
 # NB: We have to send a default value of None if we use send() without calling next()
 # first. next() and send(None) are equivalent.
 c = gen2()
-print(c.send(None))
-print(c.send(100))
-print(c.send(666))
+print(c.send(None))  # 1
+print(c.send(100))  # 42
+print(c.send(666))  # 2
 print()
 
 
@@ -144,19 +143,20 @@ def count_send(firstval=0, step=1):
 # The next() call belows returns 2.1 as the value since that is what the generator was
 # initialized with.
 counter = count_send(2.1, 0.3)
-print(next(counter))
+print(next(counter))  # 2.1
 
 # The send() call assigns new_counter_val inside the generator function the value of
 # 100.5 AND continues to execute the generator function until the next yield statement.
 # Since new_counter_val = 100.5 != None, this yields 100.5 as the next value.
-counter.send(100.5)
+print(counter.send(100.5))  # 100.5
+print()
 
 # Inside the for-loop, each call to next() will invoke the generator and increment the
 # counter inside the generator since next() sends None to the generator (and thus,
 # new_counter_val is also None inside the generator).
 for i in range(10):
     new_value = next(counter)
-    print(f"{new_value:2.2f}", end="\n")
+    print(i, f"{new_value:2.2f}", end="\n")
 print()
 
 
@@ -248,7 +248,16 @@ def generator_splitted():
 lst1 = [generator_all_in_one()]
 lst2 = [generator_splitted()]
 print(lst1)
+print(lst2)
 print(lst1 == lst2)
+print()
+for i in lst1:
+    for j in i:  # type: ignore
+        print(j)
+print()
+for i in lst2:
+    for j in i:  # type: ignore
+        print(j)
 print()
 
 
@@ -264,11 +273,11 @@ def subgenerator():
 
 def delegating_generator():
     x = yield from subgenerator()
-    print(x)
+    print(x)  # 42
 
 
 for x in delegating_generator():
-    print(x)
+    print(x)  # 1
 print()
 
 
@@ -279,7 +288,7 @@ def permutations(items):
     if n == 0:
         yield []
     else:
-        for i in range(len(items)):  # pylint: disable=C0200
+        for i in range(n):
             print(
                 "Index %s, Permuting: %s with %s"
                 % (i, items[i], items[:i] + items[i + 1 :])
