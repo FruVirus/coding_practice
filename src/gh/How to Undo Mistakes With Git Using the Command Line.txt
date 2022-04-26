@@ -1,0 +1,125 @@
+DO NOT REWRITE COMMIT HISTORY THAT HAS ALREADY BEEN PUSHED TO A REMOTE REPOSITORY!
+
+# Uncommitted Local Changes #
+
+1. Discarding All Local Changes in a File
+
+git restore <filename>
+
+Discarding uncommitted local changes cannot be undone!
+
+2. Restoring a Deleted File
+
+git restore <filename>
+
+3. Discarding Chunks/Lines in a File
+
+git restore -p <filename>
+
+Git then becomes interactive and asks if you want to discard/keep/stage/etc. each hunk of changes.
+
+4. Discarding All Local Changes
+
+git restore .
+
+Discarding uncommitted local changes cannot be undone!
+
+# Committed Local Changes #
+
+5. Fixing the Last Commit
+
+git commit --amend -m "New commit message"
+
+You can also add a new file that you forgot to add to the last commit and then do git commit --amend to add it to the last commit.
+
+"--amend" rewrites history! Never change history for commits that have already been pushed to a remote repository!
+
+To change the commit message for commits older than the last commit, you have to use interactive rebase.
+
+6. Reverting a Commit in the Middle
+
+git revert <commit-hash>
+
+git revert creates a NEW commit that undoes the changes caused by the commit hash. This action does NOT delete the OLD commit---thus, it preserves history. This is what you should do with commits that have been pushed to remote already.
+
+7. Resetting to an Old Revision
+
+git reset --hard <commit-hash>
+git reset --mixed <commit-hash>
+
+"--hard" means to reset back to the commit hash and don't keep any local changes that were made
+
+"--mixed" means to reset back to the commit hash and keep any local changes that were made
+
+8. Resetting a File to an Old Revision
+
+git restore --source <commit-hash> <filename>
+
+9. Recovering Deleted Commits
+
+git reflog is a journal that logs every movement of the HEAD pointer
+
+git reflog
+git branch <branch-name> <commit-hash>
+
+You can then retrieve the commit hash right before the deleted commit action and then do a git restore or a git branch <branch-name> <commit-hash>, etc.
+
+10. Recovering a Deleted Branch (Even with Uncommitted Changes)
+
+git reflog
+git branch <branch-name> <commit-hash>
+
+Since you have to first change to a different branch before deleting the branch you are on, git reflog will have a commit hash that points to the action of changing branches. You can then reference that commit hash to recover the point in time before you deleted the branch.
+
+11. Moving a Commit to a New Branch
+
+This is the case where you accidentally commit changes to the wrong branch (e.g., master) and want to move those committed changes to a new branch.
+
+git branch <branch-name>
+git reset HEAD~1 -- hard
+
+12. Moving a Commit to a Different Branch
+
+This time, the different branch is already present and we just want to move the changes committed in the wrong branch to the correct branch.
+
+git checkout <correct-branch>
+git cherry-pick <commit-hash>
+git checkout master
+git reset --hard HEAD~1
+
+13. Interactive Rebase
+
+(1) How far back do you want to go? What should be the "base" commit?
+(2) git rebase -i HEAD~3
+(3) In the editor, only determine which actions you want to perform. Don't change commit data in this step yet! Notice: Commits are in "reverse" order!
+
+git rebase -i HEAD~3
+
+In the interactive editor, we only mark up the actions we want to perform, NOT the actual changes themselves. Pick "reword" to reword a commit message.
+
+After marking up the actions in the interactive editor and saving and closing the interactive editor, a new window will pop up where we can make the actual changes themselves.
+
+14. Deleting Old Commits
+
+(1) How far back do you want to go? What should be the "base" commit?
+(2) git rebase -i HEAD~2
+(3) Pick "drop" to delete something
+
+15. Squashing Multiple Commits Into One
+
+(1) How far back do you want to go? What should be the "base" commit?
+(2) git rebase -i HEAD~3
+(3) Pick "squash" to combine the line with the line above. A new editor window will open allowing you to create a new commit message for the squashed commit.
+
+16. Adding a Change to an Old Commit
+
+(1) git add <file-to-add-to-old-commit>
+(2) git commit --fixup <commit-hash-to-be-fixed>
+(3) use interactive rebase
+	(3a) How far back do you want to go? What should be the "base" commit?
+	(3b) git rebase -i HEAD~4 --autosquash
+	(3c) Nothing to do in the interactive editor---just save and exit.
+
+17. Splitting/Editing an Old Commit
+
+We can edit an old commit or split an old commit into multiple commits.

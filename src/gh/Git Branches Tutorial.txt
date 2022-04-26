@@ -1,0 +1,71 @@
+1. Creating New Branches
+
+git branch <new-branch-name>
+git branch <new-branch-name> revision_number
+
+2. Switching Branches
+
+git checkout <other-branch>
+git switch <other-branch>
+
+3. Renaming Branches
+
+git branch -m <new-name>
+git branch -m <old-name> <new-name>
+
+4. Publishing Branches
+
+git push origin <local-branch>
+
+5. Tracking Branches
+
+git branch --track feature/login origin/feature/login
+git checkout --track origin/feature/login
+
+6. Pulling + Pushing Branches
+
+git pull
+git push
+git branch -v
+
+7. Deleting Branches
+
+git branch -d <branch-name>
+
+(1) To rename a remote branch, first delete the remote branch
+
+git push origin --delete <old-name>
+
+(2) Then, simply push the new local branch with the correct name
+
+git push origin <new-name>
+
+8. Merging Branches
+
+(1) Check out the branch that should receive the changes
+
+git switch main
+
+(2) Execute the "merge" command with the name of the branch that contains the desired changes
+
+git merge feature/uploader
+
+9. Rebasing Branches
+
+(1) Check out the branch that should receive the changes
+
+git switch feature/uploader
+
+(2) Execute the "rebase" command with the name of the branch that contains the desired changes
+
+git rebase main
+
+10. Comparing Branches
+
+(1) To show which commits are in the feature/uploader branch that are NOT in the main branch
+
+git log main..feature/uploader
+
+(2) To show which commits are in the local main branch that are NOT in the remote main branch
+
+git log origin/main..main
