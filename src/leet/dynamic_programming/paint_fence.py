@@ -54,8 +54,7 @@ def sol_bu(n, k):
         return k ** n
     one, two = k * k, k
     for _ in range(3, n + 1):
-        curr = (k - 1) * (one + two)
-        one, two = curr, one
+        one, two = (k - 1) * (one + two), one
     return one
 
 
