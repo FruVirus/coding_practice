@@ -1,3 +1,92 @@
-# The Perfect Commit #
+# Interactive Rebase #
 
-1. Add the right changes!
+A tool for optimizing and cleaning up your commit history.
+    - change a commit's message
+    - delete commits
+    - reorder commits
+    - combine multiple commits into one
+    - edit/split an existing commit into multiple new ones
+
+DO NOT use interactive rebase on commits that you've already pushed/shared on a remote
+repository! Instead, use it for cleaning up your local commit history before merging it
+into a share team branch.
+
+1. How far back do you want to go? What should be the "base" commit?
+2 git rebase -i HEAD~N, where N is the number of commits to go back to. If you want to
+change something at the last commit, then you should go back to the second to last
+commit. That is, you should always go back to (at least) the PARENT commit of the commit
+you want to change.
+3. In the interactive editor, only determine which actions you want to perform. Don't
+change commit data in this step, yet!
+4. Make the actual change in the next editor window that pops up.
+
+# Cherry-Picking #
+
+Cherry-picking integrates single, specific commits instead of integrating an entire
+branch like git merge/rebase.
+
+Cherry picking should be used for moving a commit to a different branch.
+
+git checkout <branch-name>
+git cherry-pick <commit-hash>
+git checkout master && git reset --hard HEAD~1 (optional to remove commit from wrong
+branch)
+
+# Reflog #
+
+Reflog is a protocol of HEAD pointer movements.
+
+Reflog can be used to recover deleted commits.
+
+git reset --hard <commit-hash>
+git reflog --> pick out commit hash you want to roll back to
+git branch happy-ending <previous-commit-hash> or git reset <previous-commit-hash>
+
+Reflog can be used to recover deleted branches.
+
+git checkout <some-other-branch>
+git branch -d <branch-to-delete>
+git reflog --> pick out commit hash you want to roll back to
+git branch <branch-name> <previous-commit-hash>
+
+# Submodules #
+
+Copy-pasting third-party code:
+	1. Mixing external code with your own files
+	2. Updating the external code is ---again--- a manual process
+
+A submodule is a standard git repository that is nested under another, parent
+repository. To add a submodule to a parent repository, you have to run:
+
+git submodule add <remote-url>
+
+The parent repository will only save the submodule configurations, not the actual
+submodules themselves. Thus, when you clone a repository with submodules, you won't see
+the actual submodules within the parent repository. To populate all the submodules, you
+have to run:
+
+git submodule update --init --recursive
+
+To clone and add submodules at the same time, you have to run:
+
+git clone --recurse-submodules <remote-url>
+
+Submodule repositories are always checked out on a specific commit, instead of a
+specific branch like parent repositories. When new commits happen, the checked out
+commit does NOT change.
+
+# Search and Find #
+
+Filtering your commit history:
+	- by date: --before/--after
+		- git log --after="2021-7-1"
+		- git log --after="2021-7-1" --before="2021-7-5"
+	- by message: --grep
+		- git log --grep="refactor"
+	- by author: --author
+		- git log --author="Sdfff"
+	- by file: -- <filename> (note the space after the double dash)
+		- git log -- README.md
+	- by branch: <branch-A>..<branch-B>
+		- git log <branch-A>..main (this shows all commits in main that are not in
+branch-A)
