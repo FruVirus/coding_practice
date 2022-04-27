@@ -282,6 +282,7 @@ docker run --mount type=bind, source=/some/data/path, target=/var/lib/mysql mysq
 
 The host's storage driver is responsible for maintaining the entire process of volume
 mounting, layered architecture, etc. For Ubuntu, the default storage driver is AUFS.
+Each storage driver has their own pros and cons.
 
 # Compose #
 
