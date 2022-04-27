@@ -1,6 +1,78 @@
-The Perfect Commit
+# The Perfect Commit #
 
 1. Add the right changes!
+
+Combine changes with the same topic into a single commit.
+Use git add to stage files that should belong to the same commit.
+
+git add -p <filename>: Add patches of a file to the staging area.
+
 2. Compose a good commit message!
 
+Subject = concise summary of what happened
+Body = more detailed explanation
+    - What is now different than before?
+    - What's the reason for the change?
+    - Is there anything to watch out for/anything particularly remarkable?
 
+git commit -m <subject message> -m <body message>
+
+# Branching Strategies #
+
+You need a written convention on an agreed upon branching workflow.
+
+# Pull Requests #
+
+Communicating about and reviewing code. Contributing code to repositories where you
+don't have write access.
+
+A pull request invites reviewers to provide feedback before merging.
+
+A pull request is always on branches, not individual commits.
+
+# Merge Conflicts #
+
+Merge conflicts occur with integrating commits from different sources.
+
+git merge, git rebase, git pull, git cherry-pick, git stash apply are all instances when
+merge conflicts can occur.
+
+To undo a conflict and start over:
+
+git merge --abort
+git rebase --abort
+
+<<<<<<<<< HEAD (current working branch)
+afddsfa
+fdadfsdfsad
+========= (lines above this line reflect the state of the code in the current branch)
+>>>>>>>>> other-branch (branch where there is a merge conflict)
+fdfdfdfddsfds
+dfsafdsfadsff
+
+# Merge vs. Rebase #
+
+When git does a merge between branch A and branch B, it looks for the common ancestor
+between branches A and B, the last commit on branch A, and the last commit on branch B.
+
+If the last commit on branch A is also the common ancestor, then git does a fast-forward
+merge whereby the commits in branch B are then tacked on after the last commit in branch
+A.
+
+If the last commit on branch A is different from the common ancestor, then git
+automatically does a merge commit whereby git creates a new commit that contains the
+differences between the two branches.
+
+Consider the situation where a series of minor commits on the "feature" branch
+collectively make up one new feature: If you just do "git merge feature_branch" without
+""--no-ff", it is impossible to see from the Git history which of the commit objects
+together have implemented a feature--you would have to manually read all the log
+messages. Reverting a whole feature (i.e., a group of commits), is a true headache (if
+"--no-ff" is not used), whereas it is easily done if the "--no-ff" flag was used
+(because, it's just one commit).
+
+Integrating with git rebase provides a linear history of git commits. Git rebase
+rewrites history. If the ancestor of branch A was originally commit c1, its ancestor
+will become the last commit in branch B after rebasing branch A onto branch B. Thus,
+NEVER rebase published commits! Instead, use rebase for cleaning up your local commit
+history before merging it into a shared team branch.
