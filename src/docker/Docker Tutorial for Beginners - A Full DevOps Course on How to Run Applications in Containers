@@ -1,0 +1,287 @@
+# Commands #
+
+docker run <image-name>
+    - Runs a container. Will go to docker hub to pull the image down if the image is not
+available locally.
+
+docker ps
+    - Lists all running containers.
+
+docker ps -a
+    - Lists all running as well as previously stopped containers.
+
+docker stop <container-id> or <container-name>
+    - Stop a running container.
+
+docker rm <container-id> or <container-name>
+    - Removes a stopped container.
+
+docker images
+    - List all images available on the host.
+
+docker rmi <image-name>
+    - Remove an image. If there are containers dependent on that image, you must first
+delete all dependent containers.
+
+docker pull <image-name>
+    - Pull image without running it.
+
+docker run ubuntu sleep 5
+    - Runs ubuntu image followed by the sleep command.
+
+docker exec <container-name> cat /etc/hosts
+    - Executes a command on a running container.
+
+# Run - attach and detach
+
+docker run <image-name> will run the container in an attached mode. In an attached mode,
+the container runs in the current terminal window. You won't be able to do anything else
+in the terminal window (other than viewing the container outputs) until the container
+stops.
+
+docker run -d <image-name> will run the container in a detached mode. In a detached
+mode, the container runs in the background and you get control of the terminal back.
+
+docker attach <container-id> or <container-name> will then attach the terminal to the
+running container.
+
+# Run #
+
+# Run - tag
+docker run <image-name>:<tag>
+    - Run a specific tag of the image.
+
+# Run - STDIN
+docker run -i <image-name>
+    - Runs image in interactive mode.
+
+docker run -it <image-name>
+    - Runs image in interactive mode with a terminal.
+
+# Run - PORT mapping
+docker run <image-name> will run a docker container. To access it, you have to access
+the URL and PORT. You can use the internal IP address of the image but this is only
+accessible internally, within the docker container.
+
+You can also use the IP address of the docker host. For this to work, you have to map
+the port inside the docker container to a free port on the docker host.
+
+docker run -p 80:5000 <image-name>
+    - Maps port 80 on the docker host to port 5000 on the docker container. You can map
+multiple docker host ports to the same docker container port so that you can access
+multiple docker containers at the same time or run different versions of docker
+containers at the same time.
+
+# Run - Volume mapping
+A docker container has its own isolated filesystem and any changes to any files happen
+within the container. By default, all data is stored in /var/lib/<image-name>. If you
+make changes to data within the container and then delete the container, you will lose
+all the data.
+
+To persist data, you want to map a directory on the docker host to the docker container.
+
+docker run -v /opt/datadir:/var/lib/mysql <image-name>
+    - Maps a directory in the docker host to a directory in the docker container.
+
+# Inspect Container
+docker inspect <container-name>
+    - Displays detailed information on a container in JSON format.
+
+# Container Logs
+docker logs <container-name>
+    - Displays the logs of the container.
+
+#  Environment Variables #
+
+# ENV Variables in Docker
+docker run -e APP_COLOR=blue <image-name>
+    - Runs the container with the environment variable APP_COLOR set to blue
+
+# Inspect Environment Variable
+docker inspect <container-name>
+    - Can get environment variables from a running container by using the inspect
+command and looking in the "Config" section.
+
+# Images #
+
+# How to create my own image?
+
+1. Create a file called "Dockerfile" and put instructions inside of the file.
+
+# Start from a base OS or another image.
+FROM Ubuntu
+
+# Install all dependencies.
+RUN apt-get update
+RUN apt-get install python
+
+RUN pip install flask
+RUN pip install flask-mysql
+
+# Copy code from the local system onto the Docker image.
+COPY . /opt/source-code
+
+# Specifies the command that will be executed when the image is run as a container.
+ENTRYPOINT FLASK_APP=/opt/source-code/app.py flash run
+
+2. Build the image.
+
+docker build Dockerfile -t <image-name:tag>
+
+3. Push the image.
+
+docker push <image-name:tag>
+
+# Dockerfile
+
+A Dockerfile is a text file where each line is in an Instruction Argument format.
+
+# Layered architecture
+
+Each line in a Dockerfile creates a separate layer of instructions that builds upon the
+previous layer. All the layers are cached so that a Docker build can restart at any
+given layer upon failure.
+
+docker history <image-name>
+    - DIsplays the history of the Dockerfile build along with the layer sizes at each
+step.
+
+# CMD vs. Entrypoint #
+
+# CMD
+
+CMD allows you to specify a default command upon container startup.
+
+CMD command param1
+CMD ["command", "param1"]
+    - Specifies a command to execute upon container startup.
+
+# Entrypoint
+
+To change the default command, we can execute
+docker run <image-name> new_command new_command_param. However, this doesn't look really
+good---we should just be able to execute docker run <image-name> new_command_param.
+
+In order to do this, we use ENTRYPOINT.
+
+ENTRYPOINT ["command"]
+    - Specifies the default command to executed upon container startup. Whatever you
+specify on the command line will get appended to the entrypoint.
+
+If you don't specify a parameter for the entrypoint, you will receive an error. To set a
+default parameter, you can use both ENTRYPOINT and CMD.
+
+ENTRYPOINT ["sleep"]
+CMD ["5"]
+
+docker run --entrypoint new_command <image-name> new_command_param
+    - Bypasses the default entrypoint command and executes the new entrypoint command
+upon container startup.
+
+# Networking #
+
+When you start Docker, it creates three networks automatically:
+    1. Bridge
+    2. None
+    3. Host
+
+Bridge is the default network that a container gets attached to.
+
+docker run <image-name> --network=none,host,bridge
+    - Runs a container with a specified network.
+
+The bridge network is a private, internal network created by Docker on the host. All the
+containers on the host gets attached to this network and they are assigned an IP address
+in the range 172.17.X.X. The containers can access each other using these internal IP
+addresses if required. To access any of these containers, you would then map a docker
+host port to the docker container port.
+
+If you use the host network, then all docker containers will use the host network. This
+would mean that you don't need any port mapping between the docker host and the docker
+containers. However, you won't be able to run multiple containers on the same docker
+host AND the same port.
+
+If you use the none network, the containers are not attached to any networks. They will
+not have access to other containers or to any external networks.
+
+# User-defined networks
+
+By default, the bridge network will have an IP address in the 172.17.X.X series. We can
+also create a different subnet for the bridge network.
+
+docker network create --driver bridge --subnet 182.18.0.0/16 <network-name>
+    - Creates a user-defined network using the specified driver network.
+
+docker network ls
+    - Lists all Docker networks.
+
+# Inspect Network
+
+We can look at the "NetworkSettings" section in docker inspect <container-name> to find
+information on the container network.
+
+# Embedded DNS
+
+Containers on a network can reach each other via their names. Docker has a built-in DNS
+server that allows all containers on a host to resolve each other using their container
+names.
+
+mysql.connect(mysql)
+
+The DNS Server always runs on IP address 127.0.0.11.
+
+Host            IP
+web             172.17.0.2
+mysql           172.17.0.3
+
+# Storage #
+
+# File system
+
+When you install Docker, it creates the /var/lib/docker folder with multiple
+sub-directories underneath it. This is where Docker stores all of its data by default---
+files related to images, containers, etc.
+
+# Layered architecture
+
+When you build a Docker image, all those layers become Read Only after the build is
+finished---changes cannot be made to the layers unless you start a new Docker build.
+This same Read Only image layer is shared by all containers that use this image.
+
+When you run a Docker container using a built image, Docker creates a new layer---the
+container layer---on top of the Read Only layers. This container layer is a Read/Write
+layer that is used to store data created by the container; e.g., log files, temporary
+data created by the container, anything that is generated within the container. The
+lifetime of the container layer is only when the container is running---when the
+container stops, the container layer and anything within it is destroyed.
+
+If we modify a file in the image layer, Docker will automatically create a copy of that
+file in the container layer and we will be modifying that copied file instead of the
+original Read Only file in the image layer (Copy-On-Write). This ensures that other
+containers using the same image will see the same original file.
+
+# Volumes
+
+docker volume create data_volume
+    - Create a persistent volume space in /var/lib/docker/volumes/data_volume
+
+docker run -v data_volume:/var/lib/mysql mysql
+    - Run a container with a persistent volume attached. Docker will automatically
+create the volume in /var/lib/volumes/ if it does not exist.
+
+docker run -v /some/data/path:/var/lib/mysql mysql
+    - Run a container with a persistent volume specified by the provided path. This path
+must exist first.
+
+If the volume being mounted is in /var/lib/docker/volumes, this is called a volume
+mount. If the volume being mounted is any other location in the docker host, this is
+called a bind mount.
+
+docker run --mount type=bind, source=/some/data/path, target=/var/lib/mysql mysql
+    - Does the same thing as -v but is more explicit.
+
+The host's storage driver is responsible for maintaining the entire process of volume
+mounting, layered architecture, etc. For Ubuntu, the default storage driver is AUFS.
+
+# Compose #
+
