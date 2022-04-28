@@ -451,3 +451,77 @@ networks:
     back-end:
 
 # Registry #
+
+# Image
+image: <registry>/<user/account>/<image/repository>
+image: docker.io/nginx/nginx
+
+# Private Registry
+docker login private-registry.io
+docker run private-registry.io/apps/internal-app
+
+# Deploy Private Registry
+docker run -d -p 5000:5000 --name registry registry:2
+docker image tag my-image localhost:5000/my-image
+docker push localhost:5000/my-image
+docker pull localhost:5000/my-image
+docker pull 192.168.56.100:5000/my-image
+
+# Engine #
+
+# Docker Engine
+A Docker engine is simply a Docker host with Docker installed on it. When you install
+Docker on a Docker host, you are actually installing three different components:
+    1. Docker CLI
+    2. REST API Server
+    3. Docker Daemon
+
+The Docker Daemon is a background process that manages Docker objects (e.g., images,
+containers, volumes, networks, etc.).
+
+The REST API Server is the interface that programs can use to talk to the daemon and
+provide instructions.
+
+The Docker CLI is command line interface. It uses the REST API to interact with the
+daemon. The Docker CLI need not be on the same host; it can be on another system and can
+still work with a remote Docker engine.
+
+docker -H=remote-docker-engine:port
+docker -H=10.123.2.1:2375 run nginx
+
+# Containerization
+Docker uses namespaces to provide isolation between workspaces and containers.
+
+# Namespace - PID
+The processes running inside a container are in fact running on the underlying host.
+The container processes have their own PID but these PIDs must be unique from the host
+PIDs as well.
+
+With PID namespaces, each process can have multiple PIDs associated with it, under
+different namespaces. If we list the processes inside a container, the processes will
+have one set of PIDs. If we list the processes on the host, those SAME container
+processes will have a different set of PIDs.
+
+# cgroupos
+The underlying Docker host and Docker containers share the same underlying CPU/memory
+resources. By default, there are no restrictions on how much of a resource a container
+can use.
+
+Docker uses cgroups to restrict the amount of CPU/memory a given container can use.
+
+docker run --cpus=0.5 ubuntu --> Restrict container to use no more than 50% of the host
+CPU.
+
+docker run --memory=100m ubuntu --> Restrict container to use no more than 100 megabytes
+of the host memory.
+
+# Container Orchestration #
+
+# Container orchestration
+Container orchestration is a set of tools and scripts that helps to manage and deploy
+containers in a production environment. Container orchestration handles clustering,
+scaling, communication between hosts, load balancing between hosts, security, etc.
+
+# Docker Swarm
+Docker swarm allows you to combine multiple Docker hosts together into a single cluster.
+Docker swarm will then take care of managining these hosts.
