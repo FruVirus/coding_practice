@@ -1,0 +1,177 @@
+Basic Commands
+--------------
+
+docker pull --> pulls image from repository to local environment
+
+docker images --> list docker images
+
+docker ps --> list running containers
+	docker ps -a --> lists running and stopped containers
+
+docker run --> run (and optionally pull) image in a container (combines docker pull and
+docker start commands)
+	docker run -d image --> run container in detached mode
+	docker run -p 6000:6379 image --> binds host port 6000 to container port 6379 for
+communication (multiple host ports can map to a single container port but not vice
+versa)
+	docker run --name a_name --> give a name to a container when it runs
+	docker run -p 27017:27017 -d -e ENV_VAR=ENV_VAR_VALUE image --> provide a set of
+environment variables with -e flags
+	docker run --net network_name --> provide a docker network
+	
+docker build -t image_name:tag location_of_dockerfile --> build image from docker file
+
+docker push --> push an image to a repository
+
+docker stop container_id --> stop running container
+
+docker start container_id --> start stopped container
+
+docker system prune
+	docker system prune -a
+	
+docker logs container_id or container_name --> view logs from running container
+
+docker exec -it container_id or container_name /bin/bash --> get the terminal of a
+running container
+
+docker network ls --> lists existing docker networks
+	docker network create network_name --> create new docker network
+
+docker rm container_id --> delete container
+
+docker rmi image_id --> delete image
+
+docker tag --> tag an image
+
+##########
+
+Docker Networks
+---------------
+
+ports list which (container) ports containers are listening on for requests
+	multiple containers can use the same host port but must use different container
+ports (e.g., host port 3000 can map to container port 3000 and host port 3000 can map to
+container port 3001)
+	
+docker network
+	Docker creates an isolated docker network where containers are running in
+	When you deploy multiple containers, they can talk to each other just using
+container names because they are in the same network and without using things like local
+host, port number, etc.
+	Applications outside of the docker network must connect to the docker network using
+localhost:port_number
+
+##########
+
+Docker Compose
+--------------
+
+A YAML config file that contains all of the services that you want Docker to run at
+once. It is a structured way to contain all common Docker commands.
+
+Docker compose takes care of creating a common network for all services in the config
+file. No need for --net flag.
+
+docker run -d --name mongodb -p 27017:27017 -e ... -e ... --net mongo-network mongo
+
+mongo.yaml
+
+version: '3' # Docker compose version number
+services:
+	mongodb:
+		image: mongo:tag
+		ports:
+			- 27017:27017
+		environment:
+			- ...
+			
+	monogoexpress:
+		...
+		
+docker-compose -f monog.yaml up --> start all containers and networks in mongo.yaml
+docker-compose -f monog.yaml down --> stop all containers and networks in mongo.yaml
+
+##########
+
+Dockerfile
+----------
+
+Blueprint for creating Docker images
+
+
+FROM base_image --> base image to start Docker image from
+
+ENV --> set global environment variables inside Docker container
+
+RUN --> execute any Linux command in Docker container environment
+
+COPY --> executes copy Linux command in the HOST environment
+
+ENTRYPOINT ["some_command"] --> specifies a command that will always be executed when
+the container starts
+
+CMD ["node", "server.js"] --> specifies arguments that will be fed to the ENTRYPOINT;
+execute entry point command "node server.js" when Docker container is started (can only
+have one CMD command but multiple RUN commands)
+
+##########
+
+Private Docker Repository
+-------------------------
+
+
+
+##########
+
+Deploy Containerized App
+------------------------
+
+
+
+##########
+
+Docker Volumes
+--------------
+
+Docker volumes are used for data persistence in Docker.
+
+Without Docker volumes, data is gone when restarting or removing a container.
+
+A Docker volume is when a folder in the physical host file system is mounted into the
+virtual file system of a Docker container. Data is automatically replicated between host
+and container file systems.
+
+In Linux, Docker volumes live in /var/lib/docker/volumes. This is where all Docker
+volumes being used by containers reside. Each volume sub-directory has its own hash so
+that its unique. In addition the hash/_data folder contains all the data for the volume.
+A named volume would get unique_namedocker_image_name_named_volume_name as a directory
+name. Directories that are pure hashes are anonymous volumes.
+
+3 Volume Types
+
+1. docker run -v /path/on/host/system:/path/on/container/system --> Host Volume --> You
+decide where on the host file system the reference is made
+
+2. docker run -v /path/on/container/system --> Anonymous Volume --> Docker takes care of
+which host system path is mounted. For each container, a folder is generated that gets
+mounted.
+
+3. docker run -v name:/path/on/container/system --> Named Volume --> name references the
+name of the folder on host file system that you specify. You can reference the volume by
+name.
+
+Docker Volumes in docker-compose
+
+each container would get a named volume:
+
+	volumes:
+	  - db-data:/path/on/container/system
+	  
+compose file at end would get a list of all named volume names:
+
+	volumes:
+		db-data:
+			driver: local --> tells Docker to create the volume on the local file system
+		...
+		
