@@ -1,4 +1,4 @@
-# pylint: disable=C0114, E1121, R0204
+# pylint: disable=C0114, E1121, R0204, W1401
 # type: ignore
 
 # Standard Library
