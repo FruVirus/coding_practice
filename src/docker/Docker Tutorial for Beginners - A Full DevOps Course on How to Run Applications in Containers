@@ -33,7 +33,6 @@ docker exec <container-name> cat /etc/hosts
     - Executes a command on a running container.
 
 # Run - attach and detach
-
 docker run <image-name> will run the container in an attached mode. In an attached mode,
 the container runs in the current terminal window. You won't be able to do anything else
 in the terminal window (other than viewing the container outputs) until the container
@@ -105,7 +104,6 @@ command and looking in the "Config" section.
 # Images #
 
 # How to create my own image?
-
 1. Create a file called "Dockerfile" and put instructions inside of the file.
 
 # Start from a base OS or another image.
@@ -133,23 +131,20 @@ docker build Dockerfile -t <image-name:tag>
 docker push <image-name:tag>
 
 # Dockerfile
-
 A Dockerfile is a text file where each line is in an Instruction Argument format.
 
 # Layered architecture
-
 Each line in a Dockerfile creates a separate layer of instructions that builds upon the
 previous layer. All the layers are cached so that a Docker build can restart at any
 given layer upon failure.
 
 docker history <image-name>
-    - DIsplays the history of the Dockerfile build along with the layer sizes at each
+    - Displays the history of the Dockerfile build along with the layer sizes at each
 step.
 
 # CMD vs. Entrypoint #
 
 # CMD
-
 CMD allows you to specify a default command upon container startup.
 
 CMD command param1
@@ -157,7 +152,6 @@ CMD ["command", "param1"]
     - Specifies a command to execute upon container startup.
 
 # Entrypoint
-
 To change the default command, we can execute
 docker run <image-name> new_command new_command_param. However, this doesn't look really
 good---we should just be able to execute docker run <image-name> new_command_param.
@@ -205,7 +199,6 @@ If you use the none network, the containers are not attached to any networks. Th
 not have access to other containers or to any external networks.
 
 # User-defined networks
-
 By default, the bridge network will have an IP address in the 172.17.X.X series. We can
 also create a different subnet for the bridge network.
 
@@ -216,12 +209,10 @@ docker network ls
     - Lists all Docker networks.
 
 # Inspect Network
-
 We can look at the "NetworkSettings" section in docker inspect <container-name> to find
 information on the container network.
 
 # Embedded DNS
-
 Containers on a network can reach each other via their names. Docker has a built-in DNS
 server that allows all containers on a host to resolve each other using their container
 names.
@@ -237,13 +228,11 @@ mysql           172.17.0.3
 # Storage #
 
 # File system
-
 When you install Docker, it creates the /var/lib/docker folder with multiple
 sub-directories underneath it. This is where Docker stores all of its data by default---
 files related to images, containers, etc.
 
 # Layered architecture
-
 When you build a Docker image, all those layers become Read Only after the build is
 finished---changes cannot be made to the layers unless you start a new Docker build.
 This same Read Only image layer is shared by all containers that use this image.
@@ -261,7 +250,6 @@ original Read Only file in the image layer (Copy-On-Write). This ensures that ot
 containers using the same image will see the same original file.
 
 # Volumes
-
 docker volume create data_volume
     - Create a persistent volume space in /var/lib/docker/volumes/data_volume
 
@@ -287,4 +275,159 @@ Each storage driver has their own pros and cons.
 # Compose #
 
 # Docker compose
+If we need to set up multiple applications, we could either issue multiple docker run
+commands or use a docker-compose.yaml file.
 
+In the docker-compose.yaml file, we would have:
+
+services:
+    web:
+        image: "<image-name>"
+    database:
+        image: "<image-name>"
+    messaging:
+        image: "<image-name>"
+    orchestration:
+        image: "<image_name>"
+
+docker-compose up:
+    - Executes a docker-compose.yaml file on a SINGLE Docker host.
+
+# Sample application - voting application
+docker run -d --name=redis redis
+docker run -d --name=db postgres:9.4
+docker run -d --name=vote -p 5000:80 voting-app
+docker run -d --name=result -p 5001:80 result-app
+docker run -d --name=worker worker
+
+After all the docker run commands are executed, we still need to somehow tell each
+container which other containers it should connect to in order to receive/send data. In
+order to provide this link, we need to execute the docker run commands as follows:
+
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app --> The first "redis"
+refers to the name of the container. The second "redis" refers to the name of the Redis
+host in the Python code for the voting app.
+
+docker run -d --name=result -p 5001:80 --link db:db result-app -->  The first "db"
+refers to the name of the container. The second "db" refers to the name of the Postgres
+host in the Node JS code for the results app.
+
+docker run -d --name=worker --link db:db --link redis:redis worker
+
+docker run -d --name=redis redis
+docker run -d --name=db postgres:9.4
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
+docker run -d --name=result -p 5001:80 --link db:db result-app
+docker run -d --name=worker --link db:db --link redis:redis worker
+
+The corresponding docker-compose.yaml file would look like:
+
+redis:
+    image: redis
+db:
+    image: postgres:9.4
+vote:
+    image: voting-app
+    ports:
+      - 5000:80
+    links:
+      - redis
+result:
+    image: result-app
+    ports:
+      - 5001:80
+    links:
+      - db
+worker:
+    image: worker
+    links:
+      - redis
+      - db
+
+And then execute docker-compose up to bring up the entire stack.
+
+# Docker compose - build
+If an image needs to be built first before the stack can be executed, we can replace
+"image" with "build" as follows:
+
+redis:
+    image: redis
+db:
+    image: postgres:9.4
+vote:
+    build: ./vote  # The directory ./vote should contain the Dockerfile to build
+    ports:
+      - 5000:80
+    links:
+      - redis
+result:
+    image: result-app
+    ports:
+      - 5001:80
+    links:
+      - db
+worker:
+    image: worker
+    links:
+      - redis
+      - db
+
+# Docker compose - versions
+In version 2 of Docker compose, all the previous yaml lines would be under a "services"
+key as follows:
+
+version: 2
+services:
+    redis:
+        image: redis
+    db:
+        image: postgres:9.4
+    vote:
+        build: ./vote  # The directory ./vote should contain the Dockerfile to build
+        ports:
+          - 5000:80
+        depends_on:
+          - redis
+    result:
+        image: result-app
+        ports:
+          - 5001:80
+    worker:
+        image: worker
+
+For version >= 2, you must specify the "version" key at the top of the Docker compose
+file.
+
+In version 1, you can only use the bridge network. All the connections between
+containers are then specified using the "links" key. In version 2, Docker compose
+automatically creates a dedicated bridge network for the applications and then attaches
+all containers to that new network. All containers are then able to communicate with
+each other using each other's service names. Thus, the "links" key is no longer
+necessary.
+
+Version 2 also allows you to specify the start up order of the stack using the
+"depends_on" key.
+
+version: 3
+services:
+    redis:
+        image: redis
+    db:
+        image: postgres:9.4
+    vote:
+        build: ./vote  # The directory ./vote should contain the Dockerfile to build
+        ports:
+          - 5000:80
+        depends_on:
+          - redis
+    result:
+        image: result-app
+        ports:
+          - 5001:80
+    worker:
+        image: worker
+
+Version 3 allows for Docker swarm. In addition, it has some options added and removed
+(see official documentation).
+
+# Docker compose
