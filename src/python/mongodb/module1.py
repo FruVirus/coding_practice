@@ -1,168 +1,133 @@
 # pylint: disable=C0114, E1121, R0204
+# type: ignore
 
 # Third Party Library
-import mysql.connector
+import pymongo
 
-# Python MySQL #
+# Python MongoDB #
 
-# MySQL Get Started
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="cajunFRU1218",
-    database="mydatabase",
-)
-print(mydb)
+# MongoDB Create Database
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+dblist = myclient.list_database_names()
+if "mydatabase" in dblist:
+    print("The database exists.")
 print()
 
-# MySQL Create Database
-mycursor = mydb.cursor()
-try:
-    mycursor.execute("CREATE DATABASE mydatabase")
-except mysql.connector.DatabaseError:
-    pass
-mycursor.execute("SHOW DATABASES")
-for x in mycursor:
+# MongoDB Create Collection
+mycol = mydb["customers"]
+collist = mydb.list_collection_names()
+if "customers" in collist:
+    print("The collection exists.")
+print()
+
+# MongoDB Insert
+# mydict = { "name": "John", "address": "Highway 37" }
+# mycol.insert_one(mydict)
+# mydict = { "name": "Peter", "address": "Lowstreet 27" }
+# x = mycol.insert_one(mydict)
+# print(x.inserted_id)
+# mylist = [
+#   { "name": "Amy", "address": "Apple st 652"},
+#   { "name": "Hannah", "address": "Mountain 21"},
+#   { "name": "Michael", "address": "Valley 345"},
+#   { "name": "Sandy", "address": "Ocean blvd 2"},
+#   { "name": "Betty", "address": "Green Grass 1"},
+#   { "name": "Richard", "address": "Sky st 331"},
+#   { "name": "Susan", "address": "One way 98"},
+#   { "name": "Vicky", "address": "Yellow Garden 2"},
+#   { "name": "Ben", "address": "Park Lane 38"},
+#   { "name": "William", "address": "Central st 954"},
+#   { "name": "Chuck", "address": "Main Road 989"},
+#   { "name": "Viola", "address": "Sideway 1633"}
+# ]
+# x = mycol.insert_many(mylist)
+# print(x.inserted_ids)
+# mylist = [
+#   { "_id": 1, "name": "John", "address": "Highway 37"},
+#   { "_id": 2, "name": "Peter", "address": "Lowstreet 27"},
+#   { "_id": 3, "name": "Amy", "address": "Apple st 652"},
+#   { "_id": 4, "name": "Hannah", "address": "Mountain 21"},
+#   { "_id": 5, "name": "Michael", "address": "Valley 345"},
+#   { "_id": 6, "name": "Sandy", "address": "Ocean blvd 2"},
+#   { "_id": 7, "name": "Betty", "address": "Green Grass 1"},
+#   { "_id": 8, "name": "Richard", "address": "Sky st 331"},
+#   { "_id": 9, "name": "Susan", "address": "One way 98"},
+#   { "_id": 10, "name": "Vicky", "address": "Yellow Garden 2"},
+#   { "_id": 11, "name": "Ben", "address": "Park Lane 38"},
+#   { "_id": 12, "name": "William", "address": "Central st 954"},
+#   { "_id": 13, "name": "Chuck", "address": "Main Road 989"},
+#   { "_id": 14, "name": "Viola", "address": "Sideway 1633"}
+# ]
+# x = mycol.insert_many(mylist)
+# print(x.inserted_ids)
+# print()
+
+# MongoDB Find
+x = mycol.find_one()
+print(x)
+for x in mycol.find():
+    print(x)
+for x in mycol.find({}, {"_id": 0, "name": 1, "address": 1}):
+    print(x)
+for x in mycol.find({}, {"address": 0}):
     print(x)
 print()
 
-# MySQL Create Table
-# mycursor.execute(
-#     "CREATE TABLE customers "
-#     "(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), address VARCHAR(255))"
-# )
-# mycursor.execute("ALTER TABLE customers ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY")
-# mycursor.execute(
-#     "CREATE TABLE users "
-#     "(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), fav INT)"
-# )
-# mycursor.execute(
-#     "CREATE TABLE products "
-#     "(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))"
-# )
-mycursor.execute("SHOW TABLES")
-for x in mycursor:
+# MongoDB Query
+myquery = {"address": "Park Lane 38"}
+mydoc = mycol.find(myquery)
+for x in mydoc:
+    print(x)
+myquery = {"address": {"$gt": "S"}}
+mydoc = mycol.find(myquery)
+for x in mydoc:
+    print(x)
+myquery = {"address": {"$regex": "^S"}}
+mydoc = mycol.find(myquery)
+for x in mydoc:
     print(x)
 print()
 
-# MySQL Insert
-sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
-val = ("John", "Highway 21")
-mycursor.execute(sql, val)
-mydb.commit()
-print(mycursor.rowcount, "record inserted.")
-sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
-val = [
-    ("Peter", "Lowstreet 4"),
-    ("Amy", "Apple st 652"),
-    ("Hannah", "Mountain 21"),
-    ("Michael", "Valley 345"),
-    ("Sandy", "Ocean blvd 2"),
-    ("Betty", "Green Grass 1"),
-    ("Richard", "Sky st 331"),
-    ("Susan", "One way 98"),
-    ("Vicky", "Yellow Garden 2"),
-    ("Ben", "Park Lane 38"),
-    ("William", "Central st 954"),
-    ("Chuck", "Main Road 989"),
-    ("Viola", "Sideway 1633"),
-]  # type: ignore
-mycursor.executemany(sql, val)
-mydb.commit()
-print(mycursor.rowcount, "was inserted.")
-# sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
-# val = ("Michelle", "Blue Village")
-# mycursor.execute(sql, val)
-# mydb.commit()
-# print("1 record inserted, ID:", mycursor.lastrowid)
-# print()
-
-# MySQL Select
-# mycursor.execute("SELECT * FROM customers")
-# myresult = mycursor.fetchall()
-# for x in myresult:
-#     print(x)
-# mycursor.execute("SELECT name, address FROM customers")
-# myresult = mycursor.fetchall()
-# for x in myresult:
-#     print(x)
-# mycursor.execute("SELECT * FROM customers")
-# myresult = mycursor.fetchone()
-# print(myresult)
-# myresult = mycursor.fetchmany(5)
-# print(myresult)
-# mycursor.fetchall()
-# print()
-
-# MySQL Where
-# sql = "SELECT * FROM customers WHERE address ='Park Lane 38'"
-# mycursor.execute(sql)
-# myresult = mycursor.fetchall()
-# for x in myresult:
-#     print(x)
-# sql = "SELECT * FROM customers WHERE address LIKE '%way%'"
-# mycursor.execute(sql)
-# myresult = mycursor.fetchall()
-# for x in myresult:
-#     print(x)
-# print()
-
-# MySQL Order By
-# sql = "SELECT * FROM customers ORDER BY name"
-# mycursor.execute(sql)
-# myresult = mycursor.fetchall()
-# for x in myresult:
-#     print(x)
-# sql = "SELECT * FROM customers ORDER BY name DESC"
-# mycursor.execute(sql)
-# myresult = mycursor.fetchall()
-# for x in myresult:
-#     print(x)
-# print()
-
-# MySQL Delete
-# sql = "DELETE FROM customers WHERE address = 'Mountain 21'"
-# mycursor.execute(sql)
-# mydb.commit()
-# print(mycursor.rowcount, "record(s) deleted")
-# sql = "DELETE FROM customers WHERE address = %s"
-# adr = ("Yellow Garden 2", )
-# mycursor.execute(sql, adr)
-# mydb.commit()
-# print(mycursor.rowcount, "record(s) deleted")
-# print()
-
-# MySQL Drop Table
-# mycursor = mydb.cursor()
-# sql = "DROP TABLE customers"
-# mycursor.execute(sql)
-# mycursor = mydb.cursor()
-# sql = "DROP TABLE IF EXISTS customers"
-# mycursor.execute(sql)
-
-# MySQL Update
-mycursor = mydb.cursor()
-sql = "UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'"
-mycursor.execute(sql)
-mydb.commit()
-print(mycursor.rowcount, "record(s) affected")
-mycursor = mydb.cursor()
-sql = "UPDATE customers SET address = %s WHERE address = %s"
-val = ("Valley 345", "Canyon 123")
-mycursor.execute(sql, val)
-mydb.commit()
-print(mycursor.rowcount, "record(s) affected")
+# MongoDB Sort
+mydoc = mycol.find().sort("name")
+for x in mydoc:
+    print(x)
+mydoc = mycol.find().sort("name", -1)
+for x in mydoc:
+    print(x)
 print()
 
-# MySQL Limit
-mycursor = mydb.cursor()
-mycursor.execute("SELECT * FROM customers LIMIT 5")
-myresult = mycursor.fetchall()
+# MongoDB Delete
+# myquery = { "address": "Mountain 21" }
+# mycol.delete_one(myquery)
+# myquery = { "address": {"$regex": "^S"} }
+# x = mycol.delete_many(myquery)
+# print(x.deleted_count, " documents deleted.")
+# x = mycol.delete_many({})
+# print(x.deleted_count, " documents deleted.")
+# print()
+
+# MongoDB Drop Collection
+# mycol.drop()
+# print()
+
+# MongoDB Update
+myquery = {"address": "Valley 345"}
+newvalues = {"$set": {"address": "Canyon 123"}}
+mycol.update_one(myquery, newvalues)
+for x in mycol.find():
+    print(x)
+myquery = {"address": {"$regex": "^S"}}
+newvalues = {"$set": {"name": "Minnie"}}
+x = mycol.update_many(myquery, newvalues)
+print(x.modified_count, "documents updated.")
+print()
+
+# MongoDB Limit
+myresult = mycol.find()
 for x in myresult:
     print(x)
-mycursor = mydb.cursor()
-mycursor.execute("SELECT * FROM customers LIMIT 5 OFFSET 2")
-myresult = mycursor.fetchall()
+myresult = mycol.find().limit(5)
 for x in myresult:
     print(x)
-print()
