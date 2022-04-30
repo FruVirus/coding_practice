@@ -128,10 +128,10 @@ def huffman_bu(c):
         right_freq = z.right.freq if isinstance(z.right, Node) else z.right
         z.freq += left_freq + right_freq
         q.insert(z)
-    root, sol = q.extract(), {k: [] for k in c.keys()}
-    for k in c.keys():
+    root, sol = q.extract(), {k: [] for k in c}
+    for k in c:
         node = root
         while node.c != k:
             node, code = (node.left, 0) if k in node.left.c else (node.right, 1)
             sol[k].append(code)
-    return sol, sum(c[k] * len(sol[k]) for k in c.keys())
+    return sol, sum(c[k] * len(sol[k]) for k in c)
