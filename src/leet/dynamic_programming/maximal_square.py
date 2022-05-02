@@ -54,7 +54,7 @@ Complexity
 Time
 ----
 
-maximalSquare(matrix): O(m * n).
+maximalSquare_bu(matrix) and maximalSquare_td(matrix): O(m * n).
 
 Space
 -----
