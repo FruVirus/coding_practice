@@ -230,7 +230,7 @@ class SLL:
     def merge(l, r):
         merged = Node(None)
         temp = merged
-        while not (l is None or r is None):
+        while l and r:
             if l.k <= r.k:
                 temp.next, l = l, l.next
             else:
