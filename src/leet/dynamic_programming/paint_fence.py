@@ -39,7 +39,7 @@ Complexity
 Time
 ----
 
-numWays(n, k): O(n).
+numWays_bu(n, k) and numWays_td(n, k): O(n).
 
 Space
 -----
