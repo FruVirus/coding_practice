@@ -92,7 +92,8 @@ Complexity
 Time
 ----
 
-minDifficulty(job_diff, d): O(d * (n - d)^2), where n is the length of job_diff.
+minDifficulty_bu(job_diff, d) and minDifficulty_td(job_diff, d): O(d * (n - d)^2), where
+n is the length of job_diff.
 
 Space
 -----
