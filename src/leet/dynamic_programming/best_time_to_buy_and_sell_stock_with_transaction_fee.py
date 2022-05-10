@@ -30,12 +30,12 @@ Complexity
 Time
 ----
 
-maxProfit(prices, fee): O(n).
+maxProfit_bu(prices, fee): O(n).
 
 Space
 -----
 
-maxProfit(prices, fee): O(1).
+maxProfit_bu(prices, fee): O(1).
 """
 
 

@@ -66,7 +66,7 @@ Complexity
 Time
 ----
 
-numDecodings(s): O(n).
+numDecodings_bu(s) and numDecodings_td(s): O(n).
 
 Space
 -----

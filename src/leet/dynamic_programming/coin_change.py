@@ -57,13 +57,13 @@ Complexity
 Time
 ----
 
-coinChange(coins, amount): O(n * s), where s is the amount and n is the denomination
-count.
+coinChange_bu(coins, amount) and coinChange_td(coins, amount): O(n * s), where s is the
+amount and n is the denomination count.
 
 Space
 -----
 
-coinChange(coins, amount): O(s).
+coinChange_bu(coins, amount) and coinChange_td(coins, amount): O(s).
 """
 
 

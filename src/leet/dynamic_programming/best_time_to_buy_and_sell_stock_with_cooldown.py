@@ -21,12 +21,12 @@ Complexity
 Time
 ----
 
-maxProfit(prices): O(n), where n is the length of prices.
+maxProfit_bu(prices) and maxProfit_td(prices): O(n), where n is the length of prices.
 
 Space
 -----
 
-maxProfit(prices): O(n).
+maxProfit_bu(prices) and maxProfit_td(prices): O(n).
 """
 
 

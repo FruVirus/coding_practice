@@ -92,9 +92,9 @@ Complexity
 Time
 ----
 
-numTilings(n): O(n), there will be n non-memoized calls to f(n) and p(n) for a total of
-2 * n complexity. In addition, there will be 2 * n memoized calls to f(n) and n memoized
-calls to p(n). Total is O(5 * n) = O(n).
+numTilings_bu(n) and numTilings_td(n): O(n), there will be n non-memoized calls to f(n)
+and p(n) for a total of 2 * n complexity. In addition, there will be 2 * n memoized
+calls to f(n) and n memoized calls to p(n). Total is O(5 * n) = O(n).
 
 Space
 -----

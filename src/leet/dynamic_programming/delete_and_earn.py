@@ -76,16 +76,16 @@ Complexity
 Time
 ----
 
-deleteAndEarn(nums): O(n + k), where n is the length of nums and k is the maximum
-element in nums. Because of cache, already solved sub-problems will only cost O(1) time.
-Since max_num = k, we will solve k unique sub-problems.
+deleteAndEarn_bu(nums) and deleteAndEarn_td(nums): O(n + k), where n is the length of
+nums and k is the maximum element in nums. Because of cache, already solved sub-problems
+will only cost O(1) time. Since max_num = k, we will solve k unique sub-problems.
 
 Space
 -----
 
-deleteAndEarn(nums): O(n + k). points take up O(n) space in the worst case where every
-element is nums is unique. The recursion call stack/array takes up O(k) space as does
-the memo dict.
+deleteAndEarn_bu(nums) and deleteAndEarn_td(nums): O(n + k). points take up O(n) space
+in the worst case where every element is nums is unique. The recursion call stack/array
+takes up O(k) space as does the memo dict.
 """
 
 

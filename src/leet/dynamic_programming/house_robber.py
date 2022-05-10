@@ -16,7 +16,7 @@ Complexity
 Time
 ----
 
-rob(nums): O(n).
+rob_bu(nums) and rob_td(nums): O(n).
 
 Space
 -----
