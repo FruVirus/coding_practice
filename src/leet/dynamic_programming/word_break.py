@@ -45,14 +45,15 @@ Complexity
 Time
 ----
 
-wordBreak(s, word_dict): O(n * k * l), where n = len(s), k = len(word_dict), and l is
-the average length of the words in word_dict. At each state i, we iterate through
-word_dict and splice s to a new string with average length l.
+wordBreak_bu(s, word_dict) and wordBreak_td(s, word_dict): O(n * k * l), where n =
+len(s), k = len(word_dict), and l is the average length of the words in word_dict. At
+each state i, we iterate through word_dict and splice s to a new string with average
+length l.
 
 Space
 -----
 
-wordBreak(s, word_dict): O(n).
+wordBreak_bu(s, word_dict) and wordBreak_td(s, word_dict): O(n).
 """
 
 
