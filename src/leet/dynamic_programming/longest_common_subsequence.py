@@ -37,7 +37,8 @@ Complexity
 Time
 ----
 
-longestCommonSubsequence(text1, text2): O(m * n).
+longestCommonSubsequence_bu(text1, text2) and longestCommonSubsequence_td(text1, text2):
+O(m * n).
 
 Space
 -----
