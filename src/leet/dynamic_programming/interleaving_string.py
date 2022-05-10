@@ -85,7 +85,7 @@ Complexity
 Time
 ----
 
-isInterleave(s1, s2, s3): O(m * n).
+isInterleave_bu(s1, s2, s3) and isInterleave_td(s1, s2, s3): O(m * n).
 
 Space
 -----
