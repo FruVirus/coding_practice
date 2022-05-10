@@ -44,12 +44,12 @@ Complexity
 Time
 ----
 
-maxSubarraySumCircular(nums): O(n).
+maxSubarraySumCircular_bu(nums): O(n).
 
 Space
 -----
 
-maxSubarraySumCircular(nums): O(n) for the inverted array.
+maxSubarraySumCircular_bu(nums): O(n) for the inverted array.
 """
 
 
