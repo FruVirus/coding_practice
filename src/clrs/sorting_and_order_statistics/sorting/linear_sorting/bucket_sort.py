@@ -44,9 +44,8 @@ def bucket_sort(a):
     b, w = [[] for _ in range(num_buckets)], (amax - amin) / num_buckets
     for num in a:
         float_index = (num - amin) / w
-        int_index = int(float_index)
-        bucket_index = int_index
-        if float_index == int_index and num != amin:
+        bucket_index = int(float_index)
+        if float_index == bucket_index and num != amin:
             bucket_index -= 1
         b[bucket_index].append(num)
     i = 0
