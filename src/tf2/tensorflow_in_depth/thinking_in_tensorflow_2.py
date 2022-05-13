@@ -106,6 +106,99 @@ print()
 
 # Take advantage of tf.function with Python control flow
 
+
+class DynamicRNN(tf.keras.Model):
+    def __init__(self, rnn_cell):
+        super().__init__(self)
+        self.cell = rnn_cell
+
+    @tf.function(
+        input_signature=[tf.TensorSpec(dtype=tf.float32, shape=[None, None, 3])]
+    )
+    def call(self, input_data):
+        input_data = tf.transpose(input_data, [1, 0, 2])
+        timesteps = tf.shape(input_data)[0]
+        batch_size = tf.shape(input_data)[1]
+        outputs = tf.TensorArray(tf.float32, timesteps)
+        state = self.cell.get_initial_state(batch_size=batch_size, dtype=tf.float32)
+        for i in tf.range(timesteps):
+            output, state = self.cell(input_data[i], state)
+            outputs = outputs.write(i, output)
+        return tf.transpose(outputs.stack(), [1, 0, 2]), state
+
+
+lstm_cell = tf.keras.layers.LSTMCell(units=13)
+my_rnn = DynamicRNN(lstm_cell)
+outputs, state = my_rnn(tf.random.normal(shape=[10, 20, 3]))
+print(outputs.shape)
+
 # New-style metrics and losses
+cce = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
+print(cce([[1, 0]], [[-1.0, 3.0]]).numpy())
+
+loss_metric = tf.keras.metrics.Mean(name="train_loss")
+accuracy_metric = tf.keras.metrics.SparseCategoricalAccuracy(name="train_accuracy")
+
+
+@tf.function  # type: ignore
+def train_step(inputs, labels):
+    with tf.GradientTape() as tape:
+        predictions = model(inputs, training=True)
+        regularization_loss = tf.math.add_n(model.losses)
+        pred_loss = loss_fn(labels, predictions)
+        total_loss = pred_loss + regularization_loss
+
+    gradients = tape.gradient(total_loss, model.trainable_variables)
+    optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+
+    loss_metric.update_state(total_loss)
+    accuracy_metric.update_state(labels, predictions)
+
+
+for epoch in range(NUM_EPOCHS):
+    loss_metric.reset_states()
+    accuracy_metric.reset_states()
+
+    for inputs, labels in train_data:
+        train_step(inputs, labels)
+
+    mean_loss = loss_metric.result()
+    mean_accuracy = accuracy_metric.result()
+
+    print("Epoch: ", epoch)
+    print("  loss:     {:.3f}".format(mean_loss))
+    print("  accuracy: {:.3f}".format(mean_accuracy))
 
 # Debugging
+
+
+@tf.function
+def f(x):
+    if x > 0:
+        # Standard Library
+        import pdb
+
+        pdb.set_trace()
+        x = x + 1
+    return x
+
+
+tf.config.run_functions_eagerly(True)
+f(tf.constant(1))
+
+
+class CustomModel(tf.keras.models.Model):
+    @tf.function
+    def call(self, input_data):
+        if tf.reduce_mean(input_data) > 0:
+            return input_data
+        # Standard Library
+        import pdb
+
+        pdb.set_trace()
+        return input_data // 2
+
+
+tf.config.run_functions_eagerly(True)
+model = CustomModel()
+model(tf.constant([-2, -4]))
