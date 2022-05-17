@@ -214,10 +214,10 @@ class BST:
         self.update_size(x.right)
 
     def walk(self, x):
-        node = self.min(x)
-        while node is not self.sentinel:
-            print(node.key)
-            node = self.successor(node)
+        x = self.min(x)
+        while x is not self.sentinel:
+            print(x.key)
+            x = self.successor(x)
 
 
 class BSTNode:
