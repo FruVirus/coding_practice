@@ -37,7 +37,7 @@ class Node:
 
 class Sol:
     def __init__(self):
-        self.visited = {}
+        self.seen = {}
 
     @staticmethod
     def clone_bfs(node):
@@ -56,9 +56,9 @@ class Sol:
     def clone_dfs(self, node):
         if not node:
             return node
-        if node in self.visited:
-            return self.visited[node]
+        if node in self.seen:
+            return self.seen[node]
         clone = Node(node.val)
-        self.visited[node] = clone
+        self.seen[node] = clone
         clone.neighbors = [self.clone_dfs(n) for n in node.neighbors]
         return clone
