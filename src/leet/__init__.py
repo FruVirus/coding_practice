@@ -5,10 +5,13 @@ binary_search:          11
 binary_search_tree:     5
 binary_tree:            8
 --------------------------
-dynamic_programming:    28
+dynamic_programming:    14
+recursion_1:            2
+--------------------------
+dynamic_programming:    14
+recursion_1:            2
 --------------------------
 graph:                  20
-recursion_1:            4
 --------------------------
 hash_table:             18
 heap:                   8
