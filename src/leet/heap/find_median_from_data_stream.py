@@ -33,11 +33,9 @@ class Sol:
 
     def add_num(self, val):
         heapq.heappush(self.max_heap, -val)
-        heapq.heappush(self.min_heap, -self.max_heap[0])
-        heapq.heappop(self.max_heap)
+        heapq.heappush(self.min_heap, -heapq.heappop(self.max_heap))
         if len(self.max_heap) < len(self.min_heap):
-            heapq.heappush(self.max_heap, -self.min_heap[0])
-            heapq.heappop(self.min_heap)
+            heapq.heappush(self.max_heap, -heapq.heappop(self.min_heap))
 
     def find_median(self):
         if len(self.max_heap) > len(self.min_heap):
