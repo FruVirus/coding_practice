@@ -78,7 +78,7 @@ def sol(nums, target, k):
             return twosum_hash(nums, target)
         for i in range(len(nums)):
             if i == 0 or nums[i - 1] != nums[i]:
-                for subset in ksum(nums[i + 1 :], target - nums[i], k - 1):
+                for subset in ksum(nums[i + 1:], target - nums[i], k - 1):
                     sol.append([nums[i]] + subset)
         return sol
 
