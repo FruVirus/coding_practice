@@ -143,7 +143,7 @@ class DecisionTreeClassifier:
         probs = self.compute_probability(y)
         return 1 - sum(probs[num] ** 2 for num in probs)
 
-    def information_gain(self, parent, l_child, r_child, mode="entropy"):
+    def information_gain(self, parent, l_child, r_child, mode="gini"):
         weight_l, weight_r = len(l_child) / len(parent), len(r_child) / len(parent)
         if mode == "gini":
             gain = self.gini_index(parent) - (
