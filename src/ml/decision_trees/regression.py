@@ -1,60 +1,34 @@
 """Decision Tree regression from scratch.
 
-A decision tree is a binary tree that recursively splits a dataset until we are left
-with pure leaf nodes; i.e., a data point with only one type of class label. Decision
-trees are nonlinear classifiers.
+The idea is the same as decision tree classifiers: We recursively split the dataset
+until we are left with pure leaf nodes. The two main differences are how we define
+impurity and how we make predictions.
 
-There are two kinds of nodes: decision nodes and leaf nodes. Decision nodes contain a
-condition to split the data. Leaf nodes helps us to decide the class of a new data
-point. If a leaf node is not pure (i.e., it contains more than one class type), we
-perform majority voting to determine the class label of the new data point.
+To make a prediction, we average the values of the data points when we arrive at a leaf
+node during the tree traversal process.
 
-There are many possible splitting conditions at each decision node. The decision tree
-model should always choose the split that maximizes the information gain. To calculate
-the information gain, we need to understand the information contained in a state. We can
-use two metrics to determine the optimal split at each decision node: entropy and Gini
-index.
-
-Entropy/Gini index is a measure of the information contained in a state. If the
-entropy is high, then we are very uncertain about the state and need more bits to
-describe the state (and vice versa).
-
-To find the information gain of a split, we subtract the sum of the entropies of the
-child nodes from the entropy of the parent node. The split that provides the highest
-information gain is chosen as the optimal split for each decision node. We iterate
-through all possible splits of the dataset to determine the optimal splits for the
-decision tree. In other words, the model iterates through all the features and feature
-values to find the optimal split and split threshold in a greedy fashion---it does not
-backtrack and change a previous optimal split. Thus, decision trees do not guarantee a
-global optimal split but is fast.
-
-Decision trees typically have two stopping conditions: 1. the minimum number of samples
-to split on and 2. the maximum depth of the tree. If the number of samples at a node is
-less than the minimum number of samples to split on, then we stop the splitting process.
-Likewise, if we have reached the maximum depth of tree, we stop the splitting process.
+To split the dataset, we have to find the split that decreases the impurities of the
+child nodes the most. In the context of regression, we use variance reduction as a
+measure of impurity. A higher value of variance means a higher impurity (and vice
+versa). Variance reduction is computed by subtracting the combined variances of the
+child nodes from the variance of the parent node. The weights of the child nodes are the
+relative size of the child nodes w.r.t the parent node.
 """
 
 # type: ignore
-
-# Standard Library
-from collections import Counter
 
 # Third Party Library
 import numpy as np
 import pandas as pd
 
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
 # Get the data
-col_names = ["sepal_length", "sepal_width", "petal_length", "petal_width", "type"]
 data = pd.read_csv(
-    "~/Projects/personal/coding_practice/src/ml/decision_trees/iris.csv",
-    skiprows=0,
-    header=None,
-    names=col_names,
+    "~/Projects/personal/coding_practice/src/ml/decision_trees/airfoil_noise_data.csv",
 )
-print(data.head(10))
+print(data.head(5))
 print()
 
 
@@ -66,7 +40,7 @@ class Node:
         feature_value=None,
         left=None,
         right=None,
-        info_gain=None,
+        var_red=None,
         value=None,
     ):
         # For decision nodes.
@@ -74,14 +48,14 @@ class Node:
         self.feature_value = feature_value
         self.left = left
         self.right = right
-        self.info_gain = info_gain
+        self.var_red = var_red
 
         # For leaf nodes.
         self.value = value
 
 
 # Tree class
-class DecisionTreeClassifier:
+class DecisionTreeRegressor:
     def __init__(self, min_samples_split=2, max_depth=2):
         self.min_samples_split = min_samples_split
         self.max_depth = max_depth
@@ -92,7 +66,7 @@ class DecisionTreeClassifier:
         num_samples, num_features = np.shape(X)
         if num_samples >= self.min_samples_split and curr_depth <= self.max_depth:
             best_split = self.get_best_split(dataset, num_features)
-            if best_split["info_gain"] > 0:
+            if best_split["var_red"] > 0:
                 left = self.build_tree(best_split["left"], curr_depth + 1)
                 right = self.build_tree(best_split["right"], curr_depth + 1)
                 return Node(
@@ -100,61 +74,33 @@ class DecisionTreeClassifier:
                     best_split["feature_value"],
                     left,
                     right,
-                    best_split["info_gain"],
+                    best_split["var_red"],
                 )
         return Node(value=self.compute_leaf_value(Y))
 
     @staticmethod
     def compute_leaf_value(Y):
-        Y = list(Y)
-        return max(Y, key=Y.count)
-
-    @staticmethod
-    def compute_probability(y):
-        return {num: freq / len(y) for num, freq in Counter(y).items()}
-
-    def entropy(self, y):
-        probs = self.compute_probability(y)
-        return sum(-probs[num] * np.log2(probs[num]) for num in probs)
+        return np.mean(Y)
 
     def fit(self, X, Y):
         dataset = np.concatenate((X, Y), axis=1)
         self.root = self.build_tree(dataset)
 
     def get_best_split(self, dataset, num_features):
-        best_split, max_info_gain = {}, -float("inf")
+        best_split, max_var_red = {}, -float("inf")
         for feature_index in range(num_features):
             for feature_value in np.unique(dataset[:, feature_index]):
                 left, right = self.split(dataset, feature_index, feature_value)
                 if len(left) > 0 and len(right) > 0:
-                    info_gain = self.information_gain(
-                        dataset[:, -1], left[:, -1], right[:, -1]
-                    )
-                    if info_gain > max_info_gain:
+                    var_red = self.var_red(dataset[:, -1], left[:, -1], right[:, -1])
+                    if var_red > max_var_red:
                         best_split["feature_index"] = feature_index
                         best_split["feature_value"] = feature_value
                         best_split["left"] = left
                         best_split["right"] = right
-                        best_split["info_gain"] = info_gain
-                        max_info_gain = info_gain
+                        best_split["var_red"] = var_red
+                        max_var_red = var_red
         return best_split
-
-    def gini_index(self, y):
-        probs = self.compute_probability(y)
-        return 1 - sum(probs[num] ** 2 for num in probs)
-
-    def information_gain(self, parent, l_child, r_child, mode="gini"):
-        weight_l, weight_r = len(l_child) / len(parent), len(r_child) / len(parent)
-        if mode == "gini":
-            gain = self.gini_index(parent) - (
-                weight_l * self.gini_index(l_child)
-                + weight_r * self.gini_index(r_child)
-            )
-        else:
-            gain = self.entropy(parent) - (
-                weight_l * self.entropy(l_child) + weight_r * self.entropy(r_child)
-            )
-        return gain
 
     def predict(self, X):
         preds = []
@@ -178,7 +124,7 @@ class DecisionTreeClassifier:
                 "<=",
                 tree.feature_value,
                 "?",
-                tree.info_gain,
+                tree.var_red,
             )
             print("%sleft:" % indent, end="")
             self.print_tree(tree.left, indent + indent)
@@ -191,6 +137,13 @@ class DecisionTreeClassifier:
         right = np.array([row for row in dataset if row[feature_index] > feature_value])
         return left, right
 
+    @staticmethod
+    def var_red(parent, l_child, r_child):
+        weight_l, weight_r = len(l_child) / len(parent), len(r_child) / len(parent)
+        return np.var(parent) - (
+            weight_l * np.var(l_child) + weight_r * np.var(r_child)
+        )
+
 
 # Train-Test split
 X = data.iloc[:, :-1].values
@@ -200,10 +153,10 @@ X_train, X_test, Y_train, Y_test = train_test_split(
 )
 
 # Fit the model
-classifier = DecisionTreeClassifier(min_samples_split=3, max_depth=3)
-classifier.fit(X_train, Y_train)
-classifier.print_tree()
+regressor = DecisionTreeRegressor(min_samples_split=3, max_depth=3)
+regressor.fit(X_train, Y_train)
+regressor.print_tree()
 
 # Test the model
-Y_pred = classifier.predict(X_test)
-print(accuracy_score(Y_test, Y_pred))
+Y_pred = regressor.predict(X_test)
+print(np.sqrt(mean_squared_error(Y_test, Y_pred)))
