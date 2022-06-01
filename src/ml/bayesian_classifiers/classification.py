@@ -65,6 +65,7 @@ print(data.head(10))
 print()
 
 # Basic EDA
+#
 # This shows that there are more positive examples than negative ones. Thus, the dataset
 # is slightly imbalanced.
 data["diagnosis"].hist()
@@ -129,6 +130,10 @@ def naive_bayes_gaussian(df, X, Y):
 
 
 # Test Gaussian model
+#
+# When we train the Naive Bayesian model, we use the training dataset to compute the
+# priors and get the unique labels. Then, for each new data point, we compute the
+# likelihood of each of the features of the new data point given the training data.
 train, test = train_test_split(data, test_size=0.2, random_state=41)
 X_test = test.iloc[:, :-1].values
 Y_test = test.iloc[:, -1].values
