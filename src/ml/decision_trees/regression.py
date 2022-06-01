@@ -1,4 +1,4 @@
-"""Decision Tree classification from scratch.
+"""Decision Tree regression from scratch.
 
 A decision tree is a binary tree that recursively splits a dataset until we are left
 with pure leaf nodes; i.e., a data point with only one type of class label. Decision
