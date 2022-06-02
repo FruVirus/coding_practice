@@ -1,5 +1,5 @@
 """
-array_and_string:       12
+array_and_string:       13
 arrays_101:             16
 binary_search:          11
 binary_search_tree:     5
@@ -22,5 +22,5 @@ queue_and_stack:        19
 recursion_2:            10
 trie:                   9
 
-Total:                  186
+Total:                  187
 """
