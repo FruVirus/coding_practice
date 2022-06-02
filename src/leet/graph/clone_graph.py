@@ -39,19 +39,18 @@ class Sol:
     def __init__(self):
         self.seen = {}
 
-    @staticmethod
-    def clone_bfs(node):
+    def clone_bfs(self, node):
         if not node:
             return node
-        queue, seen = deque([node]), {node: Node(node.val)}
+        queue, self.seen[node] = deque([node]), Node(node.val)
         while queue:
             curr_node = queue.popleft()
             for n in curr_node.neighbors:
-                if n not in seen:
-                    seen[n] = Node(n.val)
+                if n not in self.seen:
+                    self.seen[n] = Node(n.val)
                     queue.append(n)
-                seen[curr_node].neighbors.append(seen[n])
-        return seen[node]
+                self.seen[curr_node].neighbors.append(self.seen[n])
+        return self.seen[node]
 
     def clone_dfs(self, node):
         if not node:
