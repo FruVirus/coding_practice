@@ -72,5 +72,4 @@ def sol_boyer_moore(nums):
 def sol_hash(nums):
     for majority, freq in Counter(nums).items():
         if freq > len(nums) // 2:
-            break
-    return majority
+            return majority
