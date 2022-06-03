@@ -4,6 +4,10 @@ Logistic regression is used to solve classification problems. A non-linear funct
 (i.e., the sigmoid or logistic function) is introduced on top of the linear function in
 order to convert the outputs of the linear function in to the range [0, 1] so that we
 can interpret its outputs as probabilities.
+
+The cost function cannot be the same as that used for linear regression since the
+logistic function will cause the hypothesis function to have many local minima (i.e., it
+will not be a convex function).
 """
 
 # pylint: disable=W0632
@@ -49,16 +53,16 @@ def h(w, X):
 # Cost function - Binary Cross Entropy
 def cost(w, X, Y):
     y_pred = h(w, X)
-    return -1 * sum(Y * np.log(y_pred) + (1 - Y) * np.log(1 - y_pred))
+    return -sum(Y * np.log(y_pred) + (1 - Y) * np.log(1 - y_pred)) / m
 
 
 # Gradient descent
 def grad(w, X, Y):
     y_pred = h(w, X)
     g = [0] * 3
-    g[0] = -1 * sum(Y * (1 - y_pred) - (1 - Y) * y_pred)
-    g[1] = -1 * sum(Y * (1 - y_pred) * X[:, 0] - (1 - Y) * y_pred * X[:, 0])
-    g[2] = -1 * sum(Y * (1 - y_pred) * X[:, 1] - (1 - Y) * y_pred * X[:, 1])
+    g[0] = sum(y_pred - Y) / m
+    g[1] = sum((y_pred - Y) * X[:, 0]) / m
+    g[2] = sum((y_pred - Y) * X[:, 1]) / m
     return g
 
 
@@ -67,9 +71,10 @@ def descent(w_prev, w_new, lr):
     print(cost(w_prev, X, Y))
     for _ in range(100):
         w_prev = w_new
-        w0 = w_prev[0] - lr * grad(w_prev, X, Y)[0]
-        w1 = w_prev[1] - lr * grad(w_prev, X, Y)[1]
-        w2 = w_prev[2] - lr * grad(w_prev, X, Y)[2]
+        grads = grad(w_prev, X, Y)
+        w0 = w_prev[0] - lr * grads[0]
+        w1 = w_prev[1] - lr * grads[1]
+        w2 = w_prev[2] - lr * grads[2]
         w_new = [w0, w1, w2]
         print(w_new)
         print(cost(w_new, X, Y))
@@ -94,6 +99,12 @@ def graph(formula, x_range):
 
 
 def my_formula(x):
+    """The equation is w[0] + w[1] * x[0] + w[2] * x[1]. However, for the sake of
+    plotting, we take x1 as the y-axis and x0 as the x-axis. The equation for a line in
+    2D is ax + by + c = 0 --> y = (-c - ax) / b. In this case, a = w[1], b = w[2], and
+    c = w[0].
+    """
+
     return (-w[0] - w[1] * x) / w[2]
 
 

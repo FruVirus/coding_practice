@@ -51,8 +51,9 @@ def descent(w_prev, w_new, lr):
     print(cost(w_prev, X, y))
     for _ in range(500):
         w_prev = w_new
-        w0 = w_prev[0] - lr * grad(w_prev, X, y)[0]
-        w1 = w_prev[1] - lr * grad(w_prev, X, y)[1]
+        grads = grad(w_prev, X, y)
+        w0 = w_prev[0] - lr * grads[0]
+        w1 = w_prev[1] - lr * grads[1]
         w_new = [w0, w1]
         print(w_new)
         print(cost(w_new, X, y))
