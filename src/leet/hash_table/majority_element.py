@@ -56,6 +56,8 @@ majorityElement_boyer_moore(nums): O(1).
 majorityElement_hash(nums): O(n).
 """
 
+# pylint: disable=R1710
+
 # Standard Library
 from collections import Counter
 
