@@ -30,7 +30,7 @@ def h(X, w):
 
 # Cost function
 def cost(w, X, y):
-    return (0.5 * m) * np.sum(np.square(h(X, w) - np.array(y)))
+    return (0.5 / m) * np.sum(np.square(h(X, w) - np.array(y)))
 
 
 # Gradient descent
@@ -79,4 +79,4 @@ plt.scatter(X, y, c="red", alpha=0.5, marker="o")
 graph(my_formula, range(-5, 5))
 plt.xlabel("X")
 plt.ylabel("Y")
-# plt.show()
+plt.show()
