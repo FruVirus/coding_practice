@@ -14,6 +14,9 @@ from sklearn.datasets import make_regression
 X, y = make_regression(
     n_samples=200, n_features=1, n_informative=1, noise=6, bias=30, random_state=200
 )
+print(X.shape)
+print(y.shape)
+print()
 m = 200
 
 # Visualizing the data
