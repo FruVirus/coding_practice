@@ -51,9 +51,11 @@ def h(w, X):
 
 
 # Cost function - Binary Cross Entropy
-def cost(w, X, Y):
+def cost(w, X, Y, reg=1):
     y_pred = h(w, X)
-    return -sum(Y * np.log(y_pred) + (1 - Y) * np.log(1 - y_pred)) / m
+    return -sum(Y * np.log(y_pred) + (1 - Y) * np.log(1 - y_pred)) / m + (
+        0.5 * reg / m
+    ) * np.sum(np.array(w) ** 2)
 
 
 # Gradient descent
@@ -66,15 +68,15 @@ def grad(w, X, Y):
     return g
 
 
-def descent(w_prev, w_new, lr):
+def descent(w_prev, w_new, lr, reg=1):
     print(w_prev)
     print(cost(w_prev, X, Y))
     for _ in range(100):
         w_prev = w_new
         grads = grad(w_prev, X, Y)
         w0 = w_prev[0] - lr * grads[0]
-        w1 = w_prev[1] - lr * grads[1]
-        w2 = w_prev[2] - lr * grads[2]
+        w1 = w_prev[1] - lr * grads[1] - lr * reg * w_prev[1] / m
+        w2 = w_prev[2] - lr * grads[2] - lr * reg * w_prev[2] / m
         w_new = [w0, w1, w2]
         print(w_new)
         print(cost(w_new, X, Y))
