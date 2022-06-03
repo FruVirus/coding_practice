@@ -4,6 +4,8 @@ Linear regression is fitting a curve to the given data by expressing the output 
 by a linear combination of inputs and weights.
 """
 
+# pylint: disable=W0632
+
 # Third Party Library
 import numpy as np
 
