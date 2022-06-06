@@ -83,7 +83,7 @@ mapping = {
 
 
 def sol(s):
-    total = mapping.get(s[-1])
+    total = mapping[s[-1]]
     for i in reversed(range(len(s) - 1)):
         if mapping[s[i]] < mapping[s[i + 1]]:
             total -= mapping[s[i]]
