@@ -70,14 +70,14 @@ class Network:
             for x, y in zip(self.sizes[:-1], self.sizes[1:])
         ]
 
-    def accuracy(self, data, convert=False):
+    def accuracy(self, data, training=True):
         """Return the number of inputs in data for which the neural network outputs the
         correct result. The neural network's output is assumed to be the index of
         whichever neuron in the final layer has the highest activation.
 
-        The flag convert should be set to False if the data set is validation or test
-        data (the usual case), and to True if the data set is the training data. The
-        need for this flag arises due to differences in the way the results y are
+        The training convert should be set to False if the data set is validation or
+        test data (the usual case), and to True if the data set is the training data.
+        The need for this flag arises due to differences in the way the results y are
         represented in the different data sets. In particular, it flags whether we need
         to convert between the different representations. It may seem strange to use
         different representations for the different data sets. Why not use the same
@@ -87,7 +87,7 @@ class Network:
         representations speeds things up.
         """
 
-        if convert:
+        if not training:
             results = [
                 (np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in data
             ]
@@ -160,8 +160,7 @@ class Network:
         empty if the corresponding flag is not set.
         """
 
-        if evaluation_data:
-            n_data = len(evaluation_data)
+        n_data = len(evaluation_data) if evaluation_data else 0
         n = len(training_data)
         evaluation_cost, evaluation_accuracy = [], []
         training_cost, training_accuracy = [], []
@@ -179,11 +178,11 @@ class Network:
                 training_cost.append(cost)
                 print("Cost on training data: {}".format(cost))
             if monitor_training_accuracy:
-                accuracy = self.accuracy(training_data, convert=True)
+                accuracy = self.accuracy(training_data, training=True)
                 training_accuracy.append(accuracy)
                 print("Accuracy on training data: {} / {}".format(accuracy, n))
             if monitor_evaluation_cost:
-                cost = self.total_cost(evaluation_data, lmbda, convert=True)
+                cost = self.total_cost(evaluation_data, lmbda, training=False)
                 evaluation_cost.append(cost)
                 print("Cost on evaluation data: {}".format(cost))
             if monitor_evaluation_accuracy:
@@ -197,16 +196,16 @@ class Network:
             print()
         return evaluation_cost, evaluation_accuracy, training_cost, training_accuracy
 
-    def total_cost(self, data, lmbda, convert=False):
-        """Return the total cost for the data set data. The flag convert should be set
-        to False if the data set is the training data (the usual case), and to True if
+    def total_cost(self, data, lmbda, training=True):
+        """Return the total cost for the dataset data. The flag training should be set
+        to True if the data set is the training data (the usual case), and to False if
         the data set is the validation or test data.
         """
 
         cost = 0.0
         for x, y in data:
             a = self.feedforward(x)
-            if convert:
+            if not training:
                 y = vectorized_result(y)
             cost += self.cost.fn(a, y) / len(data)
         cost += (
