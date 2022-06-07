@@ -12,6 +12,13 @@ Regression
 We pick a value of k. Then, given a new data point (i.e., a new x value), we find the k
 nearest points (i.e., the k nearest x values) around the new point and average the y
 values for those k nearest points as the predicted y value for the new point.
+
+Picking Values for K
+--------------------
+
+Low values for k can be noisy and subject to the effects of outliers. High values of k
+smooth over things, but you don't want k to be so large that a category with only a few
+samples in it will always be out voted by other categories.
 """
 
 # pylint: disable=W0632
