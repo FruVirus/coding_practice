@@ -70,8 +70,8 @@ def assign_cluster(k, X, centroids):
 def compute_centroids(k, X, clusters):
     centroids = []
     for k_ in range(k):
-        arr = [x for i, x in enumerate(X) if clusters[i] == k_]
-        centroids.append(np.mean(arr, axis=0))
+        centroid_points = [x for i, x in enumerate(X) if clusters[i] == k_]
+        centroids.append(np.mean(centroid_points, axis=0))
     return np.asarray(centroids)
 
 
@@ -103,12 +103,12 @@ def k_means(k, X):
     centroids_prev = X[np.random.choice(X.shape[0], size=k), :]
 
     # Run K-means.
-    centroids_new = float("inf")
+    centroids_new = np.full(centroids_prev.shape, float("inf"))
     while measure_change(centroids_new, centroids_prev) > 0.001:
         clusters = assign_cluster(k, X, centroids_prev)
-        show_clusters(X, clusters, centroids_prev)
         centroids_new = compute_centroids(k, X, clusters)
         centroids_prev = centroids_new
+    show_clusters(X, clusters, centroids_prev)
     return clusters
 
 
