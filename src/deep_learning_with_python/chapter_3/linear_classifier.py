@@ -1,4 +1,4 @@
-"""Linear classifier in TensorFlow."""
+"""Linear classifier."""
 
 # pylint: disable=E1120, W1114
 
