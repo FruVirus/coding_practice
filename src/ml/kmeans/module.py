@@ -99,6 +99,7 @@ def show_clusters(X, clusters, c):
 # K-means
 def k_means(k, X):
     # Initialize centroids.
+    assert k <= X.shape[0]
     centroids_prev = X[np.random.choice(X.shape[0], size=k), :]
 
     # Run K-means.
