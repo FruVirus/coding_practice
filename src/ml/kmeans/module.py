@@ -103,12 +103,11 @@ def k_means(k, X):
     centroids_prev = X[np.random.choice(X.shape[0], size=k), :]
 
     # Run K-means.
-    centroids_change = float("inf")
-    while centroids_change > 0.001:
+    centroids_new = float("inf")
+    while measure_change(centroids_new, centroids_prev) > 0.001:
         clusters = assign_cluster(k, X, centroids_prev)
         show_clusters(X, clusters, centroids_prev)
         centroids_new = compute_centroids(k, X, clusters)
-        centroids_change = measure_change(centroids_new, centroids_prev)
         centroids_prev = centroids_new
     return clusters
 
