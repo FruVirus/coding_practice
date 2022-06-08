@@ -38,4 +38,4 @@ def sol(root, sub_root):
 
     if helper(root, sub_root):
         return True
-    return sol(root.left, sub_root) and sol(root.right, sub_root)
+    return sol(root.left, sub_root) or sol(root.right, sub_root)
