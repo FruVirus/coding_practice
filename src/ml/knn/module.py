@@ -1,4 +1,4 @@
-"""K-Nearest Neighbor Classification & Regression in Python.
+"""K-Nearest Neighbor Classification & Regression in Python
 
 Classification
 --------------
