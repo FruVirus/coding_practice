@@ -138,3 +138,4 @@ def k_means(k, X):
 
 
 cluster = k_means(3, X_train)
+print(cluster)
