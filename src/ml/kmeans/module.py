@@ -58,66 +58,39 @@ X_train, _ = make_blobs(n_samples=500, centers=3, n_features=2, random_state=20)
 print(X_train.shape)
 print()
 
-# Visualize the data
-df = DataFrame(dict(x=X_train[:, 0], y=X_train[:, 1]))
-fig, ax = plt.subplots(figsize=(8, 8))
-df.plot(ax=ax, kind="scatter", x="x", y="y")
-plt.xlabel("X_1")
-plt.ylabel("X_2")
-# plt.show()
-
 
 # Helper functions for K-means
-def assign_cluster(k, X, cg):
-    cluster = [-1] * len(X)
+def assign_cluster(k, X, centroids):
+    clusters = [None] * len(X)
     for i, x in enumerate(X):
-        dist_arr = []
-        for j in range(k):
-            dist_arr.append(dist(x, cg[j]))
-        idx = np.argmin(dist_arr)
-        cluster[i] = idx
-    return np.asarray(cluster)
+        clusters[i] = np.argmin([compute_distance(x, centroids[k_]) for k_ in range(k)])
+    return np.asarray(clusters)
 
 
-def compute_centroids(k, X, cluster):
-    cg_arr = []
-    for i in range(k):
-        arr = []
-        for j, x in enumerate(X):
-            if cluster[j] == i:
-                arr.append(x)
-        cg_arr.append(np.mean(arr, axis=0))
-    return np.asarray(cg_arr)
+def compute_centroids(k, X, clusters):
+    centroids = []
+    for k_ in range(k):
+        arr = [x for i, x in enumerate(X) if clusters[i] == k_]
+        centroids.append(np.mean(arr, axis=0))
+    return np.asarray(centroids)
 
 
-def dist(a, b):
+def compute_distance(a, b):
     return np.sqrt(sum(np.square(a - b)))
 
 
-def init_centroids(k, X):
-    arr = []
-    for _ in range(k):
-        cx1 = np.random.uniform(min(X[:, 0]), max(X[:, 0]))
-        cx2 = np.random.uniform(min(X[:, 1]), max(X[:, 1]))
-        arr.append([cx1, cx2])
-    return np.asarray(arr)
+def measure_change(centroids_new, centroids_prev):
+    return sum(compute_distance(x, y) for x, y in zip(centroids_new, centroids_prev))
 
 
-def measure_change(cg_new, cg_prev):
-    res = 0
-    for a, b in zip(cg_new, cg_prev):
-        res += dist(a, b)
-    return res
-
-
-def show_clusters(X, cluster, cg):
-    df = DataFrame(dict(x=X[:, 0], y=X[:, 1], label=cluster))
+def show_clusters(X, clusters, c):
+    df = DataFrame(dict(x=X[:, 0], y=X[:, 1], label=clusters))
     colors = {0: "blue", 1: "orange", 2: "green"}
     _, ax = plt.subplots(figsize=(8, 8))
     grouped = df.groupby("label")
     for key, group in grouped:
         group.plot(ax=ax, kind="scatter", x="x", y="y", label=key, color=colors[key])
-    ax.scatter(cg[:, 0], cg[:, 1], marker="*", s=150, c="#ff2222")
+    ax.scatter(c[:, 0], c[:, 1], marker="*", s=150, c="#ff2222")
     plt.xlabel("X_1")
     plt.ylabel("X_2")
     plt.show()
@@ -125,16 +98,18 @@ def show_clusters(X, cluster, cg):
 
 # K-means
 def k_means(k, X):
-    cg_prev = init_centroids(k, X)
-    cluster = [0] * len(X)
-    cg_change = 100
-    while cg_change > 0.001:
-        cluster = assign_cluster(k, X, cg_prev)
-        show_clusters(X, cluster, cg_prev)
-        cg_new = compute_centroids(k, X, cluster)
-        cg_change = measure_change(cg_new, cg_prev)
-        cg_prev = cg_new
-    return cluster
+    # Initialize centroids.
+    centroids_prev = X[np.random.choice(X.shape[0], size=k), :]
+
+    # Run K-means.
+    centroids_change = float("inf")
+    while centroids_change > 0.001:
+        clusters = assign_cluster(k, X, centroids_prev)
+        show_clusters(X, clusters, centroids_prev)
+        centroids_new = compute_centroids(k, X, clusters)
+        centroids_change = measure_change(centroids_new, centroids_prev)
+        centroids_prev = centroids_new
+    return clusters
 
 
 cluster = k_means(3, X_train)
