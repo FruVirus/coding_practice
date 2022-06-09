@@ -28,7 +28,7 @@ Complexity
 Time
 ----
 
-insert(intervals, new_interval): O(n), where n is the length of new_interval.
+insert(intervals, new_interval): O(n), where n is the length of intervals.
 
 Space
 -----
@@ -38,16 +38,16 @@ insert(intervals, new_interval): O(n).
 
 
 def sol(intervals, new_interval):
-	i, n, sol = 0, len(intervals), []
-	while i < n and intervals[i][1] < new_interval[0]:
-		sol.append(intervals[i])
-		i += 1
-	while i < n and intervals[i][0] <= new_interval[1]:
-		new_interval[0] = min(intervals[i][0], new_interval[0])
-		new_interval[1] = max(intervals[i][1], new_interval[1])
-		i += 1
-	sol.append(new_interval)
-	while i < n:
-		sol.append(intervals[i])
-		i += 1
-	return sol
+    i, n, sol = 0, len(intervals), []
+    while i < n and intervals[i][1] < new_interval[0]:
+        sol.append(intervals[i])
+        i += 1
+    while i < n and intervals[i][0] <= new_interval[1]:
+        new_interval[0] = min(intervals[i][0], new_interval[0])
+        new_interval[1] = max(intervals[i][1], new_interval[1])
+        i += 1
+    sol.append(new_interval)
+    while i < n:
+        sol.append(intervals[i])
+        i += 1
+    return sol
