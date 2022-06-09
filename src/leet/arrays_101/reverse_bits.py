@@ -35,9 +35,9 @@ reverseBits(n): O(1).
 
 
 def sol(n):
-	rn, power = 0, 31
-	while n != 0:
-		rn += (n & 1) << power
-		n >>= 1
-		power -= 1
-	return rn
+    rn, power = 0, 31
+    while n != 0:
+        rn += (n & 1) << power
+        n >>= 1
+        power -= 1
+    return rn
