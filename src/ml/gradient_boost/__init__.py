@@ -133,5 +133,65 @@ See notes.
 Part 3: Classification
 ======================
 
+When we use Gradient Boost for Classification, the initial Prediction for every
+individual is the log(odds). If 4 people say Yes and 2 people say No, then the log(odds)
+of Yes is log(4 / 2).
 
+Just like with Logistic Regression, the easiest way to use the log(odds) for
+Classification is to convert it to a Probability and we do that with a Logistic
+Function.
+
+If the probability of Yes is greater than 0.5 (or some other threshold), we can Classify
+everyone in the Training Dataset as Yes.
+
+We can measure how bad the initial Prediction is by calculating the Pseudo Residuals,
+the difference between the Observed and the Predicted values. Note that the Observed
+values would be either 0 or 1 (for binary classification). The Predicted value comes
+from sigmoid(log(4 / 2)) = 0.7.
+
+Now we build a Tree using the Training Dataset variables to Predict the Residuals. In
+practice, people often set the maximum number of leaves to be between 8 and 32.
+
+When we used Gradient Boost for Regression, a leaf with a single Residual had an Output
+Value equal to that Residual. In contrast, when we use Gradient Boost for
+Classification, the situation is a little more complex. This is because the Predictions
+are in terms of the log(odds) and the leaf value is derived from a Probability so we
+can't just add them together to get a new log(odds) Prediction without some sort of
+transformation. See notes for derivation of transformation.
+
+We update our Predictions by combining the initial leaf with the new tree. Just like
+before, the new tree is scaled by a Learning Rate. THe log(odds) Prediction is the
+previous Prediction + the Output Value from the tree scaled by the Learning Rate. We
+then convert the new log(odds) Prediction in a Probability using the Logistic Function.
+
+We then repeat as many times as necessary to build new trees.
+
+To summarize:
+
+1. We started with just a leaf, which made one Prediction for every individual.
+
+2. Then we built a tree based on the Residuals, the difference between the Observed
+values and the single value Predicted by the leaf.
+
+3. Then we calculated the Output Values for each leaf and we scaled it by a Learning
+Rate.
+
+4. Then we built another tree based on the new Residuals, the difference between the
+Observed values and the values Predicted by the leaf AND the first tree.
+
+5. Then we calculated the Output Values for each leaf and we scaled this new tree with
+the Learning Rate as well.
+
+This process repeats until we have made the maximum number of trees specified, or the
+residuals get small enough.
+
+For a new Prediction, the Prediction starts with the leaf, then we run the data down the
+first tree and we add the scaled Output Value. Then we run the data down the second tree
+and we add the scaled Output Value. We convert the final log(odds) into a probability
+using the Logistic Function to get the new Prediction of Yes/No.
+
+Part 4: Classification Details
+==============================
+
+See notes.
 """
