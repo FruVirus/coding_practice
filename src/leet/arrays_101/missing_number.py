@@ -25,5 +25,5 @@ missingNumber(nums): O(1).
 
 
 def sol(nums):
-    actual_sum, expected_sum = sum(nums), sum(i for i in range(1, len(nums) + 1))
+    actual_sum, expected_sum = sum(nums), sum(list(range(len(nums) + 1)))
     return expected_sum - actual_sum
