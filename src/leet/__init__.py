@@ -1,13 +1,14 @@
 """
-array_and_string:       14
-arrays_101:             19
+arrays_101:             20
 binary_search:          11
 binary_search_tree:     5
 binary_tree:            11
 --------------------------
+array_and_string:       8
 dynamic_programming:    14
 recursion_1:            2
 --------------------------
+array_and_string:       8
 dynamic_programming:    14
 recursion_1:            2
 --------------------------
@@ -22,5 +23,5 @@ queue_and_stack:        19
 recursion_2:            10
 trie:                   9
 
-Total:                  198
+Total:                  201
 """
