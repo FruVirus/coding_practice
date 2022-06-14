@@ -44,12 +44,12 @@ productExceptSelf(nums): O(1).
 
 
 def sol(nums):
-    n, temp = len(nums), 1
-    sol = [0] * n
-    sol[0] = temp
+    n = len(nums)
+    sol = [1] * n
     for i in range(1, n):
         sol[i] = nums[i - 1] * sol[i - 1]
+    right_prod = 1
     for i in reversed(range(n)):
-        sol[i] *= temp
-        temp *= nums[i]
+        sol[i] *= right_prod
+        right_prod *= nums[i]
     return sol
