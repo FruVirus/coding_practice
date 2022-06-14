@@ -70,6 +70,26 @@ Instead, use regularization to prevent overfitting.
 Note that we should define the PCA reduction only on the training set and not on the
 validation or test sets. You can apply the PCA mapping on the validation/test set after
 it is defined on the training set.
+
+Misc.
+-----
+
+We can also view PCA as an unsupervised learning algorithm that learns a representation
+of data. PCA learns a representation that has lower dimensionality than the original
+input. It also learns a representation whose elements have no linear correlation with
+each other. However, to achieve full independence, a representation learning algorithm
+must also remove the nonlinear relationships between variables.
+
+PCA learns an orthogonal, linear transformation of the data that projects an input x to
+a representation z. PCA preserves as much of the information in the data possible as
+measured by least-squares reconstruction error.
+
+The ability of PCA to transform data into a representation where the elements are
+mutually uncorrelated is a very important property of PCA. It is a simple example of a
+representation that attempts to disentangle the unknown factors of variation underlying
+the data. In the case of PCA, this disentangling takes the form of finding a rotation of
+the input space (described by a weight matrix, W) that aligns the principal axes of
+variance with the basis of the new representation space associated with z.
 """
 
 # Standard Library

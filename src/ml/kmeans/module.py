@@ -42,6 +42,25 @@ is very gradual, so there's no clear elbow.
 Another way to choose k is to observe how well K-means performs on a downstream purpose.
 That is, you choose k that proves to be most useful for some goal you're trying to
 achieve from using these clusters.
+
+Misc.
+-----
+
+One difficulty pertaining to clustering is that the clustering problem is inherently
+ill posed, in the sense that there is no single criterion that measures how well a
+clustering of the data corresponds to the real world. We can measure properties of the
+clustering, such as the average Euclidean distance from a cluster centroid to the
+members of the cluster. This enables us to tell how well we are able to reconstruct the
+training data from the cluster assignments. However, we do not know how well the cluster
+assignments correspond to properties of the real world. Moreover, there may be many
+different clusterings that all correspond well to some property of the real world.
+
+K-means provides a one-hot representation of the data. A distributed representation
+could have multiples attributes for each data point. While it is still not entirely
+clear what the optimal distributed representation is, having many attributes reduces the
+burden on the algorithm to guess which single attribute we care about, and gives us the
+ability to measure similarity between objects in a fine-grained way by comparing many
+attributes instead of just testing whether one attribute matches.
 """
 
 # pylint: disable=W0632

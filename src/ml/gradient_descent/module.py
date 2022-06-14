@@ -15,6 +15,33 @@ model parameters, and iterating until a negligible change occurs for the cost fu
 Gradient descent moves a point in the negative direction of the slope (tangent) of the
 function at that point. By iteratively doing this process, gradient descent will find a
 local minimum.
+
+Stochastic Gradient Descent
+---------------------------
+
+A recurring problem in machine learning is thta large training sets are necessary for
+good generalization, but large training sets are also more computationally expensive.
+
+The cost function used by a machine learning algorithm often decomposes as a sum over
+training examples of some per-example loss function. The computational cost of gradient
+descent is then O(m), where m is the number of training examples. As the training set
+size grows to billions of examples, the time to take a single gradient step becomes
+prohibitively large.
+
+The insight of SGD is that the gradient is an expectation. The expectation may be
+approximately estimated using a small set of samples. Specifically, one each step of the
+algorithm, we can sample a mini-batch of examples drawn uniformly from the training set.
+Crucially, the mini-batch size is held fixed as the training set size m grows. Thus, we
+may fit a training set with billions of examples using updates computed on only a
+hundred examples.
+
+For a fixed model size, the cost per SGD update does not depend on the training set size
+m. In practice, we often use a larger model as the training set size increases, but we
+are not foreced to do so. The number of updates required to reach convergence usually
+increases with training set size. However, as m approaches infinity, the model will
+eventually converge to its best possible test error before SGD has sampled every example
+in the training set. Increasing m further will not extend the amount of training time
+needed to reach the model's best possible test error.
 """
 
 # f(w) = 3 * w_0 ** 2 + 4 * w_1 ** 2 - 5 * w_0 + 7
