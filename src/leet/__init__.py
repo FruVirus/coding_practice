@@ -1,5 +1,5 @@
 """
-arrays_101:             20
+arrays_101:             21
 binary_search:          11
 binary_search_tree:     5
 binary_tree:            11
@@ -24,5 +24,5 @@ trie:                   9
 --------------------------
 queue_and_stack:        19
 
-Total:                  201
+Total:                  202
 """
