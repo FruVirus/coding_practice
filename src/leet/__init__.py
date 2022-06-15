@@ -4,13 +4,11 @@ binary_search:          11
 binary_search_tree:     5
 binary_tree:            11
 --------------------------
-array_and_string:       8
+array_and_string:       16
 dynamic_programming:    14
-recursion_1:            2
 --------------------------
-array_and_string:       8
 dynamic_programming:    14
-recursion_1:            2
+recursion_1:            4
 --------------------------
 graph:                  20
 --------------------------
