@@ -247,6 +247,25 @@ model: you're going to need a bigger model, one with more capacity.
 
 Get more training data, or better training data.
 
+How does one decide whether to gather more data?
+
+First, determine whether the performance on the training set is acceptable. If it is
+not, the learning algorithm is not using the training data that is already available, so
+there is no reason to gather more data. Instead, try increasing model capacity. Also,
+try improving the learning algorithm (e.g., by tuning hyperparameters). If large models
+and tuning hyperparameters do not work well, then the problem might be the quality of
+the training data.
+
+If the performance on the training set is acceptable, the measure the performance on a
+test set. If the performance on the test set is also acceptable, then there is nothing
+left to be done.
+
+If the test set performance is much worse than training set performance, then gathering
+more data is one of the most effective solutions.
+
+If gather much more data is not feasible, the only other way to improve generalization
+error is to improve the learning algorithm itself.
+
 5.4.2 Feature engineering
 -------------------------
 
