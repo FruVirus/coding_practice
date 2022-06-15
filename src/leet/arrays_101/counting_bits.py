@@ -37,6 +37,6 @@ countBits(n): O(1).
 
 def sol(n):
     sol = [0] * (n + 1)
-    for x in range(1, n + 1):
-        sol[x] = sol[x >> 1] + (x & 1)
+    for i in range(1, n + 1):
+        sol[i] = sol[i >> 1] + (i & 1)
     return sol
