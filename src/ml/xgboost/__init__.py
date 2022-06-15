@@ -233,4 +233,149 @@ Part 3: Mathematical Details
 ============================
 
 See notes.
+
+Part 4: Crazy Cool Optimizations
+================================
+
+The other parts of XGBoost are what makes XGBoost relatively efficient with relatively
+large training datasets. These parts are:
+
+1. Approximate Greedy Algorithm
+
+2. Parallel Learning
+
+3. Weighted Quantile Sketch
+
+4. Sparsity-Aware Split Finding
+
+5. Cache-Aware Access
+
+6. Blocks for Out-of-Core Computation
+
+Approximate Greedy Algorithm
+----------------------------
+
+The first thing XGBoost does is to make an initial prediction, which is 0.5 by default
+but could be anything. Then we calculated Residuals and fit a tree to the Residuals.
+
+We fit a tree to the Residuals by calculating the Similarity Scores and the Gain (using
+the Similarity Scores) for different thresholds. And the threshold with the largest Gain
+is the one XGBoost uses to split the data for the next level in the tree.
+
+The decision to use the threshold that gives the largest Gain is made without worrying
+about how the leaves will be split later on down the tree. And that means XGBoost uses
+a Greedy Algorithm to build trees.
+
+In other words, since XGBoost uses a Greedy Algorithm, it makes a decision without
+looking ahead to see if it is the absolute best choice in the long term. By using a
+Greedy Algorithm, XGBoost can build a tree relatively quickly.
+
+That said, when we have a lot of data, the Greedy Algorithm becomes slow because it
+still has to look at every possible threshold between data points. If our dataset
+contained multiple features, then XGBoost would have to look at every single threshold
+for every single feature---this would take forever.
+
+This is where the approximate Greedy Algorithm comes in.
+
+Instead of testing every single threshold, we could divide the data into Quantiles and
+only use the Quantiles as candidate thresholds to split the observations. The more
+Quantiles we have, the better our predictions but the more thresholds we will have to
+test, and that means it will take longer to build the tree.
+
+Thus, for XGBoost, the Approximate Greedy Algorithm means that instead of testing all
+possible thresholds, we only test the Quantiles. By default, XGBoost uses about 33
+quantiles.
+
+Parallel Learning and Weighted Quantile Sketch
+----------------------------------------------
+
+With lots of data, finding quantiles become really slow. To get around this problem, a
+class of algorithms, called Sketches, can quickly create approximate solutions.
+
+Imagine splitting a dataset into small pieces and putting the pieces on different
+computers on a network. The Quantile Sketch Algorithm combines the values from each
+computer to make an approximate histogram. Then, the approximate histogram is used to
+calculate approximate quantiles. And the Approximate Greedy Algorithm uses approximate
+quantiles.
+
+XGBoost uses a Weighted Quantile Sketch. Usually, quantiles are set up so that the same
+number of observations are in each one. In contrast, with weighted quantiles, each
+observation has a corresponding Weight and the sum of the Weights are the same in each
+quantile.
+
+The Weights are derived from the Cover metric. Specifically, the weight for each
+observation is the second derivative of the Loss Function, the Hessian. Thus, for
+Regression, the Weights are all equal to 1 and that means the weighted quantiles are
+just like normal quantiles and contain an equal number of observations in each quantile.
+
+In contrast, for Classification, the weights are the previous probability times 1 -
+previous probability. In other words, the weights for the Weighted Quantile Sketch are
+calculated from the previously predicted probabilities. When the previously predicted
+probability is close to 0.5, meaning we don't have much confidence in the
+classification, the weights are relatively large and vice versa.
+
+By dividing the observations into quantiles where the sum of the weights are similar, we
+split observations with low confidence predictions into separate quantiles instead of
+grouping them into the same quantile (recall that if two observations end up in the same
+leaf with roughly the same Residuals, they will cancel each other out).
+
+In other words, the advantage of using the Weighted Quantile Sketch is that we get
+smaller quantiles when we need them.
+
+NB: XGBoost only uses the Approximate Greedy Algorithm, Parallel Learning, and the
+Weighted Quantile Sketch when the Training Dataset is huge. When the Training Dataset is
+small, XGBoost just uses a normal Greedy Algorithm.
+
+Sparsity-Aware Split Finding
+----------------------------
+
+Sparsity-Aware Split Finding tells us how to build trees with missing data and how to
+deal with new observations when there is missing data.
+
+If we have missing values in our dataset, we can still calculate Residuals using the
+initial prediction value of 0.5.
+
+We put all of the initial Residuals into a single leaf and we need to determine if
+splitting the Residuals into two leaves will do a better job clustering them. To
+determine an optimal threshold, we need to sort the values. With missing values, we can
+form two tables---one with missing values and one without.
+
+We calculate two separate Gain values. The first Gain value is calculated by putting all
+of the Residuals with missing values into the leaf on the left. The second Gain value is
+calculated by putting all of the Residuals with missing values into the leaf on the
+right. We repeat this process for every possible threshold (or weighted quantile). In
+the end, we choose the threshold that gave us the largest value for Gain, overall, among
+all left/right Gain splits among all possible thresholds.
+
+The path we choose will be the default path for all future observations that are missing
+values.
+
+Cache-Aware Access
+------------------
+
+If you want your program to run really fast, the goal is to maximize what you can do
+with the Cache Memory. So XGBoost puts the Gradients and Hessians in the Cache so that
+it can rapidly calculate Similarity Scores and Output Values.
+
+Blocks for Out-of-Core Computation
+----------------------------------
+
+When the dataset is too large for the Cache and Main Memory, then, at least some of it,
+must be stored on the Hard Drive. Because reading and writing data to the Hard Drive is
+super slow, XGBoost tries to minimize these actions by compressing the data. Even though
+the CPU must spend some time decompressing the data that comes from the Hard Drive, it
+can do this faster than the Hard Drive can read the data.
+
+In other words, by spending a little bit of time uncompressing the data, we can avoid
+spending a lot of time accessing the Hard Drive.
+
+When there is more than one Hard Drive available for storage, XGBoost uses dataset
+Sharding to speed up disk access.
+
+Misc.
+-----
+
+XGBoost can also speed things up by allowing you to build each tree with only a random
+subset of the data. And XGBoost can speed up building trees by only looking at a random
+subset of features when deciding how to split the data.
 """
