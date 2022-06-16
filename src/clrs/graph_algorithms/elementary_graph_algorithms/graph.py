@@ -152,7 +152,7 @@ call is for a path one vertex shorter.
 relax(): O(1).
 same_component(): O(m * alpha(V)), where m is the number of union operations and
 alpha(V) is generally O(1) on average.
-transitive_closer(): Theta(V^3).
+transitive_closure(): Theta(V^3).
 union(): O(m * alpha(V)), where m is the number of union operations and alpha(V) is
 generally O(1) on average.
 
