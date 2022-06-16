@@ -77,8 +77,6 @@ maxProduct(nums): O(1).
 
 
 def sol(nums):
-    if len(nums) == 0:
-        return 0
     max_so_far = min_so_far = max_prod = nums[0]
     for num in nums[1:]:
         max_temp = max(num, max_so_far * num, min_so_far * num)
