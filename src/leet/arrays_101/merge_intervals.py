@@ -24,9 +24,9 @@ merge(intervals): O(lg n), for the space required by the sorting algorithm.
 def sol(intervals):
     intervals.sort()
     sol = []
-    for interval in intervals:
-        if not sol or sol[-1][1] < interval[0]:
-            sol.append(interval)
+    for start, end in intervals:
+        if not sol or sol[-1][1] < start:
+            sol.append([start, end])
         else:
-            sol[-1][1] = max(sol[-1][1], interval[1])
+            sol[-1][1] = max(sol[-1][1], end)
     return sol
