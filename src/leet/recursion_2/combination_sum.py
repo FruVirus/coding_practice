@@ -78,7 +78,7 @@ def sol(candidates, target):
         if remain == 0:
             sol.append(combo[:])
             return
-        elif remain < 0:
+        if remain < 0:
             return
         for i, candidate in enumerate(candidates[start:], start):
             combo.append(candidate)
