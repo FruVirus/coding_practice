@@ -38,12 +38,11 @@ from collections import deque
 
 def sol(deadends, target):
     def get_combos(combo):
-        for i in range(len(combo)):
-            c = int(combo[i])
+        for i, c in enumerate(combo):
             for d in [-1, 1]:
-                yield combo[:i] + str((c + d) % 10) + combo[i + 1 :]
+                yield combo[:i] + str((int(c) + d) % 10) + combo[i + 1 :]
 
-    queue, seen = deque([("0000", 0)]), {"0000"}
+    visited, queue = {"0000"}, deque([("0000", 0)])
     while queue:
         combo, num_turns = queue.popleft()
         if combo == target:
@@ -51,7 +50,7 @@ def sol(deadends, target):
         if combo in deadends:
             continue
         for c in get_combos(combo):
-            if c not in seen:
-                seen.add(c)
+            if c not in visited:
+                visited.add(c)
                 queue.append((c, num_turns + 1))
     return -1
