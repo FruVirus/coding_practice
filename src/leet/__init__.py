@@ -7,7 +7,7 @@ binary_tree:            11
 array_and_string:       16
 dynamic_programming:    14
 --------------------------
-dynamic_programming:    14
+dynamic_programming:    15
 recursion_1:            4
 --------------------------
 graph:                  20
@@ -22,5 +22,5 @@ trie:                   9
 --------------------------
 queue_and_stack:        19
 
-Total:                  206
+Total:                  207
 """
