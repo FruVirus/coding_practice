@@ -78,11 +78,11 @@ def sol(candidates, target):
         if remain == 0:
             sol.append(combo[:])
             return
-        if remain < 0:
+        elif remain < 0:
             return
-        for i in range(start, len(candidates)):
-            combo.append(candidates[i])
-            backtrack(i, remain - candidates[i], combo)
+        for i, candidate in enumerate(candidates[start:], start):
+            combo.append(candidate)
+            backtrack(i, remain - candidate, combo)
             combo.pop()
 
     backtrack(0, target, [])
