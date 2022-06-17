@@ -46,4 +46,22 @@ Specificity for Gore Police = TN / (TN + FP) = (12 + 93 + 83 + 17) / (205 + 112 
 
 Sensitivity for Cool as Ice = TP / (TP + FN) = 17 / (17 + 93 + 77)
 Specificity for Cool as Ice = TN / (TN + FP) = (12 + 102 + 112 + 23) / (249 + 83 + 92)
+
+Precision, Recall, and F1 SCore
+-------------------------------
+
+Recall tells us what percentage of patients with heart disease were correctly
+classified.
+
+Recall = Sensitivity = TP / (TP + FN)
+
+Precision tells us what percentage of patients classified as having heart disease
+actually have heart disease.
+
+Precision = TP / (TP + FP)
+
+F1 Score combines precision and recall. In order for the F1 Score to be high, both
+precision and recall must be high.
+
+F1 Score = 2 * Precision * Recall / (Precision + Recall)
 """
