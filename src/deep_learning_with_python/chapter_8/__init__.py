@@ -182,5 +182,125 @@ last Dense layer).
 8.3 Leveraging a pretrained model
 =================================
 
+A common and highly effective approach to deep learning on small image datasets is to
+use a pretained model. A pretrained model is a model that was previously trained on a
+large dataset. If this original dataset is large enough and general enough, the spatial
+hierarachy of features learned by the pretrained model can effectively act as a generic
+model of hte visual world, and hence, its features can prove useful for many different
+computer vision problems, even though these new problems may involve completely
+different classes than those of the original task.
 
+There are two ways to use a pretrained model: feature extraction and fine-tuning.
+
+8.3.1 Feature extraction with a pretrained model
+
+Feature extraction consists of using the representations learned by a previously trained
+model to extract interesting features from new samples. These features are then run
+through a new classifier, which is trained from scratch.
+
+The series of pooling and convolution layers is called the convolutional base of the
+model. In the case of convnetes, feature extraction consists of taking the convolutional
+base of a previously trained network, running the new data through it, and training a
+new classifier on top of the output.
+
+Why only reuse the convolutonal base? Could we reuse the densely connected classifier as
+well? In general, doing so should be avoided. The reason is that the representations
+learned by the convolutional base are likely to be more generic and, therefore, more
+reusable: the feature maps of a convnet are presence maps of generic concepts over a
+picture, which are likley to be useful regardless of the computer vision problem at
+hand. But the representations learned by the classifier will necessarily be specific to
+the set of classes on which the model was trained---they will only contain information
+about the presence probability of this or that class in the entire picture.
+Additionally, representations found in densely connected layers no longer contain any
+information about where objects are located in the input image; these layers get rid of
+the notion of space, whereas the object location is still described by convolutional
+feature maps. For problems where object location matters, densely connected features are
+largely useless.
+
+The level of generality of the representations extracted by specific convolution layers
+depends on the depth of the layer in the model. Layers that come earlier in the model
+extract local, highly generic feature maps, whereas layers that are higher up extract
+more abstract concepts. So if your new dataset differs a lot from the dataset on which
+the original model was trained, you may be better off using only the first few layers of
+the model to do feature extraction, rather than using the entire convolutional base.
+
+There are two ways we can proceed with feature extraction:
+
+1. Run the convolutional base over our dataset, record its output to a NumPy array on
+disk, and then use this data as input to a standalone, densely connected classifier.
+This solution is fast and cheap to run, because it only requires running the
+convolutional base once for every input image, and the convolutional base is by far the
+most expensive part of the pipeline. But for the same reason, this technique won't allow
+us to use data augmentation (since we are not feeding the augmented images through the
+convolutional base).
+
+2. Extend the convolutional base model by adding Dense layers on top, and run the whole
+thing from end to end on the input data. This will allow us to use data augmentation,
+because every input image goes through the convolutional base every time it's seen by
+the model. But for the same reason, this technique is far more expensive than the first.
+
+Fast Feature Extraction Without Data Augmentation
+
+We extract features as NumPy arrays by calling the predict() method of the convolutional
+base model on our training, validation, and test datasets. These features are then fed
+into our classifier and trained from scratch.
+
+Since this technique doesn't use data augmentation, we tend to rapidly overfit with
+small image datasets.
+
+Feature Extraction Together with Data Augmentation
+
+In order to do this, we will first freeze the convolutional base so that we prevent
+their weights from being updated during training. If we don't do this, the
+representations that were previously learned by the convolutional base will be modified
+during training. Because the Dense layers on top are randomly initialized, very large
+weight updates would be propagated through the network, effectively destroying the
+previously learned representations.
+
+Now we can create a new model that chains together:
+
+1. A data augmentation stage
+2. Our frozen convolutional base
+3. A dense classifier
+
+8.3.2 Fine-tuning a pretrained model
+------------------------------------
+
+Another widely-used technique for model reuse is fine-tuning. Fine-tuning consists of
+unfreezing a few of the top layers of a frozen model base used for feature extraction,
+and jointly training both the newly added part of the model and these top layers. This
+is called fine-tuning because it slightly adjusts the more abstract representations of
+the model being reused in order to make them more relevant for the problem at hand.
+
+It's only possible to fine-tune the top layers of the convolutional base once the
+classifier on top has already been trained. If the classifier isn't already trained, the
+error signal propagating through the network during fine-tuning will be too large, and
+the representations previously learned by the layers being fine-tuned will be destroyed.
+Thus, the steps for fine-tuning a network are as follows:
+
+1. Add the custom network on top of an already-trained base network.
+2. Freeze the base network.
+3. Train the part we added.
+4. Unfreeze some layers in the base network (except for Batch Normalization layers).
+5. Jointly train both the unfrozen layers and the part we added.
+
+Note that steps 1 - 3 correspond to feature extraction steps.
+
+We could fine-tune the entire convolutional base. However, you need to consider the
+following:
+
+- Earlier layers in the convolutional base encode more generic, reusable features,
+whereas layers higher up encode more specialized features. It's more useful to fine-tune
+the more specialized features, because these are the ones that need to be repurposed on
+your new problem. There would be fast-decreasing returns in fine-tuning the lower
+layers.
+
+- The more parameters you're training, the more you're at risk of overfitting on small
+datasets.
+
+When fine-tuning, we also want to use a much lower learning rate. The reason is that we
+want to limit the magnitude of the modifications we make to the representations of the
+layers we're fine-tuning. Updates that are too large may harm these representations.
+
+In general, fine-tuning can lead to better performance gains than feature extraction.
 """
