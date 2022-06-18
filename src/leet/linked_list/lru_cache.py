@@ -75,7 +75,7 @@ class LRUCache:
         self._remove_node(node)
         self._add_at_head(node)
 
-    def _pop_tail(self):
+    def _pop_at_tail(self):
         node = self.tail.prev
         self._remove_node(node)
         return node
@@ -99,7 +99,7 @@ class LRUCache:
             self.cache[key] = node
             self._add_at_head(node)
             if self.size > self.capacity:
-                tail = self._pop_tail()
+                tail = self._pop_at_tail()
                 self.size -= 1
                 del self.cache[tail.key]
         else:
