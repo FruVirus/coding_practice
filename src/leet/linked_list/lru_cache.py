@@ -67,13 +67,13 @@ class LRUCache:
         self.head, self.tail = Node(), Node()
         self.head.next, self.tail.prev = self.tail, self.head
 
-    def _add_node(self, node):
+    def _add_at_head(self, node):
         node.prev, node.next = self.head, self.head.next
         self.head.next.prev, self.head.next = node, node
 
     def _move_to_head(self, node):
         self._remove_node(node)
-        self._add_node(node)
+        self._add_at_head(node)
 
     def _pop_tail(self):
         node = self.tail.prev
@@ -97,7 +97,7 @@ class LRUCache:
             node = Node(key, val)
             self.size += 1
             self.cache[key] = node
-            self._add_node(node)
+            self._add_at_head(node)
             if self.size > self.capacity:
                 tail = self._pop_tail()
                 self.size -= 1
