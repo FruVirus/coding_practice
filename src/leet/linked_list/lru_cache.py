@@ -61,7 +61,7 @@ class Node:
         self.prev = self.next = None
 
 
-class LRUCache:
+class Sol:
     def __init__(self, capacity):
         self.cache, self.capacity, self.size = {}, capacity, 0
         self.head, self.tail = Node(), Node()
