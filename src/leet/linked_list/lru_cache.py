@@ -99,9 +99,8 @@ class Sol:
             self.cache[key] = node
             self._add_at_head(node)
             if self.size > self.capacity:
-                tail = self._pop_at_tail()
                 self.size -= 1
-                del self.cache[tail.key]
+                del self.cache[self._pop_at_tail().key]
         else:
             node.val = val
             self._move_to_head(node)
