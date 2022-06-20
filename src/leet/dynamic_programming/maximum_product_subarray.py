@@ -67,16 +67,16 @@ Complexity
 Time
 ----
 
-maxProduct(nums): O(n).
+maxProduct_bu(nums): O(n).
 
 Space
 -----
 
-maxProduct(nums): O(1).
+maxProduct_bu(nums): O(1).
 """
 
 
-def sol(nums):
+def sol_bu(nums):
     max_so_far = min_so_far = max_prod = nums[0]
     for num in nums[1:]:
         candidates = (num, max_so_far * num, min_so_far * num)
