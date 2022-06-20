@@ -121,7 +121,7 @@ def sol(board, words):
                     backtrack(r, c, node)
             board[i][j] = char
             if not node:
-                start.pop(char)
+                del start[char]
 
     for i in range(m):
         for j in range(n):
