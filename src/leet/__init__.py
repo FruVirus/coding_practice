@@ -17,10 +17,10 @@ heap:                   8
 linked_list:            15
 n_ary_tree:             4
 --------------------------
-recursion_2:            11
+recursion_2:            12
 trie:                   9
 --------------------------
 queue_and_stack:        19
 
-Total:                  210
+Total:                  211
 """
