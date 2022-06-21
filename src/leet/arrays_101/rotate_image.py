@@ -49,12 +49,12 @@ def sol_one(matrix):
         for j in range(n // 2):
             top_left = matrix[i][j]
             top_right = matrix[j][n - i - 1]
-            bottom_left = matrix[n - j - 1][i]
             bottom_right = matrix[n - i - 1][n - j - 1]
+            bottom_left = matrix[n - j - 1][i]
             matrix[i][j] = bottom_left
             matrix[j][n - i - 1] = top_left
-            matrix[n - j - 1][i] = bottom_right
             matrix[n - i - 1][n - j - 1] = top_right
+            matrix[n - j - 1][i] = bottom_right
 
 
 def sol_two(matrix):
