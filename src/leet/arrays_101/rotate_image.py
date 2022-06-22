@@ -27,6 +27,13 @@ The most elegant solution for rotating the matrix is to firstly transpose the ma
 around the main diagonal, and then reverse it from left to right. These operations are
 called transpose and reflect in linear algebra.
 
+Note that you can also reverse the rows of the matrix first and then transpose. In this
+setting, reversing the rows of the matrix means swapping the corresponding first and
+last rows in the following manner:
+    for i in range(n // 2):
+        for j in range(n):
+            matrix[i][j], matrix[-i - 1][j] = matrix[-i - 1][j], matrix[i][j]
+
 Complexity
 ==========
 
