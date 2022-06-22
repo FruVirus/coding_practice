@@ -8,12 +8,12 @@ array_and_string:       16
 dynamic_programming:    15
 --------------------------
 dynamic_programming:    15
+heap:                   8
 recursion_1:            4
 --------------------------
 graph:                  20
 --------------------------
 hash_table:             22
-heap:                   8
 linked_list:            16
 n_ary_tree:             4
 --------------------------
