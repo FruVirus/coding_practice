@@ -64,28 +64,28 @@ def sol_bfs(root):
     if root:
         queue = deque([(root, 0)])
         while queue:
-            level = queue[0][1]
+            first_index = queue[0][1]
             for _ in range(len(queue)):
-                node, index = queue.popleft()
+                node, last_index = queue.popleft()
                 if node.left:
-                    queue.append((node.left, 2 * index))
+                    queue.append((node.left, 2 * last_index))
                 if node.right:
-                    queue.append((node.right, 2 * index + 1))
-            max_width = max(max_width, index - level + 1)
+                    queue.append((node.right, 2 * last_index + 1))
+            max_width = max(max_width, last_index - first_index + 1)
     return max_width
 
 
 def sol_dfs(root):
     max_width, table = 0, {}
 
-    def dfs(node, level, index):
+    def dfs(node, first_index, last_index):
         nonlocal max_width
         if node:
-            if level not in table:
-                table[level] = index
-            max_width = max(max_width, index - table[level] + 1)
-            dfs(node.left, level + 1, 2 * index)
-            dfs(node.right, level + 1, 2 * index + 1)
+            if first_index not in table:
+                table[first_index] = last_index
+            max_width = max(max_width, last_index - table[first_index] + 1)
+            dfs(node.left, first_index + 1, 2 * last_index)
+            dfs(node.right, first_index + 1, 2 * last_index + 1)
 
     dfs(root, 0, 0)
     return max_width
