@@ -45,7 +45,7 @@ largestNumber(nums): O(n).
 
 class LargerNum(str):
     def __lt__(self, x):
-        return self + x > x + self
+        return x + self < self + x
 
 
 def sol(nums):
