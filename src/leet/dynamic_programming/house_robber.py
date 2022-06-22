@@ -31,8 +31,7 @@ def sol_bu(nums):
         return nums[0]
     rob_first, rob_next = nums[0], max(nums[0], nums[1])
     for num in nums[2:]:
-        rob_curr = max(rob_next, rob_first + num)
-        rob_first, rob_next = rob_next, rob_curr
+        rob_first, rob_next = rob_next, max(rob_next, rob_first + num)
     return rob_next
 
 
