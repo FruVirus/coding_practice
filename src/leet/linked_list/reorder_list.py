@@ -28,8 +28,8 @@ reorderList(head): O(1).
 
 
 def sol(head):
-    if not (head and head.next):
-        return head
+    if not head:
+        return None
     slow = fast = head
     while fast and fast.next:
         slow, fast = slow.next, fast.next.next
