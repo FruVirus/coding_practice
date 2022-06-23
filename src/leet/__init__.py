@@ -1,5 +1,5 @@
 """
-arrays_101:             28
+arrays_101:             29
 binary_search:          11
 binary_search_tree:     6
 binary_tree:            13
@@ -22,5 +22,5 @@ recursion_2:            12
 trie:                   9
 --------------------------
 
-Total:                  218
+Total:                  219
 """
