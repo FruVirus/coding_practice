@@ -71,8 +71,8 @@ class Sol:
 
     def postorder_recursive(self, root):
         if root:
-            for node in root.children:
-                self.postorder_recursive(node)
+            for child in root.children:
+                self.postorder_recursive(child)
             self.order.append(root.val)
         return self.order
 
@@ -88,6 +88,6 @@ class Sol:
     def preorder_recursive(self, root):
         if root:
             self.order.append(root.val)
-            for node in root.children:
-                self.preorder_recursive(node)
+            for child in root.children:
+                self.preorder_iterative(child)
         return self.order
