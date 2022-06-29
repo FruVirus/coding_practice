@@ -145,3 +145,4 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+/src/deep_learning_with_python/chapter_10/jena_climate_2009_2016.csv
