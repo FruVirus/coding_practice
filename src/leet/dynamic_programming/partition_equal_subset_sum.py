@@ -44,7 +44,7 @@ if dp[i − 1][j] = true
 
     - Case 2) sum j can be formed including i-th element -->
 if dp[i − 1][j − nums[i]] = true. In this case, we subtract nums[i] since that gives the
-remanining sum to be satisified moving forward.
+remaining sum to be satisfied moving forward.
 
 Complexity
 ==========
