@@ -1,11 +1,11 @@
 """
-arrays_101:             30
+arrays_101:             31
 binary_search:          11
 binary_search_tree:     6
 binary_tree:            13
 --------------------------
 array_and_string:       16
-dynamic_programming:    15
+dynamic_programming:    16
 --------------------------
 dynamic_programming:    15
 heap:                   8
@@ -22,5 +22,5 @@ recursion_2:            12
 trie:                   9
 --------------------------
 
-Total:                  221
+Total:                  223
 """
