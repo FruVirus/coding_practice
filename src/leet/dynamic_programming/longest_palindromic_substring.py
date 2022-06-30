@@ -34,7 +34,7 @@ Complexity
 Time
 ----
 
-longestPalindrome_bu(s): O(n^2).
+longestPalindrome_bu(s): O(n ^ 2).
 
 Space
 -----
