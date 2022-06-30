@@ -73,7 +73,7 @@ def sol_bu(nums):
     for num in nums:
         for j in range(subset_sum, num - 1, -1):
             dp[j] = dp[j] or dp[j - num]
-    return dp[subset_sum]
+    return dp[-1]
 
 
 def sol_td(nums):
