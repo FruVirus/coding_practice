@@ -69,5 +69,36 @@ already contains information about the entire sequence.
 ---------------------------------------------------
 
 Applying dropout layers before a recurrent layer hinders learning rather than helping
-with regularization.
+with regularization. The proper way to use dropout with a recurrent network is to use
+the same dropout mask (the same pattern of dropped units) at every timestep. What's
+more, in order to regularize the representations formed by the recurrent gates of layers
+such as GRU and LSTM, a temporally constant dropout mask should be applied to the inner
+recurrent activations of the layer (a recurrent dropout mask). Using the same dropout
+mask at every timestep allows the network to properly propagate its learning error
+through time; a temporally random dropout mask would disrupt this error signal and be
+harmful to the learning process.
+
+In other words, an RNN cell has a dropout parameter for the linear transformation of its
+inputs and a recurrent dropout parameter for the linear transformation of its recurrent
+(i.e., hidden state).
+
+10.4.2 Stacking recurrent layers
+--------------------------------
+
+Increasing network capacity is typically done by increasing the number of units in the
+layers or adding more layers.
+
+10.4.3 Using bidirectional RNNs
+-------------------------------
+
+RNNs are notably order-dependent: they process the timesteps of their input sequences in
+order, and shuffling or reversing the timesteps can completely change the
+representations the RNNs extracts from the sequence. A bidirectional RNN exploits the
+order sensitivity of RNNs: it uses two regular RNNs, each of which processes the input
+sequence in one direction (chronologically and antichronologically), and then merges
+their representations. By processing a sequence both ways, a bidirectional RNN can catch
+patterns that may be overlooked by a unidirectional RNN.
+
+Bidirectional RNNs are a great fit for text data, or any other kind of data where order
+matters, yet where *which order* you use doesn't matter.
 """
