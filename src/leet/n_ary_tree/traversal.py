@@ -89,5 +89,5 @@ class Sol:
         if root:
             self.order.append(root.val)
             for child in root.children:
-                self.preorder_iterative(child)
+                self.preorder_recursive(child)
         return self.order
