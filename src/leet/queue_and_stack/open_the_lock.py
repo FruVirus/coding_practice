@@ -42,7 +42,7 @@ def sol(deadends, target):
             for d in [-1, 1]:
                 yield combo[:i] + str((int(c) + d) % 10) + combo[i + 1 :]
 
-    visited, queue = {"0000"}, deque([("0000", 0)])
+    queue, seen = deque([("0000", 0)]), {"0000"}
     while queue:
         combo, num_turns = queue.popleft()
         if combo == target:
@@ -50,7 +50,7 @@ def sol(deadends, target):
         if combo in deadends:
             continue
         for c in get_combos(combo):
-            if c not in visited:
-                visited.add(c)
+            if c not in seen:
+                seen.add(c)
                 queue.append((c, num_turns + 1))
     return -1
