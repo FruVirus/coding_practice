@@ -11,7 +11,7 @@ Complexity
 Time
 ----
 
-canAttendMeetings(intervals): O(n * lg(n)).
+canAttendMeetings(intervals): O(n * lg n).
 
 Space
 -----
