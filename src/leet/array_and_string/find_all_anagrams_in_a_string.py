@@ -30,7 +30,7 @@ findAnagrams(s, p): O(k), where k is the maximum possible number of distinct cha
 
 
 def sol(s, p):
-    ns, np, pcount, scount, sol = len(s), len(p), [0] * 26, [0] * 26, []
+    ns, np, scount, pcount, sol = len(s), len(p), [0] * 26, [0] * 26, []
     for char in p:
         pcount[ord(char) - ord("a")] += 1
     for i in range(ns):
