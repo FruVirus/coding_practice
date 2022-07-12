@@ -2,9 +2,6 @@
 Main Takeaways
 ~~~~~~~~~~~~~~
 
-New Tweets
-----------
-
 The new Tweets fetched in the previous step are ranked and displayed on user A’s feed.
 They only view the first two-hundred Tweets and log out. The ranked results are also
 stored in a cache.
