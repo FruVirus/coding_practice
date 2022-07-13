@@ -389,7 +389,7 @@ them in machine learning models.
 
     - movie_id
 
-    Popular movie IDs are be repeated frequently.
+    Popular movie IDs are repeated frequently.
 
     - title_of_media
 
