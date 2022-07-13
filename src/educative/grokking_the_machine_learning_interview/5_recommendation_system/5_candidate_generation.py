@@ -2,137 +2,105 @@
 Main Takeaways
 ~~~~~~~~~~~~~~
 
-The users’ online engagement with Tweets can give us positive and negative training
-examples. For instance, if you are training a single model to predict user engagement,
-then all the Tweets that received user engagement would be labeled as positive training
-examples. Similarly, the Tweets that only have impressions would be labeled as negative
-training examples.
+Candidate Generation
+====================
 
-Impression: If a Tweet is displayed on a user’s Twitter feed, it counts as an
-impression. It is not necessary that the user reads it or engages with it, scrolling
-past it also counts as an impression.
+The purpose of candidate generation is to select the top k (let's say one-thousand)
+movies that you would want to consider showing as recommendations to the end-user.
+Therefore, the task is to select these movies from a corpus of more than a million
+available movies.
 
-You can train different models, each to predict the probability of occurrence of
-different user actions on a tweet. When you generate data for the “Like” prediction
-model, all Tweets that the user has liked would be positive examples, and all the Tweets
-that they did not like would be negative examples. Note how the comment is still a
-negative example for the “Like” prediction model. Similarly, for the “Comment”
-prediction model, all Tweets that the user commented on would be positive examples, and
-all the ones they did not comment on would be negative examples.
+Candidate generation techniques
+-------------------------------
 
-Models essentially learn behavior from the data we present them with. Therefore, it’s
-important for us to provide a good sample of both positive and negative examples to
-model these interactions between different actors in a system. In the feed-based system
-scenario, on average, a user engages with as little as approximately 5% of the Tweets
-that they view per day. Therefore, in order to balance the ratio of positive and
-negative training samples, you can randomly downsample:
+The candidate generation techniques are as follows:
 
-    - negative examples to five million samples
-    - positive examples to five million samples
+    1. Collaborative filtering
 
-If a model is well-calibrated, the distribution of its predicted probability is similar
-to the distribution of probability observed in the training data. However, as we have
-changed the sampling of training data, our model output scores will not be
-well-calibrated. For example, for a tweet that got only 5% engagement, the model might
-predict 50% engagement. This would happen because the model is trained on data that has
-an equal quantity of negative and positive samples. So the model would think that it is
-as likely for a tweet to get engagement as it is to be ignored. However, we know from
-the training that this is not the case. Given that the model’s scores are only going to
-be used to rank Tweets among themselves, poor model calibration doesn’t matter much in
-this scenario.
+    2. Content-based filtering
 
-Remember that random splitting defeats the purpose of training the model on an entire
-week’s data. Also, the data has a time dimension, i.e., we know the engagement on
-previous Tweets, and we want to predict the engagement on future Tweets ahead of time.
-Therefore, you will train the model on data from one time interval and validate it on
-the data with the succeeding time interval. This will give a more accurate picture of
-how the model will perform in a real scenario.
+    3. Embedding-based similarity
 
-Training Data Generation
-========================
+Each method has its own strengths for selecting good candidates, and we will combine all
+of them together to generate a complete list before passing it on to the ranker (this
+will be explained in the ranking lesson).
 
-Training data generation through online user engagement
--------------------------------------------------------
+Collaborative filtering
+-----------------------
 
-The users’ online engagement with Tweets can give us positive and negative training
-examples. For instance, if you are training a single model to predict user engagement,
-then all the Tweets that received user engagement would be labeled as positive training
-examples. Similarly, the Tweets that only have impressions would be labeled as negative
-training examples.
+In this technique, you find users similar to the active user based on the intersection
+of their historical watches. You then collaborate with similar users to generate
+candidate media for the active user.
 
-Impression: If a Tweet is displayed on a user’s Twitter feed, it counts as an
-impression. It is not necessary that the user reads it or engages with it, scrolling
-past it also counts as an impression.
+If a user shares a similar taste with a group of users over a subset of movies, they
+would probably have similar opinions on other movies compared to the opinion of a
+randomly selected person.
 
-However, as you saw in the architectural components lesson, that you can train different
-models, each to predict the probability of occurrence of different user actions on a
-tweet.
+There are two methods to perform collaborative filtering:
 
-When you generate data for the “Like” prediction model, all Tweets that the user has
-liked would be positive examples, and all the Tweets that they did not like would be
-negative examples. Note how the comment is still a negative example for the “Like”
-prediction model. Similarly, for the “Comment” prediction model, all Tweets that the
-user commented on would be positive examples, and all the ones they did not comment on
-would be negative examples.
+    1. Nearest neighborhood
 
-Balancing positive and negative training examples
--------------------------------------------------
+    2. Matrix factorization
 
-Models essentially learn behavior from the data we present them with. Therefore, it’s
-important for us to provide a good sample of both positive and negative examples to
-model these interactions between different actors in a system. In the feed-based system
-scenario, on average, a user engages with as little as approximately 5% of the Tweets
-that they view per day. How would this percentage affect the ratio of positive and
-negative examples on a larger scale? How can this be balanced?
+Method 1: Nearest neighborhood
 
-Looking at the bigger picture, assume that one-hundred million Tweets are viewed
-collectively by the users in a day. With the 5% engagement ratio, you would be able to
-generate five million positive examples, whereas the remaining ninety-five million would
-be negative.
+User A is similar to user B and user C as they have watched the movies Inception and
+Interstellar. So, you can say that user A’s nearest neighbours are user B and user C.
+You will look at other movies liked by users B and C as candidates for user A’s
+recommendations.
 
-Let’s assume that you want to limit your training samples to ten million, given that the
-training time and cost increases as training data volume increases. If you don’t do any
-balancing of training data and just randomly select ten million training samples, your
-models will see only 0.5 million positive examples and 9.5 million negative examples. In
-this scenario, the models might not be able to learn key positive interactions.
+Let’s see how this concept is realized. You have a (n x m) matrix of user u_i
+(i = 1 to n) and movie m_j (j = 1 to m). Each matrix element represents the feedback
+that the user i has given to a movie j. An empty cell means that user i has not watched
+movie j. For example a 1 means that the media has been watched/liked, a 0 means that the
+media has not been watched/disliked, and an empty cell means that the media has no
+impressions yet.
 
-Therefore, in order to balance the ratio of positive and negative training samples, you
-can randomly downsample:
+To generate recommendations for user i, you need to predict their feedback for all the
+movies they haven’t watched. You will collaborate with users similar to user i for this
+process. Their ratings for a movie, not seen by user i, would give us a good idea of how
+user i would like it.
 
-    - negative examples to five million samples
+So, you will compute the similarity (e.g. cosine similarity) of other users with user i and then select the top k similar users/nearest neighbours (KNN(u_i)
+(u
+i
+​
+ )
+). Then, user i’s feedback for an unseen movie j (f_{ij}
+f
+ij
+​
 
-    - positive examples to five million samples
+) can be predicted by taking the weighted average of feedback that the top k similar users gave to movie j. Here the feedback by the nearest neighbour is weighted by their similarity with user i.
 
-Now, you would have a total of ten million training examples per day; five million of
-which are positive and five million are negative.
+f_{ij}
+f
+ij
+​
 
-If a model is well-calibrated, the distribution of its predicted probability is similar
-to the distribution of probability observed in the training data. However, as we have
-changed the sampling of training data, our model output scores will not be
-well-calibrated. For example, for a tweet that got only 5% engagement, the model might
-predict 50% engagement. This would happen because the model is trained on data that has
-an equal quantity of negative and positive samples. So the model would think that it is
-as likely for a tweet to get engagement as it is to be ignored. However, we know from
-the training that this is not the case. Given that the model’s scores are only going to
-be used to rank Tweets among themselves, poor model calibration doesn’t matter much in
-this scenario.
+ = \frac{\sum\limits_{v\;\in\;KNN(u_i)} Similarity(u_i,u_v)f_{vj}}{k}
+k
+v∈KNN(u
+i
+​
+ )
+∑
+​
+ Similarity(u
+i
+​
+ ,u
+v
+​
+ )f
+vj
+​
 
-Train test split
-----------------
+​
 
-You need to be mindful of the fact that the user engagement patterns may differ
-throughout the week. Hence, you will use a week’s engagement to capture all the patterns
-during training data generation. At this rate, you would end up with around seventy
-million rows of training data.
 
-You may randomly select 2/3 of the seventy million training data rows that you have
-generated and utilize them for training purposes. The rest of the 1/3 can be used for
-validation and testing of the model.
+The unseen movies with good predicted feedback will be chosen as candidates for user i’s recommendations.
 
-However, this random splitting defeats the purpose of training the model on an entire
-week’s data. Also, the data has a time dimension, i.e., we know the engagement on
-previous Tweets, and we want to predict the engagement on future Tweets ahead of time.
-Therefore, you will train the model on data from one time interval and validate it on
-the data with the succeeding time interval. This will give a more accurate picture of
-how the model will perform in a real scenario.
+Collaborative filtering by identifying similar media
+It is evident that this process will be computationally expensive with the increase in numbers of users and movies. The sparsity of this matrix also poses a problem when a movie has not been rated by any user or a new user has not watched many movies.
 """
