@@ -82,6 +82,13 @@ manual labelers to label them.
 After this, you can also apply data augmentation on the newly gathered training examples
 to further improve your model’s performance.
 
+It is worth mentioning that most of the deep vision architectures are not inherently
+designed to preserve sensitivity for different scales, sizes and rotations of the
+objects/images. The pooling operation in these networks is only able to capture the
+translational variance of the labeled objects/images. Hence, it is critical to cover
+the variation in scale and rotation of your training images and keep the testing image
+size similar to the image size in your training dataset.
+
 Training Data Generation
 ========================
 
@@ -209,4 +216,11 @@ them.
 
 After this, you can also apply data augmentation on the newly gathered training examples
 to further improve your model’s performance.
+
+It is worth mentioning that most of the deep vision architectures are not inherently
+designed to preserve sensitivity for different scales, sizes and rotations of the
+objects/images. The pooling operation in these networks is only able to capture the
+translational variance of the labeled objects/images. Hence, it is critical to cover
+the variation in scale and rotation of your training images and keep the testing image
+size similar to the image size in your training dataset.
 """
