@@ -2,137 +2,158 @@
 Main Takeaways
 ~~~~~~~~~~~~~~
 
-The users’ online engagement with Tweets can give us positive and negative training
-examples. For instance, if you are training a single model to predict user engagement,
-then all the Tweets that received user engagement would be labeled as positive training
-examples. Similarly, the Tweets that only have impressions would be labeled as negative
-training examples.
+You will build your model on implicit feedback from the user. You will look at how a
+user interacts with media recommendations to generate positive and negative training
+examples.
 
-Impression: If a Tweet is displayed on a user’s Twitter feed, it counts as an
-impression. It is not necessary that the user reads it or engages with it, scrolling
-past it also counts as an impression.
+Generating training examples
+----------------------------
 
-You can train different models, each to predict the probability of occurrence of
-different user actions on a tweet. When you generate data for the “Like” prediction
-model, all Tweets that the user has liked would be positive examples, and all the Tweets
-that they did not like would be negative examples. Note how the comment is still a
-negative example for the “Like” prediction model. Similarly, for the “Comment”
-prediction model, all Tweets that the user commented on would be positive examples, and
-all the ones they did not comment on would be negative examples.
+One way of interpreting user actions as positive and negative training examples is based
+on the duration for which the user watched a particular show/movie. You take positive
+examples as ones where the user ended up watching most of a recommended movie/show,
+i.e., watched 80% or more. You take negative examples, again where we are confident that
+the user ignored a movie/show, i.e., watched 10% or less.
 
-Models essentially learn behavior from the data we present them with. Therefore, it’s
-important for us to provide a good sample of both positive and negative examples to
-model these interactions between different actors in a system. In the feed-based system
-scenario, on average, a user engages with as little as approximately 5% of the Tweets
-that they view per day. Therefore, in order to balance the ratio of positive and
-negative training samples, you can randomly downsample:
+If the percentage of a movie/show watched by the user falls between 10% and 80%, you
+will put it in the uncertainty bucket. This percentage is not clearly indicative of a
+user’s like or dislike, so you ignore such examples. For instance, let’s say a user
+watched 55% of a movie. This could be considered a positive example considering that
+they liked it enough to watch it midway. However, it could be that a lot of people had
+recommended it to them, so they wanted to see what all the hype was about by at least
+watching it halfway through. However, they, ultimately, decided that it was not
+according to their liking.
 
-    - negative examples to five million samples
-    - positive examples to five million samples
-
-If a model is well-calibrated, the distribution of its predicted probability is similar
-to the distribution of probability observed in the training data. However, as we have
-changed the sampling of training data, our model output scores will not be
-well-calibrated. For example, for a tweet that got only 5% engagement, the model might
-predict 50% engagement. This would happen because the model is trained on data that has
-an equal quantity of negative and positive samples. So the model would think that it is
-as likely for a tweet to get engagement as it is to be ignored. However, we know from
-the training that this is not the case. Given that the model’s scores are only going to
-be used to rank Tweets among themselves, poor model calibration doesn’t matter much in
-this scenario.
-
-Remember that random splitting defeats the purpose of training the model on an entire
-week’s data. Also, the data has a time dimension, i.e., we know the engagement on
-previous Tweets, and we want to predict the engagement on future Tweets ahead of time.
-Therefore, you will train the model on data from one time interval and validate it on
-the data with the succeeding time interval. This will give a more accurate picture of
-how the model will perform in a real scenario.
-
-Training Data Generation
-========================
-
-Training data generation through online user engagement
--------------------------------------------------------
-
-The users’ online engagement with Tweets can give us positive and negative training
-examples. For instance, if you are training a single model to predict user engagement,
-then all the Tweets that received user engagement would be labeled as positive training
-examples. Similarly, the Tweets that only have impressions would be labeled as negative
-training examples.
-
-Impression: If a Tweet is displayed on a user’s Twitter feed, it counts as an
-impression. It is not necessary that the user reads it or engages with it, scrolling
-past it also counts as an impression.
-
-However, as you saw in the architectural components lesson, that you can train different
-models, each to predict the probability of occurrence of different user actions on a
-tweet.
-
-When you generate data for the “Like” prediction model, all Tweets that the user has
-liked would be positive examples, and all the Tweets that they did not like would be
-negative examples. Note how the comment is still a negative example for the “Like”
-prediction model. Similarly, for the “Comment” prediction model, all Tweets that the
-user commented on would be positive examples, and all the ones they did not comment on
-would be negative examples.
+Hence, to avoid these kinds of misinterpretations, you label examples as positive and
+negative only when you are certain about it to a higher degree.
 
 Balancing positive and negative training examples
 -------------------------------------------------
 
-Models essentially learn behavior from the data we present them with. Therefore, it’s
-important for us to provide a good sample of both positive and negative examples to
-model these interactions between different actors in a system. In the feed-based system
-scenario, on average, a user engages with as little as approximately 5% of the Tweets
-that they view per day. How would this percentage affect the ratio of positive and
-negative examples on a larger scale? How can this be balanced?
+You have a lot more negative training examples than positive ones. To balance the ratio
+of positive and negative training samples, you can randomly downsample the negative
+examples.
 
-Looking at the bigger picture, assume that one-hundred million Tweets are viewed
-collectively by the users in a day. With the 5% engagement ratio, you would be able to
-generate five million positive examples, whereas the remaining ninety-five million would
-be negative.
+Weighting training examples
+---------------------------
 
-Let’s assume that you want to limit your training samples to ten million, given that the
-training time and cost increases as training data volume increases. If you don’t do any
-balancing of training data and just randomly select ten million training samples, your
-models will see only 0.5 million positive examples and 9.5 million negative examples. In
-this scenario, the models might not be able to learn key positive interactions.
+One way to incentivize your model to focus more on examples that have a higher
+contribution to the session watch time is to weight examples based on their contribution
+to session time. Here, you are assuming that your prediction model’s optimization
+function utilizes weight per example in its objective.
 
-Therefore, in order to balance the ratio of positive and negative training samples, you
-can randomly downsample:
-
-    - negative examples to five million samples
-
-    - positive examples to five million samples
-
-Now, you would have a total of ten million training examples per day; five million of
-which are positive and five million are negative.
-
-If a model is well-calibrated, the distribution of its predicted probability is similar
-to the distribution of probability observed in the training data. However, as we have
-changed the sampling of training data, our model output scores will not be
-well-calibrated. For example, for a tweet that got only 5% engagement, the model might
-predict 50% engagement. This would happen because the model is trained on data that has
-an equal quantity of negative and positive samples. So the model would think that it is
-as likely for a tweet to get engagement as it is to be ignored. However, we know from
-the training that this is not the case. Given that the model’s scores are only going to
-be used to rank Tweets among themselves, poor model calibration doesn’t matter much in
-this scenario.
+One caveat of utilizing these weights is that the model might only recommend content
+with a longer watch time. So, it’s important to choose weights such that we are not
+solely focused on watch time. We should find the right balance between user satisfaction
+and watch time, based on our online A/B experiments.
 
 Train test split
 ----------------
 
-You need to be mindful of the fact that the user engagement patterns may differ
-throughout the week. Hence, you will use a week’s engagement to capture all the patterns
-during training data generation. At this rate, you would end up with around seventy
-million rows of training data.
+You need to be mindful of the fact that the user’s interaction patterns may differ
+throughout the week. Hence, you will use the interaction with recommendations throughout
+a week to capture all of the patterns during model training.
 
-You may randomly select 2/3 of the seventy million training data rows that you have
-generated and utilize them for training purposes. The rest of the 1/3 can be used for
-validation and testing of the model.
+Random splitting defeats the purpose of training the model on a whole week’s data. Also,
+the data has a time dimension, i.e., you know the interaction on previous
+recommendations, and you want to predict the interaction with future recommendations.
+Hence, you will train the model on data from one time interval and validate it on the
+data from its succeeding time interval.
 
-However, this random splitting defeats the purpose of training the model on an entire
-week’s data. Also, the data has a time dimension, i.e., we know the engagement on
-previous Tweets, and we want to predict the engagement on future Tweets ahead of time.
-Therefore, you will train the model on data from one time interval and validate it on
-the data with the succeeding time interval. This will give a more accurate picture of
-how the model will perform in a real scenario.
+Even though Netflix has millions of subscribers, on average they may watch a maximum of
+3 movies/1 show per week. Therefore, to generate a sufficient amount of data, you need
+to increase the time span over which you gather the data. Hence, we are using an entire
+month’s data to train your model.
+
+Training Data Generation
+========================
+
+You will build your model on implicit feedback from the user. You will look at how a
+user interacts with media recommendations to generate positive and negative training
+examples.
+
+Generating training examples
+----------------------------
+
+One way of interpreting user actions as positive and negative training examples is based
+on the duration for which the user watched a particular show/movie. You take positive
+examples as ones where the user ended up watching most of a recommended movie/show,
+i.e., watched 80% or more. You take negative examples, again where we are confident that
+the user ignored a movie/show, i.e., watched 10% or less.
+
+If the percentage of a movie/show watched by the user falls between 10% and 80%, you
+will put it in the uncertainty bucket. This percentage is not clearly indicative of a
+user’s like or dislike, so you ignore such examples. For instance, let’s say a user
+watched 55% of a movie. This could be considered a positive example considering that
+they liked it enough to watch it midway. However, it could be that a lot of people had
+recommended it to them, so they wanted to see what all the hype was about by at least
+watching it halfway through. However, they, ultimately, decided that it was not
+according to their liking.
+
+Hence, to avoid these kinds of misinterpretations, you label examples as positive and
+negative only when you are certain about it to a higher degree.
+
+Balancing positive and negative training examples
+-------------------------------------------------
+
+Each time a user logs in, Netflix provides a lot of recommendations. The user cannot
+watch all of them. Yes, people do binge-watch on Netflix, but still, this does not
+improve the positive to negative training examples ratio significantly. Therefore, you
+have a lot more negative training examples than positive ones. To balance the ratio of
+positive and negative training samples, you can randomly downsample the negative
+examples.
+
+We balance the negative and positive examples to prevent classifier from favouring the
+outcome that has more examples.
+
+Weighting training examples
+---------------------------
+
+Based on our training data discussion so far, all of the training examples are weighted
+equally, i.e., all have a weight of 1. According to Netflix’s business objectives, the
+main goal could be to increase the time a user spends on the platform.
+
+One way to incentivize your model to focus more on examples that have a higher
+contribution to the session watch time is to weight examples based on their contribution
+to session time. Here, you are assuming that your prediction model’s optimization
+function utilizes weight per example in its objective.
+
+In the diagram above, you have two positive training examples. The first is a
+thirty-minute long show episode while the second is a two-hour long movie. The user
+watches 80% of both media. For the show, this equals twenty-four minutes, but for the
+movie, it means one hour and thirty-six minutes. You would assign more weight to the
+second example than the first one so that your model learns which kinds of media
+increases the session watch time.
+
+One caveat of utilizing these weights is that the model might only recommend content
+with a longer watch time. So, it’s important to choose weights such that we are not
+solely focused on watch time. We should find the right balance between user satisfaction
+and watch time, based on our online A/B experiments.
+
+Train test split
+----------------
+
+Now, it’s time to split your training data for training and then testing your models.
+While doing so, you need to be mindful of the fact that the user’s interaction patterns
+may differ throughout the week. Hence, you will use the interaction with recommendations
+throughout a week to capture all of the patterns during model training.
+
+You can randomly select 2/3 of the training data rows generated and utilize them for
+training purposes. The rest of the 1/3 can be used for validation and model testing.
+
+However, this random splitting defeats the purpose of training the model on a whole
+week’s data. Also, the data has a time dimension, i.e., you know the interaction on
+previous recommendations, and you want to predict the interaction with future
+recommendations. Hence, you will train the model on data from one time interval and
+validate it on the data from its succeeding time interval. This will give you a more
+accurate picture of how your model will perform in a real scenario.
+
+In the following illustration, you are training the model using data generated from the
+month of June and using data generated in the first and second week of July for
+validation and testing purposes.
+
+Even though Netflix has millions of subscribers, on average they may watch a maximum of
+3 movies/1 show per week. Therefore, to generate a sufficient amount of data, you need
+to increase the time span over which you gather the data. Hence, we are using an entire
+month’s data to train your model.
 """
