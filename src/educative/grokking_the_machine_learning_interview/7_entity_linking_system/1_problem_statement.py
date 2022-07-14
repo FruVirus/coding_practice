@@ -4,23 +4,23 @@ Main Takeaways
 
 The interviewer has asked you to design an entity linking system that:
 
-	- Identifies potential named entity mentions in the text.
-	- Searches for possible corresponding entities in the target knowledge base for
+    - Identifies potential named entity mentions in the text.
+    - Searches for possible corresponding entities in the target knowledge base for
 disambiguation.
-	- Returns either the best candidate corresponding entity or nil.
+    - Returns either the best candidate corresponding entity or nil.
 
 Named entity linking (NEL) is the process of detecting and linking entity mentions in a
 given text to corresponding entities in a target knowledge base.
 
 There are two parts to entity linking:
 
-	1. Named-entity recognition. Named-entity recognition (NER) detects and classifies
+    1. Named-entity recognition. Named-entity recognition (NER) detects and classifies
 potential named entities in the text into predefined categories such as a person,
 organization, location, medical code, time expression, etc. (multi-class prediction).
-	2. Disambiguation. Next, disambiguation disambiguates each detected entity by
+    2. Disambiguation. Next, disambiguation disambiguates each detected entity by
 linking it to its corresponding entity in the knowledge base.
 
-The target knowledge base depends on the application, but for generic systems, a common
+The target knowledge base depends on the applicati  on, but for generic systems, a common
 choice is Wikidata or DBpedia.
 
 The sentence/text says, “Michael Jordan is a machine learning professor at UC Berkeley.”
@@ -40,9 +40,9 @@ Entity linking has applications in many natural language processing tasks. The u
 can be broadly categorized as information retrieval, information extraction and building
 knowledge graphs, which in turn can be used in many systems, such as:
 
-	- Semantic search
-	- Content analysis
-	- Question answering systems/chatbots/virtual assistants, like Alexa, Siri, and
+    - Semantic search
+    - Content analysis
+    - Question answering systems/chatbots/virtual assistants, like Alexa, Siri, and
 Google assistant
 
 All of the above-mentioned applications require a high-level representation of the text,
@@ -54,13 +54,13 @@ Interview questions
 
 These are some of the questions that an interviewer can put forth.
 
-	1. How would you build an entity recognizer system?
-	2. How would you build a disambiguation system?
-	3. Given a piece of text, how would you extract all persons, countries, and
+    1. How would you build an entity recognizer system?
+    2. How would you build a disambiguation system?
+    3. Given a piece of text, how would you extract all persons, countries, and
 businesses mentioned in it?
-	4. How would you measure the performance of a disambiguator/entity recognizer/entity
+    4. How would you measure the performance of a disambiguator/entity recognizer/entity
 linker?
-	5. Given multiple disambiguators/recognizers/linkers, how would you figure out which
+    5. Given multiple disambiguators/recognizers/linkers, how would you figure out which
 is the best one?
 
 Problem Statement
@@ -74,15 +74,15 @@ given text to corresponding entities in a target knowledge base.
 
 There are two parts to entity linking:
 
-	1. Named-entity recognition
+    1. Named-entity recognition
 
-	Named-entity recognition (NER) detects and classifies potential named entities in
+    Named-entity recognition (NER) detects and classifies potential named entities in
 the text into predefined categories such as a person, organization, location, medical
 code, time expression, etc. (multi-class prediction).
 
-	2. Disambiguation
+    2. Disambiguation
 
-	Next, disambiguation disambiguates each detected entity by linking it to its
+    Next, disambiguation disambiguates each detected entity by linking it to its
 corresponding entity in the knowledge base.
 
 The target knowledge base depends on the application, but for generic systems, a common
@@ -105,11 +105,11 @@ Entity linking has applications in many natural language processing tasks. The u
 can be broadly categorized as information retrieval, information extraction and building
 knowledge graphs, which in turn can be used in many systems, such as:
 
-	- Semantic search
+    - Semantic search
 
-	- Content analysis
+    - Content analysis
 
-	- Question answering systems/chatbots/virtual assistants, like Alexa, Siri, and
+    - Question answering systems/chatbots/virtual assistants, like Alexa, Siri, and
 Google assistant
 
 All of the above-mentioned applications require a high-level representation of the text,
@@ -121,16 +121,16 @@ Problem statement
 
 The interviewer has asked you to design an entity linking system that:
 
-	- Identifies potential named entity mentions in the text.
+    - Identifies potential named entity mentions in the text.
 
-	- Searches for possible corresponding entities in the target knowledge base for
+    - Searches for possible corresponding entities in the target knowledge base for
 disambiguation.
 
-	- Returns either the best candidate corresponding entity or nil.
+    - Returns either the best candidate corresponding entity or nil.
 
 The problem statement translates to the following machine learning problem:
 
-	"Given a text and knowledge base, find all the entity mentions in the text
+    "Given a text and knowledge base, find all the entity mentions in the text
 (Recognize) and then link them to the corresponding correct entry in the knowledge base
 (Disambiguate)."
 
@@ -139,16 +139,16 @@ Interview questions
 
 These are some of the questions that an interviewer can put forth.
 
-	1. How would you build an entity recognizer system?
+    1. How would you build an entity recognizer system?
 
-	2. How would you build a disambiguation system?
+    2. How would you build a disambiguation system?
 
-	3. Given a piece of text, how would you extract all persons, countries, and
+    3. Given a piece of text, how would you extract all persons, countries, and
 businesses mentioned in it?
 
-	4. How would you measure the performance of a disambiguator/entity recognizer/entity
+    4. How would you measure the performance of a disambiguator/entity recognizer/entity
 linker?
 
-	5. Given multiple disambiguators/recognizers/linkers, how would you figure out which
+    5. Given multiple disambiguators/recognizers/linkers, how would you figure out which
 is the best one?
 """
