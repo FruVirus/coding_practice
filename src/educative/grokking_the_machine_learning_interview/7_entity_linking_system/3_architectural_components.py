@@ -2,157 +2,120 @@
 Main Takeaways
 ~~~~~~~~~~~~~~
 
-Overall architecture for self-driving vehicle
----------------------------------------------
+The architectural components diagram for entity linking consists of two paths:
 
-Sensory Inputs (Camera, Radar, Lidar, etc.) -->
+    1. Model generation path (training flow)
+    2. Model execution path (prediction flow)
 
-Visual Understanding System (Object Detection CNN, Drivable Region Detection CNN,
-Semantic Segmentation CNN, Scene Understanding CNN, Depth Measurement, CNN, etc.) -->
+Model generation path
+---------------------
 
-Action Predictor (RNN, Transformer, etc.)
+Model generation is responsible for training models for entity linking task.
 
-The system is designed to receive sensory inputs via cameras and radars, which are fed
-to the visual understanding system consisting of different convolutional neural networks
-(CNN), each for a specific subtask. The output of the visual understanding system is
-used by the action predictor RNN or LSTM. Based on the visual understanding of the
-environment, this component will plan the next move of the vehicle. The next move will
-be a combination of outcomes, i.e., applying brakes, accelerating, and/or steering the
-vehicle.
+Training data generation
 
-The object detection CNN detects and localizes all the obstacles and entities in the
-vehicle’s environment. This is essential information because the action predictor RNN
-may predict to slow down the vehicle due to the impending obstacle. However, the most
-crucial information for the action predictor RNN is information that allows it to
-extract a drivable path for the vehicle. Therefore, due to the significance of this
-task, we will train a separate model for this purpose: the drivable region detection
-CNN. It will be trained to detect the road lanes to help the system decide whether the
-pathway for the vehicle is clear or not.
+You will begin by gathering training data for entity linking through open-source
+datasets and manual labelling/linking of text.
 
-Moreover, as the object detection CNN identifies the key objects in the image (predicts
-bounding boxes), it is further required to share its output along with the raw pixel
-data for semantic image segmentation (i.e., draw pixel-wise boundaries around the
-objects). These boundaries will help in navigating the autonomous vehicle in a complex
-environment where overlapping objects/obstacles are presented.
+You will pass the training data to the named entity recognition (NER) model trainer and
+the named entity disambiguation (NED) model trainer.
 
-Many of the subtasks in the visual understanding component are carried out via
-specialized CNN models that are suited for that particular subtask.
+NER is responsible for building a machine learning model to recognize entities, such as
+a person, organization, etc., for a given input text.
 
-The action predictor component, on the other hand, needs to make a movement decision
-based on:
+NED disambiguation component will receive the output of the NER for linking. The
+disambiguation process has two phases:
 
-    1. Outputs of all the visual understanding sub-tasks
-    2. Track/record of the vehicle’s movements based on previous scene understanding
+    1. Candidate generation. The first phase of disambiguation is candidate generation.
+It finds potential matches for the entity mentions, by reducing the size of the
+knowledge base to a smaller subset of candidate documents/entities. This saves us from
+running the linking model on the entire knowledge base for each entity mention.
 
-You will receive the video frames covering the vehicle’s surroundings from the camera as
-input. This video is nothing more than a sequence of images (frames per second). The
-image at each time step (t, t + 1, ...) will be fed to the visual understanding system.
-The multiple outputs of this component will form the input to the self-driving vehicle’s
-action predictor. The action predictor will also use the previous time step information
-( t -1) while predicting the action for the current time step (t).
+    2. Linking. The second phase of disambiguation is linking. Here, you will select the
+exact corresponding entry in the knowledge base for each recognized entity. The linking
+model runs on only the candidate entries for each mention.
 
-System architecture for semantic image segmentation
----------------------------------------------------
+Metrics
+-------
 
-The training flow begins with training data generation, which makes use of two
-techniques. In the first technique, real-time driving images are captured with the help
-of a camera and are manually given pixel-wise labels by human annotators. The latter
-technique simply uses open-source datasets of self-driving vehicle images. This training
-data is then enhanced or augmented with the help of generative adversarial networks
-(GANs). Collectively all the training data is then used to train the segmenter model.
-Transfer learning is applied with the segmenter model to utilise powerful feature
-detectors from pre-trained models (FCN, U-Net, Mask R-CNN). The pre-trained models are
-optimized on your datasets to get the final model.
+The metrics component will measure the performance of:
 
-In the prediction flow, your self-driving vehicle would be on the road. You would
-receive real-time images of its surroundings, which would be given to the segmenter
-model for semantic image segmentation.
+    1. NER component separately
+    2. NED component separately
+    3. Entity linking as a whole
+
+Model execution path
+--------------------
+
+The model execution path is very straightforward. It begins with an input sentence that
+is fed to the NER component. NER identifies the entity mentions in the sentence, along
+with their types, and sends this information to the NED component. This component then
+links each entity mention to its corresponding entity in the knowledge base (if it
+exists).
 
 Architectural Components
 ========================
 
-Overall architecture for self-driving vehicle
----------------------------------------------
+The architectural components diagram for entity linking consists of two paths:
 
-Let’s discuss a simplified, high-level architecture for building a self-driving car. Our
-discussion entails the important learning problems to be solved and how different
-learning models can fit together.
+    1. Model generation path (training flow)
 
-Sensory Inputs (Camera, Radar, Lidar, etc.) -->
+    2. Model execution path (prediction flow)
 
-Visual Understanding System (Object Detection CNN, Drivable Region Detection CNN,
-Semantic Segmentation CNN, Scene Understanding CNN, Depth Measurement, CNN, etc.) -->
+Model generation path
+---------------------
 
-Action Predictor (RNN, Transformer, etc.)
+Model generation is responsible for training models for entity linking task. Let’s look
+at the components of this path.
 
-The system is designed to receive sensory inputs via cameras and radars, which are fed
-to the visual understanding system consisting of different convolutional neural networks
-(CNN), each for a specific subtask. The output of the visual understanding system is
-used by the action predictor RNN or LSTM. Based on the visual understanding of the
-environment, this component will plan the next move of the vehicle. The next move will
-be a combination of outcomes, i.e., applying brakes, accelerating, and/or steering the
-vehicle.
+Training data generation
 
-We won’t be discussing input through Lidar here. However, it can also be used for scene
-analysis similar to a camera, especially for reconstructing a 3D view of an environment.
+You will begin by gathering training data for entity linking through open-source
+datasets and manual labelling/linking of text.
 
-Now, let’s have a look inside the visual understanding system. The object detection CNN
-detects and localizes all the obstacles and entities (e.g., humans and other vehicles)
-in the vehicle’s environment. This is essential information because the action predictor
-RNN may predict to slow down the vehicle due to the impending obstacle (e.g., a person
-crossing the road). However, the most crucial information for the action predictor RNN
-is information that allows it to extract a drivable path for the vehicle. Therefore, due
-to the significance of this task, we will train a separate model for this purpose: the
-drivable region detection CNN. It will be trained to detect the road lanes to help the
-system decide whether the pathway for the vehicle is clear or not.
+You will pass the training data to the named entity recognition (NER) model trainer and
+the named entity disambiguation (NED) model trainer.
 
-Moreover, as the object detection CNN identifies the key objects in the image (predicts
-bounding boxes), it is further required to share its output along with the raw pixel
-data for semantic image segmentation (i.e., draw pixel-wise boundaries around the
-objects). These boundaries will help in navigating the autonomous vehicle in a complex
-environment where overlapping objects/obstacles are presented.
+NER
 
-Machine learning models used in the components
+NER is responsible for building a machine learning model to recognize entities, such as
+a person, organization, etc., for a given input text.
 
-Many of the subtasks in the visual understanding component are carried out via
-specialized CNN models that are suited for that particular subtask.
+NED
 
-The action predictor component, on the other hand, needs to make a movement decision
-based on:
+The disambiguation component will receive the output of the NER for linking. The
+disambiguation process has two phases:
 
-    1. Outputs of all the visual understanding sub-tasks
+    1. Candidate generation
 
-    2. Track/record of the vehicle’s movements based on previous scene understanding
+    The first phase of disambiguation is candidate generation. It finds potential
+matches for the entity mentions, by reducing the size of the knowledge base to a smaller
+subset of candidate documents/entities. This saves us from running the linking model on
+the entire knowledge base for each entity mention.
 
-This can be best learned through a recurrent neural network (RNN) or long short-term
-memory (LSTM) that can utilize the temporal features of the data, i.e., previous and
-current predictions from the scene segmentation as inputs.
+    2. Linking
 
-You will receive the video frames covering the vehicle’s surroundings from the camera as
-input. This video is nothing more than a sequence of images (frames per second). The
-image at each time step (t, t + 1, ...) will be fed to the visual understanding system.
-The multiple outputs of this component will form the input to the self-driving vehicle’s
-action predictor. The action predictor will also use the previous time step information
-( t -1) while predicting the action for the current time step (t).
+    The second phase of disambiguation is linking. Here, you will select the exact
+corresponding entry in the knowledge base for each recognized entity. The linking model
+runs on only the candidate entries for each mention.
 
-System architecture for semantic image segmentation
----------------------------------------------------
+Metrics
+-------
 
-You just saw how the semantic image segmentation task fits in the overall architecture
-for the self-driving vehicle system architecture. Now, let’s zoom in on the architecture
-for the semantic image segmentation task.
+The metrics component will measure the performance of:
 
-The training flow begins with training data generation, which makes use of two
-techniques. In the first technique, real-time driving images are captured with the help
-of a camera and are manually given pixel-wise labels by human annotators. The latter
-technique simply uses open-source datasets of self-driving vehicle images. This training
-data is then enhanced or augmented with the help of generative adversarial networks
-(GANs). Collectively all the training data is then used to train the segmenter model.
-Transfer learning is applied with the segmenter model to utilise powerful feature
-detectors from pre-trained models (FCN, U-Net, Mask R-CNN). The pre-trained models are
-optimized on your datasets to get the final model.
+    1. NER component separately
 
-In the prediction flow, your self-driving vehicle would be on the road. You would
-receive real-time images of its surroundings, which would be given to the segmenter
-model for semantic image segmentation.
+    2. NED component separately
+
+    3. Entity linking as a whole
+
+Model execution path
+--------------------
+
+The model execution path is very straightforward. It begins with an input sentence that
+is fed to the NER component. NER identifies the entity mentions in the sentence, along
+with their types, and sends this information to the NED component. This component then
+links each entity mention to its corresponding entity in the knowledge base (if it
+exists).
 """
