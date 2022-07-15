@@ -1,0 +1,664 @@
+Practical ML Techniques and Concepts
+####################################
+
+Performance and Capacity Considerations
+=======================================
+
+Our goal is generally to improve our metrics (engagement rate, etc.) while ensuring that
+we meet the capacity and performance requirements.
+
+Major performance and capacity discussions come in during the following two phases of
+building a machine learning system:
+
+    1. Training time: How much training data and capacity is needed to build our
+predictor?
+
+    2. Evaluation time: What are the Service Level Agreements (SLAs) that we have to
+meet while serving the model and capacity needs?
+
+We need to consider the performance and capacity along with optimization for the ML task
+at hand, i.e., measure the complexity of the ML system at the training and evaluation
+time and use it in the decision process of building our ML system architecture as well
+as in the selection of the ML modeling technique.
+
+Complexities consideration for an ML system
+-------------------------------------------
+
+Machine learning algorithms have three different types of complexities:
+
+    - Training complexity. The training complexity of a machine learning algorithm is
+the time taken by it to train the model for a given task.
+
+    - Evaluation complexity. The evaluation complexity of a machine learning algorithm
+is the time taken by it to evaluate the input at testing time.
+
+    - Sample complexity. The sample complexity of a machine learning algorithm is the
+total number of training samples required to learn a target function successfully.
+Sample complexity changes if the model capacity changes. For example, for a deep neural
+network, the number of training examples has to be considerably larger than decision
+trees and linear regression.
+
+Comparison of training and evaluation complexities
+--------------------------------------------------
+
+The evaluation complexity of the linear regression algorithm is equal to the complexity
+of a single-layer neural network-based algorithm. Linear regression is the best choice
+if we want to save time on training and evaluation.
+
+Relatively deep neural network takes a lot more time in both training and evaluation.
+Its need for training data is also high. However, it’s ability to learn complex tasks
+such as image segmentation and language understanding, is much higher, and it gives more
+accurate predictions in comparison to other models. Therefore a deep neural network is a
+viable choice if it is well suited for the task at hand and capacity isn’t a problem.
+
+MART is a tree-based algorithm that has a greater computation cost than linear models,
+but it is much faster than a deep neural network. Tree-based algorithms are able to
+generalize well using a moderately-sized training dataset. Therefore, if our training
+data is limited to a few million examples and capacity/performance is critical, they
+will be a good choice.
+
+Performance and capacity considerations in large scale system
+-------------------------------------------------------------
+
+The ML-based system wants to respond with the most relevant web pages for the searcher
+while meeting the system’s constraints. For our discussion of designing ML systems,
+performance and capacity are the most important to think about when designing the
+system. Performance based SLAs ensure that we return the results back within a given
+time frame (e.g. 500ms) for 99% of queries. Capacity refers to the load that our system
+can handle, e.g., the system can support 1000 QPS (queries per second). Since we cannot
+have unlimited capacity, it’s important to have the system find the most optimal result
+given a fixed capacity.
+
+Layered/funnel based modeling approach
+--------------------------------------
+
+To manage both the performance and capacity of a system, one reasonable approach that’s
+commonly used is to start with a relatively fast model when you have the most number of
+documents e.g. 100 million documents in case of the query “computer science” for search.
+
+In every later stage, we continue to increase the complexity (i.e. more optimized model
+in prediction) and execution time but now the model needs to run on a reduced number of
+documents e.g. our first stage could use a linear model and final stage can use a deep
+neural network. If we apply deep neural network for only top 500 documents, with 1ms
+evaluation time per document, we would need 500ms on a single machine. With five shards
+we can do it in around 100ms.
+
+In ML systems like search ranking, recommendation, and ad prediction, the layered/funnel
+approach to modeling is the right way to solve for scale and relevance while keeping
+performance high and capacity in check.
+
+Training Data Collection Strategies
+===================================
+
+Significance of training data
+-----------------------------
+
+A machine-learning system consists of three main components. They are the training
+algorithm (e.g., neural network, decision trees, etc.), training data, and features. The
+training data is of paramount importance. The model learns directly from the data to
+create and refine its rules on a given task. Therefore, inadequate, inaccurate, or
+irrelevant data will render even the most performant algorithms useless. The quality and
+quantity of training data are a big factor in determining how far you can go in our
+machine learning optimization task.
+
+Collection techniques
+---------------------
+
+User’s interaction with pre-existing system (online)
+
+In some cases, the user’s interaction with the pre-existing system can generate good
+quality training data.
+
+For many cases, the early version built for solving relevance or ranking problem is a
+rule-based system. With the rule-based system in place, you build an ML system for the
+task (which is then iteratively improved). So when you build the ML system, you can
+utilize the user’s interaction with the in-place/pre-existing system to generate
+training data for model training.
+
+Human labelers (offline)
+
+Here, the consumer of the system can’t generate training data for us. They are not
+interacting with the system in a way that would give segmentation labels for the images
+captured by the camera. In such a scenario, we need to figure out the person/resource
+that can generate labeled training data for us.
+
+Targeted data gathering
+
+Offline training data collection is expensive. So, you need to identify what kind of
+training data is more important and then target its collection more. To do this, you
+should see where the system is failing, i.e., areas where the system is unable to
+predict accurately. Your focus should be to collect training data for these areas.
+
+Three such resources are:
+
+    1. Crowdsourcing. Crowdsourcing can be used to collect training data for relatively
+simpler tasks without requiring any special training. However, there are cases, like
+when we have privacy concerns, where we cannot utilize crowdsourcing.
+
+    2. Specialized labelers. We can hire specialized/trained labelers who can label data
+for us according to the given ML task. One caveat of using specialized labelers is that
+training them for a specialized task may be time-consuming and costly. The tasks would
+be delayed until enough labelers have received training.
+
+    3. Open-source datasets. Generating training data through manual labelers is an
+expensive and time-consuming way to gather data. So, we need to supplement it with
+open-source datasets where possible.
+
+Additional creative collection techniques
+-----------------------------------------
+
+    - Build the product in a way that it collects data from user. We can tweak the
+functionality of our product in a way that it starts generating training data for our
+model. Let’s consider an example where people go to explore their interests on
+Pinterest. You want to show a personalized selection of pins to the new users to
+kickstart their experience. This requires data that would give you a semantic
+understanding of the user and the pin. This can be done by tweaking the system in the
+following way:
+
+        - Ask users to name the board (collection) to which they save each pin. The name
+of the board will help to categorize the pins according to their content.
+
+        - Ask new users to choose their interests in terms of the board names specified
+by existing users.
+
+    The first step will help you to build content profiles. Whereas, the second step
+will help you build user profiles. The model can utilize these to show pins that would
+interest the user, personalizing the experience.
+
+    - Creative manual expansion. We can expand training data using creative ways. Assume
+that we are building a system that detects logos in images (object detection) and we
+have some images containing the logos we want to detect. We can expand/enhance the
+training data by manually placing those logos on a different set of images as well. This
+logo placement can be done in different positions and sizes.
+
+    - Data expansion using GANs. When working with systems that use visual data, such as
+object detectors or image segmenters, we can use GANs to enhance the training data.
+
+Train, test, & validation splits
+--------------------------------
+
+The three parts are as follows:
+
+    1. Training data. It helps in training the ML model (fit model parameters).
+
+    2. Validation data. After training the model, we need to tune its hyperparameters.
+This process requires testing the model’s performance on various hyperparameter
+combinations to select the best one.
+
+    3. Test data. Now that we have trained and tuned the model, the final step is to
+test its performance on data that it has not seen before. In other words, we will be
+testing the model’s generalization ability. The outcome of this test will allow us to
+make the final choice for model selection.
+
+Points to consider during splitting
+
+    - The size of each split will depend on your particular scenario. The training data
+will generally be the largest portion, especially if you are training a model like a
+deep neural network that requires a lot of training data.
+
+    - While splitting training data, you need to ensure that you are capturing all kinds
+of patterns in each split.
+
+    - Most of the time, we are building models with the intent to forecast the future.
+Therefore, you need your splits to reflect this intent as well. For instance, in the
+movie recommendation system example, your data has a time dimension, i.e., you know the
+users’ interactions with previous movie recommendations, and you want to predict their
+interactions with future recommendations ahead of time. Hence, you will train the model
+on data from one time interval and validate/test it on the data from its succeeding time
+interval.
+
+Quantity of training data
+-------------------------
+
+As a general guideline, the quantity of the training data required depends on the
+modeling technique you are using. If you are training a simple linear model, like linear
+regression, the amount of training data required would be less in comparison to more
+complex models. If you are training complex models, such as a neural network, the
+magnitude of data required would be much greater.
+
+Gathering a large amount of training data requires time and effort. Moreover, the model
+training time and cost also increase as we increase the quantity of training data. To
+see the optimal amount of training data, you can plot the model’s performance on the
+validation set against the number of training data samples. After a certain quantity of
+training data, you can observe that there isn’t any gain in the model’s performance.
+
+Training data filtering
+-----------------------
+
+It is essential to filter your training data since the model is going to learn directly
+from it. Any discrepancies in the data will affect the learning of the model.
+
+    - Cleaning up data. General guidelines are available for data cleaning such as
+handling missing data, outliers, duplicates and dropping out irrelevant features. Apart
+from this, you need to analyze the data with regards to the given task to identify
+patterns that are not useful.
+
+    - Removing bias. When we are generating training data through online user
+engagement, it may become biased.
+
+    - Bootstrapping new items. Sometimes we are dealing with systems in which new items
+are added frequently. The new items may not garner a lot of attention, so we need to
+boost them to increase their visibility. We can boost them by increasing their relevance
+scores a little, thereby artificially increasing their chance of being viewed by a
+person.
+
+Online Experimentation
+======================
+
+A successful machine learning system should be able to gauge its performance by testing
+different scenarios. This can lead to more innovations in the model design. For an ML
+system, “success” can be measured in numerous ways.
+
+Hypothesis and metrics intuition
+--------------------------------
+
+At any point in time, the team can have multiple hypotheses that need to be validated
+via experimentation.
+
+To test the hypotheses, should the ML system v0.2 be created and deployed in the
+production environment? What if the hypothesis intuition is wrong and the mistake
+becomes costly?
+
+This is where online experimentation comes in handy. It allows us to conduct controlled
+experiments that provide a valuable way to assess the impact of new features on customer
+behavior.
+
+Running an online experiment
+----------------------------
+
+A/B testing is very beneficial for gauging the impact of new features or changes in the
+system on the user experience. It is a method of comparing two versions of a webpage or
+app against each other simultaneously to determine which one performs better. In an A/B
+experiment, a webpage or app screen is modified to create a second version of the same
+page. The original version of the page is known as the control and the modified version
+of the page is known as the variation.
+
+We can formulate the following two hypotheses for the A/B test:
+
+    - The null hypothesis, H0 is when the design change will not have an effect on
+variation. If we fail to reject the null hypothesis, we should not launch the new
+feature.
+
+    - The alternative hypothesis, H1 is alternate to the null hypothesis whereby the
+design change will have an effect on the variation. If the null hypothesis is rejected,
+then we accept the alternative hypothesis and we should launch the new feature. Simply
+put, the variation will go in production.
+
+Now the task is to determine if the number of successes in the variant is significantly
+better from the control, i.e., if the conversion caused a positive impact on the system
+performance. This requires confidently making statements (using statistical analysis)
+about the difference in the variant sample, even if that difference is small. Before
+statistically analyzing the results, a power analysis test is conducted to determine how
+much overall traffic should be given to the system, i.e., the minimum sample size
+required to see the impact of conversion. Half of the traffic is sent to the control,
+and the other half is diverted towards the variation.
+
+Measuring results
+-----------------
+
+As visitors are served with either the control or variation/test version of the app,
+their engagement with each experience is measured and analyzed through statistical
+analysis testing. Note that unless the tests are statistically significant, we cannot
+back up the claims of one version winning over another.
+
+Computing statistical significance
+----------------------------------
+
+P-value is used to help determine the statistical significance of the results. In
+interpreting the p-value of a significance test, a significance level (alpha) must be
+specified.
+
+The significance level is a boundary for specifying a statistically significant finding
+when interpreting the p-value. A commonly used value for the significance level is 5%
+written as 0.05.
+
+The result of a significance test is claimed to be “statistically significant” if the
+p-value is less than the significance level.
+
+If an A/B test is run with the outcome of a significance level of 95% (p-value ≤ 0.05),
+there is a 5% probability that the variation that we see is by chance. In other words,
+the variation is most likely NOT due to chance, but due to the change that we
+introduced.
+
+Measuring long term effects
+---------------------------
+
+In some cases, we need to be more confident about the result of an A/B experiment when
+it is overly optimistic.
+
+Back Testing (Checking Against Historical Data)
+
+Let’s assume that variation improved the overall system performance by 5% when the
+expected gain was 2%. This surprising change puts forth a question. Is the result overly
+optimistic? To confirm the hypothesis and be more confident about the results, we can
+perform a backtest. Now we change criteria, system A is the previous system B, and vice
+versa. We will check all potential scenarios while backtesting: Do we lose gains? Is the
+gain caused by an A/B experiment equal to the loss by B/A experiment?
+
+Long-running A/B tests
+
+In a few experiments, one key concern could be that the experiment can have a negative
+long term impact since we do A/B testing for only a short period of time. Will any
+negative effects start to appear if we do a long term assessment of the system subject
+to variation? To answer this question, we might want to have a long-running A/B
+experiment to understand the impact.
+
+Embeddings
+==========
+
+Embeddings
+----------
+
+Embeddings enable the encoding of entities (e.g., words, docs, images, person, ad, etc.)
+in a low dimensional vector space such that it captures their semantic information.
+Capturing semantic information helps to identify related entities that occur close to
+each other in the vector space.
+
+Transfer learning refers to transferring information from one ML task to another.
+Embeddings easily enable us to do that for common entities among different tasks. For
+example, Twitter can build an embedding for their users based on their organic feed
+interactions and then use the embeddings for ads serving. Organic interactions are
+generally much greater in volume compared to ads interactions. This allows Twitter to
+learn user interests by organic feed interaction, capture it as embedding, and use it to
+serve more relevant ads.
+
+Auto-encoders use neural networks consisting of both an encoder and a decoder. They
+first learn to compress the raw image pixel data to a small dimension via an encoder
+model and then try to de-compress it via a decoder to re-generate the same input image.
+The last layer of encoder determines the dimension of the embedding, which should be
+sufficiently large to capture enough information about the image so that the decoder can
+decode it. The combined encoder and decoder tries to minimize the difference between
+original and generated pixels, using backpropagation to train the network. Once we have
+trained the model, we only use the encoder (first N network layers) to generate
+embeddings for images.
+
+Text embeddings
+---------------
+
+Word2Vec
+
+Word2Vec produces word embeddings by using shallow neural networks (having a single
+hidden layer) and self-supervised learning from a large corpus of text data. Word2Vec is
+self-supervised as it trains a model by predicting words from other words that appear in
+the sentence (context).
+
+Context-based embeddings
+
+Contextualized information can result in different meanings of the same word, and
+context-based embeddings look at neighboring terms at embedding generation time. This
+means that we have to provide contextual information (neighboring terms) to fetch
+embeddings for a term.
+
+Two popular architectures used to generate word context-based embedding are:
+
+    1. Embeddings from Language Models (ELMo)
+
+    2. Bidirectional Encoder Representations from Transformers (BERT)
+
+Visual embedding
+----------------
+
+Auto-encoders
+
+Auto-encoders use neural networks consisting of both an encoder and a decoder. They
+first learn to compress the raw image pixel data to a small dimension via an encoder
+model and then try to de-compress it via a decoder to re-generate the same input image.
+The last layer of encoder determines the dimension of the embedding, which should be
+sufficiently large to capture enough information about the image so that the decoder can
+decode it. Once we have trained the model, we only use the encoder (first N network
+layers) to generate embeddings for images.
+
+Visual supervised learning tasks
+
+Visual supervised learning tasks such as image classification or object detection, are
+generally set up as convolution layers, pooling layers, and fully connected network
+layers, followed by final classification (softmax) layers. The penultimate layer before
+softmax captures all image information in a vector such that it can be used to classify
+the image correctly. So, we can use the penultimate layer value of a pre-trained model
+as our image embedding.
+
+Learning embeddings for a particular learning task
+--------------------------------------------------
+
+The advantage of this embedding is a specialized one for the given prediction task. One
+important assumption here is that we have enough training data to be able to learn such
+representation during model training. Another consideration is that training time for
+learning the embedding as part of the task will be much higher compared to utilizing a
+pre-trained embedding.
+
+Network/Relationship-based embedding
+------------------------------------
+
+Most of the systems have multiple entities, and these entities interact with each other.
+both queries and users that interact with web results. We can think of these
+interactions as relationships in a graph or resulting in interaction pairs. For the
+above example, these pairs would look like:
+
+    1. (User, Pin) for Pinterest
+
+    2. (User, Video) for YouTube
+
+    3. (User, Tweet) for Twitter
+
+    4. (Query, Webpage) for Search
+
+    5. (Searcher, Webpage) for Search
+
+In all the above scenarios, the retrieval and ranking of results for a particular user
+(or query) are mostly about predicting how close they are. Therefore, having an
+embedding model that projects these documents in the same embedding space can vastly
+help in the retrieval and ranking tasks of recommendation, search, feed-based, and many
+other ML systems.
+
+We can generate embeddings for both the above-discussed pairs of entities in the same
+space by creating a two-tower neural network model that tries to encode each item using
+their raw features. The model optimizes the inner product loss such that positive pairs
+from entity interactions have a higher score and random pairs have a lower score. Let’s
+say the selected pairs of entities (from a graph or based on interactions) belong to set
+A. We then select random pairs for negative examples.
+
+Transfer Learning
+=================
+
+What is transfer learning?
+--------------------------
+
+Transfer learning is the task of using a pre-trained model and applying it to a new
+task, i.e., transferring the knowledge learned from one task to another. This is useful
+because the model doesn’t have to learn from scratch and can achieve higher accuracy in
+less time as compared to models that don’t use transfer learning.
+
+Motivation
+----------
+
+1. Growth in the ML community and knowledge sharing.
+
+2. Common sub-problems.
+
+3. Limited supervised learning data and training resources.
+
+Techniques for transfer learning utilization
+--------------------------------------------
+
+The transfer learning technique can be utilized in the following ways:
+
+    - Extract features from useful layers. Keep the initial layers of the pre-trained
+model and remove the final layers. Add the new layer to the remaining chunk and train
+them for final classification.
+
+    - Fine-tuning. Change or tune the existing parameters in a pre-trained network,
+i.e., optimizing the model parameters during training for the supervised prediction
+task. A key question with fine-tuning the model is to see how many layers can we freeze
+and how many final layers we want to fine-tune.
+
+Transfer learning technique can be utilized in one or both of the above ways depending
+on the following two factors:
+
+    1. Size of our supervised training dataset. How much labeled data do we possess to
+optimize the model? Do we have 100k examples, 1 million examples, 10 million examples?
+
+    Training data is limited: In case of a limited amount of specialized training data,
+we can either go with the approach of freezing all the layers and using the pre-trained
+model for feature generation or fine-tuning only the final layers.
+
+    Training data is plenty: If we have a significant amount of training data (e.g. one
+million+ examples), we have the choice to play around with multiple ideas. We can start
+with just freezing the model, fine-tuning only final layers, or we can retrain the whole
+model to adjust weights for our specialized task.
+
+    2. Similarity of prediction tasks. The similarity of learning tasks can also guide
+us on whether we can simply use the model as it is or need to fine-tune the model for
+our new prediction task.
+
+Applications
+------------
+
+Computer vision problems
+
+The convolutional filters in a trained convolutional neural network (CNN) are arranged
+in a kind of hierarchy. The filters in the first layer often detect edges or blocks of
+color. The second layer’s filters can detect features like shapes. All of them are very
+general features that are useful in analyzing any image in any dataset. The filters in
+the last layers are more specific.
+
+Natural language processing (NLP)
+
+In many of NLP learning tasks such as language understanding, speech recognition, entity
+recognition, language generation, semantic understanding, etc. as well as other problems
+that are based on search, one major need is to represent our text terms in a way that
+they capture the semantic meaning.
+
+For this, we need to generate the dense representation of textual terms. A few of the
+popular term representation models that use a self-supervised learning approach, trained
+on massive datasets are Word2Vec, BERT, and ELMO. The term representation based on these
+models capture their semantic meanings. Hence, we can transfer knowledge from this
+learned task in many of the NLP tasks.
+
+Model Debugging and Testing
+===========================
+
+There are two main phases in terms of the development of a model that we will go over:
+
+    - Building the first version of the model and the ML system.
+
+    - Iterative improvements on top of the first version as well as debugging issues in
+large scale ML systems.
+
+Building model v1
+-----------------
+
+The goal in this phase is to build the 1st version of the model. Few important steps in
+this stage are:
+
+    - We begin by identifying a business problem in the first phase and mapping it to a
+machine learning problem.
+
+    - We then go onto explore the training data and machine learning techniques that
+will work best on this problem.
+
+    - Then we train the model given the available data and features, play around with
+hyper-parameters.
+
+    - Once the model has been set up and we have early offline metrics like accuracy,
+precision/recall, AUC, etc., we continue to play around with the various features and
+training data strategies to improve our offline metrics.
+
+    - If there is already a heuristics or rule-based system in place, our objective from
+the offline model would be to perform at least as good as the current system, e.g., for
+ads prediction problem, we would want our ML model AUC to be better than the current
+rule-based ads prediction based on only historical engagement rate.
+
+It’s important to get version 1 launched to the real system quickly rather than spending
+too much time trying to optimize it. It’s generally a better idea to take model online
+and then continue to iterate to improve the quality. The reason is primarily that model
+improvement is an iterative process and we want validation from real traffic and data
+along with offline validation.
+
+Deploying and debugging v1 model
+--------------------------------
+
+In our first attempt to take the model online, i.e., enable live traffic, might not work
+as expected and results don’t look as good as we anticipated offline. Let’s look at a
+few failure scenarios that can happen at this stage and how to debug them.
+
+Change in feature distribution
+
+The change in the feature distribution of training and evaluation set can negatively
+affect the model performance. Another scenario could be a significant change in incoming
+traffic because of seasonality.
+
+Feature logging issues
+----------------------
+
+When the model is trained offline, there is an assumption that features of the model
+generated offline would exactly be the same when the model is taken online. However,
+this might not be true as the way we generated features for our online system might not
+exactly be the same. It’s a common practice to append features offline to our training
+data for offline training and then add them later to the online model serving part. So,
+if the model doesn’t perform as well as we anticipated online, it would be good to see
+if feature generation logic is the same for offline training as well as online serving
+part of model evaluation.
+
+Overfitting
+-----------
+
+Overfitting happens when a model learns the intrinsic details in the training data to
+the extent that it negatively impacts the performance of the model on new or unseen
+data.
+
+If our model performance is lower in the live system but it still performs well on our
+training and validation set then there is a good chance that we have overfit our data by
+trying to improve the performance a bit too much.
+
+Another important part is to have a comprehensive and large test set to cover all
+possible scenarios in a fairly similar distribution to how we anticipate them in live
+traffic.
+
+Under-fitting
+-------------
+
+One indication from training the model could be that the model is unable to learn
+complex feature interactions especially if we are using a simplistic model. So, this
+might indicate to us that using slightly higher-order features, introduce more feature
+interactions, or use a more complex /expensive model such as a neural network.
+
+Iterative model improvement
+---------------------------
+
+Few cases that we discussed above regarding overfitting and under-fitting are still the
+questions that we should continue to ask during iterative model improvement but let’s
+discuss a few more below. The best way to iterative improve model quality is to start
+looking at failure cases of our model prediction and using that come up with the ideas
+that will help in improving model performance in those cases.
+
+Missing important feature
+
+Digging deeper into failures examples can identify missing features that can help us
+perform better in failures cases.
+
+Insufficient training examples
+
+We may also find that we are lacking training examples in cases where the model isn’t
+performing well. We will cater to all possible scenarios where the model is not
+performing well and update the training data accordingly.
+
+Debugging large scale systems
+-----------------------------
+
+In the case of debugging large scale systems with multiple components (or models), we
+need to see which part of the overall system is not working correctly. It could be done
+for one failure example or over a set of examples to see where the opportunity lies to
+improve the metrics.
+
+The following are a few key steps to think about iterative model improvement for large
+scale end to end ML systems:
+
+    - Identify the component. This accounts for finding the architectural component
+resulting in a high number of failures in our failure set. In order to see the cause of
+failure, we will look at each layers’ performance to understand the opportunity to
+significantly improve the quality of our search system.
+
+    - Improve the quality of component. Some of the model improvement methods that we
+have discussed above like adding more training data, features, modeling approach in case
+of overfitting and underfitting will still be the same once we identify the component
+that needs work.

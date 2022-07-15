@@ -1,7 +1,4 @@
 """
-Main Takeaways
-~~~~~~~~~~~~~~
-
 How Does This Course Help in ML Interviews?
 ===========================================
 

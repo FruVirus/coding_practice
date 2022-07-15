@@ -1,4 +1,33 @@
-"""
+Introduction
+############
+
+How Does This Course Help in ML Interviews?
+===========================================
+
+Machine learning system design interviews
+-----------------------------------------
+
+In the ML system design interview portion, candidates are given open-ended machine
+learning problems and are expected to build an end-to-end machine learning system to
+solve that problem.
+
+The candidates should consider the following approach:
+
+    1. Build a deeper understanding of the problem. Problem---What, When, Who, How
+
+    2. Understand system requirement. For example, latency, scale, etc.
+
+    3. Identify metrics to measure the performance of the system.
+
+    4. Envision end-to-end system architecture. Identify key components.
+
+    5. Come up with training data generation strategy.
+
+    6. Engineer meaningful features for the given ML task.
+
+    7. Select best suited ML modeling technique (e.g., transfer learning, feature
+extraction, model ensemble, etc.).
+
 Setting up a Machine Learning System
 ====================================
 
@@ -10,8 +39,10 @@ task. For instance, they may ask you to design the machine learning system for t
 following problems:
 
     - Build a system that shows relevant ads for search engines.
+
     - Extract all persons, locations, and organizations from a given corpus of
 documents.
+
     - Recommend movies to a user on Netflix.
 
 Key steps in ML system setup
@@ -39,15 +70,19 @@ understand the scale of the system and its requirements.
 Latency requirements
 
     - Do we want to return the search result in 100 milliseconds or 500 milliseconds?
+
     - Do we want to return the list of relevant tweets in 300 milliseconds or 400
 milliseconds?
 
 Scale of the data
 
     - How many requests per second do we anticipate to handle?
+
     - How many websites exist that we want to enable through this search engine?
+
     - If a query has 10 billion matching documents, how many of these would be ranked by
 our model?
+
     - How many tweets would we have to rank according to relevance for a user at a time?
 
 The answers to these questions will guide you when you come up with the architecture of
@@ -98,6 +133,7 @@ collection/generation for supervised learning tasks:
 
         1. Human labeled data. This is an expensive way to gather data. So we need to
     supplement it with in-house labelers or open-source datasets.
+
         2. Data collection through a user’s interaction with the pre-existing system.
 
     Another way to gather data is through the online (currently deployed/pre-existing)
@@ -161,4 +197,3 @@ go towards debugging. You may observe a general failure from a decrease in AUC. 
 may note that the model is failing in particular scenarios. For instance, by analysing
 the video recording of the self-driving car, you may find out that the image
 segmentation fails in rushy areas.
-"""
