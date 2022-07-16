@@ -1,0 +1,777 @@
+Problem Statement
+=================
+
+Problem statement
+-----------------
+
+The interviewer has asked you to design a search relevance system for a search engine.
+
+Clarifying questions
+--------------------
+
+Let’s clarify the problem statement by specifying three aspects: scope, scale, and
+personalization.
+
+Problem scope
+
+The interviewer’s question is really broad. Your best bet is to avoid ambiguities and
+ask the interviewer as many questions as you can. This will narrow down your problem
+space as you are thinking out loud for the best solution.
+
+So, your first question for the interviewer would be something like the following:
+
+    Is it a general search engine like Google or Bing or a specialized search engine
+like Amazon products search?
+
+Scale
+
+Once you know that you are building a general search engine, it’s also critical to
+determine the scale of the system. A couple of important questions are:
+
+    - How many websites exist that you want to enable through this search engine?
+
+    - How many requests per second do you anticipate to handle?
+
+Understanding this scale is important to architect our relevance system. For example,
+later in the chapter, we will go over the funnel-based approach where you will continue
+to increase model complexity and reduce document set, as you go down the funnel for this
+large scale search system.
+
+Personalization
+
+Another important question that you want to address is whether the searcher is a
+logged-in user or not. This will define the level of personalization that you can
+incorporate to improve the relevance of our results.
+
+Metrics
+=======
+
+Machine learning models learn directly from the data, and no human intuition is encoded
+into the model. Hence, selecting the wrong metric results in the model becoming
+optimized for a completely wrong criterion.
+
+There are two types of metrics to evaluate the success of a search query:
+
+    1. Online metrics
+
+    2. Offline metrics
+
+We refer to metrics that are computed as part of user interaction in a live system as
+Online metrics. Meanwhile, offline metrics use offline data to measure the quality of
+your search engine and don’t rely on getting direct feedback from the users of the
+system.
+
+Online metrics
+--------------
+
+In an online setting, you can base the success of a search session on user actions. On a
+per-query level, you can define success as the user action of clicking on a result.
+
+Click-through rate
+
+A simple click-based metric is click-through rate. The click-through rate measures the
+ratio of clicks to impressions.
+
+CTR = Number of clicks / Number of impressions
+
+An impression means a view. For example, when a search engine result page loads and the
+user has seen the result, you will consider that as an impression. A click on that
+result is your success.
+
+Successful session rate
+
+One problem with the click-through rate could be that unsuccessful clicks will also be
+counted towards search success. For example, this might include short clicks where the
+searcher only looked at the resultant document and clicked back immediately. You could
+solve this issue by filtering your data to only successful clicks, i.e., to only
+consider clicks that have a long dwell time.
+
+Dwell time is the length of time a searcher spends viewing a webpage after they’ve
+clicked a link on a search engine result page (SERP).
+
+Therefore, successful sessions can be defined as the ones that have a click with a
+ten-second or longer dwell time.
+
+Session success rate = Number of successful sessions / Number of total sessions
+
+Caveat
+
+Another aspect to consider is zero-click searches. Zero-click searches occur when a SERP
+may answer the searcher’s query right at the top such that the searcher doesn’t need any
+further clicks to complete the search. The searcher has found what they were looking for
+without a single click!. The click-through rate would not work in this case (but your
+definition of a successful session should definitely include it). We can fix this using
+the time to success.
+
+Time to success
+
+Until now, we have been considering a single query-based search session. However, it may
+span over several queries. For example, the searcher initially queries: “italian food”.
+They find that the results are not what they are looking for and make a more specific
+query: “italian restaurants”. Also, at times, the searcher might have to go over
+multiple results to find the one that they are looking for.
+
+Ideally, you want the searcher to go to the result that answers their question in the
+minimal number of queries and as high on the results page as possible. So, time to
+success is an important metric to track and measure search engine success.
+
+For scenarios like this, a low number of queries per session means that your system was
+good at guessing what the searcher actually wanted despite their poorly worded query.
+So, in this case, we should consider a low number of queries per session in your
+definition of a successful search session.
+
+Offline metrics
+---------------
+
+The offline methods to measure a successful search session makes use of trained human
+raters. They are asked to rate the relevance of the query results objectively, keeping
+in view well-defined guidelines. These ratings are then aggregated across a query sample
+to serve as the ground truth. Ground truth refers to the actual output that is desired
+of the system. In this case, it is the ranking or rating information provided by the
+human raters.
+
+Normalized Discounted Cumulative Gain (NDCG)
+
+NDCG is an improvement on cumulative gain (CG).
+
+The cumulative gain (CG) for the search engine’s result ranking is computed by simply
+adding each document’s relevance rating provided by the human rater.
+
+CG_p = sum(rel_i) for i = 1 to p, where p is the position of the result on the SERP and
+rel_i is the relevance rating of document i
+
+In contrast to cumulative gain, discounted cumulative gain (DCG) allows us to penalize
+the search engine’s ranking if highly relevant documents (as per ground truth) appear
+lower in the result list.
+
+DCG discounts are based on the position of the document in human-rated data. The
+intuition behind it is that the search engine will not be of much use if it doesn’t show
+the most relevant documents at the top of search result pages.
+
+DCG_p = sum(rel_i / log(i + 1)) for i = 1 to p, where rel_i is the relevance rating of a
+document, i is the position of the document, and p is the number of positions.
+
+However, DCG can’t be used to compare the search engine’s performance across different
+queries on an absolute scale. The is because the length of the result list varies from
+query to query. So, the DCG for a query with a longer result list may be higher due to
+its length instead of its quality. To remedy this, you need to move towards NDCG.
+
+NDCG normalizes the DCG in the 0 to 1 score range by dividing the DCG by the max DCG or
+the IDCG (ideal discounted cumulative gain) of the query. IDCG is the DCG of an ideal
+ordering of the search engine’s result list.
+
+NDCG_p = DCG_p / IDCG_p, where IDCG_p is the ideal discounted cumulative gain
+
+An NDCG value near one indicates good performance by the search engine. Whereas, a value
+near 0, indicates poor performance.
+
+In order to compute IDCG, you find an ideal ordering of the search engine’s result list.
+This is done by rearranging the search engine’s results based on the ranking provided by
+the human raters. For example, if a human rated D_3 higher than D_2, then the
+calculation of IDCG would switch the positions of D_2 and D_3.
+
+To compute NDCG for the overall query set with N queries, we take the mean of the
+respective NDCGs of all the N queries, and that’s the overall relevance as per human
+ratings of the ranking system.
+
+NDCG = sum(NDCG_i) / N for i = 1 to N
+
+Caveat
+------
+
+NDCG does not penalize irrelevant search results. In our case, it didn’t penalize D_4,
+which had zero relevance according to the human rater. Another result set may not
+include D_4, but it would still have the same NDCG score. As a remedy, the human rater
+could assign a negative relevance score to that document.
+
+Architectural Components
+========================
+
+Architecture
+------------
+
+Query rewriting
+---------------
+
+Queries are often poorly worded and far from describing the searcher’s actual
+information needs. Hence, we use query rewriting to increase recall, i.e., to retrieve a
+larger set of relevant results. Query rewriting has multiple components which are
+mentioned below.
+
+Spell checker
+
+Spell checking allows you to fix basic spelling mistakes like “itlian restaurat” to
+“italian restaurant”.
+
+Query expansion
+
+Query expansion improves search result retrieval by adding terms to the user’s query.
+Essentially, these additional terms minimize the mismatch between the searcher’s query
+and available documents.
+
+Hence, after correcting the spelling mistakes, we would want to expand terms, e.g., for
+the query “italian restaurant”, we should expand “restaurant” to food or recipe to look
+at all potential candidates (i.e., web pages) for this query.
+
+The reverse, i.e., query relaxation, serves the same purpose. For example, a search
+for “good italian restaurant” can be relaxed to “italian restaurant”.
+
+Query understanding
+-------------------
+
+This stage includes figuring out the main intent behind the query, e.g., the query
+“gas stations” most likely has a local intent (an interest in nearby places) and the
+query “earthquake” may have a newsy intent.
+
+Document selection
+------------------
+
+The web has billions of documents. Therefore, our first step in document selection is to
+find a fairly large set of documents that seems relevant to the searcher’s query.
+Document selection’s role will be to reduce this set from those millions of documents to
+a smaller subset of the most relevant documents.
+
+Document selection is more focused on recall. It uses a simpler technique to sift
+through billions of documents on the web and retrieve documents that have the potential
+of being relevant.
+
+Ranker
+------
+
+We let the ranking component worry about finding out “exactly” how relevant (precision)
+each selected document is and in what order they should be displayed on the SERP.
+
+Since the ranking component receives only the documents that have gone through the
+“initial screening” its workload is greatly reduced. This allows us to use more complex
+ML modeling options (that have great precision) for the ranking component, without
+affecting the performance and capacity requirements of the system.
+
+If the number of documents from the document selection stage is significantly large
+(more than 10k) and the amount of incoming traffic is also huge (more than 10k QPS or
+queries per second), you would want to have multiple stages of ranking with varying
+degrees of complexity and model sizes for the ML models. Multiple stages in ranking can
+allow you to only utilize complex models at the very last stage where ranking order is
+most important. This keeps computation cost in check for a large scale search system.
+
+In stage one, you can use fast (nanoseconds) linear ML models to rank them. In stage
+two, you can utilize computationally expensive models (like deep learning models) to
+find the most optimized order of top 500 documents given by stage one.
+
+Blender
+-------
+
+Blender gives relevant results from various search verticals, like, images, videos,
+news, local results, and blog posts. The fundamental motivation behind blending is to
+satisfy the searcher and to engage them by making the results more relevant. Another
+important aspect to consider is the diversity of results, e.g., you might not want to
+show all results from the same source (website).
+
+The blender finally outputs a search engine result page (SERP) in response to the
+searcher’s query.
+
+Training data generation
+------------------------
+
+This component displays the cyclic manner of using machine learning to make a search
+engine ranking system. It takes online user engagement data from the SERP displayed in
+response to queries and generates positive and negative training examples. The training
+data generated is then fed to the machine learning models trained to rank search engine
+results.
+
+Layered model approach
+----------------------
+
+100 billion documents on the web -->
+
+Document Selection: 100k documents selected related to the query -->
+
+Stage 1 Ranker: Reduced to 500 most relevant documents -->
+
+Stage 2 Ranker: Assign score to documents -->
+
+Stage 2 Ranker: Ordered 500 documents -->
+
+Blender: Merge different types of results -->
+
+Filter: Filtered results sent to SERP
+
+These steps translate into a layered model approach that allows you to select the
+appropriate ML algorithm at each stage, which is thought through the perspective of
+scalability as well. It’s important to point out that the number of stages and documents
+ranked at each stage should be selected based on capacity requirements as well as
+experimentation to see the impact on relevance based on documents scored at each layer.
+
+Document Selection
+==================
+
+From the one-hundred billion documents on the internet, we want to retrieve the top
+one-hundred thousand that are relevant to the searcher’s query by using information
+retrieval techniques.
+
+Information retrieval is the science of searching for information in a document. It
+focuses on comparing the query text with the document text and determining what is a
+good match.
+
+Documents
+
+Document types can be Web-pages, emails, books, news stories, scholarly papers, text
+messages, etc. All of the above have a significant amount of textual content.
+
+Inverted Index
+
+Inverted index is an index data structure that stores a mapping from content, such as
+words or numbers, to its location in a set of documents. That is, given a set of
+documents, where (which document indices) does the term "restaurants" appear?
+
+Document selection process
+--------------------------
+
+The searcher’s query does not match with only a single document. The selection criteria
+derived from the query may match a lot of documents with a different degree of
+relevance.
+
+Selection criteria
+------------------
+
+Our document selection criteria would then be as follows:
+
+    Retrieve documents that match term "italian" and (match term "restaurant" or match
+    term "food")
+
+We will go into the index and retrieve all the documents based on the above selection
+criteria. While we would check whether each of the documents matches the selection
+criteria, we would also be assigning them a relevance score alongside. At the end of the
+retrieval process, we will have selected relevant documents sorted according to their
+relevance score. From these documents, we can then forward the top one-hundred thousand
+documents to the ranker.
+
+Relevance scoring scheme
+------------------------
+
+One basic scoring scheme is to utilize a simple weighted linear combination of the
+factors involved. The weight of each factor depends on its importance in determining the
+relevance score. The weight of each factor in determining the score can be selected
+manually or using machine learning. Some of these factors are:
+
+    1. Terms match
+
+    2. Document popularity
+
+    3. Query intent match
+
+    4. Personalization match
+
+Terms match
+
+Our query contains multiple terms. We will use the inverse document frequency or IDF
+score of each term to weigh the match. The match for important terms in the query weighs
+higher.
+
+Document popularity
+
+The document’s popularity score is stored in the index.
+
+Query intent match
+
+The query intent component describes the intent of the query. For our query, the
+component may reveal that there is a very strong local intent.
+
+Personalization match
+
+It scores how well a document meets the searcher’s individual requirements based on a
+lot of aspects. For instance, the searcher’s age, gender, interests, and location.
+
+Feature Engineering
+===================
+
+An important aspect of the feature generation process is to first think about the main
+actors that will play a key role in our feature engineering process.
+
+The four such actors for search are:
+
+    1. Searcher
+
+    2. Query
+
+    3. Document
+
+    4. Context
+
+Searcher-specific features
+--------------------------
+
+Assuming that the searcher is logged in, you can tailor the results according to their
+age, gender and interests by using this information as features for your model.
+
+Query-specific features
+-----------------------
+
+Query historical engagement
+
+For relatively popular queries, historical engagement can be very important. You can use
+query’s prior engagement as a feature.
+
+Query intent
+
+The “query intent” feature enables the model to identify the kind of information a
+searcher is looking for when they type their query. The model uses this feature to
+assign a higher rank to the documents that match the query’s intent. For instance, if a
+person queries “pizza places”, the intent here is local. Therefore, the model will give
+high rank to the pizza places that are located near the searcher.
+
+Document-specific features
+--------------------------
+
+Page rank
+
+The rank of a document can serve as a feature. To estimate the relevance of the document
+under consideration, we can look at the number and quality of the documents that link to
+it.
+
+Document engagement radius
+
+The document engagement radius can be another important feature. A document on a coffee
+shop in Seattle would be more relevant to people living within a ten-mile radius of the
+shop. However, a document on the Eiffel Tower might interest people all around the
+world. Hence, in case our query has a local intent, we will choose the document with the
+local scope of appeal rather than that with a global scope of appeal.
+
+Context-specific features
+-------------------------
+
+Time of search
+
+A searcher has queried for restaurants. In this case, a contextual feature can be the
+time of the day. This will allow the model to display restaurants that are open at that
+hour.
+
+Recent events
+
+The searcher may appreciate any recent events related to the query.
+
+Searcher-document features
+--------------------------
+
+Distance
+
+For queries inquiring about nearby locations, we can use the distance between the
+searcher and the matching locations as a feature to measure the relevance of the
+documents.
+
+
+Historical engagement
+
+Another interesting feature could be the searcher’s historical engagement with the
+result type of the document. For instance, if a person has engaged with video documents
+more in the past, it indicates that video documents are generally more relevant for that
+person. Historical engagement with a particular website or document can also be an
+important signal as the user might be trying to “re-find” the document.
+
+Query-document features
+-----------------------
+
+Text Match
+
+One feature can be the text match. Text match can not only be in the title of the
+document, but it can also be in the metadata or content of a document.
+
+Unigram or bigram
+
+We can also look at data for each unigram and bigram for text match between the query
+and document. For instance, the query: “Seattle tourism guide” will result in three
+unigrams:
+
+    1. Seattle
+
+    2. tourism
+
+    3. guide
+
+These unigrams may match different parts of the document, e.g., “Seattle” may match the
+document title, while “tourism” may match the document’s content. Similarly, we can
+check the match for the bigram and the full trigram, as well. All of these text matches
+can result in multiple text-based features used by the model.
+
+Query-document historical engagement
+
+The prior engagement data can be a beneficial feature for determining the best ranking
+of the search results.
+
+    - Click rate
+
+    We want to see users’ historical engagement with documents shown in response to a
+particular query. The click rates for the documents can help in the ranking process. For
+example, we might observe across people’s queries on “Paris tourism” that the click rate
+for the “Eiffel tower website” is the highest. So, the model will develop the
+understanding that whenever someone queries “Paris tourism”, the document/website on
+Eiffel tower is the most engaged with. It can then use this information in the ranking
+of documents.
+
+Embeddings
+
+We can use embedding models to represent the query and documents in the form of vectors.
+These vectors can provide significant insight into the relationship between the query
+and the document.
+
+The embedding model generates vectors in such a manner that if a document is on the same
+topic/concept as the query, its vector is similar to the query’s vector. We can use this
+characteristic to create a feature called “embedding similarity score”. The similarity
+score is calculated between the query vector and each document vector to measure its
+relevance for the query. The higher the similarity score, the more relevant a document
+is for a query.
+
+Training Data Generation
+========================
+
+Training data generation for pointwise approach
+------------------------------------------------
+
+Pointwise approach: In this approach of model training, the training data consists of
+relevance scores for each document. The loss function looks at the score of one document
+at a time as an absolute ranking. Hence the model is trained to predict the relevance of
+each document for a query, individually. The final ranking is achieved by simply sorting
+the result list by these document scores.
+
+While adopting the pointwise approach, our ranking model can make use of classification
+algorithms when the score of each document takes a small, finite number of values. For
+instance, if we aim to simply classify a document as relevant or irrelevant, the
+relevance score will be 0 or 1. This will allow us to approximate the ranking problem by
+a binary classification problem.
+
+Positive and negative training examples
+---------------------------------------
+
+We are essentially predicting user engagement towards a document in response to a query.
+A relevant document is one that successfully engages the searcher.
+
+Assumption
+
+Let’s assume that the searcher did not engage with Paris.com but engaged with
+Eiffeltower.com. Upon clicking on Eiffeltower.com, they spent two minutes on the website
+and then signed up. After signing up, they went back to the SERP and clicked on
+Lourvemusuem.com and spent twenty seconds there.
+
+This sequence of events generates three rows of training data. “Paris.com” would be a
+negative instance because it only had a view with no engagement. The user skipped it and
+engaged with the other two links, which would become positive examples.
+
+Caveat: Less negative examples
+
+A question may arise that if the user engages with only the first document on the SERP,
+we may never get enough negative examples to train our model. To remedy it, we use
+random negative examples. For example, all the documents displayed on the 50th page of
+Google search results can be considered negative examples.
+
+User engagement patterns may differ throughout the week. For instance, the engagement on
+weekdays may differ from the weekend. Therefore, we will use a week’s queries to capture
+all patterns during training data generation.
+
+Train test split
+----------------
+
+A random sample may not be the best idea. You are trying to build a model using
+historical data, that is trying to predict the future. You can better capture the
+essence of our goal by, say, training the model using data generated from the first and
+second week of July and data generated in the third week of July for validation and
+testing purposes.
+
+Training data generation for pairwise approach
+----------------------------------------------
+
+Pairwise approach: Here, the loss function looks at the scores of document pairs as an
+inequality instead of the score of a single document. This enables the model to learn to
+rank documents according to their relative order which is closer to the nature of
+ranking. Hence, the model tries to predict the document scores such that the number of
+inversions in the final ranked results is minimum. Inversions are cases where the pair
+of results are in the wrong order relative to the ground truth.
+
+We are going to explore two methods of training data generation for the pairwise
+approach to the ranking problem:
+
+    1. The use of human raters
+
+    2. The use of online user engagement
+
+Human raters (offline method)
+
+In order to generate training data, human raters can help us by ranking the results for
+queries.
+
+User-engagement (online method)
+
+Generating a large amount of training data with the help of human raters can turn out to
+be very expensive. As an alternative, you can use online user engagement data to
+generate rankings. The user’s interaction with the results on the SERP will translate to
+ranks based on the type of interaction.
+
+For instance, for the query: “Paris tourism”, we get the following three results on the
+SERP:
+
+    1. Paris.com
+
+    2. Eiffeltower.com
+
+    3. Lourvemusuem.com
+
+Paris.com only has an impression with no click, which would translate to label 0. The
+searcher signs up on Eiffeltower.com. It will be rated as perfect and assigned the label
+4. Lourvemusuem.com will be rated as excellent and assigned the label 3 as the searcher
+spends twenty seconds exploring the website.
+
+Ranking
+=======
+
+Extra emphasis should be applied to the relevance of the top few results since a user
+generally focuses on them more on the SERP.
+
+Stage-wise approach
+--------------------
+
+First stage model will focus on the recall of the top five to ten relevant documents in
+the first five-hundred results while the second stage will ensure precision of the top
+five to ten relevant documents.
+
+For a large scale search engine, it makes sense to adopt a multi-layer funnel approach.
+The top layer of the funnel looks at a large number of documents and uses simpler and
+faster algorithms for ranking. The bottom layer ranks a small number of documents with
+complex machine-learned models.
+
+The configuration assumes that the first stage will receive one-hundred thousand
+relevant documents from the document selection component. You then reduce this number to
+five-hundred after ranking in this layer, ensuring that the topmost relevant results are
+forwarded to the second stage (also referred to as the recall of the documents).
+
+It will then be the responsibility of the second stage to rank the documents such that
+topmost relevant results are placed in the correct order (also referred to as the
+precision of the documents).
+
+Stage 1
+-------
+
+As we try to limit documents in this stage from a large set to a relatively smaller set,
+it’s important that we don’t miss out on highly relevant documents for the query from
+the smaller set. So, this layer needs to ensure that the top relevant documents are
+forwarded to stage 2. This can be achieved with the pointwise approach. The problem can
+be approximated with the binary classification of results as relevant or irrelevant.
+
+Logistic regression
+
+A relatively less complex linear algorithm, like logistic regression or small MART
+(Multiple additive regression trees) model, is well suited for scoring a large set of
+documents. The ability to score each document extremely quickly (microseconds or less)
+for the fairly large document pool at this stage is super critical.
+
+Analyzing performance
+
+To analyze the performance of our model, we will look at the area under curve (AUC) of
+receiver operating characteristics curves or ROC curves.
+
+Stage 2
+-------
+
+The main objective of our stage 2 model is to find the optimized rank order.
+
+This is achieved by changing the objective function from a single pointwise objective
+(click, session success) to a pairwise objective. Pairwise optimization for learning to
+rank means that the model is not trying to minimize the classification error but rather
+trying to get as many pairs of documents in the right order as possible.
+
+We can calculate the NDCG score of the ranked results to compare the performance of
+different models.
+
+LambdaMART
+
+LambdaMART is a variation of MART where we change the objective to improve pairwise
+ranking. Tree-based algorithms are generally able to generalize effectively using a
+moderate set of training data. Therefore, if your training data is limited to a few
+million examples, this definitely will be the best choice to use in pairwise ranking in
+the second stage.
+
+LambdaRank
+
+LambdaRank is a neural network-based approach utilizing pairwise loss to rank the
+documents. Neural network-based models are relatively slower (given the large number of
+computations based on width and depth) and need more training data. So training data
+size and capacity are key questions before selecting this modeling approach.
+
+Your training data contains pairs of documents (i, j), where i ranks higher than j.
+Suppose we have to rank two documents i and j for a given query. We feed their
+corresponding feature vectors x_i and x_j to the model, and it gives us their relevance
+scores, i.e., s_i and s_j. The model should compute these scores (s_i and s_j) such that
+the probability of document i being ranked higher than document j is close to that of
+the ground truth. The optimization function tries to minimize the inversions in the
+ranking.
+
+Filtering Results
+=================
+
+You may still have to filter out results that might seem relevant for the query but are
+inappropriate to show.
+
+Result set after ranking
+------------------------
+
+The result set might contain results that:
+
+    - are offensive
+
+    - cause misinformation
+
+    - are trying to spread hatred
+
+    - are not appropriate for children
+
+    - are inconsiderate towards a particular group
+
+These results are inappropriate despite having good user engagement.
+
+ML problem
+----------
+
+From a machine learning point of view, we would want to have a specialized model that
+removes inappropriate results from our ranked result set. We would need training data,
+features, and a trained classifier for filtering these results.
+
+Training data
+-------------
+
+Human raters
+
+Human raters can identify content that needs to be filtered. We can collect data from
+raters about the above-mentioned cases of misinformation, hatred, etc. and from their
+feedback, we can train a classifier that predicts the probability that a particular
+document is inappropriate to show on SERP.
+
+Online user feedback
+
+Good websites provide users with the option to report a result in case it is
+inappropriate. Therefore, another way to generate data is through this kind of online
+user feedback.
+
+Features
+--------
+
+We can use the same features for this model that we have used for training our ranker,
+e.g., document word embeddings or raw terms can help us identify the type of content on
+the document.
+
+There are maybe a few particular features that we might want to add specifically for our
+filtering model. For example, website historical report rate, sexually explicit terms
+used, domain name, website description, images used on the website, etc.
+
+Building a classifier
+---------------------
+
+Once you have built the training data with the right features, you can utilize
+classification algorithms like logistic regression, MART, or a Deep neural network to
+classify a result as inappropriate.
+
+Similar to the discussion in the ranking section, your choice of the modelling algorithm
+will depend on:
+
+    - how much data you have
+
+    - capacity requirements
+
+    - experiments to see how much gain in reducing bad content do we see with that
+modelling technique
