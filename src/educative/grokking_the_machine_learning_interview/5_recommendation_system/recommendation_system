@@ -1,0 +1,814 @@
+Problem Statement
+=================
+
+The task at hand is to create such a recommendation system that keeps the viewers hooked
+and introduces them to varied content that expands their horizons.
+
+One common way to set up the recommendation system in the machine learning world is to
+pose it as a classification problem with the aim to predict the probability of user
+engagement with the content. So, the problem statement would be:
+
+    “Given a user and context (time, location, and season), predict the probability of
+engagement for each movie and order movies using that score.”
+
+Introduction
+------------
+
+    1. The Amazon homepage recommends personalized products that we might be interested
+in.
+
+    2. The Pinterest feed is full of pins that we might like based on trends and our
+historical browsing.
+
+    3. Netflix shows movie recommendations based on our taste, trending movies, etc.
+
+Problem statement
+-----------------
+
+The interviewer has asked you to display media (movie/show) recommendations for a
+Netflix user. Your task is to make recommendations in such a manner that the chance of
+the user watching them is maximized.
+
+Visualizing the problem
+-----------------------
+
+Unlike Netflix’s recommendation system, a simple recommendation system would have simply
+recommended the trending movies/shows with little regard for the particular user’s
+preferences. At most, it would look at the viewer’s past watches and recommend
+movies/shows of the same genre.
+
+Another key aspect of Netflix’s approach is that they have found ways to recommend
+content that seemed different from the user’s regular choices. However, Netflix’s
+recommendations are not based on wild guesses, but they are based on other users’ watch
+histories, these users share some common patterns with the concerned user. This way,
+customers got to discover new content that they wouldn’t have found otherwise.
+
+80% of the shows watched on Netflix are driven by its recommendations, as opposed to
+someone searching for a particular show and watching it.
+
+Scope of the problem
+--------------------
+
+Now that you know the problem at hand, let’s define the scope of the problem:
+
+    1. The total number of subscribers on the platform as of 2019 is 163.5 million.
+
+    2. There are 53 million international daily active users.
+
+Hence, you have to build a system for a large number of users who require good
+recommendations on a daily basis.
+
+Problem formulation
+-------------------
+
+Since our main focus is on getting the users to watch most of the recommendations, the
+recommendation system would be based on implicit feedback (having binary values: the
+user has watched movie/show or not watched).
+
+Types of user feedback
+----------------------
+
+Explicit feedback is provided by user, whereas implicit feedback is assumed by user
+action. One key advantage of utilizing implicit feedback is that it allows collecting a
+large amount of training data. This allows us to better personalize recommendations by
+getting to know our users more. However, this is not the case with explicit feedback.
+People seldom rate the movies after watching them.
+
+    1. Explicit feedback. A user provides an explicit assessment of a recommendation. In
+our case, it would be a star rating, e.g., a user rates the movie four out of five
+stars. Here, the recommendation problem will be viewed as a rating prediction problem.
+
+    2. Implicit feedback. Implicit feedback is extracted from a user’s interaction with
+the recommended media. Most often, it is binary in nature. For instance, a user watched
+a movie (1), or they did not watch the movie (0). Here, the recommendation problem will
+be viewed as a ranking problem.
+
+Explicit feedback faces the missing not at random (MNAR) problem. Users will generally
+rate those media recommendations that they liked. This means 4/5 or 5/5 star ratings are
+more common than 1/5, 2/5, or 3/5. Therefore, we won’t get much information on the kind
+of movies that a user does not like. Also, movies with fewer ratings would have less
+impact on the recommendation process.
+
+Metrics
+=======
+
+Types of metrics
+----------------
+
+If a model performs well in an offline test but not in the online test, we need to think
+about where we went wrong. For instance, we need to consider whether our data was biased
+or whether we split the data appropriately for train and test.
+
+Driving online metrics in the right direction is the ultimate goal of the recommendation
+system.
+
+Online metrics
+--------------
+
+Engagement rate
+
+The success of the recommendation system is directly proportional to the number of
+recommendations that the user engages with. So, the engagement rate
+(sessions with clicks / total number of sessions) can help us measure it. However, the
+user might click on a recommended movie but does not find it interesting enough to
+complete watching it. Therefore, only measuring the engagement rate with the
+recommendations provides an incomplete picture.
+
+Videos watched
+
+To take into account the unsuccessful clicks on the movie/show recommendations, we can
+also consider the average number of videos that the user has watched. We should only
+count videos that the user has spent at least a significant time watching (e.g., more
+than two minutes).
+
+However, this metric can be problematic when it comes to the user starting to watch
+movie/series recommendations but not finding them interesting enough to finish them. So
+just measuring the average number of videos watched might miss out on overall user
+satisfaction with the recommended content.
+
+Session watch time
+
+Session watch time measures the overall time a user spends watching content based on
+recommendations in a session. The key measurement aspect here is that the user is able
+to find a meaningful recommendation in a session such that they spend significant time
+watching it.
+
+Offline metrics
+---------------
+
+The purpose of building an offline measurement set is to be able to evaluate our new
+models quickly. Offline metrics should be able to tell us whether new models will
+improve the quality of the recommendations or not.
+
+Can we build an ideal set of documents that will allow us to measure recommendation set
+quality? One way of doing this could be to look at the movies/series that the user has
+completely watched and see if your recommendation system gets it right using historical
+data. Once we have the set of movies/series that we can confidently say should be on the
+user’s recommendation list, we can use the following offline metrics to measure the
+quality of your recommendation system.
+
+mAP @ N
+
+One such metric is the Mean Average Precision (mAP @ N), where N is the length of the
+recommendation list.
+
+P = number of relevant recommendations / total number of recommendations
+
+We can observe that precision alone does not reward the early placement of relevant
+items on the list. However, if we calculate the precision of the subset of
+recommendations up until each position, k (k = 1 to N), on the list and take their
+weighted average, we will achieve our goal. Let’s see how.
+
+Assume the following:
+
+    1. The system recommended N = 5 movies.
+
+    2. The user watched three movies from this recommendation list and ignored the other
+two.
+
+    3. Among all the possible movies that the system could have recommended (available
+on the Netflix platform), only m = 10 are actually relevant to the user (historical
+data).
+
+We would then calculate the precision at each value of k.
+
+Now to calculate the average precision (AP), we have the following formula:
+
+AP @ N = (1 / m) * sum(P(k) * rel(k)), where rel(k) tells us whether that kth item is
+relevant (1) or not (0).
+
+Here, we see that P(k) only contributes to AP if the recommendation at position k is
+relevant. Also, observe the “placement legalization” by AP by the following scores of
+three different recommendation lists:
+
+User interaction with recommendation	Precision @ k	AP @ 3
+[1 0 0]	                                [1/1 1/2 1/3]	(1/10) * (1/1) = 0.1
+[0 1 0]	                                [0/1 1/2 1/3]	(1/10) * (1/2) = 0.05
+[0 0 1]	                                [0/1 0/2 1/3]	(1/10) * (1/3) = 0.03
+
+Note that a true positive (1), down the recommendation list, leads to low a mAP compared
+to the one that is high up in the list. This is important because we want the best
+recommendations to be at the start of the recommendation set.
+
+Lastly, the “mean” in mAP means that we will calculate the AP with respect to each
+user’s ratings and take their mean. So, mAP computes the metric for a large set of users
+to see how the system performs overall on a large set of users.
+
+mAR @ N
+
+Another metric that rewards the previously mentioned points is called Mean Average
+Recall (mAR @ N). It works similar to mAP @ N. The difference lies in the use of recall
+instead of precision.
+
+R = number of relevant recommendations / total number of all possible relevant items
+
+We will use the same recommendation list as used in the mAP @ K example, where N = 5 and
+m = 10. Let’s calculate the recall of recommendation subsets up to each position, k.
+
+The average recall (AR) will then be calculated as follows:
+
+AR @ N = (1 / m) * sum(R(k) * rel(k)), where rel(k) tells us whether that kth item is
+relevant (1) or not (0).
+
+Lastly, the “mean” in mAR means that we will calculate AR with respect to each user’s
+ratings and then take their mean.
+
+So, mAR at a high-level, measures how many of the top recommendations (based on
+historical data) we are able to get in the recommendation set.
+
+F1 score
+
+If you want to give equal importance to precision and recall, you need to look for a
+score that conveys the balance between precision and recall.
+
+mAP @ N focuses on how relevant the top recommendations are, whereas mAR @ N shows how
+well the recommender recalls all the items with positive feedback, especially in its top
+recommendations. You want to consider both of these metrics for the recommender. Hence,
+you arrive at the final metric “F1 score”.
+
+F1 score = (2 * mAR * mAP) / (mAR + mAP)
+
+So, the F1 score based on mAP and mAR will be a fairly good offline way to measure the
+quality of your models.
+
+Offline metric for optimizing ratings
+-------------------------------------
+
+We established above that we optimize the system for implicit feedback data. However,
+what if the interviewer says that you have to optimize the recommendation system for
+getting the ratings (explicit feedback) right. Here, it makes sense to use root mean
+squared error (RMSE) to minimize the error in rating prediction.
+
+RMSE = sqrt((1 / N) * sum(y_hat_i - y_i) ^ 2)
+
+y_hat_i is the recommendation system’s predicted rating for the movie, and y_i is the
+ground truth rating actually given by the user. The difference between these two values
+is the error. The average of this error is taken across N movies.
+
+Architectural Components
+========================
+
+It makes sense to consider generating the best recommendation from a large corpus of
+movies as a multi-stage ranking problem. We have a huge number of movies to choose from.
+Also, we require complex models to make great, personalized recommendations. However, if
+we try to run a complex model on the whole corpus, it would be inefficient in terms of
+execution time and computing resources usage.
+
+Therefore, we split the recommendation task into two stages.
+
+    - Stage 1: Candidate generation
+
+    - Stage 2: Ranking of generated candidates
+
+Stage 1 uses a simpler mechanism to sift through the entire corpus for possible
+recommendations. Stage 2 uses complex strategies only on the candidates given by stage 1
+to come up with personalized recommendations.
+
+Candidate generation
+--------------------
+
+Candidate generation is the first step in coming up with recommendations for the user.
+This component uses several techniques to find out the best candidate movies/shows for a
+user, given the user’s historical interactions with the media and context.
+
+This component focuses on higher recall, meaning it focuses on gathering movies that
+might interest the user from all perspectives.
+
+Ranker
+------
+
+The ranker component will score the candidate movies/shows generated by the candidate
+data generation component according to how interesting they might be for the user.
+
+This component focuses on higher precision, i.e., it will focus on the ranking of the
+top k recommendations.
+
+It will ensemble different scores given to a media by multiple candidate generation
+sources whose scores are not directly comparable. Moreover, it will also use a lot of
+other dense and sparse features to ensure highly relevant and personalized results.
+
+Training data generation
+------------------------
+
+The user’s engagement with the recommendations on their Netflix homepage will help to
+generate training data for both, the ranker component and the candidate generation
+component.
+
+Feature Engineering
+===================
+
+To start the feature engineering process, we will first identify the main actors in the
+movie/show recommendation process:
+
+    1. Logged-in user
+
+    2. Movie/show
+
+    3. Context (e.g., season, time, etc.)
+
+User-based features
+-------------------
+
+    - age
+
+    - gender
+
+    - language
+
+    - country
+
+    - average_session_time
+
+    - last_genre_watched
+
+    - user_actor_histogram
+
+    - user_genre_histogram
+
+    - user_language_histogram
+
+Context-based features
+----------------------
+
+    - season_of_the_year
+
+    - upcoming_holiday
+
+    - days_to_upcoming_holiday
+
+    - time_of_day
+
+    - day_of_week
+
+    - device
+
+Media-based features
+--------------------
+
+    - public-platform-rating
+
+    - revenue
+
+    - time_passed_since_release_date
+
+    - time_on_platform
+
+    - media_watch_history
+
+        - media_watch_history_last_12_hrs
+
+        - media_watch_history_last_24_hrs
+
+    - genre
+
+    - movie_duration
+
+    - content_set_time_period
+
+    - content_tags
+
+    - show_season_number
+
+    - country_of_origin
+
+    - release_country
+
+    - release_year
+
+    - release_type
+
+    - maturity_rating
+
+Media-user cross features
+-------------------------
+
+In order to learn the users’ preferences, representing their historical interactions
+with media as features is very important. For instance, if a user watches a lot of
+Christopher Nolan movies, that would give us a lot of information about what kind of
+movies the user likes.
+
+User-genre historical interaction features
+
+    - user_genre_historical_interaction_3months
+
+    - user_genre_historical_interaction_1year
+
+    - user_and_movie_embedding_similarity
+
+    - user_actor
+
+    - user_director
+
+    - user_language_match
+
+    - user_age_match
+
+    - movie_id
+
+    - title_of_media
+
+    - synopsis
+
+    - original_title
+
+    - distributor
+
+    - creator
+
+    - original_language
+
+    - director
+
+    - first_release_year
+
+    - music_composer
+
+    - actors
+
+Candidate Generation
+====================
+
+The purpose of candidate generation is to select the top k (let's say one-thousand)
+movies that you would want to consider showing as recommendations to the end-user from a
+corpus of more than a million available movies.
+
+Candidate generation techniques
+-------------------------------
+
+The candidate generation techniques are as follows:
+
+    1. Collaborative filtering
+
+    2. Content-based filtering
+
+    3. Embedding-based similarity
+
+Collaborative filtering
+-----------------------
+
+In this technique, you find users similar to the active user based on the intersection
+of their historical watches. You then collaborate with similar users to generate
+candidate media for the active user.
+
+If a user shares a similar taste with a group of users over a subset of movies, they
+would probably have similar opinions on other movies compared to the opinion of a
+randomly selected person.
+
+There are two methods to perform collaborative filtering:
+
+    1. Nearest neighborhood
+
+    2. Matrix factorization
+
+Method 1: Nearest neighborhood
+
+User A is similar to user B and user C as they have watched the movies Inception and
+Interstellar. So, you can say that user A’s nearest neighbours are user B and user C.
+You will look at other movies liked by users B and C as candidates for user A’s
+recommendations.
+
+Let’s see how this concept is realized. You have a (n x m) matrix of user u_i
+(i = 1 to n) and movie m_j (j = 1 to m). Each matrix element represents the feedback
+that the user i has given to a movie j. An empty cell means that user i has not watched
+movie j. For example a 1 means that the media has been watched/liked, a 0 means that the
+media has not been watched/disliked, and an empty cell means that the media has no
+impressions yet.
+
+To generate recommendations for user i, you need to predict their feedback for all the
+movies they haven’t watched. You will collaborate with users similar to user i for this
+process. Their ratings for a movie, not seen by user i, would give us a good idea of how
+user i would like it.
+
+So, you will compute the similarity (e.g. cosine similarity) of other users with user i
+and then select the top k similar users/nearest neighbours (KNN(u_i)). Then, user i’s
+feedback for an unseen movie j (f_{ij} can be predicted by taking the weighted average
+of feedback that the top k similar users gave to movie j. Here the feedback by the
+nearest neighbour is weighted by their similarity with user i.
+
+The unseen movies with good predicted feedback will be chosen as candidates for user i’s
+recommendations.
+
+It is evident that this process will be computationally expensive with the increase in
+numbers of users and movies. The sparsity of this matrix also poses a problem when a
+movie has not been rated by any user or a new user has not watched many movies.
+
+We are also looking at the user-based approach of collaborative filtering (CF) where you
+are identifying similar users. There is another approach known as the item-based
+approach where we look at the similarity of the items (movies/shows) for generating
+candidates. First, you calculate media similarity based on similar feedback from users.
+Then the media most similar to that already watched by user A will be selected as
+candidates for user A’s recommendation.
+
+The user-based approach is often harder to scale as user preference tends to change over
+time. Items, in contrast, don’t change so the item-based approach can usually be
+computed offline and served without frequent re-training.
+
+Method 2: Matrix factorization
+
+As explained above, you need to represent the user-media interaction matrix in a way
+that is scalable and handles sparsity. Here, matrix factorization helps us by factoring
+this matrix into two lower dimensional matrices:
+
+    1. User profile matrix (n x M). Each user in the user profile matrix is represented
+by a row, which is a latent vector of M dimensions.
+
+    2. Media profile matrix (M x m). Each movie in the movie profile matrix is
+represented by a column, which is a latent vector of M dimensions.
+
+The dimension M is the number of latent factors we’re using to estimate the user-media
+feedback matrix. M is much smaller than the actual number of users and number of media.
+
+The representation of users and media in the form of a vector of latent factors aims to
+explain the reason behind a user’s particular feedback for a media. Latent vectors can
+also be thought of as features of a movie or a user.
+
+User A’s vector has their preferences: 1 for the “comedy” and 0 for “quirkiness”. Movie
+B’s vector contains the presence/absence of the two factors in the movie, e.g., 1 and 0.
+The dot product of these two vectors will tell how much movie B aligns with the
+preferences of the user A; hence, the feedback.
+
+The first step is to create the user profile and movie profile matrices. Then, you can
+generate good candidates for movie recommendation by predicting user feedback for unseen
+movies. This prediction can be made simply by computing the dot product of the user
+vector with the movie vector.
+
+Now, let’s go over the process of how to learn the latent factor matrices for users and
+media.
+
+You will initialize the user and movie vectors randomly. For each known/historical
+user-movie feedback value f_{ij}, you will predict the movie feedback by taking the dot
+product of the corresponding user profile vector u_i and movie profile vector m_j. The
+difference between the actual (f_{ij}) and the predicted feedback (u_i.m_j) will be the
+error (e_{ij}).
+
+e_{ij} = f_{ij} - u_i.m_j
+
+You will use stochastic gradient descent to update the user and movie latent vectors,
+based on the error value. As you continue to optimize the user and movie latent vectors,
+you will get a semantic representation of the users and movies, allowing us to find new
+recommendations that are closer in that space.
+
+The user profile vector will be made based on the movies that the user has given
+feedback on. Similarly, the media/movie profile vector will be made based on its user
+feedbacks. By utilizing these user and movie profile vectors, you will generate
+candidates for a given user based on their predicted feedback for unseen movies.
+
+Content-based filtering
+-----------------------
+
+Content-based filtering allows us to make recommendations to users based on the
+characteristics or attributes of the media they have already interacted with.
+
+As such the recommendations tend to be relevant to users’ interest. The characteristics
+come from metadata (e.g., genre, movie cast, synopsis, director, etc.) information and
+manually assigned media-descriptive-tags (e.g., visually striking, nostalgic, magical
+creatures, character development, winter season, quirky indie rom-com set in Oregon,
+etc.) by Netflix taggers. The media is represented as a vector of its attributes.
+
+Initially, you have the media’s attributes in raw form. They need to be preprocessed
+accordingly to extract features. For instance, you need to remove stop words and convert
+attribute values to lowercase to avoid duplication. You also have to join the director’s
+first name and last name to identify unique people since there maybe two directors with
+the first name Christopher. Similar preprocessing is required for the tags. After this,
+you are able to represent the movies as a vector of attributes with elements depicting
+the term frequency (TF) (binary representation of attribute’s presence (1) or absence
+(0)).
+
+Now, you have the movies represented as vectors containing the TF (term/attribute
+frequency) of all the attributes. This is followed by normalizing the term frequencies
+by the length of the vectors (sum of non-zero features). Finally, you multiply the
+movies’ normalized TF vectors and the IDF vector element-wise to make TF-IDF vectors for
+the movies. The Document Frequency would be how many times Christopher Nolan appeared in
+all movies in the database.
+
+Given the TF-IDF representation of each movie/show, you have two options for
+recommending media to the user:
+
+    1. Similarity with historical interactions. You can recommend movies to the user
+similar to those they have interacted (seen) with in the past. This can be achieved by
+computing the dot product of movies.
+
+    2. Similarity between media and user profiles. The media’s TF-IDF vectors can be
+viewed as their profile. Based on user preferences, which can be seen from its
+historical interactions with media, you can build user profiles as well. Now, instead of
+using past watches to recommend new ones, you can just compute the similarity between
+the user’s profile and media profiles of unseen movies to generate relevant candidates
+for user A’s recommendations.
+
+Generate embedding using neural networks/deep learning
+------------------------------------------------------
+
+Given the historical feedback (u, m), i.e., user u’s feedback for movie m, you can use
+the power of deep learning to generate latent vectors/embeddings to represent both
+movies and users. Once you have generated the vectors, you will utilize KNN (k nearest
+neighbours) to find the movies that you would want to recommend to the user. This method
+is similar to generating latent vectors, that you saw in matrix factorization but is
+much more powerful because using NNs allows us to use all the sparse and dense features
+in the data to generate user and movie embedding.
+
+Embedding generation
+
+You set up the network as two towers with one tower feeding in media only sparse and
+dense features and the other tower feeding in user-only sparse and dense features. The
+activation of the first tower’s last layer will form the media’s vector embedding (m).
+Similarly, the activation of the second tower’s last layer will form the user’s vector
+embedding (u). The combined optimization function at the top aims to minimize the
+distance between the dot product of u and m (predicted feedback) and the actual feedback
+label.
+
+min(abs(dot(u, m) - label))
+
+Let’s look at the intuition behind this cost function. The actual feedback label will be
+positive when the media aligns with user preferences and negative when it does not. To
+make the predicted feedback follow the same pattern, the network learns the user and
+media embeddings in such a way that their distance will be minimized if the user would
+like this media and maximized if the user would not like the media.
+
+The vector representation of the user, which you would get as a result, will be nearest
+to the kind of movies that the user would like/watch.
+
+Candidate selection (KNN)
+
+After the user and media vector embeddings have been generated, you will apply KNN and
+select candidates for each user.
+
+Techniques’ strengths and weaknesses
+------------------------------------
+
+Collaborative filtering can suggest candidates based solely on the historical
+interaction of the users. Unlike content-based filtering, it does not require domain
+knowledge to create user and media profiles. It may also be able to capture data aspects
+that are often elusive and difficult to profile using content-based filtering. However,
+collaborative filtering suffers from the cold start problem. It is difficult to find
+users similar to a new user in the system because they have less historical interaction.
+Also, new media can’t be recommended immediately as no users have given feedback on it.
+
+The neural network technique also suffers from the cold start problem. The embedding
+vectors of media and users are updated in the training process of the neural networks.
+However, if a movie is new or if a user is new, both would have fewer instances of
+feedback received and feedback given, respectively. By extension, this means there is a
+lack of sufficient training examples to update their embedding vectors accordingly.
+Hence, the cold start problem.
+
+Content-based filtering is superior in such scenarios. It does require some initial
+input from the user regarding their preferences to start generating candidates, though.
+This input is obtained as a part of the onboarding process, where a new user is asked to
+share their preferences. Once we have the initial input, it can create and then match
+the user’s profile with media profiles. Moreover, new medias’ profiles can be built
+immediately as their description is provided manually.
+
+Training Data Generation
+========================
+
+You will build your model on implicit feedback from the user. You will look at how a
+user interacts with media recommendations to generate positive and negative training
+examples.
+
+Generating training examples
+----------------------------
+
+One way of interpreting user actions as positive and negative training examples is based
+on the duration for which the user watched a particular show/movie. You take positive
+examples as ones where the user ended up watching most of a recommended movie/show,
+i.e., watched 80% or more. You take negative examples, again where we are confident that
+the user ignored a movie/show, i.e., watched 10% or less.
+
+If the percentage of a movie/show watched by the user falls between 10% and 80%, you
+will put it in the uncertainty bucket. This percentage is not clearly indicative of a
+user’s like or dislike, so you ignore such examples. For instance, let’s say a user
+watched 55% of a movie. This could be considered a positive example considering that
+they liked it enough to watch it midway. However, it could be that a lot of people had
+recommended it to them, so they wanted to see what all the hype was about by at least
+watching it halfway through. However, they, ultimately, decided that it was not
+according to their liking.
+
+Hence, to avoid these kinds of misinterpretations, you label examples as positive and
+negative only when you are certain about it to a higher degree.
+
+Balancing positive and negative training examples
+-------------------------------------------------
+
+Each time a user logs in, Netflix provides a lot of recommendations. The user cannot
+watch all of them. Yes, people do binge-watch on Netflix, but still, this does not
+improve the positive to negative training examples ratio significantly. Therefore, you
+have a lot more negative training examples than positive ones. To balance the ratio of
+positive and negative training samples, you can randomly downsample the negative
+examples.
+
+Weighting training examples
+---------------------------
+
+Based on our training data discussion so far, all of the training examples are weighted
+equally, i.e., all have a weight of 1. According to Netflix’s business objectives, the
+main goal could be to increase the time a user spends on the platform.
+
+One way to incentivize your model to focus more on examples that have a higher
+contribution to the session watch time is to weight examples based on their contribution
+to session time. Here, you are assuming that your prediction model’s optimization
+function utilizes weight per example in its objective.
+
+In the diagram above, you have two positive training examples. The first is a
+thirty-minute long show episode while the second is a two-hour long movie. The user
+watches 80% of both media. For the show, this equals twenty-four minutes, but for the
+movie, it means one hour and thirty-six minutes. You would assign more weight to the
+second example than the first one so that your model learns which kinds of media
+increases the session watch time.
+
+One caveat of utilizing these weights is that the model might only recommend content
+with a longer watch time. So, it’s important to choose weights such that we are not
+solely focused on watch time. We should find the right balance between user satisfaction
+and watch time, based on our online A/B experiments.
+
+Train test split
+----------------
+
+You need to be mindful of the fact that the user’s interaction patterns may differ
+throughout the week. Hence, you will use the interaction with recommendations throughout
+a week to capture all of the patterns during model training.
+
+Tandom splitting defeats the purpose of training the model on a whole week’s data. Also,
+the data has a time dimension, i.e., you know the interaction on previous
+recommendations, and you want to predict the interaction with future recommendations.
+Hence, you will train the model on data from one time interval and validate it on the
+data from its succeeding time interval.
+
+Ranking
+=======
+
+Your goal is to rank the content based on the probability of a user watching a media
+given a user and a candidate media, i.e., P(watch|(User, Media)).
+
+The ranking model takes the top candidates from multiple sources of candidate
+generation. Then, an ensemble of all of these candidates is created, and the candidates
+are ranked with respect to the chance of the user watching that video content.
+
+First, we will discuss some approaches using logistic regression or tree ensemble
+methods and then a deep learning model with dense and sparse features.
+
+Deep learning should be able to learn through sparse features and outperform simplistic
+approach.
+
+Approach 1: Logistic regression or random forest
+------------------------------------------------
+
+There are multiple reasons that training a simplistic model might be the way to go. They
+are as follows:
+
+    - Training data is limited
+
+    - You have limited training and model evaluation capacity
+
+    - You want model explainability to really understand how the ML model is making its
+decision and show that to the end-user
+
+    - You require an initial baseline to see how far you can go in reducing our test set
+loss before you try more complex approaches
+
+Approach 2: Deep NN with sparse and dense features
+--------------------------------------------------
+
+Another way to model this problem is to set up a deep NN. Some of the factors that were
+discussed in Approach 1 are now key requirements for training this deep NN model. They
+are as follows:
+
+    - Hundreds of millions of training examples should be available
+
+    - Having the capacity to evaluate these models in terms of capacity and model
+interpretability is not that critical.
+
+Since the idea is that you want to predict whether the user will watch the media or not,
+you train a deep NN with sparse and dense features for this learning task. Two extremely
+powerful sparse features fed into such a network can be videos that the user has
+previously watched and the user’s search terms. For these sparse features, you can set
+up the network to also learn media and search term embeddings as part of the learning
+task. These specialized embeddings for historical watches and search terms can be very
+powerful in predicting the next watch idea for a user. They will allow the model to
+personalize the recommendation ranking based on the user’s recent interaction with media
+content on the platform.
+
+An important aspect here is that both search terms and historical watched content are
+list-wise features (i.e., they continue to grow over time). You need to think about how
+to feed them in the network given that the size of the layers is fixed. You can use an
+approach similar to pooling layers in CNN (convolution neural networks) and simply
+average the historical watch id and search text term embeddings before feeding it into
+the network.
+
+Network structure
+-----------------
+
+You should start with 2-3 hidden layers with a RELU based activation unit and then play
+around with the numbers to see how this helps us reduce the test error. Generally,
+adding more layers and units helps initially, but its usefulness tapers off quickly. The
+computation and time cost would be higher relative to the drop in error rate.
+
+Re-ranking
+----------
+
+Re-ranking is done for various reasons, such as bringing diversity to the
+recommendations. Consider a scenario where all the top ten recommended movies are
+comedy. You might decide to keep only two of each genre in the top ten recommendations.
+This way, you would have five different genres for the user in the top recommendations.
+
+If you are also considering past watches for the media recommendations, then re-ranking
+can help you. It prevents the recommendation list from being overwhelmed by previous
+watches by moving some previously watched media down the list of recommendations.
