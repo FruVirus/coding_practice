@@ -1,0 +1,477 @@
+Problem Statement
+=================
+
+Problem statement
+-----------------
+
+The interviewer has asked you to design a self-driving car system focusing on its
+perception component (semantic image segmentation in particular). This component will
+allow the vehicle to perceive its environment and make informed driving decisions.
+
+Interviewer’s questions
+-----------------------
+
+    1. How would you approach a computer vision-based problem in terms of the
+self-driving car?
+
+    2. How would you train a semantic image segmentation model for autonomous driving?
+
+    3. How will the segmentation model fit in the overall autonomous driving system
+architecture?
+
+    4. How would you deal with data scarcity in imaging dataset?
+
+    5. How would you best apply data augmentation on images?
+
+    6. What are the best model architectures for image segmentation tasks?
+
+    7. Your optimized deep learning model gives a high performance on the validation
+set, but it fails when you take the self-driving car on the road. Why? How would you
+solve this issue?
+
+Hardware support
+----------------
+
+Let’s look at the sensory receptors that allow the vehicle to “see” and “hear” its
+environment and plan its course of action accordingly.
+
+    - Camera. The camera provides the system with high-resolution visual information of
+its surrounding. The visual input from a frame-based camera can also be used to get an
+estimate of the depth/distance of objects from the self-driving car. However, the
+usefulness of the camera depends heavily on the lighting conditions and may not work
+optimally in the night scenarios. Bad for fog, rain, 3D depth, range, speed detection,
+bright light, and dark.
+
+    - Radar. The radar uses radio waves’ reflections from solid objects to detect their
+presence. It adds depth on top of the visual information so that the system can
+accurately sense the distance between various objects. It works well in varied
+conditions, like low light, dirt and cloudy weather, as well as long operating
+distances. Bad for 3D depth, resolution, color, size, and cost.
+
+    - Lidar. Lidar, in contrast, uses laser light reflecting off objects to create a
+precise 3D image of the environment, while measuring the distance at which objects are
+positioned. They are good at even detecting small objects. However, they do not work
+well during rainy/foggy weather and are quite expensive. Bad for color, cost, size, fog,
+and rain.
+
+    - Microphones. When a person hears an ambulance siren, they can detect the source of
+the sound, as well as the speed and direction at which the source is moving. Similarly,
+the self-driving vehicle uses microphones to gather audio information from the
+surroundings. Auditory information can also help the system learn about weather
+conditions.
+
+Subtasks
+--------
+
+The pipeline from environment perception to planning the movement of the vehicle can be
+split into several machine learning subtasks.
+
+In the field of computer vision, the first three subtasks represent approaches that can
+be adapted to deal with imaging datasets (driving images in your case), e.g.,
+classification, localization, segmentation, etc.
+
+If you train an image classier on the labeled data, then feeding the input camera frames
+in real-time would probably generate the average classification scores like this:
+{“car”: 0.1, “road”: 0.5, “sky”: 0.3, “trees”: 0.05, “misc”: 0.05}.
+
+This score provides a decent estimate of the overall categories of objects present in
+the surroundings. However, it does not help locate these objects. This can be solved
+through an image localizer, which will generate bounding boxes, i.e., locations on top
+of the predicted objects. This leads you to your first subtask, which is object
+detection.
+
+    1. Object detection. In object detection, we detect instances of different class
+objects (e.g., greenery, fences, cars, roads, and mountains) in the surroundings and
+localize them by drawing bounding boxes.
+
+Your image localizer will generate a lot of overlapping bounding boxes. To resolve this,
+you need to upgrade the system to segment the object categories to find the optimal
+available path for the vehicle. You build an image segmenter that can generate the
+predicted binary mask/category on top of bounding boxes and classifications through
+semantic segmentation. This leads to the second subtask, i.e., semantic segmentation.
+
+    2. Semantic segmentation. Semantic segmentation can be viewed as a pixel-wise
+classification of an image. Objects of the same class are assigned the same label.
+
+You need to segment individual objects in real-time with high precision: You upgrade the
+system from semantic to instance-based segmentation, which will generate a predictive
+binary mask/object on top of the bounding boxes and classifications. This leads us to
+the third subtask, i.e., instance segmentation.
+
+    3. Instance segmentation. Instance segmentation combines object detection and
+segmentation to classify the pixels of each instance of an object. It first detects an
+object (a particular instance) and then classifies its pixels.
+
+    4. Scene understanding. Here, you try to understand what is happening in the
+surroundings. For instance, you may find out that a person is walking towards us, and
+you need to apply brakes. Or we see that a car is going ahead of us on the highway.
+
+    Scene understanding: given an input image, the output is a text-based command: "Car
+ahead on the highway"
+
+    5. Movement plan. After you have identified the objects, segmented unique objects in
+the image and understood the scenario, it’s time to decide the movement plan for the
+self-driving vehicle. For example, you might decide to slow down (apply brakes) due to a
+car ahead.
+
+Metrics
+=======
+
+Component level metric
+----------------------
+
+In order to look for a suitable metric to measure the performance of an image segmenter,
+the first notion that comes to mind is the pixel-wise accuracy. Using this metric, you
+can simply compare the ground truth segmentation with the model’s predictive
+segmentation at a pixel level. However, this might not be the best idea, e.g., consider
+a scenario where the driving scene image has a major class imbalance, i.e., it mostly
+consists of sky and road.
+
+If your model correctly classifies all the pixels of only sky and road, it will result
+in high pixel-wise accuracy. However, this is not really indicative of good performance
+since the segmenter completely misses other classes such as building and roadside!
+
+IoU
+---
+
+You will be using IoU as an offline metric to test the performance of the segmentation
+model.
+
+Intersection over Union (IoU) divides the overlapping area between the predicted
+segmentation and the ground truth in perspective, by the area of union between the
+predicted segmentation and the ground truth.
+
+IoU = area of intersection / area of union
+    = (Pred and GT) / ((Pred + GT) - (Pred and GT)
+
+This metric ranges from 0 – 1. ‘0’ indicates no overlap while ‘1’ indicates perfectly
+overlapping segmentation.
+
+The driving images contain objects of multiple classes (e.g., building,roadside, sky,
+road, etc.). So, you will be performing multi-class segmentation, for which the mean IoU
+is calculated by taking the average of the IoU for each class.
+
+You will begin by calculating the IoU for each class. Here, the “area of overlap” means
+the number of pixels that belong to the particular class in both the prediction and
+ground-truth. Whereas, the “area of union” refers to the number of pixels that belong to
+the particular class in the prediction and in ground-truth, but not in both (the overlap
+is subtracted).
+
+End-to-end metric
+-----------------
+
+You also require an online, end-to-end metric to test the overall performance of the
+self-driving car system as you plug in your new image segmenter to see its effect.
+
+Manual intervention
+
+Ideally, you want the system to be as close to self-driving as possible, where the
+person never has to intervene and take control of the driving. So, you can use manual
+intervention as a metric to judge the success of the overall system. If a person rarely
+has to intervene, it means that your system is performing well.
+
+Simulation errors
+
+Another approach is to use historical data, such as driving scene recording, where an
+expert driver was driving the car. You will give the historical data as input to your
+self-driving car system with the new segmentation model and see how its decisions align
+with the decisions made by an expert driver.
+
+You will assume that the decisions made by the professional driver in that actual
+scenario are your ground truths. The overall objective will be to minimize the movement
+and planning errors with these ground truths.
+
+Architectural Components
+========================
+
+Overall architecture for self-driving vehicle
+---------------------------------------------
+
+The system is designed to receive sensory inputs via cameras and radars, which are fed
+to the visual understanding system consisting of different convolutional neural networks
+(CNN), each for a specific subtask. The output of the visual understanding system is
+used by the action predictor RNN or LSTM. Based on the visual understanding of the
+environment, this component will plan the next move of the vehicle. The next move will
+be a combination of outcomes, i.e., applying brakes, accelerating, and/or steering the
+vehicle.
+
+The object detection CNN detects and localizes all the obstacles and entities (e.g.,
+humans and other vehicles) in the vehicle’s environment. This is essential information
+because the action predictor RNN may predict to slow down the vehicle due to the
+impending obstacle (e.g., a person crossing the road).
+
+However, the most crucial information for the action predictor RNN is information that
+allows it to extract a drivable path for the vehicle. Therefore, due to the significance
+of this task, we will train a separate model for this purpose: the drivable region
+detection CNN. It will be trained to detect the road lanes to help the system decide
+whether the pathway for the vehicle is clear or not.
+
+Moreover, as the object detection CNN identifies the key objects in the image (predicts
+bounding boxes), it is further required to share its output along with the raw pixel
+data for semantic image segmentation (i.e., draw pixel-wise boundaries around the
+objects). These boundaries will help in navigating the autonomous vehicle in a complex
+environment where overlapping objects/obstacles are presented.
+
+Machine learning models used in the components
+
+Many of the subtasks in the visual understanding component are carried out via
+specialized CNN models that are suited for that particular subtask.
+
+The action predictor component, on the other hand, needs to make a movement decision
+based on:
+
+    1. Outputs of all the visual understanding sub-tasks
+
+    2. Track/record of the vehicle’s movements based on previous scene understanding
+
+This can be best learned through a recurrent neural network (RNN) or long short-term
+memory (LSTM) that can utilize the temporal features of the data, i.e., previous and
+current predictions from the scene segmentation as inputs.
+
+You will receive the video frames covering the vehicle’s surroundings from the camera as
+input. This video is nothing more than a sequence of images (frames per second). The
+image at each time step (t, t + 1, ...) will be fed to the visual understanding system.
+The multiple outputs of this component will form the input to the self-driving vehicle’s
+action predictor. The action predictor will also use the previous time step information
+( t -1) while predicting the action for the current time step (t).
+
+System architecture for semantic image segmentation
+---------------------------------------------------
+
+The training flow begins with training data generation, which makes use of two
+techniques. In the first technique, real-time driving images are captured with the help
+of a camera and are manually given pixel-wise labels by human annotators. The latter
+technique simply uses open-source datasets of self-driving vehicle images. This training
+data is then enhanced or augmented with the help of GANs. Collectively all the training
+data is then used to train the segmenter model. Transfer learning is applied with the
+segmenter model to utilise powerful feature detectors from pre-trained models. The
+pre-trained models are optimized on your datasets to get the final model.
+
+In the prediction flow, your self-driving vehicle would be on the road. You would
+receive real-time images of its surroundings, which would be given to the segmenter
+model for semantic image segmentation.
+
+Training Data Generation
+========================
+
+Generating training examples
+----------------------------
+
+Autonomous driving systems have to be extremely robust with no margin of error. This
+requires training each component model with all the possible scenarios that can happen
+in real life.
+
+Human-labeled data
+------------------
+
+First, you will have to gather driving images and hire people to label the images in a
+pixel-wise manner.
+
+Open source datasets
+--------------------
+
+There are quite a few open-source datasets available with segmented driving
+videos/images.
+
+These two methods are effective in generating manually labeled data. In most cases, your
+training data distribution will match with what you observe in the real-world scene
+images. However, you may not have enough data for all the conditions that you would like
+your model to make predictions for such as snow, rain, and night. For a self-autonomous
+vehicle to be perfect, your segmenter should work well for all the possible weather
+conditions, as well as cover a variety of obstacle images in the road.
+
+It is an important area to think about how you can give your model training data for all
+conditions. One option is to manually label a lot of examples for each scenario. The
+second option is to use powerful data augmentation techniques to generate new training
+examples given your human-labeled data, especially for conditions that are missing in
+your training set.
+
+Training data enhancement through GANs
+--------------------------------------
+
+The segmenter can play its role in creating a reliable system by being able to
+accurately segment the driving scene in any condition that the vehicle experiences.
+
+The target includes two parts:
+
+    1. Generating new training images
+
+    2. Ensuring generated images have different conditions (e.g., weather and lighting
+conditions).
+
+For the first part, you can utilize GANs. They are deep learning models used for
+generation of new content. However, for the second part, i.e., to generate a different
+variation of the original segmented image, a simple GAN would not work. You would have
+to use conditional generative adversarial networks (cGANs) instead.
+
+If you train a GAN on a set of driving images, you do not have any control over the
+generator’s output, i.e., it would just generate driving images similar to the images
+present in the training dataset. However, that is not particularly useful in your case.
+
+Therefore, we want to perform image-to-image translation (a kind of data augmentation)
+to enhance our training data, i.e., you want to map features from an input image to an
+output image. For instance, you want to learn to map driving images with one weather
+condition to another weather condition, or you may want to convert day time driving
+images to night time images and vice versa. This can be done with a cGAN which is a deep
+neural network that extends the concept of GAN.
+
+For image translation, your training data should consist of paired images. For example,
+image pairs could be of the same road during day and night. They could also be of the
+same road during winter and summer.
+
+In cGAN, you give the source image that you want to translate to the generator, along
+with an additional input (target image as a condition). This will guide the generator’s
+output image to be of the same place but with a different weather/light condition.
+
+You will also feed the source image to the discriminator so that apart from its usual
+task of discriminating between real and generated images, it will also see if the given
+image is a plausible translation of the source image.
+
+You see that the cGAN loss function differs from the GAN loss function as the
+discriminator’s probability D(x) or D(G(z)) is now conditioned on y.
+
+Once you have trained the cGAN for the image translation task, you can now feed it the
+driving images you manually collected through the generator model to enhance the
+training data.
+
+Targeted data gathering
+-----------------------
+
+Your aim is to gather training data specifically on the areas where you fail while
+testing the system. It will help to further enhance the training data.
+
+After this, you can also apply data augmentation on the newly gathered training examples
+to further improve your model’s performance.
+
+It is worth mentioning that most of the deep vision architectures are not inherently
+designed to preserve sensitivity for different scales, sizes and rotations of the
+objects/images. The pooling operation in these networks is only able to capture the
+translational variance of the labeled objects/images. Hence, it is critical to cover
+the variation in scale and rotation of your training images and keep the testing image
+size similar to the image size in your training dataset.
+
+Modeling
+========
+
+In modeling discussion, we will discuss two key aspects.
+
+    1. SOTA Segmentation Models: What are the state-of-the-art segmentation models and
+their architectures?
+
+    2. Transfer Learning: How can you use these models to train a better segmenter for
+the self-driving car data?
+
+SOTA segmentation models
+------------------------
+
+FCN
+
+Fully convolutional networks (FCNs) are one of the top-performing networks for semantic
+segmentation tasks.
+
+A typical FCN operates by fine-tuning an image classification CNN and applying
+pixel-wise training. It first compresses the information using multiple layers of
+convolutions and pooling. Then, it up-samples these feature maps to predict each pixel’s
+class from this compressed information.
+
+The convolutional layers at the end (instead of the fully connected layers) also allow
+for dynamic input size. The output pixel-wise classification tends to be coarse, so you
+make use of skip connections to achieve good edges. The initial layers capture the edge
+information through the deepness of the network. You use that information during our
+upsampling to get more refined segmentation.
+
+U-Net
+
+U-Net is commonly used for semantic segmentation-based vision applications. It is built
+upon the FCN architecture with some modifications. The architectural changes add a
+powerful feature in the network to require less training examples. The overall
+architecture can be divided into two halves. The first half down-samples the
+convolutional features through the pooling operation. The second half up-samples the
+feature maps to generate the output segmentation maps. The upsampling process makes use
+of skip connections to concatenate high-resolution features from the downsampling
+portion. This allows for accurate upsampling.
+
+In the downsampling portion, the network gains increasing information about what objects
+are present but loses information about where objects are present.
+
+In the upsampling portion, skip connections allows the network to create high resolution
+segmented outputs. High resolution features are concatenated for accuate upsampling.
+
+Mask R-CNN
+
+Mask R-CNN combines the best of both the worlds: Faster R-CNN for object detection and
+localization and FCN for pixel-wise instance segmentation of objects.
+
+Mask R-CNN architecture is constructed by using a convolutional backbone of a powerful
+CNN classifier (e.g. ResNet) followed by a Feature Pyramid Network (FPN). FPN extracts
+feature maps from the input image at different scales, which are fed to the Region
+Proposal Network (RPN). RPN applies a convolutional neural network over the feature maps
+in a sliding-window fashion to predict region proposals as bounding boxes that will
+contain class objects. These proposals are fed to the RoI Align layer that extracts the
+corresponding ROIs (regions of interest) from the feature maps to align them with the
+input image properly. The ROI pooled outputs are fixed-size feature maps that are fed to
+parallel heads of the Mask R-CNN.
+
+To reduce the computational cost, Mask R-CNN has three parallel heads to perform
+
+    1. Classification
+
+    2. Localization
+
+    3. Segmentation
+
+The output layer of the classifier returns a discrete probability distribution of each
+object class. Localization is performed by the regressor whose output layer generates
+the four bounding-box coordinates. The third arm consists of an FCN that generates the
+binary masks of the predicted objects.
+
+Transfer learning
+-----------------
+
+Since increasing the size of human-annotated data can be time-consuming, transfer
+learning helps take advantage of a powerful deep neural network that is pre-trained on a
+different but large human-annotated dataset that is similar in nature to the dataset in
+hand.
+
+In a trained model, the low-level feature detectors are fine-tuned to filter
+high-frequency visual information (edges), which are mostly common in natural images.
+For more similar objects/images, this similarity can also be correlated in high-level
+feature detectors. In this regard, freezing the layers of a trained deep neural network
+in transfer learning helps take advantage of the learned feature detectors from a large
+and rather similar natural imaging dataset.
+
+Retraining topmost layer
+
+This approach makes the most sense when the driving images data is limited and/or you
+believe that the current learned layers capture the information that you need for making
+a prediction.
+
+You can take advantage of the large features’ bank in the ImageNet FCN and re-train it
+for your smaller driving images dataset. In this case, you need to update the final
+pixel-wise prediction layer in the pre-trained FCN (i.e., replace the classes in
+ImageNet trained model with classes in driving image set) and retrain the final layer
+through an optimizer while freezing the remaining layers in the FCN.
+
+Retraining top few layers
+
+This approach makes the most sense when you have a decent amount of driving images data.
+Also, shallow layers generally don’t need training because they are capturing the basic
+image features, e.g., edges, which don’t need retraining.
+
+Similarly, in cases where you have a medium-sized driving images dataset available, you
+can also try retraining some deeper upsampling layers to improve the accuracy of your
+segmenter.
+
+You can experiment with how many upsampling layers you need to retrain by looking at the
+IoU metric to see if retraining any further improves the performance of the segmentation
+model.
+
+Retraining entire model
+
+As the size of your dataset increase, you can consider retraining even more layers or
+retraining the entire model. Once again, you can use the IoU metric to evaluate the
+optimal number of layers whose retraining can increase model performance.
+
+Generally, retraining the entire network is laborious and time-consuming. It is usually
+done only if the dataset under consideration has completely different characteristics
+from the one on which the network was pre-trained.
