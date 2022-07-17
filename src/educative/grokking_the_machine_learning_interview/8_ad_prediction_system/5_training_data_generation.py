@@ -1,52 +1,4 @@
 """
-Main Takeaways
-~~~~~~~~~~~~~~
-
-Training data generation through online user engagement
--------------------------------------------------------
-
-When we show an ad to the user, they can engage with it or ignore it. Positive examples
-result from users engaging with ads, e.g., clicking or adding an item to their cart.
-Negative examples result from users ignoring the ads or providing negative feedback on
-the ad. Advertisers will usually specify which actions to consider as positive vs.
-negative.
-
-Balancing positive and negative training examples
--------------------------------------------------
-
-Users’ engagement with an ad can be fairly low based on the platform e.g. in case of a
-feed system where people generally browse content and engage with minimal content, it
-can be as low as 2-3%.
-
-In order to balance the ratio of positive and negative training samples, we can randomly
-down sample the negative examples so that we have a similar number of positive and
-negative examples.
-
-Model recalibration
--------------------
-
-Negative downsampling can accelerate training while enabling us to learn from both
-positive and negative examples. However, our predicted model output will now be in the
-downsampling space. Auction uses this predicted rate to determine order and pricing;
-therefore it’s critical that we recalibrate our score before sending them to auction.
-The recalibration can be done using:
-
-q = p / (p + (1 - p) / w
-
-Here,
-
-q is the re-calibrated prediction score,
-p is the prediction in downsampling space,
-w is the negative downsampling rate.
-
-Train test split
-----------------
-
-Random splitting would result in utilizing future data for prediction given our data has
-a time dimension, i.e., we can utilize engagement on historical ads to predict future ad
-engagement. Hence we will train the model on data from the one-time interval and
-validate it on the data from its succeeding time interval.
-
 Training Data Generation
 ========================
 
@@ -73,19 +25,9 @@ Balancing positive and negative training examples
 
 Users’ engagement with an ad can be fairly low based on the platform e.g. in case of a
 feed system where people generally browse content and engage with minimal content, it
-can be as low as 2-3%.
-
-How would this percentage affect the ratio of positive and negative examples on a larger
-scale?
-
-Let’s look at an extreme example by assuming that one-hundred million ads are viewed
-collectively by the users in a day with a 2% engagement rate. This will result in
-roughly two million positive examples (where people engage with the ad) and 98 million
-negative examples (where people ignore the ad).
-
-In order to balance the ratio of positive and negative training samples, we can randomly
-down sample the negative examples so that we have a similar number of positive and
-negative examples.
+can be as low as 2 - 3%. In order to balance the ratio of positive and negative training
+samples, we can randomly down sample the negative examples so that we have a similar
+number of positive and negative examples.
 
 Model recalibration
 -------------------
@@ -94,7 +36,7 @@ Negative downsampling can accelerate training while enabling us to learn from bo
 positive and negative examples. However, our predicted model output will now be in the
 downsampling space. For instance, consider that if our engagement rate is 5% and we
 select only 10% negative samples, our average predicted engagement rate will be near
-50%. Auction uses this predicted rate to determine order and pricing; therefore it’s
+33%. Auction uses this predicted rate to determine order and pricing; therefore it’s
 critical that we recalibrate our score before sending them to auction. The recalibration
 can be done using:
 
@@ -113,13 +55,8 @@ We need to be mindful of the fact that user engagement patterns may differ throu
 the week. Hence we will use a week’s engagement to capture all patterns during training
 data generation.
 
-We may randomly select 2/3 training data rows that we have generated and utilize them
-for training purposes. The rest of the 1/3 can be used for validation and testing of the
-model.
-
-However, this random splitting would result in utilizing future data for prediction
-given our data has a time dimension, i.e., we can utilize engagement on historical ads
-to predict future ad engagement. Hence we will train the model on data from the one-time
-interval and validate it on the data from its succeeding time interval. This will give a
-more accurate picture of how our model will perform in a real scenario.
+Random splitting would result in utilizing future data for prediction given our data has
+a time dimension, i.e., we can utilize engagement on historical ads to predict future ad
+engagement. Hence we will train the model on data from the one-time interval and
+validate it on the data from its succeeding time interval.
 """
