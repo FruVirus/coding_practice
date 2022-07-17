@@ -1,0 +1,493 @@
+Problem Statement
+=================
+
+Introduction
+------------
+
+Named entity linking (NEL) is the process of detecting and linking entity mentions in a
+given text to corresponding entities in a target knowledge base.
+
+There are two parts to entity linking:
+
+    1. Named-entity recognition. Named-entity recognition (NER) detects and classifies
+potential named entities in the text into predefined categories such as a person,
+organization, location, medical code, time expression, etc. (multi-class prediction).
+
+    2. Disambiguation. Next, disambiguation disambiguates each detected entity by
+linking it to its corresponding entity in the knowledge base. The target knowledge base
+depends on the application, but for generic systems, a common choice is Wikidata or
+DBpedia.
+
+The sentence/text says, “Michael Jordan is a machine learning professor at UC Berkeley.”
+First NER detects and classifies the named entities Michael Jordan and UC Berkeley as
+person and organisation.
+
+Then disambiguation takes place. Assume that there are two ‘Michael Jordan’ entities in
+the given knowledge base, the UC Berkeley professor and the athlete. Michael Jordan in
+the text is linked to the professor at the University of California, Berkeley entity in
+the knowledge base (that the text is referring to). Similarly, UC Berkeley in the text
+is linked to the University of California entity in the knowledge base.
+
+Problem statement
+-----------------
+
+The interviewer has asked you to design an entity linking system that:
+
+    - Identifies potential named entity mentions in the text.
+
+    - Searches for possible corresponding entities in the target knowledge base for
+disambiguation.
+
+    - Returns either the best candidate corresponding entity or nil.
+
+The problem statement translates to the following machine learning problem:
+
+    "Given a text and knowledge base, find all the entity mentions in the text
+(Recognize) and then link them to the corresponding correct entry in the knowledge base
+(Disambiguate)."
+
+Interview questions
+-------------------
+
+These are some of the questions that an interviewer can put forth.
+
+    1. How would you build an entity recognizer system?
+
+    2. How would you build a disambiguation system?
+
+    3. Given a piece of text, how would you extract all persons, countries, and
+businesses mentioned in it?
+
+    4. How would you measure the performance of a disambiguator/entity recognizer/entity
+linker?
+
+    5. Given multiple disambiguators/recognizers/linkers, how would you figure out which
+is the best one?
+
+Metrics
+=======
+
+We require metrics that:
+
+    1. Compare different entity linking models based on their performance. This will be
+catered to by offline metrics.
+
+    2. Measure the performance of the bigger task when a particular model for entity
+linking is used. This will be catered to by online metrics.
+
+Offline metrics
+---------------
+
+The named-entity linking component is made of two layers, as discussed previously:
+
+    1. Named entity recognition
+
+    2. Disambiguation
+
+We will first look at offline metrics for each of the layers individually and will then
+discuss a good offline metric to measure the overall entity linking system.
+
+Named entity recognition
+------------------------
+
+For the first layer/component, i.e., the recognition layer, you want to extract all the
+entity mentions from a given sentence. We will continue with the previous sentence
+example, i.e., “Michael Jordan is the best professor at UC Berkeley”.
+
+It has two entity mentions:
+
+    1. Michael Jordan
+
+    2. UC Berkeley
+
+NER should be able to detect both entities correctly. However, it may detect:
+
+    - Both correctly
+
+    - One correctly
+
+    - None correctly (wrongly detect non-entity as an entity)
+
+    - Correct entity but with the wrong type
+
+    - No entity, i.e., altogether miss the entities in the sentence
+
+You will call a recognition/detection of a named entity correct, only if it is an exact
+match of the entity in the labeled data. If NER only recognizes “Michael” as an entity
+and misses the “Jordan” part, it would be considered wrong. Moreover, if NER recognizes
+“Michael Jordan” as an entity but with the wrong type (say Organization), again, it
+would be considered wrong.
+
+Given the above context on the correctness of the system, both precision and recall are
+important for measuring the performance of NER. You want your model to have both high
+precision and high recall. To look at both, collectively, you will use the F1-score as
+the metric.
+
+Disambiguation
+--------------
+
+The disambiguation layer/component receives the recognized entity mentions in the text
+and links them to entities in the knowledge base. It might:
+
+    - Link the mention to the correct entity
+
+    - Link the mention to the wrong entity
+
+    - Not link the mention to any entity (in case it does not find any corresponding
+entity in the knowledge base)
+
+This component will perform linking for all entities recognized, and they will either be
+linked to an object in the knowledge base or not linked at all (i.e., the model predicts
+that it doesn’t have a corresponding object in the knowledge base). So, the concept of
+recall doesn’t really apply here as each entity is going to be linked (to either an
+object or Null). Therefore, it makes sense to only use precision as the metric for
+disambiguation.
+
+Named-entity linking component
+------------------------------
+
+You will use F1-score as the end-to-end metric. The definition of a true positive,
+true negative, false positive, and false negative, for the calculation of end-to-end
+F1-score (and precision and recall by extension), is as follows:
+
+    - True positive: an entity has been correctly recognized and linked.
+
+    - True negative: a non-entity has been correctly recognized as a non-entity or an
+entity that has no corresponding entity in the knowledge base is not linked.
+
+    - False positive: a non-entity has been wrongly recognized as an entity or an entity
+has been wrongly linked.
+
+    - False negative: an entity is wrongly recognized as a non-entity, or an entity that
+has a corresponding entity in the knowledge base is not linked.
+
+Micro vs. macro metrics
+-----------------------
+
+A macro-average computes the metric independently for each document and takes the
+average (giving equal weightage to all documents). In contrast, a micro-average
+aggregates the contributions of all documents to compute the average metric.
+
+Macro averaged metrics allow you to calculate the metric for each set of documents and
+then take their average, thereby giving an equal chance of representation to the small
+segment of science-related documents. On the contrary, micro-averaged metrics would not
+pay attention to these small number of documents where performance is low and give a
+biased result.
+
+Micro-averaged metrics
+
+We are focused on the overall performance of the entity linking component. We don’t care
+if the performance is better for a certain set of documents and not good for another
+set, so we opt for micro-averaged metrics.
+
+Macro-averaged metrics
+
+When you are interested in the individual performance of entity linking across the
+different types of documents (e.g., science, history, and arts), you will shift to
+macro-averaged f1 score and macro averaged precision and recall, by extension.
+
+Online metrics
+--------------
+
+Once you have a model with good offline scores, you still need to see if the bigger
+task/system’s performance will improve if you plug in your new model. So, you would do
+A/B experiments for these bigger systems to measure their performance with your new
+entity linking component. The metrics in these A/B tests would be devised based on the
+overall system, which, in turn, would indicate how well your new model for entity
+linking is performing as it gets integrated.
+
+To get a better understanding, let’s think about two such larger tasks/systems:
+
+    1. Search engines
+
+    2. Virtual assistants
+
+Search engines
+
+Semantic search allows us to directly answer the user’s query by returning the entity or
+its properties that the user wants to know. The user no longer needs to open up search
+results and look for the information that is required.
+
+For search engines, user satisfaction lies in the query being properly answered, which
+can be measured by session success rate, i.e., % of sessions with user intent satisfied.
+So, your online A/B experiment will measure the effect of your new entity linking
+systems on the session success rate.
+
+Virtual assistants
+
+Virtual assistants (VAs) helps perform tasks for a person based on commands or
+questions. For instance, a user asks Alexa, “What is the height of the Eiffel tower?”.
+In order to answer this question, the VA needs to detect and link the entities in the
+user’s question (the entity linking component is required here). In this case, the
+entity would be “Eiffel tower”. Once this has been done, the VA can fetch the entity’s
+property “height” and answer the user’s question.
+
+The evaluation metric for the VA would be user satisfaction (percentage of questions
+successfully answered). It could be measured in various ways by using implicit and
+explicit feedback. However, the key aspect here is that user satisfaction should improve
+by plugging in a better model for the entity linking component in the system.
+
+Architectural Components
+========================
+
+The architectural components diagram for entity linking consists of two paths:
+
+    1. Model generation path (training flow)
+
+    2. Model execution path (prediction flow)
+
+Model generation path
+---------------------
+
+Model generation is responsible for training models for entity linking task.
+
+Training data generation
+
+You will begin by gathering training data for entity linking through open-source
+datasets and manual labelling/linking of text. You will pass the training data to the
+named entity recognition (NER) model trainer and the named entity disambiguation (NED)
+model trainer.
+
+NER
+
+NER is responsible for building a machine learning model to recognize entities, such as
+a person, organization, etc., for a given input text.
+
+NED
+
+The disambiguation component will receive the output of the NER for linking. The
+disambiguation process has two phases:
+
+    1. Candidate generation. The first phase of disambiguation is candidate generation.
+It finds potential matches for the entity mentions, by reducing the size of the
+knowledge base to a smaller subset of candidate documents/entities. This saves us from
+running the linking model on the entire knowledge base for each entity mention.
+
+    2. Linking. The second phase of disambiguation is linking. Here, you will select the
+exact corresponding entry in the knowledge base for each recognized entity. The linking
+model runs on only the candidate entries for each mention.
+
+Metrics
+-------
+
+The metrics component will measure the performance of:
+
+    1. NER component separately
+
+    2. NED component separately
+
+    3. Entity linking as a whole
+
+Model execution path
+--------------------
+
+The model execution path is very straightforward. It begins with an input sentence that
+is fed to the NER component. NER identifies the entity mentions in the sentence, along
+with their types, and sends this information to the NED component. This component then
+links each entity mention to its corresponding entity in the knowledge base (if it
+exists).
+
+Training Data Generation
+========================
+
+There are two approaches you can adopt to gather training data for the entity linking
+problem.
+
+    1. Open-source datasets
+
+    2. Manual labeling
+
+Open-source datasets
+--------------------
+
+If the task is not extremely domain-specific and does not require very specific tags,
+you can avail open-source datasets as training data. For example, if you were asked to
+perform entity linking for a simple chatbot, you could utilize the general-purpose,
+open-source dataset CoNLL-2003 for named-entity recognition.
+
+CoNLL-2003 is built on the Reuters Corpus which contains 10,788 news documents totalling
+1.3 million words. It contains train and test files for English and German languages and
+follows the IOB tagging scheme.
+
+IOB tagging scheme
+
+I - An inner token of a multi-token entity
+O - A non-entity token
+B - The first token of a multi-token entity; The B-tag is used only when a tag is
+followed by a tag of the same type without “O” tokens between them. For example, if for
+some reason the text has two consecutive locations (type LOC) that are not separated by
+a non-entity
+
+For named-entity disambiguation, you can utilize the AIDA CoNLL-YAGO Dataset, which
+contains assignments of entities to the mentions of named entities annotated for the
+CoNLL-2003 dataset. The entity mentions are assigned to YAGO (database), Wikipedia and
+Freebase (database) entities.
+
+Human-labeled data
+------------------
+
+Once you have utilized the open-source datasets, we may want to enhance the data and
+increase its size through manual labelers. The manual labelers will generate training
+data similar to the open-source datasets, by annotating named entities in text and
+linking them to corresponding entities in the knowledge base.
+
+Another case where you would generate data through manual labelers is when you require a
+highly specialized dataset for a specific problem. For example, assume that the problem
+is related to the medical field; this requires identifying certain domain-specific
+entities.
+
+After labeling the entities the labelers will also link them to the entities in the
+knowledge base (database) that is being used.
+
+Modeling
+========
+
+The first step of entity linking is to build a representation of the terms that you can
+use in the ML models. It’s also critical to use contextual information (i.e., other
+terms in the sentence) as you embed the terms.
+
+Contextualized text representation
+----------------------------------
+
+The NER and NED models require context to correctly recognize entity type and
+disambiguate, respectively. Therefore, the representation of terms must take contextual
+information into account.
+
+One way to represent text is in the form of embeddings. The embedding model needs to
+consider the whole sentence/context while generating an embedding for a word to ensure
+that its true meaning is captured. The embedding model needs to be bi-directional, i.e.,
+it should look at the context in both the backward direction and the forward direction.
+
+Two popular model architectures that generate term contextual embeddings are:
+
+    1. ELMo
+
+    2. BERT
+
+It makes sense to use the cased version knowing that case is important in NER (generally
+the upper case is used when writing names).
+
+NER modelling
+-------------
+
+Contextual embedding as features
+
+One quick way to utilize these contextual embeddings generated by BERT is to use them as
+features in your NER modelling. Once BERT gives us token level embeddings, you can train
+a classifier on top of token embeddings to predict NER classes.
+
+Fine-tuning embeddings
+
+Another option is to take the pre-trained models generated on a large corpus (e.g., BERT
+base, BERT large, and DistilBERT) and fine-tune them based on your NER dataset to
+improve the classifier quality. This makes more sense, especially when we have a large
+NER labelled data set. For BERT fine-tuning, we can either fine-tune the whole model or
+only top k layers, depending on how much training data you have and also on training
+time (performance).
+
+If the interviewer asks you to not use these large pre-trained models due to time or
+resource constraints, you can build your own customized model based on similar concepts.
+
+Disambiguation modeling
+-----------------------
+
+The disambiguation process consists of two phases:
+
+    1. Candidate generation. In this phase, for each recognized entity, you will select
+a subset of the knowledge-base entities as candidates that might correspond to it.
+
+    2. Linking. In this phase, for each recognized entity, you will select a
+corresponding entity from among the candidate entities. Thanks to candidate generation,
+you will only have to choose from a smaller subset instead of the whole knowledge base.
+
+Candidate generation
+--------------------
+
+The process of candidate generation requires building an index where terms are mapped to
+knowledge base entities. This index will help us in the quick retrieval of candidates
+for recognized entities. To build this index, you need ways to figure out what terms
+should be used to index each entity in the knowledge base.
+
+You need to build the index such that candidate generation focuses on higher recall. The
+index should include all terms that could possibly refer to an entity, even if it is
+something as trivial as a nickname or a less frequently used term for an entity.
+
+Now let’s look at some of the ways to look for terms to index each entity on.
+
+    1. You will index a knowledge base entity on all the terms in its name and their
+concatenations. For instance, for the entity “Michael Irwin Jordan”, the index terms can
+include “Michael Irwin Jordan”, “Michael Jordan”, “Michael”, “Irwin”, “Jordan”,
+“Jordan Michael”, and so on. Now, if you encounter any of these terms in the text, you
+can say that they might be referring to the entity “Michael Irwin Jordan” in the
+knowledge base.
+
+    2. You can also make use of referrals and anchor text in the knowledge-base data for
+this purpose. For instance, assume that an anchor text reads “Michael I. Jordan” and
+refers to the “Michael Irwin Jordan” entity in the knowledge-base. Here, you will index
+the entity on the terms in the anchor text as well. This way, you will get a flavour of
+a lot of different ways in which a knowledge base entity may be referred to in text such
+as nicknames and abbreviations.
+
+    3. If you are provided with a source that can give us commonly used spellings,
+aliases, and synonyms for an entity’s name, then you can also use these terms for
+indexing. However, if that is not the case, then you can use the embedding method.
+
+    Embedding method. You know about some terms that link to a particular entity by
+methods such as the two described above. In order to discover more terms to index a
+particular entity on, you can look for words that are similar to the ones an entity is
+already indexed on. The first step to finding similar words is representing all the
+words in the knowledge base with the help of embeddings. The model will try to bring the
+abbreviation/aliases/synonyms, that refer to the same entity closer in the embedding
+space. Once you have the embedding of all the words, you can find k nearest neighboring
+terms for a particular term that is already linked to an entity. These k nearest
+neighboring terms can also be used to index the entity.
+
+Linking
+-------
+
+Once you are done generating candidates from the knowledge base entities for the
+recognized entity mentions in the given input sentence, you need to perform linking.
+
+In the linking stage, you will build a model that will give us the probability of a
+candidate being the true match for a recognized entity. You will select the candidate
+with the highest probability and link it to the recognized entity mention.
+
+Let’s look at the linking model’s inputs. It will receive:
+
+    - the recognized entity mention that you want to link
+
+    - the type of the entity mention, e.g., location, person etc.
+
+    - the whole input sentence in which the entity mention is recognised
+
+    - the candidate entity from the knowledge base
+
+    - the prior: for a certain entity mention, how many times the candidate entity under
+consideration is actually being referred to. For example, the anchor text “Harrison
+Ford”, referred to the entity American actor 98% of the time instead of the silent film
+actor “Harrison Edward Ford”. It’s important to tell the model that priors favor a
+certain entity more.
+
+    Utilization of the candidate entity in the anchor text is the “prior” in the above
+example.
+
+All of these inputs will be fed to a deep neural network (DNN) classifier, which will
+give us the required probability.
+
+This stage focuses on precision, i.e., you want to identify the correct corresponding
+entity for a mention.
+
+It is important to consider how the inputs (entity mention, sentence and candidate
+entity) will be represented. The best representations are the ones given by
+contextualized embeddings, which you are generating through models such as BERT and ELMO
+for NER.
+
+For example, assume that you have used BERT for NER, so you have the contextual
+embedding for the recognized entity. BERT can also provide sentence embeddings (along
+with term embeddings), so you can have the embedding for the entire input sentence. You
+can also generate the embeddings of the candidate entities based on their representation
+in the knowledge base. For instance, Wikidata has a small description of each entity in
+the knowledge base, which can be used to generate an embedding for the candidate entity.
+
+These embeddings, along with the prior and entity type, will provide the model with all
+the information it needs to produce a good output.
