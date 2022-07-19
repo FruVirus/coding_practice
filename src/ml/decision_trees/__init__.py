@@ -222,11 +222,24 @@ How to Prune Regression Trees
 Motivating for pruning a tree
 -----------------------------
 
-There are several methods for pruning Regression Trees. Here, we consider Cost
-Complexity Pruning (a.k.a. Weakest Link Pruning).
+The main idea behind pruning a Regression Tree is to prevent overfitting to the training
+data so that the tree will do a better job on unseen data. There are several methods for
+pruning Regression Trees. Here, we consider Cost Complexity Pruning (a.k.a. Weakest Link
+Pruning).
+
+One way to prevent overfitting a Regression Tree to the training data is to remove some
+of the leaf nodes and replace the split with a leaf node that is the average of a larger
+number of observations. The new Regression Tree might have larger residuals w.r.t. the
+training data but it might do a much better job on unseen data.
 
 Calculating the sum of squared residuals for pruned trees
 ---------------------------------------------------------
+
+We could keep replacing splits with leaf nodes that is the average of larger and larger
+number of observations. In the extreme case, we would just split on the average of all
+observations. Cost Complexity Pruning helps us choose which split is the best.
+
+
 
 Compared pruned trees with alpha
 --------------------------------
