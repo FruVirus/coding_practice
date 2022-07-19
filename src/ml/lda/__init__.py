@@ -41,7 +41,7 @@ Ideally, we want the numerator to be large and the denominator to be small.
 If we only maximized the distance between means, we will end up with a projection with a
 lot of overlap in the middle.
 
-However, if we optimize the distance between means the scatter, then we get nice
+However, if we optimize the distance between means and the scatter, then we get nice
 separation with minimal overlap in the middle. We might end up with closer means, but
 less scatter.
 
