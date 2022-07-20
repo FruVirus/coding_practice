@@ -239,22 +239,83 @@ We could keep replacing splits with leaf nodes that is the average of larger and
 number of observations. In the extreme case, we would just split on the average of all
 observations. Cost Complexity Pruning helps us choose which split is the best.
 
+The first step is to calculate the SSR for each tree. This is done by calculating the
+SSR for each leaf node of a tree and then summing them to get the total SSR for the
+tree.
 
+In general, the SSR will increase for trees that have more pruning. However, this is
+expected since the whole idea for pruned trees is that they will not fit the training
+data as well as the full sized tree.
 
 Compared pruned trees with alpha
 --------------------------------
 
+How to we compare the trees after calculating an SSR score for each tree?
+
+Cost Complexity pruning works by calculating a Tree Score that is based on the SSR for
+each tree and a Tree Complexity Penalty that is a function of the number of leaves in
+the tree. The Tree Complexity Penalty compensates for the difference in the number of
+leaves.
+
+Tree Score = SSR + alpha * T
+
+alpha is a tuning parameter that we find using Cross Validation and T is the total
+number of leaves in the tree. Thus, the more leaves a Tree has, the larger the penalty.
+
+The tree with the lowest Tree Score is chosen as the "best" tree.
+
 Step 1: Use all of the data to build trees with different alphas
 ----------------------------------------------------------------
+
+First, using all of the data, we build a full sized Regression Tree. This full sized
+tree is different because it is trained on all of the data, not just the training data.
+This full sized tree has the lowest Tree Score when alpha = 0 because the Tree
+Complexity Penalty becomes 0 and the Tree Score is just the SSR and the SSR would be the
+lowest for a full sized tree that is trained on all of the data.
+
+For the first pruned tree, we increase alpha until the pruned tree gives us a lower Tree
+Score than the previous (full sized) tree. We keep increasing alpha and building new
+trees with pruned leaves that give us a lower Tree Score.
+
+In the end, different values for alpha give us a sequence of trees, from full sized to
+just a leaf.
 
 Step 2: Use cross validation to compare alphas
 ----------------------------------------------
 
+Now we go back to the full dataset and divide it into Training and Test datasets. Using
+just the Training data, we use the alpha values we found before to build a full sized
+tree and a sequence of sub-trees that minimize the Tree Score on the Training data.
+
+When alpha = 0, we build a full sized tree, since it will have the lowest Tree Score.
+For the next sub-tree, alpha = 10000 (value determined from Step 1) gives us a lower
+Tree Score, and so on for the other sub-trees.
+
+After we have built all the new sub-trees using just the Training Data. We calculate the
+SSR for each new tree using only the Testing data. Suppose the tree with alpha = 10000
+gave us the lowest SSR for the Test data.
+
+Now we go back and create new Training and Test data. And just using the new Training
+data, we build a new sequence of trees, from full sized to leaf, using the alpha values
+we found before. Then we calculate the SSR using the new Test data. This time, the tree
+with alpha = 0 had the lowest SSR.
+
 Step 3: Select the alpha that, on average, gives the best results
 -----------------------------------------------------------------
+
+Now we just keep repeating until we have done 10-Fold Cross Validation. The value of
+alpha that, on average, gave us the lowest SSR with the Test data is the final value for
+alpha.
+
+In other words, we build a set of trees from full-sized to leaf using different Training
+and Test data each time using k-Fold Cross Validation. The values of alpha are set from
+Step 1. The value of alpha that, on average, gave us the lowest SSR with the Test data
+across the different folds is the final value for alpha.
 
 Step 4: Select the original tree that corresponds to that alpha
 ---------------------------------------------------------------
 
-
+Lastly, we go back to the original trees and sub-trees made from the full data and pick
+the tree that corresponds to the value for alpha that we selected. This sub-tree will be
+the final pruned tree.
 """
