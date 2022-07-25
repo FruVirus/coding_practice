@@ -39,7 +39,7 @@ susceptible to overfitting.
 Importantly, a feature value doesn't need to occur only a couple of times to lead to
 spurious correlations.
 
-Nosiy features inevitably lead to overfitting. As such, in cases where you aren't sure
+Noisy features inevitably lead to overfitting. As such, in cases where you aren't sure
 whether the features you have are informative or distracting, it's common to do
 feature selection before training. The typical way to do feature selection is to compute
 some usefulness score for each feature available---a measure of how informative the
@@ -87,7 +87,7 @@ points you[ve never seen before by relating them to other points that lie close 
 manifold. In other words, you can make sense of the totality of the space using only a
 sample of the space. YOu can use interpolation to fill in the blanks.
 
-While deep learning achieves generalization bia interpolation on a learned approximation
+While deep learning achieves generalization via interpolation on a learned approximation
 of the data manifold, it would be a mistake to assume that interpolation is all there is
 to generalization. Interpolation can only help you make sense of things that are very
 close to what you've seen before: it enables local generalization.
@@ -106,7 +106,7 @@ Your data forms a highly structured, low-dimensional manifold within the input s
 that's the manifold hypothesis. And because fitting your model curve to this data
 happens gradually and smoothly over time as gradient descent progresses, there will be
 an intermediate point during training at which the model roughly approximates the
-natural manifold of hte data.
+natural manifold of the data.
 
 Moving along the curve learned by the model at that point will come close to moving
 along the actual latent manifold of the data---as such, the model will be capable of
@@ -122,7 +122,7 @@ smoothness helps approximate latent manifolds, which follow the same properties.
 
 - Deep learning models tend to be structured in a way that mirrors the "shape" of the
 information in their training dataa (via architecture priors). More generally, deep
-neural networks strucutre their learned representations in a hierarchical and modular
+neural networks structure their learned representations in a hierarchical and modular
 way, which echos the way natural data is organized.
 
 Training Data Is Paramount
@@ -136,26 +136,13 @@ be trained on a dense sampling of its input space. A "dense sampling" in this co
 means that the training data should densely cover the entirety of the input data
 manifold. This is especially true near decision boundaries. With a sufficiently dense
 sampling, it becomes possible to make sense of new inputs by interpolating between past
-training inputs wihtout having to use reasoning.
+training inputs without having to use reasoning.
 
 5.2 Evaluating machine learning models
 ======================================
 
 5.2.1 Training, validation, and test sets
 -----------------------------------------
-
-Developing a model always involves tuning its configurations. You do this tuning by
-using as a feedback signal the performance of the model on the validation data. In
-essence, this tuning is a form of learning: a search for a good configuration in some
-parameter space. As a result, tuning the configuration of the model based on its
-performance on the validation set can quickly result in overfitting to the validation
-set, even though your model is never directly trained on it.
-
-At the end of the day, you'll end up with a model that performs artificially well on the
-validation data, because that's what you optimized it for. You care about performance on
-completely new data, not on the validation data, so you need to use a completely
-different, never-before-seen dataset to evaluate the model: the test dataset. Your model
-shouldn't have access to any information about the test set, even indirectly.
 
 Simple Holdout Validation
 
@@ -177,7 +164,7 @@ Iterated K-Fold Validation With Shuffling
 
 This one is for situations in which you have relatively little data available and you
 need to evaluate your model as precisely as possible. It consists of applying K-fold
-valiation multiple times, shuffling the data every time before splitting it K ways. The
+validation multiple times, shuffling the data every time before splitting it K ways. The
 final score is the average of the scores obtained at each run of K-fold validation.
 
 5.2.3 Things to keep in mind about model evaluation
@@ -297,7 +284,7 @@ training long before you've reached the minimum possible training loss.
 
 Regularization techniques are a set of best practices that actively impede the model's
 ability to fit perfectly to the training data, with the goal of making the model perform
-better during validation. THis is called "regularizing" the model, because it tends to
+better during validation. This is called "regularizing" the model, because it tends to
 make the model simpler, more "regular", its curve smoother, more "generic"; thus it is
 less specific to the training set and better able to generalize by more closely
 approximating the latent manifold of the data.
@@ -311,7 +298,7 @@ validation loss increases right away) and if its validation loss curve looks cho
 high variance.
 
 The more capacity the model has, the more quickly it can model the training data
-(resulting in a low training loss), but ther more susceptible it is to overfitting
+(resulting in a low training loss), but the more susceptible it is to overfitting
 (resulting in a large difference between the training and validation loss).
 
 Adding Weight Regularization
@@ -341,13 +328,12 @@ Adding Dropout
 Dropout, applied to a layer, consists of randomly dropping out (setting to zero) a
 number of output features of the layer during training. The dropout rate is the fraction
 of the features that are zeroed out; it's usually set between 0.2 and 0.5. At test time,
-no units are dropped out; instead, the layer's output values are scaled down by a factor
-equal to the dropout rate, to balance for the fact that more units are active than at
-training time.
+no units are dropped out; instead, the layer's output values are multiplied by the
+dropout rate, to balance for the fact that more units are active than at training time.
 
 Note that this process can be implemented all at once during training time and leaving
 the outputs unchanged at test time. In effect, during training, we add dropout to a
-layer and then multiply the layer's output by the dropout rate.
+layer and then divide the layer's output by the dropout rate.
 
 The core idea behind dropout is that introducing noise (i.e., dropping features) in the
 output values of a layer can break up happenstance patterns that aren't significant,
