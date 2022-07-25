@@ -23,13 +23,13 @@ final_right. Then, the answer to the problem is 1 + len(final_left).
 We build these intervals in-place, by swapping elements when necessary and updating i
 and j.
 
-If val == i + 1, then the number is in the right place and we may consider it as part of
-the interval left and increment i.
+1. If val == i + 1, then the number is in the right place and we may consider it as part
+of the interval left and increment i.
 
-If any of the below statements are true, then the number doesn't belong in the interval
-final_left and so we can put it into the interval final_right (via swapping) and advance
-j. After the swap, nums[i] has some new value that we haven't considered before, so we
-leave i as is and loop again:
+2. If any of the below statements are true, then the number doesn't belong in the
+interval final_left and so we can put it into the interval final_right (via swapping)
+and advance j. After the swap, nums[i] has some new value that we haven't considered
+before, so we leave i as is and loop again:
 
     1. If val > j, then this number should go into the interval final_left but it would
 overlap with the interval final_right.
@@ -40,7 +40,7 @@ interval final_left.
     3. If nums[val - 1] == val, then this number is a duplicate and doesn't belong in
 the interval final_left.
 
-Otherwise, we don't yet know whether val should be in the interval final_left or
+3. Otherwise, we don't yet know whether val should be in the interval final_left or
 final_right, so put it in neither. In order to consider another value, place val so that
 it matches its own index; that is, place it where it will be if it indeed ends up in
 the interval final_left, and next consider the element there. We learned nothing new
