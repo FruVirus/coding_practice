@@ -44,6 +44,12 @@ Dealing with Continuous Features
 
 1. Discretization
 2. Fit a known distribution to the dataset (e.g., a normal distribution)
+
+Why Naive Bayes is Naive
+------------------------
+
+Naive Bayes does not take the word order into account when calculating probabilities
+(i.e., it assumes bag-of-words).
 """
 
 # Third Party Library
