@@ -12,6 +12,9 @@ The method is based on the observation that, for a positive integer n, we have:
     x^n =   x * (x^2)^((n - 1) / 2), if n is odd
             (x^2) * (n / 2), if n is even
 
+Initially, x^1 = x, and for each i > 1, we can use the result of x^(2 * i - 1) to get
+x^(2 * i).
+
 Complexity
 ==========
 
