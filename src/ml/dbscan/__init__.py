@@ -1,4 +1,6 @@
-"""Clustering with DBSCAN
+"""
+Clustering with DBSCAN
+======================
 
 The problems solved by DBSCAN
 -----------------------------
