@@ -10,6 +10,7 @@ phrase, typically using all the original letters exactly once.
 
 Intuition
 ---------
+
 Patterns are known in advance, and the set of characters in the patterns is very limited
 as well: 26 lowercase English letters. Hence one could allocate array or hashmap with 26
 elements and use it as a letter counter in the sliding window.
