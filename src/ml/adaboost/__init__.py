@@ -157,7 +157,7 @@ Now we can use the normalized New Sample Weights to make the second stump in the
 forest.
 
 In theory, we could use the Sample Weights to calculate Weighted Gini Indexes to
-determine which variable should split the next stump. The Weighted Gini INdex would put
+determine which variable should split the next stump. The Weighted Gini Index would put
 more emphasis on correctly classifying the misclassified example(s), since those
 examples have the largest Sample Weights.
 
