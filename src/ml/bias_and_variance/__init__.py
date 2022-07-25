@@ -1,4 +1,6 @@
-"""Machine Learning Fundamentals: Bias and Variance
+"""
+Machine Learning Fundamentals: Bias and Variance
+================================================
 
 The inability for a machine learning method (like linear regression) to capture the true
 relationship is called bias.
