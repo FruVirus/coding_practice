@@ -4,6 +4,17 @@ Add Binary
 
 Given two binary strings a and b, return their sum as a binary string.
 
+Intuition
+---------
+
+Adding two number using bit manipulation involves summing the answer without carry and
+carry. The loop continues until the carry is 0.
+
+XOR is a sum of two binaries without taking carry into account.
+Carry is the AND of two binaries, shifted one bit to the left.
+
+
+
 Complexity
 ==========
 
