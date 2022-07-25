@@ -6,6 +6,13 @@ Write a function to find the longest common prefix string amongst an array of st
 
 If there is no common prefix, return an empty string "".
 
+Intuition
+---------
+
+string max()/min() returns the maximum/minimum alphabetical ordering of strings. Also
+note that we are trying to find the longest common prefix amongst ALL the strings in the
+array of strings.
+
 Complexity
 ==========
 
