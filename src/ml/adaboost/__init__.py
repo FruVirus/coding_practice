@@ -133,16 +133,9 @@ a little smaller than the old one.
 In summary:
 
 For INCORRECTLY classified samples, we want to INCREASE sample weights for the next
-stump. If the current stump was a good classifier, then the new sample weight will be
-much larger so that its weighted Gini index will be larger and vice versa. If a sample
-weight is larger, then its weighted Gini index will also be larger, which means that a
-particular variable will be less likely to be the root of the new stump.
+stump.
 
 For CORRECTLY classified samples, we want to DECREASE sample weights for the next stump.
-If the current stump was a good classifier, then the new sample weight will be much
-smaller so that its weighted Gini index will be smaller and vice versa. If a sample
-weight is smaller, than its weighted Gini index will also be smaller, which means that a
-particular variable will be more likely to be the root of the new stump.
 
 Normalizing the sample weights
 ------------------------------
