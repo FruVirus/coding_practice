@@ -1,4 +1,4 @@
-"""Naive Bayesian classification from scratch.
+"""Multinomial Naive Bayesian classification from scratch.
 
 Bayesian classification deals with conditional probabilities. Naive Bayesian
 classification deals with joint probabilities.
@@ -49,7 +49,25 @@ Why Naive Bayes is Naive
 ------------------------
 
 Naive Bayes does not take the word order into account when calculating probabilities
-(i.e., it assumes bag-of-words).
+(i.e., it assumes bag-of-words). In ignoring relationships between words, Naive Bayes
+has high bias but, because it works well in practice, Naive Bayes has low variance.
+
+Gaussian Naive Bayes
+====================
+
+Gaussian Naive Bayes is named after the Gaussian distributions that represent the data
+in the Training Dataset.
+
+With a new sample, we first calculate the Prior probabilities using the existing
+Training Data just like in Multinomial Naive Bayes.
+
+The main difference is how we calculate the likelihood. The likelihood is computed from
+the Gaussian distribution for each feature (as opposed to using raw counts as in the
+Multinomial Naive Bayes). In other words, in Multinomial Naive Bayes, we used
+probabilities. In Gaussian Naive Bayes, we use likelihoods.
+
+We also typically take the log of all the probabilities so that we sum the logs in order
+to avoid underflow.
 """
 
 # Third Party Library
