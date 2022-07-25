@@ -15,6 +15,12 @@ Patterns are known in advance, and the set of characters in the patterns is very
 as well: 26 lowercase English letters. Hence one could allocate array or hashmap with 26
 elements and use it as a letter counter in the sliding window.
 
+1. Build reference array using string p, pcount.
+2. Sliding window on the string s.
+    2a. Add one more letter on the right side of the window for s in scount.
+    2b. Remove one letter from the left side of the window for s if i >= np.
+    2c. Compare array in the sliding window with the reference array, pcount.
+
 Complexity
 ==========
 
