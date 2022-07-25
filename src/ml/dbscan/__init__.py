@@ -19,10 +19,10 @@ should form a cluster and low-density points should be outliers.
 How DBSCAN works
 ----------------
 
-Starting with the raw unclustered data, the first thing we can do is to count the first
-thing we can do is count the number of points close to each point. We do this by drawing
-a circle around a given point and counting how many other points are within the circle.
-The radius of the circle is a hyperparameter of DBSCAN.
+Starting with the raw unclustered data, the first thing we can do is to count the number
+of points close to each point. We do this by drawing a circle around a given point and
+counting how many other points are within the circle. The radius of the circle is a
+hyperparameter of DBSCAN.
 
 We define a Core Point to be one that is close to at least N other points. The number of
 close points for a Core Point is also a hyperparameter of DBSCAN.
