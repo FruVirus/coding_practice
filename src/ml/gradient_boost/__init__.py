@@ -149,8 +149,9 @@ the initial Prediction, we can Classify everyone in the Training Dataset as Yes
 We can measure how bad the initial Prediction is by calculating the Pseudo Residuals,
 the difference between the Observed and the Predicted values. Note that the Observed
 values would be either 0 or 1 (for binary classification). The initial Predicted value
-comes from sigmoid(log(4 / 2)) = 0.7. Thus, the residuals for "Yes" would be 1 - 0.7 and
-the residuals for "No" would be 0 - 0.7.
+must be converted from log(odds) to probability and thus, we use sigmoid(log(4 / 2)) =
+0.7. Thus, the residuals for "Yes" would be 1 - 0.7 and the residuals for "No" would be
+0 - 0.7.
 
 Now we build a Tree using the Training Dataset variables to Predict the Residuals. In
 practice, people often set the maximum number of leaves to be between 8 and 32.
