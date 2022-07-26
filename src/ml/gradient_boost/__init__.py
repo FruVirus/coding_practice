@@ -26,8 +26,9 @@ number of leaves is usually between 8 and 32.
 Thus, like AdaBoost, Gradient Boost builds fixed sized trees based on the previous
 tree's errors, but unlike AdaBoost, each tree can be larger than a stump. Also, like
 AdaBoost, Gradient Boost scales the trees. However, Gradient Boost scales all trees by
-the same amount. Gradient Boost contains to build trees in this fashion until it has
-made the number of trees you asked for, or additional trees fail to improve the fit.
+the same amount (via the Learning Rate). Gradient Boost continues to build trees in this
+fashion until it has made the number of trees you asked for, or additional trees fail to
+improve the fit.
 
 Building the first tree to predict weight
 -----------------------------------------
@@ -45,11 +46,10 @@ is based on Linear Regression---the "Pseudo" part is a reminder that we are doin
 Gradient Boost and not Linear Regression.
 
 We build the tree using all the variables (features) from the training data to predict
-the (pseudo) residuals. Note that we don't use the variables to predict the Weights
-(explained later). By restricting the total number of leaves in a given (decision) tree,
-we get fewer leaves than residuals. As a result, leaves can contain multiple residual
-values and we simply take the average of the residual values as the value for a given
-leaf.
+the (pseudo) residuals; i.e., the tree leaves contains residual values instead of weight
+values. By restricting the total number of leaves in a given (decision) tree, we get
+fewer leaves than residuals. As a result, leaves can contain multiple residual values
+and we simply take the average of the residual values as the value for a given leaf.
 
 Now we can combine the original leaf (for the first iteration, the original leaf value
 is just the average of all the Weights) with the new tree to make a new Prediction of an
@@ -108,7 +108,10 @@ Prediction with Gradient Boost
 ------------------------------
 
 When we get new measurements, we can Predict Weight by starting with the initial
-Prediction and adding the scaled values from all the trees.
+Prediction and adding the scaled values from all the trees. These scaled values are
+residuals that are added to/subtracted from the initial Prediction. As we build more
+trees, we expect the residuals to decrease. Hence, each tree makes smaller and smaller
+adjustments to the initial Prediction.
 
 Summary of concepts and main ideas
 ---------------------------------
@@ -117,8 +120,8 @@ In summary, when Gradient Boost is used for Regression:
 
 1. We start with a leaf that is the average value of the variable we want to Predict.
 
-2. Then we add a tree based on the Residuals, the difference between the Observed values
-and the Predicted values and we scale the tree's contribution to the final Prediction
+2. Then we add a tree based on the Residuals (the difference between the Observed values
+and the Predicted values) and we scale the tree's contribution to the final Prediction
 with a Learning Rate.
 
 3. Then we add another tree based on the new Residuals.
@@ -141,13 +144,14 @@ Just like with Logistic Regression, the easiest way to use the log(odds) for
 Classification is to convert it to a Probability and we do that with a Logistic
 Function.
 
-If the probability of Yes is greater than 0.5 (or some other threshold), we can Classify
-everyone in the Training Dataset as Yes.
+If the probability of Yes is greater than 0.5 (or some other threshold) for the initial
+Prediction, we can Classify everyone in the Training Dataset as Yes (initially).
 
 We can measure how bad the initial Prediction is by calculating the Pseudo Residuals,
 the difference between the Observed and the Predicted values. Note that the Observed
 values would be either 0 or 1 (for binary classification). The Predicted value comes
-from sigmoid(log(4 / 2)) = 0.7.
+from sigmoid(log(4 / 2)) = 0.7. Thus, the residuals for "Yes" would be 1 - 0.7 and the
+residuals for "No" would be 0 - 0.7.
 
 Now we build a Tree using the Training Dataset variables to Predict the Residuals. In
 practice, people often set the maximum number of leaves to be between 8 and 32.
@@ -155,12 +159,18 @@ practice, people often set the maximum number of leaves to be between 8 and 32.
 When we used Gradient Boost for Regression, a leaf with a single Residual had an Output
 Value equal to that Residual. In contrast, when we use Gradient Boost for
 Classification, the situation is a little more complex. This is because the Predictions
-are in terms of the log(odds) and the leaf value is derived from a Probability so we
-can't just add them together to get a new log(odds) Prediction without some sort of
-transformation. See notes for derivation of transformation.
+are in terms of the log(odds) and the leaf value is derived from a Probability (i.e.,
+1 - sigmoid(log(odds)) or 0 - sigmoid(log(odds))) so we can't just add them together to
+get a new log(odds) Prediction without some sort of transformation. See notes for
+derivation of transformation.
+
+Leaf Output Value = sum(leaf residuals) /
+					sum for each leaf residual(
+						previous probabilities * (1 - previous probabilities)
+					)
 
 We update our Predictions by combining the initial leaf with the new tree. Just like
-before, the new tree is scaled by a Learning Rate. THe log(odds) Prediction is the
+before, the new tree is scaled by a Learning Rate. The log(odds) Prediction is the
 previous Prediction + the Output Value from the tree scaled by the Learning Rate. We
 then convert the new log(odds) Prediction in a Probability using the Logistic Function.
 
