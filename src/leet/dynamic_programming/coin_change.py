@@ -13,39 +13,28 @@ You may assume that you have an infinite number of each kind of coin.
 Intuition
 ---------
 
-First, let's define:
-
-    F(S) - minimum number of coins needed to make change for amount S using coin
-denominations [c_0, ..., c_(n - 1)]
-
-How do we split the problem into subproblems? Let's assume that we know F(S) where some
-change val_1, val_2, ..., for S which is optimal and the last coin's denomination is C.
-Then the following equation should be true because of the optimal substructure of the
-problem.
-
-    F(S) = F(S - C) + 1
-
-But we don't know which is the denomination of the last coin C. We compute F(S - c_i)
-for each possible denomination c_0, c_1, c_2, ..., c_(n - 1) and choose the minimum
-among them. Then the following recurrence relation holds:
-
-F(S) = min(F(S - c_i)) + 1 subject to S - c_i >= 0
-
-F(S) = 0 when S = 0
-F(S) = -1 when n = 0
+The idea is to find the minimum # of coins required to make x value in the range 0 to
+the input amount. This is done by iterating through all of the coins, and for each
+possible value the coin can create, saving to a global list the minimum number of coins
+required. dp[i] stores the number of coins required, while the index, i, is the value
+that we are trying to create with x number of coins.
 
 Example
 
 coins = [1, 2, 3], amount = 4
 
-If we had coins = [1] and amount 4, then dp = [0, 1, 2, 3, 4], where the number in each
+We first have coin = 1 and amount 4, then dp = [0, 1, 2, 3, 4], where the number in each
 index of the array signifies how many 1c coins it would take to make 0, 1, 2, 3, and 4
 cents, respectively. In this case, since our only denomination is 1c, it takes 0, 1, 2,
 3, and 4 1c coins, respectively.
 
-If we had coins = [1, 2] and amount 4, then dp = [0, 1, 1, 2, 2].
+Then we have coin = 2 and amount 4, then dp = [0, 1, 1, 2, 2]. In this case, it takes 1
+coin to make amount 1, 1 coin to make amount 2, 2 coins to make amount 3, and 2 coins to
+make amount 4.
 
-If we had coins = [1, 2, 3] and amount 4, then dp = [0, 1, 1, 1, 2].
+Then we have coin = 3 and amount 4, then dp = [0, 1, 1, 1, 2]. In this case, it takes 1
+coin to make amount 1, 1 coin to make amount 2, 1 coin to make amount 3, and 2 coins to
+make amount 4.
 
 The indexes in dp correspond to the various increments of amount, from 0 to amount, and
 the values in dp correspond to how many coins it takes to make that amount if the coin
