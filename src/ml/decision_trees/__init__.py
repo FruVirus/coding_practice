@@ -291,6 +291,8 @@ Step 2: Use cross validation to compare alphas
 Now we go back to the full dataset and divide it into Training and Test datasets. Using
 just the Training data, we use the alpha values we found before to build a full sized
 tree and a sequence of sub-trees that minimize the Tree Score on the Training data.
+The number of leaves in these sub-trees are constrained since the value of alpha is
+pre-determined from Step 1.
 
 When alpha = 0, we build a full sized tree, since it will have the lowest Tree Score.
 For the next sub-tree, alpha = 10000 (value determined from Step 1) gives us a lower
@@ -302,8 +304,8 @@ gave us the lowest SSR for the Test data.
 
 Now we go back and create new Training and Test data. And just using the new Training
 data, we build a new sequence of trees, from full sized to leaf, using the alpha values
-we found before. Then we calculate the SSR using the new Test data. This time, the tree
-with alpha = 0 had the lowest SSR.
+we found before. Then we calculate the SSR using the new Test data. This time, suppose
+that the tree with alpha = 0 had the lowest SSR.
 
 Step 3: Select the alpha that, on average, gives the best results
 -----------------------------------------------------------------
