@@ -20,32 +20,26 @@ If the total amount of money is zero, there is only one combination: to take zer
 Another base case is no coins: zero combinations for amount > 0 and one combination for
 amount == 0.
 
-All amounts less than x coin are not impacted by the presence of x coins. Starting from
-x coin, one could use x coins in the combinations.
+Example
 
-For example, suppose we have a 2 cent coin. The number of combinations to make less than
-2 cents is not impacted by a 2 cent coin. Starting from 2 cents, we have the following:
+coins = [1, 2, 3], amount = 4
 
-To make 2 cents using a 2 cent coin: # of ways to make 2 cents using no coins +
-# of ways to make 2 cents using a 2 cent coin = 0 + 1 = 1.
+We first have coin = 1 and amount 4, then dp = [1, 1, 1, 1, 1], where the number in each
+index of the array signifies how many different ways a 1c coin can make amounts 1, 2, 3,
+and 4. In this case, since our only denomination is 1c, there is exactly 1 way to make
+amounts 1, 2, 3, and 4.
 
-Now the strategy is here:
+Then we have coin = 2 and amount 4, then dp = [1, 1, 2, 2, 3]. In this case, we have 1
+way to make amount 1, 2 ways to make amount 2, 2 ways to make amount 3, and 3 ways to
+make amount 4.
 
-    - Add coins one-by-one, starting from base case "no coins".
+Then we have coin = 3 and amount 4, then dp = [1, 1, 2, 3, 4]. In this case, we have 1
+way to make amount 1, 2 ways to make amount 2, 3 ways to make amount 3, and 4 ways to
+make amount 4.
 
-    - For each added coin, compute recursively the number of combinations for each
-amount of money from 0 to amount.
-
-    - Initiate number of combinations array with the base case "no coins": dp[0] = 1,
-and all the rest = 0.
-
-    - Loop over all coins:
-
-        - For each coin, loop over all amounts from 0 to amount:
-            - For each amount x, compute the number of combinations:
-dp[x] += dp[x - coin].
-
-    - Return dp[amount].
+The indexes in dp correspond to the various increments of amount, from 0 to amount, and
+the values in dp correspond to how many different ways you can make amount using the
+number of current coins.
 
 Note: To understand how the coin loop being outside resolves the double counting, you
 should pay attention to the fact that when the coin loop is outside, we will count how
