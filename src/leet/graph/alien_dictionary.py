@@ -17,6 +17,17 @@ they differ, the letter in s comes before the letter in t in the alien language.
 first min(s.length, t.length) letters are the same, then s is smaller if and only if
 s.length < t.length.
 
+Approach
+--------
+
+All approaches break the problem into three steps.
+
+    1. Extracting dependency rules from the input. For example "A must be before C", "X
+must be before D", or "E must be before B".
+    2. Putting the dependency rules into a graph with letters as nodes and dependencies
+as edges (an adjacency list is best).
+    3. Topologically sorting the graph nodes.
+
 Intuition
 ---------
 
@@ -290,17 +301,17 @@ def sol_dfs(words):
             if len(w2) < len(w1):
                 return ""
 
-    def backtrack(u):
+    def is_dag(u):
         if u in done:
             return done[u]
         done[u] = False
-        if not all(backtrack(v) for v in graph[u]):
+        if not all(is_dag(v) for v in graph[u]):
             return False
         done[u] = True
         sol.append(u)
         return True
 
-    return "" if not all(backtrack(u) for u in graph) else "".join(sol)
+    return "" if not all(is_dag(u) for u in graph) else "".join(sol)
 
 
 def sol_kahn(words):
