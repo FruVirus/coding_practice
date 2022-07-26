@@ -43,6 +43,7 @@ To calculate the Gini Impurity associated with a given Root Node, we start by
 calculating the Gini Impurity for the individual leaves.
 
 Gini Impurity for a Leaf = 1 - p("Yes") ^ 2 - p("No") ^ 2
+                         = 1 - p(Left Branch) ^ 2 - p(Right Branch) ^ 2
 
 Since leaf nodes will generally contain unequal number of samples, we use the Total Gini
 Impurity.
@@ -76,8 +77,9 @@ building subsequent nodes.
 Adding leaves
 -------------
 
-Leaf nodes are formed when we make internal nodes with 0 Gini Impurity or we reach a
-pre-specified maximum depth for the Decision Tree.
+Leaf nodes are formed when we make internal nodes with 0 Gini Impurity, we reach a
+pre-specified maximum depth for the Decision Tree, or a leaf node has fewer than a
+pre-specified number of samples.
 
 Defining output values
 ----------------------
@@ -184,7 +186,8 @@ smallest sum of squared residuals.
 The process then repeats itself for each branch of the first node.
 
 If a node has only one sample, then it is considered a leaf node. If the sum of squared
-residuals is 0 for a node, then it is considered a leaf node.
+residuals is 0 for a node, then it is considered a leaf node. If the number of samples
+is smaller than a pre-specified threshold, then it is considered a leaf node.
 
 To prevent overfitting to the training data, we can only split observations when there
 are more than some minimum number.
@@ -237,7 +240,8 @@ Calculating the sum of squared residuals for pruned trees
 
 We could keep replacing splits with leaf nodes that is the average of larger and larger
 number of observations. In the extreme case, we would just split on the average of all
-observations. Cost Complexity Pruning helps us choose which split is the best.
+observations. Cost Complexity Pruning helps us choose which split (i.e., tree) is the
+best.
 
 The first step is to calculate the SSR for each tree. This is done by calculating the
 SSR for each leaf node of a tree and then summing them to get the total SSR for the
@@ -250,7 +254,7 @@ data as well as the full sized tree.
 Compared pruned trees with alpha
 --------------------------------
 
-How to we compare the trees after calculating an SSR score for each tree?
+How do we compare the trees after calculating an SSR score for each tree?
 
 Cost Complexity pruning works by calculating a Tree Score that is based on the SSR for
 each tree and a Tree Complexity Penalty that is a function of the number of leaves in
@@ -273,9 +277,10 @@ This full sized tree has the lowest Tree Score when alpha = 0 because the Tree
 Complexity Penalty becomes 0 and the Tree Score is just the SSR and the SSR would be the
 lowest for a full sized tree that is trained on all of the data.
 
-For the first pruned tree, we increase alpha until the pruned tree gives us a lower Tree
-Score than the previous (full sized) tree. We keep increasing alpha and building new
-trees with pruned leaves that give us a lower Tree Score.
+For the first pruned tree, we increase alpha (on the full sized tree) until the pruned
+tree (with lower T) gives us a lower Tree Score than the previous (full sized) tree. We
+keep increasing alpha and building new trees with pruned leaves that give us a lower
+Tree Score.
 
 In the end, different values for alpha give us a sequence of trees, from full sized to
 just a leaf.
