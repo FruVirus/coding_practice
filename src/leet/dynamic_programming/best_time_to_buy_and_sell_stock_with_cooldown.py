@@ -15,6 +15,28 @@ one day).
 Note: You may not engage in multiple transactions simultaneously (i.e., you must sell
 the stock before you buy again).
 
+Approach
+--------
+
+1. A function that answers the problem for a given state
+
+    dp(i, holding)
+
+2. A recurrence relation to transition between states
+
+    dp(i, holding) = max(do_nothing, sell_stock) if holding == 1 else
+                     max(do_nothing, buy_stock)
+
+    where,
+        do_nothing = dp(i + 1, holding),
+        sell_stock = prices[i] + dp(i + 2, 0), and
+        buy_stock = -prices[i] + dp(i + 1, 1).
+
+3. Base cases
+
+    If the stock is no longer on the market (i >= prices.length), then we should return
+0, as we cannot make any more money.
+
 Complexity
 ==========
 
