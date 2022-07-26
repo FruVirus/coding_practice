@@ -169,6 +169,9 @@ Leaf Output Value = sum(leaf residuals) /
 						previous probabilities * (1 - previous probabilities)
 					)
 
+Note that the previous probability for a given sample will be different for each sample
+after the first tree. Initially, they are all the same (i.e., 0.7).
+
 We update our Predictions by combining the initial leaf with the new tree. Just like
 before, the new tree is scaled by a Learning Rate. The log(odds) Prediction is the
 previous Prediction + the Output Value from the tree scaled by the Learning Rate. We
