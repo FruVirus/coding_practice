@@ -142,27 +142,26 @@ of Yes is log(4 / 2).
 
 Just like with Logistic Regression, the easiest way to use the log(odds) for
 Classification is to convert it to a Probability and we do that with a Logistic
-Function.
-
-If the probability of Yes is greater than 0.5 (or some other threshold) for the initial
-Prediction, we can Classify everyone in the Training Dataset as Yes (initially).
+Function. If the probability of Yes is greater than 0.5 (or some other threshold) for
+the initial Prediction, we can Classify everyone in the Training Dataset as Yes
+(initially).
 
 We can measure how bad the initial Prediction is by calculating the Pseudo Residuals,
 the difference between the Observed and the Predicted values. Note that the Observed
-values would be either 0 or 1 (for binary classification). The Predicted value comes
-from sigmoid(log(4 / 2)) = 0.7. Thus, the residuals for "Yes" would be 1 - 0.7 and the
-residuals for "No" would be 0 - 0.7.
+values would be either 0 or 1 (for binary classification). The initial Predicted value
+comes from sigmoid(log(4 / 2)) = 0.7. Thus, the residuals for "Yes" would be 1 - 0.7 and
+the residuals for "No" would be 0 - 0.7.
 
 Now we build a Tree using the Training Dataset variables to Predict the Residuals. In
 practice, people often set the maximum number of leaves to be between 8 and 32.
 
 When we used Gradient Boost for Regression, a leaf with a single Residual had an Output
 Value equal to that Residual. In contrast, when we use Gradient Boost for
-Classification, the situation is a little more complex. This is because the Predictions
-are in terms of the log(odds) and the leaf value is derived from a Probability (i.e.,
-1 - sigmoid(log(odds)) or 0 - sigmoid(log(odds))) so we can't just add them together to
-get a new log(odds) Prediction without some sort of transformation. See notes for
-derivation of transformation.
+Classification, the situation is a little more complex. This is because the initial
+Prediction is in terms of the log(odds) and the leaf value is derived from a Probability
+(i.e., 1 - sigmoid(log(odds)) or 0 - sigmoid(log(odds))) so we can't just add them
+together to get a new log(odds) Prediction without some sort of transformation. See
+notes for derivation of transformation.
 
 Leaf Output Value = sum(leaf residuals) /
 					sum for each leaf residual(
