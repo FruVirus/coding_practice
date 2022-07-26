@@ -19,7 +19,7 @@ local minimum.
 Stochastic Gradient Descent
 ---------------------------
 
-A recurring problem in machine learning is thta large training sets are necessary for
+A recurring problem in machine learning is that large training sets are necessary for
 good generalization, but large training sets are also more computationally expensive.
 
 The cost function used by a machine learning algorithm often decomposes as a sum over
@@ -37,7 +37,7 @@ hundred examples.
 
 For a fixed model size, the cost per SGD update does not depend on the training set size
 m. In practice, we often use a larger model as the training set size increases, but we
-are not foreced to do so. The number of updates required to reach convergence usually
+are not forced to do so. The number of updates required to reach convergence usually
 increases with training set size. However, as m approaches infinity, the model will
 eventually converge to its best possible test error before SGD has sampled every example
 in the training set. Increasing m further will not extend the amount of training time
