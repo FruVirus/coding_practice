@@ -94,11 +94,11 @@ def sol_dset(accounts):
                 email_group[email] = i
             else:
                 dset.union(i, email_group[email])
-    components = defaultdict(list)
+    group_to_emails = defaultdict(list)
     for email, group in email_group.items():
-        components[dset.find(group)].append(email)
+        group_to_emails[dset.find(group)].append(email)
     merged_accounts = []
-    for group, emails in components.items():
+    for group, emails in group_to_emails.items():
         name = accounts[group][0]
         merged_accounts.append([name] + sorted(emails))
     return merged_accounts
