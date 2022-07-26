@@ -9,6 +9,18 @@ According to the definition of LCA on Wikipedia: “The lowest common ancestor i
 between two nodes p and q as the lowest node in T that has both p and q as descendants
 (where we allow a node to be a descendant of itself).”
 
+Intuition
+---------
+
+1. Build a mapping from node to its parent starting with the root (whose parent is
+None).
+
+2. Starting with p, add ancestors of p. One of the parents of q will also be an ancestor
+of p.
+
+3. Go up the chain of q's parents until one of q's parent is in the ancestor of p. This
+is the lowest common ancestor.
+
 Complexity
 ==========
 
