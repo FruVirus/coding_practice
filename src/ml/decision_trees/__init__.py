@@ -298,7 +298,7 @@ When alpha = 0, we build a full sized tree, since it will have the lowest Tree S
 For the next sub-tree, alpha = 10000 (value determined from Step 1) gives us a lower
 Tree Score, and so on for the other sub-trees.
 
-After we have built all the new sub-trees using just the Training Data. We calculate the
+After we have built all the new sub-trees using just the Training Data, we calculate the
 SSR for each new tree using only the Testing data. Suppose the tree with alpha = 10000
 gave us the lowest SSR for the Test data.
 
@@ -316,8 +316,9 @@ alpha.
 
 In other words, we build a set of trees from full-sized to leaf using different Training
 and Test data each time using k-Fold Cross Validation. The values of alpha are set from
-Step 1. The value of alpha that, on average, gave us the lowest SSR with the Test data
-across the different folds is the final value for alpha.
+Step 1 and these alpha values constrain the number of leaves in the sub-trees. The value
+of alpha that, on average, gave us the lowest SSR with the Test data across the
+different folds is the final value for alpha.
 
 Step 4: Select the original tree that corresponds to that alpha
 ---------------------------------------------------------------
