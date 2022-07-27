@@ -87,6 +87,13 @@ LDA is like PCA---both try to reduce dimensions
     - PCA looks at variables with the most variation
     - LDA tries to maximize the separation between categories
 
+Both LDA and PCA are linear transformation techniques: LDA is a supervised whereas PCA
+is unsupervised – PCA ignores class labels.
+
+We can picture PCA as a technique that finds the directions of maximal variance. In
+contrast to PCA, LDA attempts to find a feature subspace that maximizes class
+separability.
+
 Misc.
 -----
 
