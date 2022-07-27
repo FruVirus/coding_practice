@@ -35,7 +35,7 @@ can run the algorithm on many different random initializations and then pick the
 clustering that gives the lowest cost.
 
 Choosing k can be quite arbitrary and ambiguous. The cost function should reduce as we
-increase the number of clusters an then flatten out --> choose k at the point where the
+increase the number of clusters and then flatten out --> choose k at the point where the
 cost function starts to flatten out --> elbow method. However, fairly often, the curve
 is very gradual, so there's no clear elbow.
 
