@@ -85,7 +85,7 @@ from collections import deque
 
 class Node:
     def __init__(self, val=None, children=None):
-        self.val, self.children = val, children
+        self.val, self.children = val, children or []
 
 
 class TreeNode:
