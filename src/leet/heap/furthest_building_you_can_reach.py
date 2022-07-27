@@ -18,6 +18,41 @@ either use one ladder or (h[i + 1] - h[i]) bricks.
 Return the furthest building index (0-indexed) you can reach if you use the given
 ladders and bricks optimally.
 
+Intuition
+---------
+
+Min Heap
+
+The best strategy is to use the ladders for the longest climbs and the bricks for the
+shortest climbs. This shouldn’t seem too surprising; a ladder is most valuable in the
+cases where we would have to use a lot of bricks.
+
+The solution is to move along the buildings sequentially, one climb at a time. At all
+times, we should ensure ladders have been allocated to the longest climbs seen so far
+and bricks to the shortest. This might sometimes involve going back and changing an
+earlier allocation.
+
+This code loops over all buildings, starting from the first and ending at the
+second-to-last. For each building, it calculates the difference between the next
+building and itself. If this difference is non-positive, then we know this is not a
+climb and therefore should be skipped. Otherwise, it's a climb that we will need to
+allocate bricks or a ladder to.
+
+Anyway, the next thing to do is to decide how we're going to handle the allocation of
+ladders and bricks. We decided above that the strategy we'll use is to use a ladder if
+we have one available. If we're out of ladders, we'll replace the most wasteful (i.e.,
+the ladder that was used with the smallest climb) ladder allocation with bricks. In
+code, this means we'll need a data structure that we can insert climbs into, and then
+when needed, retrieve the smallest climb.
+
+Max Heap
+
+This approach is similar to Approach 1, except instead of initially allocating ladders,
+we allocate bricks. When we run out of bricks, we replace the longest climb with a
+ladder. This was in contrast to before when we were replacing the shortest climb with
+bricks. Because we now need to retrieve maximums instead of minimums, we should use a
+max-heap instead of a min-heap.
+
 Complexity
 ==========
 
