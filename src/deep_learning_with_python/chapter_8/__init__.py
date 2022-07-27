@@ -111,8 +111,8 @@ input. The high-level patterns learned by the convnet will still be very small w
 regard to the initial input, which may not be enough to learn to classify digits (try
 recognizing a digit by only looking at it through windows that are 7 x 7 pixels!). We
 need the features from the last convolution layer to contain information about the
-totality of the input. We max-pooling, the 3 x 3 windows in the third layer will contain
-information coming from 18 x 18 windows in the initial input instead.
+totality of the input. With max-pooling, the 3 x 3 windows in the third layer will
+contain information coming from 18 x 18 windows in the initial input instead.
 
 - The final feature map would have a large number of coefficients without some form of
 downsampling before being fed to the Dense layer.
@@ -185,8 +185,8 @@ last Dense layer).
 A common and highly effective approach to deep learning on small image datasets is to
 use a pretained model. A pretrained model is a model that was previously trained on a
 large dataset. If this original dataset is large enough and general enough, the spatial
-hierarachy of features learned by the pretrained model can effectively act as a generic
-model of hte visual world, and hence, its features can prove useful for many different
+hierarchy of features learned by the pretrained model can effectively act as a generic
+model of the visual world, and hence, its features can prove useful for many different
 computer vision problems, even though these new problems may involve completely
 different classes than those of the original task.
 
@@ -199,15 +199,15 @@ model to extract interesting features from new samples. These features are then 
 through a new classifier, which is trained from scratch.
 
 The series of pooling and convolution layers is called the convolutional base of the
-model. In the case of convnetes, feature extraction consists of taking the convolutional
+model. In the case of convnets, feature extraction consists of taking the convolutional
 base of a previously trained network, running the new data through it, and training a
 new classifier on top of the output.
 
-Why only reuse the convolutonal base? Could we reuse the densely connected classifier as
-well? In general, doing so should be avoided. The reason is that the representations
+Why only reuse the convolutional base? Could we reuse the densely connected classifier
+as well? In general, doing so should be avoided. The reason is that the representations
 learned by the convolutional base are likely to be more generic and, therefore, more
 reusable: the feature maps of a convnet are presence maps of generic concepts over a
-picture, which are likley to be useful regardless of the computer vision problem at
+picture, which are likely to be useful regardless of the computer vision problem at
 hand. But the representations learned by the classifier will necessarily be specific to
 the set of classes on which the model was trained---they will only contain information
 about the presence probability of this or that class in the entire picture.
