@@ -20,8 +20,8 @@ A segmentation mask is the image-segmentation equivalent of a label: it's an ima
 same size as the input image, with a single color channel where each integer value
 corresponds to the class of the corresponding pixel in the input image.
 
-In segmentation, we typically use downsample by adding strides to every other
-convolution layer instead of using max pooling. We do this because, in the case of image
+In segmentation, we typically downsample by adding strides to every other convolution
+layer instead of using max pooling. We do this because, in the case of image
 segmentation, we care a lot about the spatial location of information in the image,
 since we need to produce per-pixel target masks as output of the model. When you do
 2 x 2 max pooling, you are completely destroying location information within each
@@ -54,7 +54,7 @@ filters grows with layer depth, while the size of the feature maps shrinks accor
 
 Deeper hierarchies are intrinsically good because they encourage feature reuse, and
 therefore abstraction. In general, a deep stack of narrow layers performs better than a
-shollow stack of large layers. However, there's a limit to how deep you can stack
+shallow stack of large layers. However, there's a limit to how deep you can stack
 layers, due to the problem of vanishing gradients. This leads us to our first essential
 model architecture pattern: residual connections.
 
@@ -81,7 +81,7 @@ a max pooling layer.
 -------------------------
 
 Data normalization may be of interest after every transformation operated by the
-network: even if the data entering a Dense of Conv2D network has a 0 mean and unit
+network: even if the data entering a Dense layer of Conv2D network has a 0 mean and unit
 variance, there's no reason to expect apriori that this will be the case for the data
 coming out.
 
@@ -156,7 +156,7 @@ depthwise convolution. Then, we take the transformed image and simply elongate i
 9.3.5 Putting it together: A mini Xception-like model
 -----------------------------------------------------
 
-Here are the convnet principlies you've learned so far:
+Here are the convnet principles you've learned so far:
 
 - Your model should be organized into repeated blocks of layers, usually made of
 multiple convolution layers and a max pooling layer
@@ -170,14 +170,14 @@ feature maps decreases
 networks
 
 - It can be beneficial to introduce batch normalization layers after your convolution
-layers
+layers (and before the nonlinear activation)
 
-It can be beneficial to replace Conv2D layers with SeparableConv2D layers, which are
+- It can be beneficial to replace Conv2D layers with SeparableConv2D layers, which are
 more parameter-efficient
 
 NB: The assumption that underlies separable convolution, "feature channels are largely
 independent," does not hold for RGB images since the color channels are actually highly
-corrleated in natural images. As such, the first layer in a convnet model should just be
+correlated in natural images. As such, the first layer in a convnet model should just be
 a regular Conv2D layer.
 
 9.4 Interpreting what convnets learn
@@ -215,7 +215,7 @@ There are a few things to note:
 activations retain almost all of the information present in the initial picture.
 
 - As you go deeper, the activations become increasingly abstract and less visually
-interpretable. They being to encode higher-level concepts. Deeper representations carry
+interpretable. They begin to encode higher-level concepts. Deeper representations carry
 increasingly less information about the visual contents of the image, and increasingly
 more information related to the class of the image.
 
@@ -278,7 +278,7 @@ channels" by "how important each channel is with regard to the class," resulting
 spatial map of "how intensely the input image activates the class." In other words, we
 want to calculate how changing the input image changes the class prediction by
 calculating how changing the input image changes the channels of the convnet feature
-maps and how change the channels of the convnet feature maps change the class
+maps and how changing the channels of the convnet feature maps change the class
 prediction.
 
 First, we create a model that maps the input image to the activations of the last
