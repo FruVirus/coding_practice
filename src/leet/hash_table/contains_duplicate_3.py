@@ -30,6 +30,10 @@ need to check if the absolute difference is <= t.
 To take into account the condition abs(i - j) <= k, we use a sliding window where we
 delete the key at index nums[i - k] // w if i >= k.
 
+Each of our buckets contains at most one element at any time, because two elements in a
+bucket means "almost duplicate" and we can return early from the function. Therefore, a
+HashMap with an element associated with a bucket label is enough for our purpose.
+
 Complexity
 ==========
 

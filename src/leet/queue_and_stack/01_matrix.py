@@ -6,6 +6,14 @@ Given an m x n binary matrix mat, return the distance of the nearest 0 for each 
 
 The distance between two adjacent cells is 1.
 
+Intuition
+---------
+
+Note that this approach requires rewriting the values of mat. Another approach is to use
+a hash set to keep track of already visited (r, c) cells in mat so that we don't
+consider them twice. Or, we could initialize an array of zeros of the same size as mat,
+with 0 values where mat is 0 and float("inf") values where mat is 1.
+
 Complexity
 ==========
 

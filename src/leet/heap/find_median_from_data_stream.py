@@ -5,6 +5,16 @@ Find Median from Data Stream
 The median is the middle value in an ordered integer list. If the size of the list is
 even, there is no middle value and the median is the mean of the two middle values.
 
+Intuition
+---------
+
+We get the median value from the max heap if there are more elements in the max heap
+than the min heap. Otherwise, we take the average of the top two values from the max
+and min heaps.
+
+Since we move the top value from the min heap to the max heap, this ensures that the
+value at the top of the max heap is the median.
+
 Complexity
 ==========
 

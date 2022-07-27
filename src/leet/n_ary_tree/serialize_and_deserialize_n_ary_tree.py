@@ -16,7 +16,9 @@ the original tree structure.
 Intuition
 ---------
 
-We add a sentinel value when all the children have been added to the final string.
+We add a sentinel value when all the children have been added to the final string. The
+sentinel value is "#" which has ord("#") = 35. Thus, we add/subtract 36 when
+serializing/deserializing so that we won't have a string collision.
 
 Complexity
 ==========
