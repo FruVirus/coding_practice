@@ -7,6 +7,12 @@ array answer such that answer[i] is the number of days you have to wait after th
 day to get a warmer temperature. If there is no future day for which this is possible,
 keep answer[i] == 0 instead.
 
+Intuition
+---------
+
+We traverse backwards through the array. For the last day, we wait 0 days to get a
+higher temperature since there are no more days after the last day.
+
 Complexity
 ==========
 
