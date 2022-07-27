@@ -12,32 +12,32 @@ binary tree and this binary tree can be decoded to the original N-nary tree stru
 Intuition
 ---------
 
+Each node in the original N-ary tree would correspond uniquely to a node in the
+resulting binary tree.
+
 BFS Approach
 
 To put it simple, the algorithm can be summarized in two steps.
 
-    1. Link all siblings together, like a singly-linked list.
+    1. Link all children of a node together using a singly-linked list.
 
-Each node in the original N-ary tree would correspond uniquely to a node in the
-resulting binary tree.
-
-In the first step, we first chain up all the sibling nodes together, i.e. nodes that
+    In the first step, we first chain up all the child nodes together, i.e. nodes that
 share the same parent. By chaining up, we would link the nodes via either left or right
 child pointers of the binary tree node. Here we choose to do with the right pointer.
 
-    2. Link the head of the obtained list of siblings with its parent node.
+    2. Link the head of the obtained list of child nodes with its parent node.
 
-Now that the siblings are chained up, we just need to link this sibling list with their
-parent node.
+    Now that the child nodes are chained up, we just need to link this child list with
+their parent node.
 
-As one can see, we don't have to link each one of the siblings to its parent, and we
+    As one can see, we don't have to link each one of the children to its parent, and we
 cannot do so either, since we only got two pointers for a node in binary tree. It
-suffices to pick one of the siblings. Naturally, we could link the head of the list with
+suffices to pick one of the children. Naturally, we could link the head of the list with
 its parent node.
 
-As one can imagine, based on the above idea, one can create some variants. For instance,
-instead of linking the child nodes with the right pointers, we could use the left
-pointers. And accordingly, we could start from the last child node to chain up the
+    As one can imagine, based on the above idea, one can create some variants. For
+instance, instead of linking the child nodes with the right pointers, we could use the
+left pointers. And accordingly, we could start from the last child node to chain up the
 siblings.
 
 DFS Approach
