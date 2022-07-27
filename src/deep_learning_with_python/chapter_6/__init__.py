@@ -39,7 +39,7 @@ the relationship between inputs and targets.
 6.1.2 Collect a dataset
 -----------------------
 
-Beware Of Non-Represetative Data
+Beware Of Non-Representative Data
 
 It's critical that the data used for training should be representative of the production
 data.
@@ -91,7 +91,7 @@ data vectorization.
 Value Normalization
 
 To make learning easier for your network, your data should have the following
-characeteristics:
+characteristics:
 
 - Take small values---Typically, most values should be in the 0 - 1 range.
 
@@ -123,7 +123,7 @@ the categorical features that you expect are likely to be missing in the test da
 
 Three common evaluation protocols:
 
-- Manintaining a holdout validation set---this is the way to go when you have plenty of
+- Maintaining a holdout validation set---this is the way to go when you have plenty of
 data
 
 - Doing K-fold cross-validation---this is the right choice when you have too few samples
@@ -177,7 +177,7 @@ model to overfit to the validation process.
 
 Once you've developed a satisfactory model configuration, you can train your final
 production model on all the available data (training and validation) and evaluate it one
-last time on teh test set.
+last time on the test set.
 
 6.3 Deploy the model
 ====================
@@ -194,7 +194,7 @@ You should consider showing some examples of the failure modes of your model.
 You should clearly convey model performance expectations. Clearly relate the model's
 performance metrics to business goals.
 
-Disucss with stakeholders the choice of key launch parameters---for instance, the
+Discuss with stakeholders the choice of key launch parameters---for instance, the
 probability threshold at which a transaction should be flagged.
 
 6.3.2 Ship an inference model
@@ -234,7 +234,7 @@ user surveys.
 As soon as your model has launched, you should be getting ready to train the next
 generation that will replace it. As such,
 
-- Watch out for chagnes in the production data. Are new features becoming available?
+- Watch out for changes in the production data. Are new features becoming available?
 Should you expand or otherwise edit the label set?
 
 - Keep collecting and annotating data, and keep improving your annotation pipeline over
