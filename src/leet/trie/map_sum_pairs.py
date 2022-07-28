@@ -46,6 +46,10 @@ approach this problem. For every node of the trie corresponding to some prefix, 
 remember the desired answer (score) and store it at this node. As in Approach #2, this
 involves modifying each node by delta = val - map[key].
 
+In essence, nodes higher up in the Trie have higher scores since they correspond to
+shorter prefixes whereas leaf nodes have lower scores since they correspond to entire
+words.
+
 Complexity
 ==========
 
