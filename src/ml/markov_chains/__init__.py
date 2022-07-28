@@ -18,8 +18,8 @@ P(X_(n + 1) = x | X_n = x_n)
 2. The sum of the weights of the outgoing edges from any state is equal to 1. This has
 to be true since these weights represent probabilities.
 
-3. We can transform the outgoing edges into an adjacency matrix. If we multiply this
-matrix by a row vector whose elements represent the probabilities of the states. To
+3. We can transform the outgoing edges into a transition matrix, where the values in the
+matrix denote the weights and a value of 0 means there is no edge between two nodes. To
 start, we can assume pi = [0, 1, 0] which corresponds to an initial configuration where
 all the probability is on the second state. If we multiply this row vector with the
 matrix, we get the corresponding probabilities for that state.
@@ -30,7 +30,7 @@ eventually get to a state where the output row vector does not change from the i
 vector---this is a stationary state that denotes a persistent state of the system in the
 long run.
 
-pi * A = pi
+pi * A = 1 * pi
 
 The pi vectors are the (left) eigenvectors of matrix A with eigenvalue of 1. In
 addition, the elements of pi must add up to 1 since they represent probabilities.
@@ -67,5 +67,11 @@ Part 5: Hidden Markov Model
 ---------------------------
 
 A hidden Markov model consists of a hidden Markov chain and a set of observed variables.
-The observed variables only depends on the current state in the Markov chain.
+The observed variables only depends on the current hidden state in the Markov chain.
+
+Hidden Markov Model = Hidden Markov Chain + Observed Variables
+
+In effect, we have to transition matrices. One denotes the transition matrix for the
+hidden markov chain and the other denotes the transition matrix for the observed
+variables.
 """
