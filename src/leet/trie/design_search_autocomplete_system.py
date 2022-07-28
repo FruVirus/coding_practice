@@ -88,9 +88,12 @@ Sol:
     def starts_with(self): O(1).
 """
 
+# Standard Library
+from typing import List
+
 
 class Sol:
-    def __init__(self, sentences, times, k=3):
+    def __init__(self, sentences: List[str], times: List[int], k=3):
         self.k, self.sents, self.times = k, sentences, times
         self.curr_sent, self.num_sents = "", len(self.sents)
         self.idx_map, self.trie = {s: i for i, s in enumerate(self.sents)}, {}
