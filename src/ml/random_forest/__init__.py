@@ -103,7 +103,7 @@ The proportion of Out-Of-Bag samples that were incorrectly classified is the
 Optimizing the Random Forest
 ----------------------------
 
-Now we cna compare the Out-Of-Bad error for a random forest built using only 2 variables
+Now we can compare the Out-Of-Bad error for a random forest built using only 2 variables
 per step to a random forest built using 3 variables per step, and so on. We can test a
 bunch of different settings and choose the most accurate random forest as determined by
 the Out-Of-Bad Error.
@@ -122,12 +122,12 @@ Random Forests consider 2 types of missing data:
 1. Missing data in the original dataset used to create the random forest.
 
 The general idea for dealing with missing data in the training set is to make an initial
-guess that could be ad, then gradually refine the guess until it is (hopefully) a good
+guess that could be bad, then gradually refine the guess until it is (hopefully) a good
 guess.
 
-We can look the correlation between the prediction and the column with the missing data
-and choose a value for the missing data that correlates with the other values in the
-column. For binary data, we can use the majority value from the other data in the
+We can look at the correlation between the prediction and the column with the missing
+data and choose a value for the missing data that correlates with the other values in
+the column. For binary data, we can use the majority value from the other data in the
 column. For numeric data, we can use the mean or median value from the other data in the
 column.
 
