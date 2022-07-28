@@ -64,8 +64,8 @@ sentence to the trie.
         c. Finally, we reset self.curr_sent to an empty string and return an empty list.
 
 def starts_with(self):
-    We return the indices of nodes in the trie that starts with the characters in the
-current input sentence.
+    We return the indices of sentences that starts with the characters in the current
+input sentence.
 
 Complexity
 ==========
