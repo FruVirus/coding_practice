@@ -29,7 +29,7 @@ kthGrammar(n, k): O(n).
 Space
 -----
 
-kthGrammar(n, k): O(1).
+kthGrammar(n, k): O(n).
 """
 
 

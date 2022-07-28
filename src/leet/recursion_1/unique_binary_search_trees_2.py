@@ -11,12 +11,12 @@ Complexity
 Time
 ----
 
-generateTrees(n): O(4^n / n^(1 / 2)).
+generateTrees(n): O(4^n / sqrt(n)).
 
 Space
 -----
 
-generateTrees(n): O(4^n / n^(1 / 2)).
+generateTrees(n): O(4^n / sqrt(n)).
 """
 
 
@@ -26,12 +26,12 @@ class Node:
 
 
 def sol(n):
-    cache = {}
+    memo = {}
 
     def generate_trees(start, end):
         if start <= end:
-            if (start, end) in cache:
-                return cache[(start, end)]
+            if (start, end) in memo:
+                return memo[(start, end)]
             all_trees = []
             for i in range(start, end + 1):
                 for l in generate_trees(start, i - 1):
@@ -39,7 +39,7 @@ def sol(n):
                         tree = Node(i)
                         tree.left, tree.right = l, r
                         all_trees.append(tree)
-            cache[(start, end)] = all_trees
+            memo[(start, end)] = all_trees
             return all_trees
         return [None]
 
