@@ -1,10 +1,12 @@
-"""Regularization
+"""
+Regularization
+==============
 
 Overview
-========
+--------
 
 Q: How do Ridge or Lasso know which variables are useless? Will they not also shrink the
-parameter of important variables ?
+parameter of important variables?
 
 A: You could think of it as if Ridge and Lasso are balancing between the predictive
 ability and the complexity of the model. If a feature is very helpful in predicting,
@@ -64,7 +66,8 @@ that the Least Squares Line.
 
 Lambda can be any value from 0 to infinity. As lambda increases, the slope of the line
 decreases. As lambda approaches infinity, the slope of the line approaches 0 and this
-means that the predicted y values becomes less and less sensitive to the x values.
+means that the predicted y values becomes less and less sensitive to the x values, and
+ultimately, the predicted y values is just the average y value.
 
 Ridge Regression for fancy models
 ---------------------------------
@@ -124,7 +127,7 @@ using Cross Validation. In addition, Lasso Regression includes all parameters ex
 the y-intercept.
 
 Like Ridge Regression, Lasso Regression results in a line with a little bit of Bias but
-less variance than Least Squares.
+less Variance than Least Squares.
 
 The big difference between Ridge and Lasso Regression is that Ridge Regression can only
 shrink the slope asymptotically close to 0 while Lasso Regression can shrink the slope
