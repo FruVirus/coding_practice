@@ -91,8 +91,8 @@ So, let’s combine the above two ideas together:
     - We train additive trees and neural network to predict non-linear complex
 relationships among our features. We then use these models to generate features.
 
-    - We use raw features and features generated in the previous step to train a logic
-regression model.
+    - We use raw features and features generated in the previous step to train a
+logistic regression model.
 
 The above two steps together solve both of our problems to capture complex non-linear
 relationships and also enable us to use online learning to refresh the model frequently
