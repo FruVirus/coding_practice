@@ -1,4 +1,6 @@
-"""Principal Component Analysis in Python
+"""
+Principal Component Analysis in Python
+======================================
 
 PCA is a dimensionality reduction technique. Given two features, x_1 and x_2, we want to
 find a single line that effectively describes both features at once. We then map our old
@@ -41,7 +43,7 @@ axis. Thus, x_1 is more important in terms of describing the data.
 
 PCA using SVD scales the hypotenuse so that its length is 1 and scales the other sides
 accordingly. However, the ratio of x_1 to x_2 remains the same. This unit vector for PC1
-is called the singluar vector or the eigenvector for PC1. The sum of squared distances
+is called the singular vector or the eigenvector for PC1. The sum of squared distances
 for PC1 is called the eigenvalue for PC1 and the square root of the eigenvalue for PC1
 is called the singular value for PC1.
 
@@ -52,9 +54,9 @@ Once you have all of the PCs figured out, you can use the eigenvalues to determi
 proportion of variation that each PC accounts for. The sum of squared distances divided
 by (n - 1) is the variation for each PC. You can then take the highest variance PCs as
 the main variables (e.g., to use for plotting). Differences along PC1 are more important
-than differences along PC2, etc. Thus, if data points separated by the same distances
-along PC1 and PC2, the data points along PC1 are more different from each other than the
-data points along PC2.
+than differences along PC2, etc. Thus, if data points are separated by the same
+distances along PC1 and PC2, the data points along PC1 are more different from each
+other than the data points along PC2.
 
 In theory, there is one PC for each variable. In practice, the number of PCs is either
 the number of variables or the number of samples, whichever is smaller.
