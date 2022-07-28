@@ -36,13 +36,14 @@ Intuition
 ---------
 
 def __init__(self, sentences, times, k=3):
-    We call add_word() to construct a trie using all the sentences.
+    We call add_sent() to construct a trie using all the sentences.
 
-def add_word(self, word):
-    For each character in word, we build a nested dictionary (i.e., a trie) for that
-word. Since word can also be a sentence here, we are effectively building a trie for
-sentences. In other words, we are treating sentences as "words". The key for each nested
-dictionary can be any character (just choose "$").
+def add_sent(self, sent):
+    For each character in sent, we build a nested dictionary (i.e., a trie) for that
+sentence. The key for each nested dictionary can be any character (just choose "$"). The
+values for the nested dictionary are lists, where the element in the list is the index
+of the sentence that the character appears in. For example, if we have the sentence
+"i love you" and "island", then the node i wll have {"$": [0, 1]}.
 
 def input(self, c):
     1. Python sorted() will automatically sort based on ASCII-code order. In addition,
@@ -102,8 +103,8 @@ class Sol:
 
     def add_sent(self, sent):
         node = self.trie
-        for word in sent:
-            node = node.setdefault(word, {"$": []})
+        for char in sent:
+            node = node.setdefault(char, {"$": []})
             node["$"].append(self.idx_map[sent])
 
     def input(self, c):
@@ -124,8 +125,8 @@ class Sol:
 
     def starts_with(self):
         node = self.trie
-        for word in self.curr_sent:
-            if word not in node:
+        for char in self.curr_sent:
+            if char not in node:
                 return []
-            node = node[word]
+            node = node[char]
         return node["$"]
