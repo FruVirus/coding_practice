@@ -19,7 +19,7 @@ fib(n): O(n).
 Space
 -----
 
-fib(n): O(n).
+fib(n): O(1).
 """
 
 
