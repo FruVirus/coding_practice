@@ -147,7 +147,7 @@ vectors into a stack of layers.
 
 A First Practical Example
 
-The simples way to convert our integer sequences to vector sequences is to one-hot
+The simplest way to convert our integer sequences to vector sequences is to one-hot
 encode the integers (each dimension would represent one possible term in the
 vocabulary).
 
@@ -164,7 +164,7 @@ The geometric relationship between two word vectors should reflect the semantic
 relationship between these words. Words that mean different things should lie far away
 from each other, whereas related words should be closer.
 
-Word embeddings are vector representations of words that achieve exasctly this: they map
+Word embeddings are vector representations of words that achieve exactly this: they map
 human language into a structured geometric space.
 
 Whereas the vectors obtained through one-hot encoding are binary, sparse, and very
@@ -238,7 +238,7 @@ These scores can be used to inform the next representation of the input.
 Crucially, this kind of attention mechanism can be used for more than just highlighting
 or erasing certain features. It can be used to make features context-aware. In an
 embedding space, a single word has a fixed position---a fixed set of relationships with
-every other word in the space. But that's not quite how langauge works: the meaning of a
+every other word in the space. But that's not quite how language works: the meaning of a
 word is usually context-specific.
 
 A smart embedding space would provide a different vector representation for a word
@@ -253,7 +253,7 @@ between two token vectors as measure of the strength of their relationship.
 
 Step 2 is to compute the sum of all token vectors in the input, weighted by our
 relevancy scores. Words closely related to the token will contribute more to the sum,
-while irrelevant tokens will contriubte almost nothing. The resulting vector is our new
+while irrelevant tokens will contribute almost nothing. The resulting vector is our new
 representation for the token: a representation that incorporates the surrounding
 context.
 
@@ -275,7 +275,7 @@ resulting in three separate vectors. Each vector is processed via neural attenti
 the three outputs are concatenated back together into a single output sequence. Each
 such subspace is called a "head."
 
-The presence of the laernable dense projections enables the layer to actually learn
+The presence of the learnable dense projections enables the layer to actually learn
 something, as opposed to being a purely stateless transformation that would require
 additional layers before or after it to be useful. In addition, having independent heads
 helps the layer learn different groups of features for each token, where features within
@@ -301,7 +301,7 @@ the end, or in the middle of a sequence.
 Using Positional Encoding To Re-Inject Order Information
 
 The idea behind positional encoding is very simple: to give the model access to
-word-order information, we're going tp add the word's position in the sentence to each
+word-order information, we're going to add the word's position in the sentence to each
 word embedding. Our input word embeddings will have two components: the usual word
 vector, which represents the word independently of any specific context, and a position
 vector, which represents the position of the word in the current sentence.
@@ -314,18 +314,19 @@ relevant approach in many cases.
 
 When approaching a new text-classification task, you should pay close attention to the
 ratio between the number of samples in your training data and the mean number of words
-per sample. If that ration is less than 1500, then the bag-of-bigrams model will perform
+per sample. If that ratio is less than 1500, then the bag-of-bigrams model will perform
 better. Otherwise, you should go with a sequence model. In other words, sequence models
 work best when lots of training data is available and when each sample is relatively
 short.
 
 This intuitively makes sense: the input of a sequence model represents a richer and more
 complex space, and thus it takes more data to map out that space; meanwhile, a plain set
-of terms is a space so simple that you can train a logistic regression. In addition, the
-shorter a sample is, the less the model can afford to discard any of the information it
-contains---in particular, word order becomes more important, and discarding it can
-create ambiguity. With a longer sample, word statistics would become more reliable and
-the topic or sentiment would be more apparent from the word histogram alone.
+of terms is a space so simple that you can train a logistic regression model. In
+addition, the shorter a sample is, the less the model can afford to discard any of the
+information it contains---in particular, word order becomes more important, and
+discarding it can create ambiguity. With a longer sample, word statistics would become
+more reliable and the topic or sentiment would be more apparent from the word histogram
+alone.
 
 11.5 Beyond text classification: Sequence-to-sequence learning
 ==============================================================
