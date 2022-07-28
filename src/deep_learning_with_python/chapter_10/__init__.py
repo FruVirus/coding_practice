@@ -80,7 +80,7 @@ harmful to the learning process.
 
 In other words, an RNN cell has a dropout parameter for the linear transformation of its
 inputs and a recurrent dropout parameter for the linear transformation of its recurrent
-(i.e., hidden state).
+activations (i.e., hidden state).
 
 10.4.2 Stacking recurrent layers
 --------------------------------
