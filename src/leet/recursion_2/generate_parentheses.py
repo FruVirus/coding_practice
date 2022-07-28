@@ -12,7 +12,8 @@ Let's only add "(" or ")" when we know it will remain a valid sequence. We can d
 by keeping track of the number of opening and closing brackets we have placed so far.
 
 We can start an opening bracket if we still have one (of n) left to place. And we can
-start a closing bracket if it would not exceed the number of opening brackets.
+start a closing bracket if it would not exceed the number of opening brackets. Once a
+combination equals 2 * n, then we have a well-formed parenthesis.
 
 Complexity
 ==========
