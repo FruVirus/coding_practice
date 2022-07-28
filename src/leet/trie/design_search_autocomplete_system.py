@@ -111,7 +111,7 @@ class Sol:
         if self.curr_sent in self.idx_map:
             self.times[self.idx_map[self.curr_sent]] += 1
         else:
-            self.sents.append(self.curr_sent)
+            self.sents[self.curr_sent] += 1
             self.idx_map[self.curr_sent] = self.num_sents
             self.times.append(1)
             self.num_sents += 1
