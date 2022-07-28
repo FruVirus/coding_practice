@@ -10,6 +10,14 @@ For example, for n = 3, the 1st row is 0, the 2nd row is 01, and the 3rd row is 
 Given two integer n and k, return the kth (1-indexed) symbol in the nth row of a table
 of n rows.
 
+Intuition
+---------
+
+Each row, after the first row, is the concatenation of the row above it and its reverse.
+The midpoint of a row is given by 2 ^ (n - 1) / 2. If k is <= mid, then we recurse to a
+previous row and decrement n by 1. Otherwise, we recurse to a previous row and decrement
+n by 1 and k by mid and we subtract 1 from the return value.
+
 Complexity
 ==========
 
