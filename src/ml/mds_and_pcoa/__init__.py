@@ -1,4 +1,6 @@
-"""Multidimensional Scaling (MDS) and Principal Coordinate Analysis (PCoA)
+"""
+Multidimensional Scaling (MDS) and Principal Coordinate Analysis (PCoA)
+=======================================================================
 
 MDS and PCoA
 ------------
