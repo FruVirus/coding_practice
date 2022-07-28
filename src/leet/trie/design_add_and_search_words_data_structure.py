@@ -13,6 +13,13 @@ Implement the WordDictionary class:
 matches word or false otherwise. word may contain dots '.' where dots can be matched
 with any letter.
 
+Intuition
+---------
+
+Everytime we see ".", we essentially skip over the current node and recurse the search
+into the node's children. During the recursion, we would return True if we eventually
+reach a leaf node or False if a character in word is not found in the Trie.
+
 Complexity
 ==========
 
