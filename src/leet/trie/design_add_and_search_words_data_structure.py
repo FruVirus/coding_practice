@@ -1,9 +1,9 @@
 """
-Add and Search Word - Data structure design
--------------------------------------------
+Design Add and Search Words Data Structure
+------------------------------------------
 
 Design a data structure that supports adding new words and finding if a string matches
-any previously added string.
+any previously added strings.
 
 Implement the WordDictionary class:
 
