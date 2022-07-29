@@ -33,11 +33,14 @@ explore certain direction. And this, would greatly reduce the exploration space,
 therefore improve the performance of the backtracking algorithm.
 
 The overall workflow of the algorithm is intuitive, which consists of a loop over each
-cell in the board and a recursive function call starting from the cell. Here is the
-skeleton of the algorithm.
+cell in the board and a recursive function call starting from the cell. Basically, once
+we build a trie using the words we are searching for, we just need to backtrack through
+each cell of the board to see if we can find those words. Once we find the complete
+word, we can add it to our solution. Here is the skeleton of the algorithm.
 
     - We build a Trie out of the words in the dictionary, which would be used for the
-matching process later.
+matching process later. The leaf nodes of the trie contain a dictionary whose key is
+"$" (arbitrary) and whose value is the string word.
 
     - Starting from each cell, we start the backtracking exploration (i.e.,
 backtracking(cell)), if there exists any word in the dictionary that starts with the
