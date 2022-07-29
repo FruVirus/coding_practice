@@ -8,6 +8,12 @@ Given an integer array nums, return the maximum result of nums[i] XOR nums[j], w
 Intuition
 ---------
 
+We want to do the comparison starting with the leftmost bit of each number going to the
+rightmost bit. The leftmost bit can then be considered a "prefix" of that number and so
+we can use a trie.
+
+We first need to ensure that all numbers are the same length bit-wise.
+
 Each root -> leaf path in Bitwise Trie represents a binary form of a number in nums, for
 example, 0 -> 0 -> 0 -> 1 -> 1 is 3. As before, the same number of bits L is used for
 all numbers, and L = 1 + lg(M), where M is a maximum number in nums. The depth of
