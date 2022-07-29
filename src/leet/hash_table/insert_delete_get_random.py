@@ -34,6 +34,29 @@ In either case, we need a hashmap that maps elements to their indices.
 
 With duplicates, we also have to map values to all indices that have those values.
 
+Example:
+
+insert(1)
+insert(1)
+insert(2)
+
+self.dict = {1: {0, 1}, 2: {2}}
+self.list = [1, 1, 2]
+
+remove(1)
+
+First, we swap the number we want to remove from self.list with the last number from
+self.list. The most recent index of the number we want to remove comes from self.dict.
+The last number comes from the end of self.list.
+
+Second, we swap the number we want to remove from self.list with the last number from
+self.list.
+
+Third, we update self.dict for the last number to reflect its new index in self.list.
+
+Last, we remove the old index in self.dict for the last number and remove the last
+number from its old position in self.list.
+
 Complexity
 ==========
 
