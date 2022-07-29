@@ -133,7 +133,8 @@ do the following for each word.
     1. Check if the reverse of word is present. If it is, then we have a case 1 pair by
 appending the reverse onto the end of word. In addition, we should check that the index
 of the reversed word is not the same as the current word since this would mean that a
-word is forming a palindrome with itself (which is not allowed).
+word is forming a palindrome with itself (which is not allowed). This can happen if the
+word is a single character.
 
     2. For each suffix of word, check if the suffix is a palindrome. If it is a
 palindrome, then reverse the remaining prefix and check if it's in the list. If it is,
