@@ -27,6 +27,9 @@ constraint then we try another one. At the end, if one repeats the above steps w
 word as the starting word, one would exhaust all the possibilities to construct a valid
 word square.
 
+Basically, each time we backtrack, we consider an additional character in the prefix and
+check if there are any words that start with that prefix.
+
 Note that, we tweak the Trie data structure a bit, in order to further optimize the time
 and space complexity.
 
