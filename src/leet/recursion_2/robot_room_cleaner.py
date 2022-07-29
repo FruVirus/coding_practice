@@ -74,11 +74,11 @@ combine(robot): O(n - m).
 
 def sol(robot):
     def go_back():
-        robot.turnRight()
-        robot.turnRight()
+        robot.turn_right()
+        robot.turn_right()
         robot.move()
-        robot.turnRight()
-        robot.turnRight()
+        robot.turn_right()
+        robot.turn_right()
 
     def backtrack(row, col, d):
         seen.add((row, col))
@@ -89,7 +89,7 @@ def sol(robot):
             if (r, c) not in seen and robot.move():
                 backtrack(r, c, d_)
                 go_back()
-            robot.turnRight()
+            robot.turn_right()
 
     directions, seen = [(0, 1), (1, 0), (0, -1), (-1, 0)], set()
     return backtrack(0, 0, 0)
