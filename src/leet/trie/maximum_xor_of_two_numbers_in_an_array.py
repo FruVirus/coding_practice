@@ -12,7 +12,10 @@ We want to do the comparison starting with the leftmost bit of each number going
 rightmost bit. The leftmost bit can then be considered a "prefix" of that number and so
 we can use a trie.
 
-We first need to ensure that all numbers are the same length bit-wise.
+We first need to compute the binary representation of all numbers in nums and ensure
+that their binary representations all have the same length. Thus, we find the binary
+representation of the maximum number in nums and left zero-pad all other numbers as
+needed.
 
 Each root -> leaf path in Bitwise Trie represents a binary form of a number in nums, for
 example, 0 -> 0 -> 0 -> 1 -> 1 is 3. As before, the same number of bits L is used for
@@ -26,18 +29,13 @@ child node to add (0 or 1) is already present. If yes, just go one step down. If
 add it into the Trie and then go one step down.
 
 To maximize XOR, the strategy is to choose the opposite bit at each step whenever it's
-possible.
+possible. This is because XOR is maximized when the bits are different.
 
 The implementation is also pretty simple:
 
     - Try to go down to the opposite bit at each step if it's possible. Add 1-bit at the
 end of current XOR.
     - If not, just go down to the same bit. Add 0-bit at the end of current XOR.
-
-NB: We first need to compute the binary representation of all numbers in nums and ensure
-that their binary representations all have the same length. Thus, we find the binary
-representation of the maximum number in nums and left zero-pad all other numbers as
-needed.
 
 Complexity
 ==========
@@ -60,11 +58,11 @@ and l and m could be considered as constants here.
 
 def sol(nums):
     l = len(bin(max(nums))) - 2
-    nums = [[(num >> i) & 1 for i in reversed(range(l))] for num in nums]
+    bit_array = [[(num >> i) & 1 for i in reversed(range(l))] for num in nums]
     max_xor, trie = 0, {}
-    for num in nums:
+    for bits in bit_array:
         curr_xor, node, xor_node = 0, trie, trie
-        for bit in num:
+        for bit in bits:
             node = node.setdefault(bit, {})
             flipped_bit = 1 - bit
             if flipped_bit in xor_node:
