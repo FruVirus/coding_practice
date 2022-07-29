@@ -37,6 +37,9 @@ The implementation is also pretty simple:
 end of current XOR.
     - If not, just go down to the same bit. Add 0-bit at the end of current XOR.
 
+Note that we do bit wise operations to increase curr_xor. A left shift doubles the
+number. A left shift and | doubles the number and adds 1.
+
 Complexity
 ==========
 
