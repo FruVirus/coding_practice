@@ -18,9 +18,9 @@ linked_list:            16
 n_ary_tree:             4
 --------------------------
 queue_and_stack:        19
-recursion_2:            12
+recursion_2:            13
 trie:                   9
 --------------------------
 
-Total:                  224
+Total:                  225
 """
