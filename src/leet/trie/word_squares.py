@@ -43,50 +43,51 @@ For example:
 
 {
     'a': {
-    '#': [0],
+    '$': [0],
     'r': {
-    '#': [0],
+    '$': [0],
     'e': {
-    '#': [0],
-    'a': {'#': [0]}}}},
+    '$': [0],
+    'a': {'$': [0]}}}},
 
     'l': {
-        '#': [1, 3],
+        '$': [1, 3],
         'e': {
-        '#': [1],
+        '$': [1],
         'a': {
-        '#': [1],
-        'd': {'#': [1]}}},
+        '$': [1],
+        'd': {'$': [1]}}},
 
         'a': {
-        '#': [3],
+        '$': [3],
         'd': {
-        '#': [3],
-        'y': {'#': [3]}}}
+        '$': [3],
+        'y': {'$': [3]}}}
     },
 
     'w': {
-    '#': [2],
+    '$': [2],
     'a': {
-    '#': [2],
+    '$': [2],
     'l': {
-    '#': [2],
+    '$': [2],
     'l': {
-    '#': [2]}}}},
+    '$': [2]}}}},
 
     'b': {
-    '#': [4],
+    '$': [4],
     'a': {
-    '#': [4],
+    '$': [4],
     'l': {
-    '#': [4],
+    '$': [4],
     'l': {
-    '#': [4]}}}}
+    '$': [4]}}}}
 }
 
 NB: The backtracking index starts at 1 since we start the word square matching at the
 second letter of the word in words. For example, if the first word is "area", then we
-are looking for other words that starts with "r".
+are looking for other words that starts with "r" since the first letter matches by
+default.
 
 Complexity
 ==========
