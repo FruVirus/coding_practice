@@ -54,7 +54,7 @@ or "subtracted".
 Because we're starting at the second-to-last-index, we know that index i + 1 always
 exists. We no longer need to handle its potential non-existence as a special case, and
 additionally we're able to (cleanly) use a for loop, as we're always moving along by 1
-index at at time, unlike before where it could have been 1 or 2.
+index at a time, unlike before where it could have been 1 or 2.
 
 Complexity
 ==========
