@@ -1,4 +1,6 @@
-"""t-SNE
+"""
+t-SNE
+=====
 
 Unlike PCA, t-SNE can be used to do nonlinear dimensionality reduction.
 
@@ -56,7 +58,7 @@ scores will make them the same for both clusters.
 
 To scale the similarity scores so they sum to 1:
 
-Score / SUm of all scores = Scaled Score
+Score / Sum of all scores = Scaled Score
 
 This would imply that the scaled similarity scores for relatively tight clusters would
 be comparable to the scaled similarity scores for relatively loose clusters.
