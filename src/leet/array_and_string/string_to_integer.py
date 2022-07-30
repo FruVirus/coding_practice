@@ -104,7 +104,6 @@ def sol(s):
     n = len(s)
     i, integer, sign = 0, 0, 1
     int_max, int_min = 2 ** 31 - 1, -(2 ** 31)
-    threshold, last_digit = int_max // 10, int_max % 10
     while i < n and s[i] == " ":
         i += 1
     if i < n:
@@ -114,7 +113,7 @@ def sol(s):
             i += 1
     while i < n and s[i].isdigit():
         digit = int(s[i])
-        if integer > threshold or (integer == threshold and digit > last_digit):
+        if integer > int_max // 10 or (integer == int_max // 10 and digit > 7):
             return int_max if sign == 1 else int_min
         integer = 10 * integer + digit
         i += 1
