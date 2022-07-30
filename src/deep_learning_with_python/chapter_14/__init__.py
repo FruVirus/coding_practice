@@ -9,8 +9,8 @@
 1. Define the problem.
 2. Identify a way to reliably measure success on your goal.
 3. Prepare the validation process that you'll use to evaluate your models.
-4. Vectorize the data by turning it into vectors and prprocessing it in a way that makes
-it more easily approachable by a neural network.
+4. Vectorize the data by turning it into vectors and preprocessing it in a way that
+makes it more easily approachable by a neural network.
 5. Develop a first model that beats a trivial common-sense baseline, thus demonstrating
 that machine learning can work on your problem.
 6. Gradually refine your model architecture by tuning hyperparameters and adding
@@ -31,7 +31,7 @@ structure of the data and the assumptions of the network architecture.
 - Image data---2D convnets.
 - Sequence data---RNNs for timeseries or Transformers for discrete sequences. 1D
 convnets can also be used for translation-invariant, continuous sequence data.
-- Video data---Either 3D convnets, or a combination of a frame-level 2D convent for
+- Video data---Either 3D convnets, or a combination of a frame-level 2D convnet for
 feature extraction followed by a sequence-processing model.
 - Volumetric data---3D convnets.
 
@@ -71,7 +71,7 @@ efficient and modular.
 
 Convnets consists of stacks of convolution and max-pooling layers. The max-pooling
 layers keep feature maps to a reasonable size as the number of features grows, and to
-allow subsequence convolution layers to "see" a greater spatial extent of the inputs.
+allow subsequent convolution layers to "see" a greater spatial extent of the inputs.
 Convnets are often ended with either a Flatten operation or a global pooling layer,
 turning spatial feature maps into vectors, followed by Dense layers to achieve
 classification or regression.
