@@ -14,6 +14,16 @@ A row i is weaker than a row j if one of the following is true:
 Return the indices of the k weakest rows in the matrix ordered from weakest to
 strongest.
 
+Intuition
+---------
+
+We'd only want to insert a "strength"/index pair if it was one of the k smallest we've
+seen so far. We would then also need to remove the largest to bring the total back down
+to k. For this, it makes sense to use a Max-Priority Queue.
+
+Since we use a max-priority queue, if entry > heap[0], this actually means that we have
+a weaker row (due to negative sign) and thus, we should add this to the heap.
+
 Complexity
 ==========
 
