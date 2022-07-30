@@ -36,11 +36,11 @@ class Node:
 
 
 def sol(lists):
-    interval, n = 1, len(lists)
-    while interval < n:
-        for i in range(0, n - interval, 2 * interval):
-            lists[i] = merge(lists[i], lists[i + interval])
-        interval *= 2
+    i, n = 1, len(lists)
+    while i < n:
+        for j in range(0, n - i, 2 * i):
+            lists[j] = merge(lists[j], lists[j + i])
+        i *= 2
     return lists[0] if n > 0 else None
 
 
