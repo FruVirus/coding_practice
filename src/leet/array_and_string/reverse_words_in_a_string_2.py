@@ -26,20 +26,20 @@ reverseWords(s): O(n).
 
 def sol(s):
     reverse(s, 0, len(s) - 1)
-    reverse_word(s)
+    reverse_words(s)
 
 
-def reverse(s, left, right):
-    while left < right:
-        s[left], s[right] = s[right], s[left]
-        left, right = left + 1, right - 1
+def reverse(s, i, j):
+    while i < j:
+        s[i], s[j] = s[j], s[i]
+        i, j = i + 1, j - 1
 
 
-def reverse_word(s):
-    start, end, n = 0, 0, len(s)
-    while start < n:
-        while end < n and s[end] != " ":
-            end += 1
-        reverse(s, start, end - 1)
-        start = end + 1
-        end += 1
+def reverse_words(s):
+    i, j, n = 0, 0, len(s)
+    while i < n:
+        while j < n and s[j] != " ":
+            j += 1
+        reverse(s, i, j - 1)
+        i = j + 1
+        j += 1
