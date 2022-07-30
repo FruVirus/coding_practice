@@ -9,7 +9,7 @@
 You need to search the architecture space and find the best-performing architectures
 empirically.
 
-The process of optimzing hyperparameters typicalls looks like:
+The process of optimizing hyperparameters typically looks like:
 
 1. Choose a set of hyperparameters (automatically).
 2. Build the corresponding model.
@@ -34,7 +34,7 @@ architecture best practices.
 The good news is that by leveraging hyperparameter tuning, the configuration decisions
 you have to make graduate from micro-decisions to higher-level architecture decisions.
 And while micro-decisions are specific to a certain model and a certain dataset,
-higher-level decisions genearlize better across different tasks and datasets.
+higher-level decisions generalize better across different tasks and datasets.
 
 13.1.2 Model ensembling
 -----------------------
