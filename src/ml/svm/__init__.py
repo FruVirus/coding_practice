@@ -101,7 +101,7 @@ The kernel trick
 
 Kernel functions only calculate the relationships between every pair of points as if
 they are in the higher dimension---they don't actually do the transformation (i.e., they
-don't actually transfrom the data points).
+don't actually transform the data points).
 
 This trick, calculating the high-dimensional relationships without actually transforming
 the data to the higher dimension, is called The Kernel Trick. The Kernel Trick reduces
