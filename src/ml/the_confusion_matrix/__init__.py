@@ -1,4 +1,6 @@
-"""Machine Learning Fundamentals: The Confusion Matrix
+"""
+Machine Learning Fundamentals: The Confusion Matrix
+===================================================
 
 In summary, a Confusion Matrix tells you what your machine learning algorithm did right
 and what it did wrong.
