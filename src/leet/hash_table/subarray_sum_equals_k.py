@@ -7,6 +7,33 @@ whose sum equals to k.
 
 A subarray is a contiguous non-empty sequence of elements within an array.
 
+Intuition
+---------
+
+The HashMap will store with the key being any particular sum, and the value being the
+number of times it has happened till the current iteration of the loop as we traverse
+the array from left to right.
+
+For example:
+    k = 26.
+
+    If a sub-array sums up to k, then the sum at the end of this sub-array will be
+sumEnd = sumStart + k. That implies: sumStart = sumEnd - k. In the beginning of the
+iteration, sumStart = 0.
+
+    Suppose, at index 10, sum = 50, and the next 6 numbers are 8,-5,-3,10,15,1.
+
+    At index 13, sum will be 50 again (the numbers from indexes 11 to 13 add up to 0).
+
+    Then at index 16, sum = 76.
+
+    Now, when we reach index 16, sumEnd - k = 76 - 26 = 50. So, if this is the end index
+of a sub-array which sums up to k, then before this, just before the start of the
+sub-array, the sum should be 50 (which it is).
+
+    As we found sum = 50 at two places before reaching index 16, we indeed have two
+sub-arrays which sum up to k (26): from indexes 14 to 16 and from indexes 11 to 16.
+
 Complexity
 ==========
 
@@ -39,30 +66,12 @@ def sol_one(nums, k):
 
 
 def sol_two(nums, k):
-    n = len(nums)
-    count = 0
-    dict_cumsum = defaultdict(
-        int
-    )  # hashtable for storing the cumsum we have seen so far
-    curr_sum = 0  # for cumulative sum at each index
-    for i in range(0, n):  # upto the length of the nums array
-        curr_sum += nums[i]  # cumulative sum in each index
-        if curr_sum == k:  # if current cumsum is equal to target
+    cum_sum, curr_sum, count = defaultdict(int), 0, 0
+    for num in nums:
+        curr_sum += num
+        if curr_sum == k:
             count += 1
-        # if curr_sum - k in the dict, then let's say
-        # curr_sum - k = some_val. so, curr_sum = k + some_val, means
-        # if the some_val is already in the dictionary, then there
-        # exists a subarray whose sum is k that has lead us to this
-        # curr_sum. How lead us? by some_val + k = curr_sum
-        # now if some_val occurs more than 1 time, means you have
-        # that number of subarray to consider to the count
-        # So you need to add that number of occurence of curr_sum - k
-        # to the count
-        # think about this with example nums list in the solution
-        # [3,4,7,2,-3,1,4,2] and also with [3,4,7,2,-3,1,4,2, 1]
-        if curr_sum - k in dict_cumsum:
-            count += dict_cumsum[curr_sum - k]
-        # add the curr_sum entry to the hashtable
-        dict_cumsum[curr_sum] += 1
-    # print(dict_cumsum)
+        if curr_sum - k in cum_sum:
+            count += cum_sum[curr_sum - k]
+        cum_sum[curr_sum] += 1
     return count
