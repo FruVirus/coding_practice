@@ -1,4 +1,6 @@
-"""Machine Learning Fundamentals: Sensitivity and Specificity
+"""
+Machine Learning Fundamentals: Sensitivity and Specificity
+==========================================================
 
 Once we've filled out the Confusion Matrix, we can calculate two useful metrics:
 Sensitivity and Specificity.
