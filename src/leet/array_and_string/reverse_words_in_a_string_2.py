@@ -41,5 +41,5 @@ def reverse_words(s):
         while j < n and s[j] != " ":
             j += 1
         reverse(s, i, j - 1)
-        i = j + 1
         j += 1
+        i = j
