@@ -10,6 +10,17 @@ element.
 
 You must find a solution with a memory complexity better than O(n^2).
 
+Intuition
+---------
+
+Since the matrix rows and columns are already sorted, we only need to consider min(n, k)
+rows since numbers in rows greater than k cannot contain the kth smallest element by
+definition. As such, we add the numbers in the first columns for those rows to the heap.
+Once we heapify the heap, the smallest element will be at the top of the heap.
+
+As we iterate through k, we add numbers from the popped off row and next column into
+the heap. The heap will keep the smallest element on top.
+
 Complexity
 ==========
 
