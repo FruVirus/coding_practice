@@ -81,7 +81,7 @@ ladderLength(begin_word, end_word, word_list): O(m^2 * n).
 """
 
 # Standard Library
-from collections import defaultdict
+from collections import defaultdict, deque
 
 
 def sol(begin_word, end_word, word_list):
