@@ -58,8 +58,8 @@ def sol_one(nums, k):
     count, n = 0, len(nums)
     for i in range(n):
         sum_ = 0
-        for j in range(i, n):
-            sum_ += nums[j]
+        for num in nums[i:]:
+            sum_ += num
             if sum_ == k:
                 count += 1
     return count
