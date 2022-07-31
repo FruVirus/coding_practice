@@ -147,9 +147,8 @@ class Sol:
         return self.order
 
     def zigzag_iterative(self, root):
-        level_queue = deque()
         if root:
-            level, queue, ltr = 0, deque([root]), True
+            level_queue, queue, ltr = deque(), deque([root]), True
             while queue:
                 for _ in range(len(queue)):
                     node = queue.popleft()
@@ -161,7 +160,6 @@ class Sol:
                         queue.append(node.left)
                     if node.right:
                         queue.append(node.right)
-                level += 1
                 self.order.append(level_queue)
                 level_queue = deque()
                 ltr = not ltr
