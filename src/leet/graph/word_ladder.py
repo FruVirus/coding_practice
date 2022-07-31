@@ -81,12 +81,12 @@ ladderLength(begin_word, end_word, word_list): O(m^2 * n).
 """
 
 # Standard Library
-from collections import deque
+from collections import defaultdict
 
 
 def sol(begin_word, end_word, word_list):
     def get_word(word, index):
-        return word[:index] + "*" + word[index + 1:]
+        return word[:index] + "*" + word[index + 1 :]
 
     n, combos = len(begin_word), defaultdict(list)
     for word in word_list:
