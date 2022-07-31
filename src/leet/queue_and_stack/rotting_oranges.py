@@ -22,6 +22,16 @@ levels. In this way, we only need one queue for the iteration. As an alternative
 can create a queue for each level and alternate between the queues, though technically
 the initialization and the assignment of each queue could consume some extra time.
 
+There are several ways to implement the BFS algorithm.
+
+    - One way would be that we run a two-level nested loop, with the outer loop
+iterating each level on the tree, and with the inner loop iterating each node within a
+single level.
+    - We could also implement BFS with a single loop though. The trick is that we append
+the nodes to be visited into a queue and we separate nodes of different levels with a
+sort of delimiter (e.g. an empty node). The delimiter marks the end of a level, as well
+as the beginning of a new level.
+
 Complexity
 ==========
 
