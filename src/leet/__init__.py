@@ -11,7 +11,7 @@ dynamic_programming:    15
 heap:                   8
 recursion_1:            4
 --------------------------
-graph:                  21
+graph:                  22
 --------------------------
 hash_table:             23
 linked_list:            17
@@ -22,5 +22,5 @@ recursion_2:            13
 trie:                   9
 --------------------------
 
-Total:                  230
+Total:                  231
 """
