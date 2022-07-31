@@ -94,10 +94,10 @@ def sol(begin_word, end_word, word_list):
             combos[get_word(word, i)].append(word)
     queue, seen = deque([(begin_word, 1)]), {begin_word}
     while queue:
-        current_word, level = queue.popleft()
+        curr_word, level = queue.popleft()
         for i in range(n):
-            intermediate_word = get_word(current_word, i)
-            for word in combos[intermediate_word]:
+            inter_word = get_word(curr_word, i)
+            for word in combos[inter_word]:
                 if word == end_word:
                     return level + 1
                 if word not in seen:
