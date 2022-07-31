@@ -62,6 +62,8 @@ maxPathSum(root): O(h).
 
 
 def sol(root):
+    max_sum = -float("inf")
+
     def max_gain(node):
         nonlocal max_sum
         if not node:
@@ -71,6 +73,5 @@ def sol(root):
         max_sum = max(max_sum, node.val + left_gain + right_gain)
         return node.val + max(left_gain, right_gain)
 
-    max_sum = -float("inf")
     max_gain(root)
     return max_sum
