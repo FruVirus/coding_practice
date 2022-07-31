@@ -71,12 +71,13 @@ Complexity
 Time
 ----
 
-ladderLength(begin_word, end_word, word_list): O().
+ladderLength(begin_word, end_word, word_list): O(m^2 * n), where m is the length of each
+word and n is the total number of words in the input word list.
 
 Space
 -----
 
-ladderLength(begin_word, end_word, word_list): O().
+ladderLength(begin_word, end_word, word_list): O(m^2 * n).
 """
 
 # Standard Library
@@ -84,15 +85,18 @@ from collections import deque
 
 
 def sol(begin_word, end_word, word_list):
+    def get_word(word, index):
+        return word[:index] + "*" + word[index + 1:]
+
     n, combos = len(begin_word), defaultdict(list)
     for word in word_list:
         for i in range(n):
-            combos[word[:i] + "*" + word[i + 1:]].append(word)
+            combos[get_word(word, i)].append(word)
     queue, seen = deque([(begin_word, 1)]), {begin_word}
     while queue:
         current_word, level = queue.popleft()
         for i in range(n):
-            intermediate_word = current_word[:i] + "*" + current_word[i + 1:]
+            intermediate_word = get_word(current_word, i)
             for word in combos[intermediate_word]:
                 if word == end_word:
                     return level + 1
