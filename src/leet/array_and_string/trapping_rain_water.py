@@ -34,19 +34,19 @@ trap(height): O(1).
 
 
 def sol(height):
-    num_rain = max_l = max_r = 0
+    num_rain = maxl = maxr = 0
     l, r = 0, len(height) - 1
     while l < r:
         if height[l] < height[r]:
-            if height[l] > max_l:
-                max_l = height[l]
+            if height[l] > maxl:
+                maxl = height[l]
             else:
-                num_rain += max_l - height[l]
+                num_rain += maxl - height[l]
             l += 1
         else:
-            if height[r] > max_r:
-                max_r = height[r]
+            if height[r] > maxr:
+                maxr = height[r]
             else:
-                num_rain += max_r - height[r]
+                num_rain += maxr - height[r]
             r -= 1
     return num_rain
