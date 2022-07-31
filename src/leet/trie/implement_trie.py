@@ -65,6 +65,8 @@ class Sol:
     def erase(self, word):
         node = self.root
         for char in word:
+            if char not in node.children:
+                return
             node = node.children[char]
         node.count -= 1
 
