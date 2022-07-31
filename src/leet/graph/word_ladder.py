@@ -103,5 +103,4 @@ def sol(begin_word, end_word, word_list):
                 if word not in seen:
                     seen.add(word)
                     queue.append((word, level + 1))
-            combos[intermediate_word] = []
     return 0
