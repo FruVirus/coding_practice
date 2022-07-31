@@ -4,7 +4,7 @@ binary_search:          11
 binary_search_tree:     6
 binary_tree:            13
 --------------------------
-array_and_string:       19
+array_and_string:       20
 dynamic_programming:    16
 --------------------------
 dynamic_programming:    15
@@ -22,5 +22,5 @@ recursion_2:            13
 trie:                   9
 --------------------------
 
-Total:                  229
+Total:                  230
 """
