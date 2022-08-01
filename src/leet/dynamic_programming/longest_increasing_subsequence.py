@@ -19,8 +19,8 @@ represents the length of the longest increasing subsequence that ends with nums[
 nums[3] > nums[2], then we can simply take the subsequence ending at i = 2 and append
 nums[3] to it, increasing the length by 1. The same can be said for nums[0] and nums[1]
 if nums[3] is larger. Of course, we should try to maximize dp[3], so we need to check
-all 3. Formally, the recurrence relation is: dp[i] = max(dp[j] + 1) for all j where
-nums[j] < nums[i] and j < i.
+all 3. Formally, the recurrence relation is: dp[i] = max(dp[i], dp[j] + 1) for all j
+where nums[j] < nums[i] and j < i.
 
 Binary Search Algorithm
 
@@ -34,10 +34,10 @@ element replaced to be included in the sequence.
 One thing to add: this algorithm does not always generate a valid subsequence of the
 input, but the length of the subsequence will always equal the length of the longest
 increasing subsequence. For example, with the input [3, 4, 5, 1], at the end we will
-have sub = [1, 4, 5], which isn't a subsequence, but the length is still correct. The
-length remains correct because the length only changes when a new element is larger than
-any element in the subsequence. In that case, the element is appended to the subsequence
-instead of replacing an existing element.
+have sub = [1, 4, 5], which isn't a valid increasing subsequence, but the length is
+still correct. The length remains correct because the length only changes when a new
+element is larger than any element in the subsequence. In that case, the element is
+appended to the subsequence instead of replacing an existing element.
 
 Since sub is in sorted order, we can use binary search instead to greatly improve the
 efficiency of our algorithm.
