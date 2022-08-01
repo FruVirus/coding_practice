@@ -97,7 +97,7 @@ where n is the number of courses and e is the length of relations.
 Space
 -----
 
-minimumSemesters_dfs(n, relations) and minimumSemesters_kahn(n, relations): O().
+minimumSemesters_dfs(n, relations) and minimumSemesters_kahn(n, relations): O(n + e).
 """
 
 
