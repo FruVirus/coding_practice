@@ -1,6 +1,6 @@
 """
-Insert into a Cyclic Sorted List
---------------------------------
+Insert into a Sorted Cyclic Linked List
+---------------------------------------
 
 Given a Circular Linked List node, which is sorted in ascending order, write a function
 to insert a value insertVal into the list such that it remains a sorted circular list.
