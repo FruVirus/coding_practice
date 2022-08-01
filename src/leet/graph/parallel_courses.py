@@ -143,8 +143,8 @@ def sol_kahn(n, relations):
         num_semesters += 1
         num_courses += len(stack)
         next_stack = []
-        for u in stack:
-            for v in graph[u]:
+        while stack:
+            for v in graph[stack.pop()]:
                 indeg[v] -= 1
                 if indeg[v] == 0:
                     next_stack.append(v)
