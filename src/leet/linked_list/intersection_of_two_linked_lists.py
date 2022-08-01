@@ -5,6 +5,23 @@ Intersection of Two Linked Lists
 Given the heads of two singly linked-lists headA and headB, return the node at which the
 two lists intersect. If the two linked lists have no intersection at all, return null.
 
+Intuition
+---------
+
+In this problem, the two linked lists eventually join into one linked list if they have
+an intersection. For example
+
+
+A:       4 --> 1 -->
+                     --> 8 --> 4 --> 5
+B: 5 --> 6 --> 1 -->
+
+Otherwise, they are just two separated linked lists.
+
+In essence, this is similar to Floyd's cycle detection algorithm. The two pointers will
+eventually meet at the same node if there is an intersection. Otherwise, they will both
+end up at a null node and the loop terminates.
+
 Complexity
 ==========
 
