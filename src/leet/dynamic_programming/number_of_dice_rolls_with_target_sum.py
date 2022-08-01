@@ -8,6 +8,20 @@ Given three integers n, k, and target, return the number of possible ways (out o
 k^n total ways) to roll the dice so the sum of the face-up numbers equals target. Since
 the answer may be too large, return it modulo 10^9 + 7.
 
+Intuition
+---------
+
+We have n dice, each having k faces with a number from 1 to k. We need to find the
+number of ways to roll these nn dice such that the sum of numbers on them is equal to
+target.
+
+There are two characteristics of this problem that we should take note of at this time.
+First, as we iterate over the dice, we need to decide the number for each dice. The
+feasible options for number at the current dice depend upon the current sum, which is in
+turn dependent on the number we chose for the previous dice. It implies each decision we
+make is affected by the previous decisions we have made. Second, the problem is asking
+to count all the ways to roll n dice.
+
 Complexity
 ==========
 
