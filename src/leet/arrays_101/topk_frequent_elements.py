@@ -59,6 +59,8 @@ topKFrequent_one(nums, k) and topKFrequent_two(nums, k): O(n).
 """
 
 # Standard Library
+import random
+
 from collections import Counter
 
 
@@ -73,7 +75,7 @@ def sol_one(nums, k):
 def sol_two(nums, k):
     freq = Counter(nums)
     a = list(freq.keys())
-    n = len(unique)
+    n = len(a)
 
     def partition(low, high, pivot_index):
         a[high], a[pivot_index] = a[pivot_index], a[high]
@@ -94,4 +96,4 @@ def sol_two(nums, k):
         return quickselect(pivot + 1, high, i)
 
     quickselect(0, n - 1, n - k)
-    return unique[n - k:]
+    return a[n - k :]
