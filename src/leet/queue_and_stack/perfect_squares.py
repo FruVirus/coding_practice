@@ -45,7 +45,7 @@ def sol(n):
             for square_num in square_nums:
                 if remainder == square_num:
                     return level
-                if remainder >= square_num:
+                if remainder > square_num:
                     next_queue.add(remainder - square_num)
         queue = next_queue
     return level
