@@ -17,6 +17,11 @@ result in division by zero and that there is no contradiction.
 Intuition
 ---------
 
+Each division implies the reverse of the division is also a valid value. While by
+chaining up equations, we could obtain new equations with new values.
+
+
+
 Backtrack/DFS Approach
 
 We could reformulate the equations with the graph data structure, where each variable
