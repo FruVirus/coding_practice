@@ -62,10 +62,10 @@ def sol_dc(heights):
 
 
 def sol_stack(heights):
-    max_area, stack, heights = 0, [], [0] + heights + [0]
+    maxarea, stack, heights = 0, [], [0] + heights + [0]
     for i, height in enumerate(heights):
         while stack and stack[-1][1] > height:
             r, h, l = i, stack.pop()[1], stack[-1][0]
-            max_area = max(max_area, (r - l - 1) * h)
+            maxarea = max(maxarea, (r - l - 1) * h)
         stack.append((i, height))
-    return max_area
+    return maxarea
