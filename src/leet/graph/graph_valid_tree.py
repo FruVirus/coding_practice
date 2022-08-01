@@ -52,7 +52,7 @@ from src.leet.graph.number_of_provinces import DisjointSet
 def sol_dfs(n, edges):
     if len(edges) != n - 1:
         return False
-    graph, seen, stack = {i: [] for i in range(n)}, set(), [0]
+    graph, stack, seen = {i: [] for i in range(n)}, [0], set()
     for u, v in edges:
         graph[u].append(v)
         graph[v].append(u)
