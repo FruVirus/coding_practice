@@ -14,7 +14,7 @@ Complexity
 Time
 ----
 
-reverse(x) O(log(x)), since there are roughly log(x) digits in x.
+reverse(x): O(log x), since there are roughly log(x) digits in x.
 
 Space
 -----
