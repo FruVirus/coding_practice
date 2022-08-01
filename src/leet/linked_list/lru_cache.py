@@ -37,6 +37,11 @@ Hashmap, finding an element in our cache’s linked list takes only in O(1) time
 
 The maximum size of the hashmap will be equal to the cache capacity.
 
+NB: We always put the node corresponding to a new key at the head of the DLL. For an
+existing node, we update its val and then move it to the head of the DLL. In this
+manner, the least recently used node will be at the tail of the DLL and we can just pop
+it off in O(1) time when appropriate.
+
 Complexity
 ==========
 
