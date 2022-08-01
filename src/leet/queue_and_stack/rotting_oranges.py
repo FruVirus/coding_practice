@@ -32,6 +32,38 @@ the nodes to be visited into a queue and we separate nodes of different levels w
 sort of delimiter (e.g. an empty node). The delimiter marks the end of a level, as well
 as the beginning of a new level.
 
+Approach One
+
+Starting from the top rotten orange, the contamination would propagate layer by layer
+(or level by level), until it reaches the farthest fresh oranges. The number of minutes
+that are elapsed would be equivalent to the number of levels in the graph that we
+traverse during the propagation.
+
+Approach Two
+
+As one might recall from the previous BFS implementation, its space complexity is mainly
+due to the queue that we were using to keep the order for the visits of cells. In order
+to achieve O(1) space complexity, we then need to eliminate the queue in the BFS.
+
+The idea is that at each round of the BFS, we mark the cells to be visited in the input
+grid with a specific timestamp. By round, we mean a snapshot in time where a group of
+oranges turns rotten.
+
+1. Starting from the beginning (with timestamp=2), the cells that are marked with the
+value 2 contain rotten oranges. From this moment on, we adopt a rule stating as "the
+cells that have the value of the current timestamp (i.e. 2) should be visited at this
+round of BFS.".
+
+2. For each of the cell that is marked with the current timestamp, we then go on to mark
+its neighbor cells that hold a fresh orange with the next timestamp
+(i.e., timestamp += 1). This in-place modification serves the same purpose as the queue
+variable in the previous BFS implementation, which is to select the candidates to visit
+for the next round.
+
+3. At this moment, we should have timestamp=3, and meanwhile we also have the cells to
+be visited at this round marked out. We then repeat the above step (2) until there is no
+more new candidates generated in the step (2) (i.e. the end of BFS traversal).
+
 Complexity
 ==========
 
