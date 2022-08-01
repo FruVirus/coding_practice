@@ -4,6 +4,13 @@ Palindrome Linked List
 
 Given the head of a singly linked list, return true if it is a palindrome.
 
+Intuition
+---------
+
+1. Reverse the first half of the list.
+2. Get the point to the start of the second half of the list.
+3. Compare elements between the reversed first half and the second half one by one.
+
 Complexity
 ==========
 
