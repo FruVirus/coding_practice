@@ -14,11 +14,11 @@ You must solve this problem without using the library's sort function.
 Intuition
 ---------
 
-Let's use here three pointers to track the rightmost boundary of zeros, the leftmost
-boundary of twos and the current element under the consideration.
+Let's use here three pointers to track the rightmost boundary of zeros (i), the
+leftmost boundary of twos (k) and the current element under the consideration (j).
 
 The idea of solution is to move curr pointer along the array, if nums[curr] = 0 - swap
-it with nums[p0], if nums[curr] = 2 - swap it with nums[p2].
+it with nums[i], if nums[curr] = 2 - swap it with nums[k], otherwise, just advance j.
 
 Complexity
 ==========
