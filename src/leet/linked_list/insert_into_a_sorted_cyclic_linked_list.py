@@ -14,6 +14,13 @@ If the list is empty (i.e., the given node is null), you should create a new sin
 circular list and return the reference to that single node. Otherwise, you should return
 the originally given node.
 
+Intuition
+---------
+
+1. if head is curr.next --> Handles case where there is only one node in the linked
+list.
+
+2.
 Complexity
 ==========
 
@@ -43,7 +50,7 @@ def sol(head, val):
     while True:
         if head is curr.next:
             break
-        if curr.val <= val <= curr.next.val:
+        if curr.val < val <= curr.next.val:
             break
         if val >= curr.val > curr.next.val or curr.val > curr.next.val >= val:
             break
