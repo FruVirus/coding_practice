@@ -24,6 +24,12 @@ a + b = -(c + d). First, we will count sums of elements a + b from the first two
 using a hashmap. Then, we will enumerate elements from the third and fourth arrays, and
 search for a complementary sum a + b = -(c + d) in the hashmap.
 
+In essence, we first compute all the possible sum combinations in the first two lists.
+Then, we compute all the possible sum combinations in the second two lists. If a sum
+combination from the second two lists exists in the hash map from the first two lists,
+then we know that a four sum = 0 is possible and we add up the corresponding number of
+combinations.
+
 kSum II Approach
 
 After you solve 4Sum II, an interviewer can follow-up with 5Sum II, 6Sum II, and so on.
