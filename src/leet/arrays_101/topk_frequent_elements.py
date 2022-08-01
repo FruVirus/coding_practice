@@ -32,6 +32,17 @@ If not, we can choose one more pivot and place it in its perfect position.
 of unique elements. Note that elements are unique, but their frequencies are not. That
 means we need a partition algorithm that works fine with duplicates.
 
+2. Work with unique array. Use a partition scheme (please check the next section) to
+place the pivot into its perfect position pivot_index in the sorted array, move less
+frequent elements to the left of pivot, and more frequent or of the same frequency - to
+the right.
+
+3. Compare pivot and i.
+
+    - If i == pivot, the pivot is ith most frequent element, and all elements on the
+right are more frequent or of the same frequency. Return these top k frequent elements.
+    - Otherwise, choose the side of the array to proceed recursively.
+
 Complexity
 ==========
 
@@ -60,15 +71,15 @@ def sol_one(nums, k):
 
 
 def sol_two(nums, k):
-    count = Counter(nums)
-    unique = list(count.keys())
+    freq = Counter(nums)
+    unique = list(freq.keys())
     n = len(unique)
 
     def partition(low, high, pivot_index):
-        pivot_freq, i = count[unique[pivot_index]], low - 1
+        freq_pivot, i = freq[unique[pivot_index]], low - 1
         unique[high], unique[pivot_index] = unique[pivot_index], unique[high]
         for j in range(low, high):
-            if count[unique[j]] <= pivot_freq:
+            if freq[unique[j]] <= freq_pivot:
                 i += 1
                 unique[i], unique[j] = unique[j], unique[i]
         unique[high], unique[i + 1] = unique[i + 1], unique[high]
