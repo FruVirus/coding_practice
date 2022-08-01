@@ -5,6 +5,13 @@ Implement Queue using Stacks
 Implement a first in first out (FIFO) queue using only two stacks. The implemented queue
 should support all the functions of a normal queue (push, peek, pop, and empty).
 
+Intuition
+---------
+
+We can use two stacks to simulate a queue. One stack holds the values as they come in.
+The other stack will contain the values from the first stack in reverse order so that it
+acts like a queue.
+
 Complexity
 ==========
 
