@@ -7,7 +7,7 @@ i-th job, you have to finish all the jobs j where 0 <= j < i).
 
 You have to finish at least one task every day. The difficulty of a job schedule is the
 sum of difficulties of each day of the d days. The difficulty of a day is the maximum
-difficulty of a job done on that day.
+difficulty of all jobs done on that day.
 
 You are given an integer array jobDifficulty and an integer d. The difficulty of the
 i-th job is jobDifficulty[i].
