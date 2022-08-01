@@ -24,11 +24,15 @@ ways to paint the i-th post a different color than the (i − 1)-th post.
 
     2. Use the same color as the previous post. There is only one color for us to use,
 so there are 1 * totalWays(i - 1) ways to paint the i-th post the same color as the
-(i − 1)-th post. However, we have the added restriction of not being allowed to paint
-three posts in a row the same color. Therefore, we can paint the i-th post the same
-color as the (i − 1)-th post only if the (i − 1)-th post is a different color than the
-(i − 2)-th post. So, how many ways are there to paint the (i − 1)-th post a different
-color than the (i − 2)-th post? Well, as stated in the first option, there are
+(i − 1)-th post.
+
+    However, we have the added restriction of not being allowed to paint three posts in
+a row the same color. Therefore, we can paint the i-th post the same color as the
+(i − 1)-th post only if the (i − 1)-th post is a different color than the (i − 2)-th
+post.
+
+    So, how many ways are there to paint the (i − 1)-th post a different color than the
+(i − 2)-th post? Well, as stated in the first option, there are
 (k - 1) * totalWays(i - 1) ways to paint the i-th post a different color than the
 (i − 1)-th post, so that means there are 1 * (k - 1) * totalWays(i - 2) ways to paint
 the (i − 1)-th post a different color than the (i − 2)-th post.
