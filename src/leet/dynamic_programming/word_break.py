@@ -8,6 +8,12 @@ into a space-separated sequence of one or more dictionary words.
 Note that the same word in the dictionary may be reused multiple times in the
 segmentation.
 
+Example
+
+Input: s = "leetcode", wordDict = ["leet","code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+
 Intuition
 ---------
 
