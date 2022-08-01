@@ -64,7 +64,7 @@ def sol_two(nums, k):
     unique = list(count.keys())
     n = len(unique)
 
-    def partition(low, high, pivot_index) -> int:
+    def partition(low, high, pivot_index):
         pivot_freq, i = count[unique[pivot_index]], low - 1
         unique[high], unique[pivot_index] = unique[pivot_index], unique[high]
         for j in range(low, high):
@@ -74,7 +74,7 @@ def sol_two(nums, k):
         unique[high], unique[i + 1] = unique[i + 1], unique[high]
         return i + 1
 
-    def quickselect(low, high, i) -> None:
+    def quickselect(low, high, i):
         pivot = partition(low, high, random.randrange(low, high + 1))
         if i == pivot:
             return
