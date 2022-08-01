@@ -21,7 +21,7 @@ Example:
 Assume totalSum of an array is 20 and if we want to partition it into 2 subsets of equal
 sum, then the subSetSum must be (20 / 2) = 10.
 
-Now, the problem to find the subset with a sum equals a given target. Here target is
+Now, the problem is to find the subset with a sum equals a given target. Here target is
 subSetSum.
 
 It must be noted that the total sum of an array must be even, only then we can divide it
