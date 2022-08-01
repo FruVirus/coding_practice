@@ -72,17 +72,17 @@ def sol_one(nums, k):
 
 def sol_two(nums, k):
     freq = Counter(nums)
-    unique = list(freq.keys())
+    a = list(freq.keys())
     n = len(unique)
 
     def partition(low, high, pivot_index):
-        freq_pivot, i = freq[unique[pivot_index]], low - 1
-        unique[high], unique[pivot_index] = unique[pivot_index], unique[high]
+        a[high], a[pivot_index] = a[pivot_index], a[high]
+        x, i = freq[a[high]], low - 1
         for j in range(low, high):
-            if freq[unique[j]] <= freq_pivot:
+            if freq[a[j]] <= x:
                 i += 1
-                unique[i], unique[j] = unique[j], unique[i]
-        unique[high], unique[i + 1] = unique[i + 1], unique[high]
+                a[i], a[j] = a[j], a[i]
+        a[high], a[i + 1] = a[i + 1], a[high]
         return i + 1
 
     def quickselect(low, high, i):
