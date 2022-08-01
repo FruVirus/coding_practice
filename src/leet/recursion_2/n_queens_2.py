@@ -28,14 +28,15 @@ place a queen, we can add the column index to this set.
 The diagonals are a little trickier - but they have a property that we can use to our
 advantage.
 
-    1. For each square on a given diagonal, the difference between the row and column
-indexes (row - col) will be constant. Think about the diagonal that starts from (0, 0) -
-the i^th square has coordinates (i, i), so the difference is always 0.
+    1. For each square on a given diagonal (top-left to bottom-right), the difference
+between the row and column indexes (row - col) will be constant. Think about the
+diagonal that starts from (0, 0) - the i^th square has coordinates (i, i), so the
+difference is always 0.
 
-    2. For each square on a given anti-diagonal, the sum of the row and column indexes
-(row + col) will be constant. If you were to start at the highest square in an
-anti-diagonal and move downwards, the row index increments by 1 (row + 1), and the
-column index decrements by 1 (col - 1). These cancel each other out.
+    2. For each square on a given anti-diagonal (bottom-left to top-right), the sum of
+the row and column indexes (row + col) will be constant. If you were to start at the
+highest square in an anti-diagonal and move downwards, the row index increments by 1
+(row + 1), and the column index decrements by 1 (col - 1). These cancel each other out.
 
 Whenever we place a queen, we should calculate the diagonal and the anti-diagonal value
 it belongs to. In the same way we had a set for the column, we should also have a set
