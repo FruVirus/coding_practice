@@ -17,10 +17,13 @@ the originally given node.
 Intuition
 ---------
 
-1. if head is curr.next --> Handles case where there is only one node in the linked
-list.
+We have to handles 4 cases:
+    1. Only one node in the linked list: if head is curr.next.
+    2. val fits between curr and curr.next: if curr.val < val <= curr.next.val.
+    3. val fits before curr: if val >= curr.val > curr.next.val.
+    4. val fits between curr and curr.next and is the smallest:
+if curr.val > curr.next.val >= val.
 
-2.
 Complexity
 ==========
 
