@@ -4,6 +4,15 @@ Rotate List
 
 Given the head of a linked list, rotate the list to the right by k places.
 
+Intuition
+---------
+
+1. Find out how many nodes are in the list.
+2. Set the end of the list to head.
+3. Iterate through the list to get to the node just before the rotation.
+4. Set the new head to the node just after rotation and set the node.next for the node
+just before rotation to None.
+
 Complexity
 ==========
 
