@@ -55,7 +55,9 @@ topKFrequent_two(nums, k): O(n) expected, O(n^2) worst case.
 Space
 -----
 
-topKFrequent_one(nums, k) and topKFrequent_two(nums, k): O(n).
+topKFrequent_one(nums, k): O(n).
+topKFrequent_two(nums, k): O(p) expected, O(n) worst case, where p is the number of
+unique integers in the array.
 """
 
 # Standard Library
