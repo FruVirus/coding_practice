@@ -67,7 +67,7 @@ def sol_boyer_moore(nums):
     for num in nums:
         if count == 0:
             majority = num
-        count += 1 if num == majority else -1
+        count += 1 if majority == num else -1
     return majority
 
 
