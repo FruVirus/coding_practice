@@ -12,8 +12,8 @@ Time
 ----
 
 Sol:
-    def pop(self): O(1).
-    def push(self, val): O(n).
+    def dequeue(self): O(1).
+    def enqueue(self, val): O(n).
 
 Space
 -----
@@ -30,13 +30,13 @@ class Sol:
     def __init__(self):
         self.q1 = deque()
 
+    def dequeue(self):
+        return self.q1.popleft()
+
     def empty(self):
         return len(self.q1) == 0
 
-    def pop(self):
-        return self.q1.popleft()
-
-    def push(self, val):
+    def enqueue(self, val):
         self.q1.append(val)
         len_ = len(self.q1)
         while len_ > 1:
