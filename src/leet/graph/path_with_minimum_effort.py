@@ -78,6 +78,10 @@ maxDifference. In other words, we have found that the path from the current cell
 adjacent cell takes lesser efforts than the other paths that have reached the adjacent
 cell so far. Also, we must add this updated difference value in the queue.
 
+Note that if two cells have the same height, there is no effort increase to move between
+them. In other words, the effort from A --> B if A and B are at the same height is just
+the existing effort at A.
+
 Ideally, for updating the priority queue, we must delete the old value and reinsert with
 the new maxDifference value. But, as we know that the updated maximum value is always
 lesser than the old value and would be popped from the queue and visited before the old
@@ -115,18 +119,18 @@ def sol_bs(heights):
             row, col = queue.popleft()
             if row == m - 1 and col == n - 1:
                 return True
-            seen[row][col] = True
+            seen.add((row, col))
             for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                 r, c = row + x, col + y
-                if 0 <= r < m and 0 <= c < n and not seen[r][c]:
+                if 0 <= r < m and 0 <= c < n and (r, c) not in seen:
                     if abs(heights[row][col] - heights[r][c]) <= effort:
-                        seen[r][c] = True
+                        seen.add((r, c))
                         queue.append((r, c))
 
     low, high = 0, 10 ** 6
     while low < high:
         effort = low + (high - low) // 2
-        seen = [[False] * n for _ in range(m)]
+        seen = set()
         if not bfs(effort):
             low = effort + 1
         else:
