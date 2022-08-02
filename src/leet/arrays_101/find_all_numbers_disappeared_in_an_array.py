@@ -5,6 +5,13 @@ Find All Numbers Disappeared in an Array
 Given an array nums of n integers where nums[i] is in the range [1, n], return an array
 of all the integers in the range [1, n] that do not appear in nums.
 
+Intuition
+---------
+
+We will be negating the numbers seen in the array and use the sign of each of the
+numbers for finding our missing numbers. We will be treating numbers in the array as
+indices and mark corresponding locations in the array as negative.
+
 Complexity
 ==========
 
