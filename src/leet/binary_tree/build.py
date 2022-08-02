@@ -37,9 +37,9 @@ def sol_postorder(inorder, postorder):
     def helper(in_left, in_right):
         if in_left <= in_right:
             val = postorder.pop()
-            root, index = Node(val), idx_map[val]
-            root.right = helper(index + 1, in_right)
-            root.left = helper(in_left, index - 1)
+            root, idx = Node(val), idx_map[val]
+            root.right = helper(idx + 1, in_right)
+            root.left = helper(in_left, idx - 1)
             return root
         return None
 
@@ -51,9 +51,9 @@ def sol_preorder(inorder, preorder):
     def helper(in_left, in_right):
         if in_left <= in_right:
             val = preorder.pop(0)
-            root, index = Node(val), idx_map[val]
-            root.left = helper(in_left, index - 1)
-            root.right = helper(index + 1, in_right)
+            root, idx = Node(val), idx_map[val]
+            root.left = helper(in_left, idx - 1)
+            root.right = helper(idx + 1, in_right)
             return root
         return None
 
