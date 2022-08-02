@@ -119,6 +119,7 @@ def sol_bs(heights):
             row, col = queue.popleft()
             if row == m - 1 and col == n - 1:
                 return True
+            seen.add((row, col))
             for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                 r, c = row + x, col + y
                 if 0 <= r < m and 0 <= c < n and (r, c) not in seen:
