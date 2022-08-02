@@ -55,8 +55,8 @@ and then (0, 2, s), where s denotes start.
 buildings in increasing order of their heights. Thus, we should process (5, 2, e) first
 and then (5, 3, e), where e denotes end.
 
-3. The right side of a build overlaps with the left side of the next building. In this
-case, we should sort the buildings so that the left side of the next building comes
+3. The right side of a building overlaps with the left side of the next building. In
+this case, we should sort the buildings so that the left side of the next building comes
 before the right side of the current building. Thus, we should process (7, 3, s) first
 and then (7, 2, e), where s/e denotes start/end.
 
