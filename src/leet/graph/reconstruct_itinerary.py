@@ -57,7 +57,7 @@ Complexity
 Time
 ----
 
-findItinerary(tickets): O(abs(e)^d), where e is the number of total flights and d is the
+findItinerary(tickets): O(e^d), where e is the number of total flights and d is the
 maximum number of flights from an airport.
 
 Space
