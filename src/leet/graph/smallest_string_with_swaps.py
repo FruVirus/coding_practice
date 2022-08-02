@@ -20,13 +20,35 @@ can still swap them by first swapping them with the character at index b. Thus, 
 we can swap the characters at these indices any number of times, we can rearrange the
 characters a, b, and c into any order.
 
+This demonstrates how we can swap any pair of vertices present in the same connected
+component. Thus, we can rearrange the characters such that any character is at any index
+within the connected component. To find the lexicographically smallest string, we need
+to sort the characters that correspond to these indices in ascending order and then
+place the ith character at the ith index.
+
 We can break the solution down into four steps: build a graph using the given pairs,
 find the connected components in the graph, sort the characters in each connected
 component in ascending order, and build the smallest string.
 
+The biggest challenge in solving this problem was figuring out that, with infinite
+swaps, we can arrange all characters that belong to the same connected component in
+sorted order.
+
+DFS Approach
+
+We will build the adjacency list using the pairs given i.e., for each pair (x, y) we
+will add an edge from x to y and from y to x. Then we will iterate over the indices from
+0 to n-1 where n is the length of the given string s. For each index, if it has not been
+visited yet, we will perform a DFS and store the vertices (index) and the characters at
+these indices in a list. Each list will represent a different component in the graph.
+Then we will sort each list of indices and each list of characters and place the ith
+character at the ith index in the string smallestString.
+
+DSU Approach
+
 Each list in char_to_indices will represent a different component in the graph. Then
 we will sort each list of indices and each list of characters and place the i_th
-character at the i_th index in the smallest string.
+character at the ith index in the smallest string.
 
 Complexity
 ==========
