@@ -37,6 +37,12 @@ To find if there exists a path from the source cell to the destination cell for 
 mid value, we could use simple graph traversal. In this approach, we use Breath First
 Search traversal.
 
+Note that we always start the BFS starting from (0, 0) and we keep doing BFS until we
+either get to the bottom right corner or we exhaust all items in the queue. If we get to
+the bottom right corner, this means we can reach the end with the effort that was passed
+in---so we can try a lower effort next time. Otherwise, our effort was too low and we
+need to try a higher effort next time.
+
 Dijkstra Approach
 
 If we observe, the problem is similar to finding the shortest path from a source cell to
