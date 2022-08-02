@@ -34,7 +34,7 @@ there is not enough gas in the tank to travel to i + 1 station.
 
 The second fact could be generalized. Let's introduce curr_tank variable to track the
 current amount of gas in the tank. If at some station curr_tank is less than 0, that
-means that one couldn't reach this station.
+means that one couldn't reach this station (from some starting point).
 
 Next step is to mark this station as a new starting point, and reset curr_tank to zero
 since one starts with no gas in the tank.
