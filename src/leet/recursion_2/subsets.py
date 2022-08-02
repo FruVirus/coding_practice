@@ -19,6 +19,16 @@ So, this time let us loop over the length of combination, rather than the candid
 numbers, and generate all combinations for a given length with the help of backtracking
 technique.
 
+Example:
+
+nums = [1, 2]
+
+At each iteration through k:
+
+k = 0: sol = [[]]
+k = 1: sol = [[], [1], [2]]
+k = 2: sol = [[], [1], [2], [1, 2]]
+
 Complexity
 ==========
 
