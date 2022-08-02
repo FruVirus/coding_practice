@@ -11,20 +11,21 @@ Complexity
 Time
 ----
 
-rightSideView(root): O(n).
+rightSideView_bfs(root) and rightSideView_dfs(root): O(n).
 
 Space
 -----
 
-rightSideView(root): O(d), where d is the tree diameter. For the last tree level, it
+rightSideView_bfs(root): O(d), where d is the tree diameter. For the last tree level, it
 could contain up to n / 2 nodes in the case of a complete binary tree.
+rightSideView_dfs(root): O(h), where h is the tree height.
 """
 
 # Standard Library
 from collections import deque
 
 
-def sol(root):
+def sol_bfs(root):
     sol = []
     if not root:
         return sol
@@ -37,4 +38,20 @@ def sol(root):
             if node.right:
                 queue.append(node.right)
         sol.append(node.val)
+    return sol
+
+
+def sol_dfs(root):
+    sol = []
+    if not root:
+        return sol
+
+    def dfs(node, level):
+        if node:
+            if len(sol) == level:
+                sol.append(node.val)
+            dfs(node.right, level + 1)
+            dfs(node.left, level + 1)
+
+    dfs(root, 0)
     return sol
