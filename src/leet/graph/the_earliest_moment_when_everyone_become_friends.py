@@ -13,6 +13,25 @@ someone acquainted with b.
 Return the earliest time for which every person became acquainted with every other
 person. If there is no such earliest time, return -1.
 
+Intuition
+---------
+
+In order to discover the earliest moment, we must first ensure that we read through the
+logs in chronological order. Since there is no mentioning whether the logs are ordered
+or not in the problem description, we need to sort them first.
+
+Once the logs are sorted by time, we then iterate through them, while applying the
+Union-Find data structure.
+
+    - For each log, we connect the two individuals that were involved in the log, by
+applying the union(a, b) function.
+    - Each log adds more connections among the individuals. A connection is useful if
+the two individuals are separated (disjoint), or redundant if the two individuals are
+connected already via other individuals.
+    - Initially, we treat each individual as a separate group. The number of groups
+decreases along with the useful merging operations. The moment when the number of groups
+is reduced to one is the earliest moment when everyone becomes connected (friends).
+
 Complexity
 ==========
 
