@@ -13,8 +13,6 @@ carry. The loop continues until the carry is 0.
 XOR is a sum of two binaries without taking carry into account.
 Carry is the AND of two binaries, shifted one bit to the left.
 
-
-
 Complexity
 ==========
 
