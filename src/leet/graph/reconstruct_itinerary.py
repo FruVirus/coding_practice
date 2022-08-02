@@ -75,7 +75,7 @@ def sol(tickets):
     adj_list, seen, sol = defaultdict(list), set(), []
     for src, dst in tickets:
         adj_list[src].append(dst)
-    for src, dsts in adj_list.items():
+    for dsts in adj_list.values():
         dsts.sort()
 
     def backtrack(src, route):
