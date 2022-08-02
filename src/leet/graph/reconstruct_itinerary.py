@@ -19,6 +19,11 @@ tickets once and only once.
 Intuition
 ---------
 
+As one might notice in the above example, the input graph is NOT what we call a DAG,
+since we could find at least a cycle in the graph. In addition, the graph could even
+have some duplicate edges (i.e. we might have multiple flights with the same origin and
+destination).
+
 At each airport, one might have several possible destinations to fly to. With
 backtracking, we enumerate each possible destination. We mark the choice at each
 iteration (i.e., trial) before we move on to the chosen destination. If the destination
@@ -67,22 +72,21 @@ from collections import defaultdict
 
 
 def sol(tickets):
-    adj_list, seen, sol = defaultdict(list), {}, []
+    adj_list, seen, sol = defaultdict(list), set(), []
     for src, dst in tickets:
         adj_list[src].append(dst)
     for src, dsts in adj_list.items():
         dsts.sort()
-        seen[src] = [False] * len(dsts)
 
     def backtrack(src, route):
         if len(route) == len(tickets) + 1:
             sol.extend(route)
             return True
         for i, dst in enumerate(adj_list[src]):
-            if not seen[src][i]:
-                seen[src][i] = True
+            if (src, i) not in seen:
+                seen.add((src, i))
                 done = backtrack(dst, route + [dst])
-                seen[src][i] = False
+                seen.remove((src, i))
                 if done:
                     return True
         return False
