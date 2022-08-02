@@ -27,6 +27,10 @@ The replacement must be in place and use only constant extra memory.
 Intuition
 ---------
 
+1. Find first non-increasing element starting from right (foo).
+2. Find first element greater than foo starting from right (bar) and swap foo with bar.
+3. Reverse elements after foo to end of list.
+
 We need to find the next lexicographic permutation of the given list of numbers than the
 number formed by the given array.
 
@@ -79,7 +83,7 @@ nextPermutation(nums): O(1).
 
 def sol(nums):
     i = len(nums) - 2
-    while i >= 0 and nums[i + 1] <= nums[i]:
+    while i >= 0 and nums[i] >= nums[i + 1]:
         i -= 1
     if i >= 0:
         j = len(nums) - 1
