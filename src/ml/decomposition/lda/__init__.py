@@ -1,4 +1,6 @@
-"""Linear Discriminant Analysis (LDA)
+"""
+Linear Discriminant Analysis (LDA)
+==================================
 
 LDA Main Ideas
 --------------
