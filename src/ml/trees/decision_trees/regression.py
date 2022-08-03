@@ -26,7 +26,7 @@ from sklearn.model_selection import train_test_split
 
 # Get the data
 data = pd.read_csv(
-    "~/Projects/personal/coding_practice/src/ml/decision_trees/airfoil_noise_data.csv",
+    "/src/ml/trees/decision_trees/airfoil_noise_data.csv",
 )
 print(data.head(5))
 print()

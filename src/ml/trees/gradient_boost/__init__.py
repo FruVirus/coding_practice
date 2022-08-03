@@ -165,9 +165,9 @@ together to get a new log(odds) Prediction without some sort of transformation. 
 notes for derivation of transformation.
 
 Leaf Output Value = sum(leaf residuals) /
-					sum for each leaf residual(
-						previous probabilities * (1 - previous probabilities)
-					)
+                    sum for each leaf residual(
+                        previous probabilities * (1 - previous probabilities)
+                    )
 
 Note that the previous probability for a given sample will be different for each sample
 after the first tree. Initially, they are all the same (i.e., 0.7).

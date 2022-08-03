@@ -49,7 +49,7 @@ from sklearn.model_selection import train_test_split
 # Get the data
 col_names = ["sepal_length", "sepal_width", "petal_length", "petal_width", "type"]
 data = pd.read_csv(
-    "~/Projects/personal/coding_practice/src/ml/decision_trees/iris.csv",
+    "/src/ml/trees/decision_trees/iris.csv",
     skiprows=0,
     header=None,
     names=col_names,
