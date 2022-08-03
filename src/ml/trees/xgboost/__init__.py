@@ -17,7 +17,7 @@ Building an XGBoost Tree for regression
 
 Just like Gradient Boost, XGBoost fits a Regression Tree to the residuals.
 
-However, unlike Gradient Boost, which typically uses regular, off-the-shel, Regresssion
+However, unlike Gradient Boost, which typically uses regular, off-the-shelf, Regression
 Trees, XGBoost uses a unique Regression Tree.
 
 Note: There are many ways to build XGBoost Trees.
@@ -65,6 +65,8 @@ root.
 We do this by calculating the Gain of splitting the Residuals into two groups.
 
 Gain = Sum of Leaf Similarity Scores - Parent Similarity Score
+
+Thus, a higher Gain means that the leaves do a better job clustering than the root.
 
 Once we have calculated the Gain for a certain threshold, we can compare it to the Gains
 calculate for other thresholds. To do this, we select another threshold (i.e., another
