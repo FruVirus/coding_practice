@@ -14,7 +14,7 @@ recursion_1:            4
 graph:                  22
 --------------------------
 hash_table:             23
-linked_list:            17
+linked_list:            18
 n_ary_tree:             4
 --------------------------
 queue_and_stack:        19
@@ -22,5 +22,5 @@ recursion_2:            13
 trie:                   9
 --------------------------
 
-Total:                  234
+Total:                  235
 """
