@@ -95,8 +95,7 @@ def sol_two(head, k):
 
 def reverse(head, k):
     temp, curr = None, head
-    while k:
+    for _ in range(k):
         next, curr.next = curr.next, temp
         curr, temp = next, curr
-        k -= 1
     return temp
